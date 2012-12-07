@@ -1,0 +1,22 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginPostForm("form")) {
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.EditorForModel("_EditProduct")
+    
+    <p>
+        @Html.SubmitFormLink("save", "Edit") |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

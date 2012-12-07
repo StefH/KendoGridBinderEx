@@ -1,0 +1,16 @@
+﻿@model EmployeeVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginPostForm("form")) {
+    //@Html.ValidationSummary()
+
+    @Html.EditorForModel("_EditEmployee")
+
+    <p>
+        @Html.SubmitFormLink("save", "Create") |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

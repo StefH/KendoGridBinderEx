@@ -1,0 +1,12 @@
+﻿@model EmployeeVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@Html.DisplayForModel("_ViewEmployee")
+
+<p>
+    @Html.ImageActionLink("edit", "Edit", "Edit", new { Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

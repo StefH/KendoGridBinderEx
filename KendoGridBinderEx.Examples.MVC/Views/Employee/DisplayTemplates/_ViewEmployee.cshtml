@@ -1,0 +1,70 @@
+﻿@model EmployeeVM
+
+<fieldset>
+    <legend>EmployeeVM</legend>
+    
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.CompanyName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompanyName)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Number)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Number)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.First)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.First)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Last)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Last)
+    </div>
+    
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Full)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Full)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Email)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.HireDate)
+    </div>
+    <div class="display-field">
+        @Html.TextBoxFor(model => model.HireDate, new { disabled="disabled", @readonly = "readonly" })
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.IsManager)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsManager)
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#HireDate").kendoDatePicker({
+            value: new Date(),
+            format: 'dd/M/yyyy'
+        });
+    });
+</script>

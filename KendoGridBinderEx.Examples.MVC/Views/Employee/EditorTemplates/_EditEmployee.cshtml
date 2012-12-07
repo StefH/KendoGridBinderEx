@@ -1,0 +1,104 @@
+﻿@model EmployeeVM
+
+<table>
+    <tr>
+        <td style="width: 200px;">
+            @Html.LabelFor(model => model.CompanyId)    
+        </td>
+        <td style="width: 400px;">
+            <input id="CompanyId" name="CompanyId" data-bind="kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: companies, value: companyId, optionLabel: 'Select ...' }" />
+        </td>
+        <td style="width: 200px;">
+            @Html.ValidationMessageFor(model => model.CompanyId)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Number)
+        </td>
+        <td>
+            @Html.EditorFor(model => model.Number)
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.Number)
+        </td>
+    </tr>
+    <tr>
+        <td>
+             @Html.LabelFor(model => model.First)
+        </td>
+        <td>
+            @Html.EditorFor(model => model.First)
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.First)            
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Last)
+        </td>
+        <td>
+            @Html.EditorFor(model => model.Last)
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.Last)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Email)
+        </td>
+        <td>
+            @Html.EditorFor(model => model.Email)
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.Email)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.HireDate)
+        </td>
+        <td>
+            @Html.EditorFor(model => model.HireDate)
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.HireDate)
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ViewModel = function () {
+            this.companies = ko.observableArray();
+            this.companyId = ko.observable();
+            
+            this.Init = function () {
+                this.GetCompanies();
+            };
+
+            this.GetCompanies = function () {
+                var vm = this;
+                
+                $.getJSON(
+                    '@Url.Action("GetJson", "Company")',
+                    function (data) {
+                        vm.companies(data);
+                        vm.companyId('@(Model != null ? @Model.CompanyId : 0)');
+                    }
+                );
+            };
+        };
+
+        var viewModel = new ViewModel();
+        viewModel.Init();
+        ko.applyBindings(viewModel);
+
+        $("#HireDate").kendoDatePicker({
+            value: new Date(),
+            format: 'M/dd/yyyy'
+        });
+    });
+ </script>

@@ -1,0 +1,17 @@
+﻿@model EmployeeVM
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginPostForm("form")) {
+    //@Html.ValidationSummary()
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.EditorForModel("_EditEmployee")
+
+    <p>
+        @Html.SubmitFormLink("save", "Save") |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

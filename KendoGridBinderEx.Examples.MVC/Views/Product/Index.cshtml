@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Product Grid Example";
+}
+
+<h3>All Products</h3>
+<div id="grid"></div>
+<br/>
+@Html.ImageActionLink("add", "Create", "Create New Product", null)
+<br/>
+<br/>
+<h3>Top 3 Products</h3>
+<div id="gridTop3"></div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var url = '@Url.Action("Grid")';
+
+        var dataSource = new kendo.data.DataSource({
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: url
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Code: { type: 'string' },
+                        Name: { type: 'string' }
+                    }
+                }
+            }
+        });
+
+        $('#grid').kendoGrid({
+            dataSource: dataSource,
+            height: '220px',
+            columns: [
+                {
+                    field: 'Id', width: '78px', filterable: false, sortable: false, title: ' ',
+                    template:
+                        '<a href="/Product/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
+                        '<a href="/Product/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                        '<a href="/Product/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                },
+                { field: 'Code' },
+                { field: 'Name' }
+            ],
+            filterable: true,
+            sortable: {
+                mode: 'multiple'
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            }
+        });
+        
+        var urlTop3 = '@Url.Action("GridTop3")';
+
+        var dataSourceTop3 = new kendo.data.DataSource({
+            serverPaging: false,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: urlTop3
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Code: { type: 'string' },
+                        Name: { type: 'string' }
+                    }
+                }
+            }
+        });
+
+        $('#gridTop3').kendoGrid({
+            dataSource: dataSourceTop3,
+            columns: [
+                { field: 'Id', width: '78px', filterable: false, sortable: false, title: ' ', template: '&nbsp;' },
+                { field: 'Code' },
+                { field: 'Name' }
+            ],
+            filterable: true,
+            sortable: {
+                mode: 'multiple'
+            },
+            pageable: false
+        });
+    });
+</script>

@@ -1,0 +1,16 @@
+﻿@model EmployeeVM
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Are you sure you want to delete this?</h3>
+
+@Html.DisplayForModel("_ViewEmployee")
+
+@using (Html.BeginPostForm("form", new { Model.Id })) {
+    <p>
+        @Html.SubmitFormLink("delete", "Delete") |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

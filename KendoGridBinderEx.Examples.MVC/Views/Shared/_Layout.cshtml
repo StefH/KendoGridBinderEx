@@ -1,0 +1,43 @@
+﻿@using StackExchange.Profiling
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/knockout")
+</head>
+<body>
+    <div class="page">
+        <div id="header">
+            <div id="title">
+                <h1>KendoGridBinderEx MVC Demo</h1>
+            </div>
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial")
+            </div>
+            <div id="menucontainer">
+                <ul id="menu">
+                    <li>@Html.ActionLink("Employees (TEntity & TViewModel)", "Index", "Employee")</li>
+                    <li>@Html.ActionLink("Products (TEntity)", "Index", "Product")</li>
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+    
+    @RenderSection("scripts", false)
+    @MiniProfiler.RenderIncludes()
+</body>
+</html>

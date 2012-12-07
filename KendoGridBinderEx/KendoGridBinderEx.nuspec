@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>KendoGridBinderEx</id>
+        <version>1.0.0</version>
+        <title>KendoGridBinderEx</title>
+        <authors>Stef Heyenrath</authors>
+        <owners />
+        <licenseUrl>http://www.gnu.org/copyleft/gpl.html</licenseUrl>
+        <projectUrl>https://github.com/stefh/KendoGridBinderEx</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
+        <summary />
+        <tags>Kendo Grid Model Binder ModelBinder MVC AutoMappers</tags>
+        <dependencies>
+            <dependency id="System.Linq.Dynamic" version="1.0" />
+            <dependency id="AutoMapper" version="2.2.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\KendoGridBinderEx.dll" target="lib\net40\KendoGridBinderEx.dll" />
+        <file src="bin\Release\KendoGridBinder.dll" target="lib\net40\KendoGridBinder.dll" />
+    </files>
+</package>
