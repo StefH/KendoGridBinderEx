@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using FluentValidation.Results;
 using KendoGridBinder.Examples.MVC.Data.Entities;
 using KendoGridBinder.Examples.MVC.Data.Service;
@@ -22,25 +23,36 @@ namespace KendoGridBinder.Examples.MVC.Data.Validation
 
             RuleFor(e => e.EmployeeNumber)
                 .NotEmpty().WithMessage(GlobalResources.Employee_Number_Required)
-                .Must(IsNumberUnique).WithMessage(GlobalResources.Employee_Number_NotUnique, e => e.EmployeeNumber)
+                .Must(IsNumberUnique).WithMessage(GlobalResources.Employee_Number_NotUnique)
                 ;
 
             RuleFor(e => e.Company)
                 .NotNull().WithMessage(GlobalResources.Employee_Company_Required)
-                ;    
+                ;
 
             RuleSet(RuleSetNames, () =>
             {
                 RuleFor(e => e.FirstName)
-                    .NotEmpty()
-                    .Length(0, 10)
+                    .NotEmpty().WithMessage(GlobalResources.Employee_First_Required)
+                    .Length(0, 10).WithName(GlobalResources.FirstName)
                     .Must(IsFirstNameUnique).WithMessage(GlobalResources.Employee_Fullname_NotUnique, e => e.FullName);
 
                 RuleFor(e => e.LastName)
-                    .NotEmpty()
-                    .Length(0, 50)
+                    .NotEmpty().WithMessage(GlobalResources.Employee_Last_Required)
+                    .Length(0, 50).WithName(GlobalResources.LastName)
                     .Must(IsLastNameUnique).WithMessage(GlobalResources.Employee_Fullname_NotUnique, e => e.FullName);
             });
+
+            RuleFor(e => e.Email)
+                .NotEmpty().WithMessage(GlobalResources.Employee_Email_Required)
+                .EmailAddress().WithMessage(GlobalResources.Employee_Email_Invalid)
+                .Must(IsEmailUnique).WithMessage(GlobalResources.Employee_Email_NotUnique)
+                ;
+
+            RuleFor(e => e.HireDate)
+                .NotNull().WithMessage(GlobalResources.Employee_HireDate_Required)
+                .GreaterThanOrEqualTo(DateTime.Now).WithMessage(GlobalResources.Employee_HireDate_InvalidPast)
+                ;
         }
 
         public ValidationResult ValidateNames(Employee employee)
@@ -53,6 +65,11 @@ namespace KendoGridBinder.Examples.MVC.Data.Validation
             return _employeeService.IsNumberUnique(employee, number);
         }
 
+        public bool IsEmailUnique(Employee employee, string email)
+        {
+            return _employeeService.IsEmailUnique(employee, email);
+        }
+
         public bool IsFirstNameUnique(Employee employee, string firstName)
         {
             return _employeeService.IsFullNameUnique(employee, firstName, employee.LastName);
@@ -61,11 +78,6 @@ namespace KendoGridBinder.Examples.MVC.Data.Validation
         public bool IsLastNameUnique(Employee employee, string lastName)
         {
             return _employeeService.IsFullNameUnique(employee, employee.FirstName, lastName);
-        }
-
-        public bool IsFullNameUnique(Employee employee, string full)
-        {
-            return _employeeService.IsFullNameUnique(employee, full);
         }
     }
 }

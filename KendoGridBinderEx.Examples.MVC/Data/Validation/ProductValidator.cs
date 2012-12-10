@@ -18,12 +18,14 @@ namespace KendoGridBinder.Examples.MVC.Data.Validation
         {
             _productService = service;
 
-            RuleFor(x => x.Code)
+            RuleFor(p => p.Code)
                 .NotEmpty()
-                .Must(IsCodeUnique).WithMessage(GlobalResources.Product_Code_NotUnique, x => x.Code)
+                .Must(IsCodeUnique).WithMessage(GlobalResources.Product_Code_NotUnique)
                 .Length(0, 10);
 
-            RuleFor(x => x.Name).NotEmpty().Length(0, 50);
+            RuleFor(p => p.Name)
+                .NotEmpty()
+                .Length(0, 50);
         }
 
         public bool IsCodeUnique(Product product, string code)

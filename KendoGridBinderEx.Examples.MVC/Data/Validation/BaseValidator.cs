@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using FluentValidation;
+using FluentValidation.Internal;
 using FluentValidation.Results;
 using KendoGridBinder.Examples.MVC.Data.Entities;
 using KendoGridBinder.Examples.MVC.Data.Service;
@@ -22,6 +23,16 @@ namespace KendoGridBinder.Examples.MVC.Data.Validation
         protected BaseValidator(BaseService<T> service)
         {
             Service = service;
+        }
+
+        public ValidationResult ValidateAll(T instance)
+        {
+            return this.Validate(instance, ruleSet: "*");
+        }
+
+        public ValidationResult Validate(T instance, params string[] ruleSets)
+        {
+            return ruleSets == null ? Validate(instance) : Validate(new ValidationContext<T>(instance, new PropertyChain(), new RulesetValidatorSelector(ruleSets)));
         }
 
         public ValidationResult Validate(long? id, Expression<Func<T, object>> propertyExpression, object value)

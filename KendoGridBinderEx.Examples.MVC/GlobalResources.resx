@@ -117,19 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CompanyName" xml:space="preserve">
+    <value>CompanyName</value>
+  </data>
   <data name="Employee_Company_Required" xml:space="preserve">
     <value>The Company Name is required</value>
+  </data>
+  <data name="Employee_Email_Invalid" xml:space="preserve">
+    <value>The Email is invalid</value>
+  </data>
+  <data name="Employee_Email_NotUnique" xml:space="preserve">
+    <value>The Email is not unique</value>
+  </data>
+  <data name="Employee_Email_Required" xml:space="preserve">
+    <value>The Email is required</value>
+  </data>
+  <data name="Employee_First_Required" xml:space="preserve">
+    <value>The FirstName is required</value>
   </data>
   <data name="Employee_Fullname_NotUnique" xml:space="preserve">
     <value>The Fullname '{0}' is not unique</value>
   </data>
+  <data name="Employee_HireDate_InvalidPast" xml:space="preserve">
+    <value>The HireDate cannot be defined in the past</value>
+  </data>
+  <data name="Employee_HireDate_Required" xml:space="preserve">
+    <value>The HireDate is required</value>
+  </data>
+  <data name="Employee_Last_Required" xml:space="preserve">
+    <value>The LastName is required</value>
+  </data>
   <data name="Employee_Number_NotUnique" xml:space="preserve">
-    <value>The Number '{0} is not unique</value>
+    <value>The Number s not unique</value>
   </data>
   <data name="Employee_Number_Required" xml:space="preserve">
     <value>The Number is required</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>FirstName</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>LastName</value>
+  </data>
   <data name="Product_Code_NotUnique" xml:space="preserve">
-    <value>The Code '{0}' is not unique</value>
+    <value>The Code is not unique</value>
   </data>
 </root>

@@ -12,9 +12,11 @@ namespace KendoGridBinder.Examples.MVC.Models
         [Remote("ValidateUniqueNumber", "Employee", AdditionalFields = "Id")]
         public int Number { get; set; }
 
+        [Display(ResourceType = typeof(GlobalResources), Name = GlobalResourceLiterals.FirstName)]
         [Remote("ValidateUniqueFullName", "Employee", AdditionalFields = "Last,Id")]
         public string First { get; set; }
 
+        [Display(ResourceType = typeof(GlobalResources), Name = GlobalResourceLiterals.LastName)]
         [Remote("ValidateUniqueFullName", "Employee", AdditionalFields = "First,Id")]
         public string Last { get; set; }
 
@@ -26,9 +28,10 @@ namespace KendoGridBinder.Examples.MVC.Models
 
         public string Full { get; set; }
 
-        [Display(Name = "Company Name")]
+        [Display(ResourceType = typeof(GlobalResources), Name = GlobalResourceLiterals.CompanyName)]
         public long CompanyId { get; set; }
 
+        [Display(ResourceType = typeof(GlobalResources), Name = GlobalResourceLiterals.CompanyName)]
         public string CompanyName { get; set; }
 
         public string MainCompanyName { get; set; }

@@ -1299,7 +1299,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GlobalResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobalResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

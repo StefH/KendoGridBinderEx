@@ -1,18 +1,22 @@
-﻿using KendoGridBinder.Examples.MVC.Data.Entities;
+﻿using System.Web.Mvc;
+using FluentValidation.Results;
+using KendoGridBinder.Examples.MVC.Data.Entities;
 using KendoGridBinder.Examples.MVC.Data.Service;
 using KendoGridBinder.Examples.MVC.Data.Validation;
-using System.Web.Mvc;
 
 namespace KendoGridBinder.Examples.MVC.Controllers
 {
     public class ProductController : BaseGridController<Product, Product>
     {
         private readonly ProductService _productService;
+        private readonly ProductValidator _productValidator;
 
         public ProductController()
             : base(CompositionRoot.ResolveService<ProductService>())
         {
             _productService = (ProductService)Service;
+
+            _productValidator = new ProductValidator(_productService);
         }
 
         [HttpPost]
@@ -22,14 +26,18 @@ namespace KendoGridBinder.Examples.MVC.Controllers
             return GetKendoGridAsJson(request, entities);
         }
 
-        [HttpGet]
-        public JsonResult IsCodeUnique(string code)
+        #region Validations
+        protected override ValidationResult Validate(Product product, string ruleSet)
         {
-            var validator = new ProductValidator(_productService);
-            //var result = validator.Validate(p => p.Code, code);
-
-            //return JsonValidationResult(result);
-            return null;
+            return _productValidator.ValidateAll(product);
         }
+        [HttpGet]
+        public JsonResult IsCodeUnique(string code, long? id)
+        {
+            var result = _productValidator.Validate(id, p => p.Code, code);
+
+            return JsonValidationResult(result);
+        }
+        #endregion
     }
 }

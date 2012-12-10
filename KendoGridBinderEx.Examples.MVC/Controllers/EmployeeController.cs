@@ -27,28 +27,32 @@ namespace KendoGridBinder.Examples.MVC.Controllers
         public static void InitAutoMapper()
         {
             Mapper.CreateMap<Employee, EmployeeVM>()
-               .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
-               .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
-               .ForMember(vm => vm.Last, opt => opt.MapFrom(m => m.LastName))
-               .ForMember(vm => vm.Number, opt => opt.MapFrom(m => m.EmployeeNumber))
-               .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
-               .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
-               .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
-               ;
+                .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
+                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
+                .ForMember(vm => vm.Last, opt => opt.MapFrom(m => m.LastName))
+                .ForMember(vm => vm.Number, opt => opt.MapFrom(m => m.EmployeeNumber))
+                .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
+                .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
+                .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
+                ;
 
             Mapper.CreateMap<EmployeeVM, Employee>()
-              .ForMember(e => e.Email, opt => opt.MapFrom(vm => vm.Email))
-              .ForMember(e => e.EmployeeNumber, opt => opt.MapFrom(vm => vm.Number))
-              .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
-              .ForMember(e => e.HireDate, opt => opt.MapFrom(vm => vm.HireDate))
-              .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.Last))
-              .ForMember(e => e.Company, opt => opt.Ignore())
-              ;
+                .ForMember(e => e.EmployeeNumber, opt => opt.MapFrom(vm => vm.Number))
+                .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
+                .ForMember(e => e.HireDate, opt => opt.MapFrom(vm => vm.HireDate))
+                .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.Last))
+                .ForMember(e => e.Company, opt => opt.Ignore())
+                ;
         }
 
         protected override IQueryable<Employee> GetQueryable()
         {
             return _employeeService.AsQueryable(e => e.Company.MainCompany);
+        }
+
+        protected override Employee GetById(long id)
+        {
+            return _employeeService.GetById(id, e => e.Company.MainCompany);
         }
 
         protected override Employee Map(EmployeeVM viewModel)
@@ -76,7 +80,8 @@ namespace KendoGridBinder.Examples.MVC.Controllers
         #region Validations
         protected override ValidationResult Validate(Employee employee, string ruleSet)
         {
-            return _employeeValidator.Validate(employee);
+            //return _employeeValidator.Validate(employee, ruleSet: "*");
+            return _employeeValidator.ValidateAll(employee);
         }
 
         [HttpGet]

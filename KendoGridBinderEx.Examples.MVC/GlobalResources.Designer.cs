@@ -22,7 +22,7 @@ namespace KendoGridBinder.Examples.MVC {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class GlobalResources {
+    public class GlobalResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace KendoGridBinder.Examples.MVC {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KendoGridBinder.Examples.MVC.GlobalResources", typeof(GlobalResources).Assembly);
@@ -51,7 +51,7 @@ namespace KendoGridBinder.Examples.MVC {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,27 +61,99 @@ namespace KendoGridBinder.Examples.MVC {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CompanyName.
+        /// </summary>
+        public static string CompanyName {
+            get {
+                return ResourceManager.GetString("CompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Company Name is required.
         /// </summary>
-        internal static string Employee_Company_Required {
+        public static string Employee_Company_Required {
             get {
                 return ResourceManager.GetString("Employee_Company_Required", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Email is invalid.
+        /// </summary>
+        public static string Employee_Email_Invalid {
+            get {
+                return ResourceManager.GetString("Employee_Email_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Email is not unique.
+        /// </summary>
+        public static string Employee_Email_NotUnique {
+            get {
+                return ResourceManager.GetString("Employee_Email_NotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Email is required.
+        /// </summary>
+        public static string Employee_Email_Required {
+            get {
+                return ResourceManager.GetString("Employee_Email_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The FirstName is required.
+        /// </summary>
+        public static string Employee_First_Required {
+            get {
+                return ResourceManager.GetString("Employee_First_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Fullname &apos;{0}&apos; is not unique.
         /// </summary>
-        internal static string Employee_Fullname_NotUnique {
+        public static string Employee_Fullname_NotUnique {
             get {
                 return ResourceManager.GetString("Employee_Fullname_NotUnique", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Number &apos;{0} is not unique.
+        ///   Looks up a localized string similar to The HireDate cannot be defined in the past.
         /// </summary>
-        internal static string Employee_Number_NotUnique {
+        public static string Employee_HireDate_InvalidPast {
+            get {
+                return ResourceManager.GetString("Employee_HireDate_InvalidPast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The HireDate is required.
+        /// </summary>
+        public static string Employee_HireDate_Required {
+            get {
+                return ResourceManager.GetString("Employee_HireDate_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The LastName is required.
+        /// </summary>
+        public static string Employee_Last_Required {
+            get {
+                return ResourceManager.GetString("Employee_Last_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Number s not unique.
+        /// </summary>
+        public static string Employee_Number_NotUnique {
             get {
                 return ResourceManager.GetString("Employee_Number_NotUnique", resourceCulture);
             }
@@ -90,16 +162,34 @@ namespace KendoGridBinder.Examples.MVC {
         /// <summary>
         ///   Looks up a localized string similar to The Number is required.
         /// </summary>
-        internal static string Employee_Number_Required {
+        public static string Employee_Number_Required {
             get {
                 return ResourceManager.GetString("Employee_Number_Required", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Code &apos;{0}&apos; is not unique.
+        ///   Looks up a localized string similar to FirstName.
         /// </summary>
-        internal static string Product_Code_NotUnique {
+        public static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LastName.
+        /// </summary>
+        public static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Code is not unique.
+        /// </summary>
+        public static string Product_Code_NotUnique {
             get {
                 return ResourceManager.GetString("Product_Code_NotUnique", resourceCulture);
             }

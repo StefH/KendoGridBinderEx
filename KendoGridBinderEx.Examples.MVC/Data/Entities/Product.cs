@@ -1,7 +1,7 @@
-﻿using FluentValidation.Attributes;
-using KendoGridBinder.Examples.MVC.Data.Validation;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
+using FluentValidation.Attributes;
+using KendoGridBinder.Examples.MVC.Data.Validation;
 
 namespace KendoGridBinder.Examples.MVC.Data.Entities
 {
@@ -9,7 +9,7 @@ namespace KendoGridBinder.Examples.MVC.Data.Entities
     [Validator(typeof(ProductValidator))]
     public class Product : Entity
     {
-        [Remote("IsCodeUnique", "Product")]
+        [Remote("IsCodeUnique", "Product", AdditionalFields = "Id")]
         public string Code { get; set; }
 
         public string Name { get; set; }

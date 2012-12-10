@@ -26,12 +26,12 @@ namespace KendoGridBinder.Examples.MVC.Data.Service
             return !Repository.AsQueryable().Any(e => e.EmployeeNumber == number && (!isProvided || (isProvided && currentId != e.Id)));
         }
 
-        public bool IsFullNameUnique(Employee current, string full)
+        public bool IsEmailUnique(Employee current, string email)
         {
             bool isProvided = current != null;
             long currentId = isProvided ? current.Id : 0;
 
-            return !Repository.AsQueryable().Any(e => e.FullName == full && (!isProvided || (isProvided && currentId != e.Id)));
+            return !Repository.AsQueryable().Any(e => e.Email == email && (!isProvided || (isProvided && currentId != e.Id)));
         }
 
         public bool IsFullNameUnique(Employee current, string firstName, string lastName)

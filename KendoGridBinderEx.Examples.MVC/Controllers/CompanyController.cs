@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using KendoGridBinder.Examples.MVC.Data;
 using KendoGridBinder.Examples.MVC.Data.Entities;
 using KendoGridBinder.Examples.MVC.Data.Service;
 

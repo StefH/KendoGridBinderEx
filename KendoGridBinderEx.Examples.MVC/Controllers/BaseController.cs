@@ -43,6 +43,11 @@ namespace KendoGridBinder.Examples.MVC.Controllers
             return Service.AsQueryable();
         }
 
+        protected virtual TEntity GetById(long id)
+        {
+            return Service.GetById(id);
+        }
+
         protected virtual TViewModel Map(TEntity entity)
         {
             return Mapper.Map<TViewModel>(entity);
@@ -61,7 +66,7 @@ namespace KendoGridBinder.Examples.MVC.Controllers
 
         public ActionResult Details(long id)
         {
-            var entity = Service.GetById(id);
+            var entity = GetById(id);
             var viewModel = Map(entity);
 
             return View(viewModel);
@@ -69,7 +74,7 @@ namespace KendoGridBinder.Examples.MVC.Controllers
 
         public ActionResult Edit(long id)
         {
-            var entity = Service.GetById(id);
+            var entity = GetById(id);
             var viewModel = Map(entity);
 
             return View(viewModel);
@@ -136,7 +141,7 @@ namespace KendoGridBinder.Examples.MVC.Controllers
 
         public ActionResult Delete(long id)
         {
-            var entity = Service.GetById(id);
+            var entity = GetById(id);
             var viewModel = Map(entity);
 
             return View(viewModel);
@@ -147,7 +152,7 @@ namespace KendoGridBinder.Examples.MVC.Controllers
         {
             try
             {
-                var entity = Service.GetById(viewModel.Id);
+                var entity = GetById(viewModel.Id);
                 Service.Delete(entity);
 
                 return RedirectToAction("Index");

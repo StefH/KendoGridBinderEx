@@ -1,64 +1,63 @@
 ﻿@model EmployeeVM
 
-<fieldset>
-    <legend>EmployeeVM</legend>
-    
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.CompanyName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CompanyName)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Number)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Number)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.First)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.First)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Last)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Last)
-    </div>
-    
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Full)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Full)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Email)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Email)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.HireDate)
-    </div>
-    <div class="display-field">
-        @Html.TextBoxFor(model => model.HireDate, new { disabled="disabled", @readonly = "readonly" })
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.IsManager)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsManager)
-    </div>
-</fieldset>
+<table>
+    <tr>
+        <td style="width: 200px;">
+            @Html.LabelFor(model => model.CompanyId)
+        </td>
+        <td style="width: 400px;">
+            @Html.DisplayFor(model => model.CompanyName)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Number)
+        </td>
+    </tr>
+    <tr>
+        <td>
+             @Html.LabelFor(model => model.First)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.First)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Last)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Last)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Email)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.HireDate)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.HireDate, new { disabled="disabled", @readonly = "readonly" })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.IsManager)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.IsManager)
+        </td>
+    </tr>
+</table>
 
 <script type="text/javascript">
     $(document).ready(function () {
