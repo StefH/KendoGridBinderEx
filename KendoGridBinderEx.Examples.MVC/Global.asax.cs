@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
@@ -24,6 +25,8 @@ namespace KendoGridBinder.Examples.MVC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ModelBinders.Binders.Add(typeof(DateTime), new MyDateTimeBinder());
 
             InitAutoMapper();
 

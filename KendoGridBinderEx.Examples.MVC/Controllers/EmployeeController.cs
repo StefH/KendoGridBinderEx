@@ -39,7 +39,6 @@ namespace KendoGridBinder.Examples.MVC.Controllers
             Mapper.CreateMap<EmployeeVM, Employee>()
                 .ForMember(e => e.EmployeeNumber, opt => opt.MapFrom(vm => vm.Number))
                 .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
-                .ForMember(e => e.HireDate, opt => opt.MapFrom(vm => vm.HireDate))
                 .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.Last))
                 .ForMember(e => e.Company, opt => opt.Ignore())
                 ;
@@ -76,14 +75,14 @@ namespace KendoGridBinder.Examples.MVC.Controllers
             var entities = _employeeService.GetManagers();
             return GetKendoGridAsJson(request, entities);
         }
-
-        #region Validations
+        
         protected override ValidationResult Validate(Employee employee, string ruleSet)
         {
             //return _employeeValidator.Validate(employee, ruleSet: "*");
             return _employeeValidator.ValidateAll(employee);
         }
 
+        #region Remote Validations
         [HttpGet]
         public JsonResult ValidateUniqueNumber(int number, long? id)
         {

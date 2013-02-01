@@ -51,7 +51,7 @@ namespace KendoGridBinder.Examples.MVC.Data.Validation
 
             RuleFor(e => e.HireDate)
                 .NotNull().WithMessage(GlobalResources.Employee_HireDate_Required)
-                .GreaterThanOrEqualTo(DateTime.Now).WithMessage(GlobalResources.Employee_HireDate_InvalidPast)
+                .GreaterThanOrEqualTo(DateTime.Now.Date).WithMessage(GlobalResources.Employee_HireDate_InvalidPast)
                 ;
         }
 

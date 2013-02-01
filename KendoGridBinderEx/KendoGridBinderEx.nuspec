@@ -11,7 +11,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
         <summary />
-        <tags>Kendo Grid Model Binder ModelBinder MVC AutoMappers</tags>
+        <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
         <dependencies>
             <dependency id="System.Linq.Dynamic" version="1.0" />
             <dependency id="AutoMapper" version="2.2.0" />

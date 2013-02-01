@@ -169,6 +169,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="CustomModelBinders.cs" />
     <Compile Include="Data\Entities\Entity.cs" />
     <Compile Include="Data\Repository\IRepositoryConfig.cs" />
     <Compile Include="Data\Repository\RepositoryConfig.cs" />
