@@ -1245,8 +1245,8 @@
     <Content Include="Scripts\kendo\2012.3.1114\kendo.validator.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\kendo.window.min.js" />
-    <Content Include="Scripts\knockout-2.2.0.debug.js" />
-    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\knockout-2.2.1.debug.js" />
+    <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\knockout-kendo-0.4.2.js" />
     <Content Include="Scripts\knockout-kendo-0.4.2.min.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
