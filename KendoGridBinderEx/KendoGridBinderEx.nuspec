@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>KendoGridBinderEx</id>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <title>KendoGridBinderEx</title>
         <authors>Stef Heyenrath</authors>
         <owners />
@@ -14,7 +14,7 @@
         <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
         <dependencies>
             <dependency id="System.Linq.Dynamic" version="1.0" />
-            <dependency id="AutoMapper" version="2.2.0" />
+            <dependency id="AutoMapper" version="2.2.1" />
         </dependencies>
     </metadata>
     <files>
