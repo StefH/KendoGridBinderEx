@@ -36,6 +36,13 @@ namespace KendoGridBinder
         public int Total { get; set; }
 
         protected KendoGrid(KendoGridRequest request, IQueryable<TEntity> query,
+                            Dictionary<string, string> mappings,
+                            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion)
+            : this(request, query, null, mappings, conversion)
+        {
+        }
+
+        protected KendoGrid(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes,
             Dictionary<string, string> mappings,
             Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion)
         {
@@ -48,7 +55,7 @@ namespace KendoGridBinder
 
             if (request.GroupObjects != null)
             {
-                Groups = ApplyGroupingAndSorting(tempQuery, request);
+                Groups = ApplyGroupingAndSorting(tempQuery, includes, request);
 
                 _query = null;
                 Data = null;
@@ -78,7 +85,7 @@ namespace KendoGridBinder
             Dictionary<string, string> mappings,
             Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion
             )
-            : this(request, entities.AsQueryable(), mappings, conversion)
+            : this(request, entities.AsQueryable(), null, mappings, conversion)
         {
         }
 
@@ -105,7 +112,7 @@ namespace KendoGridBinder
             return query.OrderBy(sorting);
         }
 
-        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IGrouping<object, TEntity> grouping, object aggregates, List<KendoGroup> kendoGroups)
+        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<TEntity> grouping, object aggregates, List<KendoGroup> kendoGroups)
         {
             var groupObjects = groupByFields as IList<GroupObject> ?? groupByFields.ToList();
             bool isLast = groupObjects.Count() == 1;
@@ -137,7 +144,7 @@ namespace KendoGridBinder
             kendoGroups.Add(kendoGroup);
         }
 
-        protected IEnumerable<KendoGroup> ApplyGroupingAndSorting(IQueryable<TEntity> query, KendoGridRequest request)
+        protected IEnumerable<KendoGroup> ApplyGroupingAndSorting(IQueryable<TEntity> query, IEnumerable<string> includes, KendoGridRequest request)
         {
             bool hasAggregates = request.GroupObjects.Any(g => g.AggregateObjects.Any());
             var aggregatesExpression = hasAggregates ?
@@ -145,19 +152,16 @@ namespace KendoGridBinder
                string.Empty;
 
             var newSort = request.SortObjects.ToList();
-            /*var groupByFieldPresentInSort = newSort.FirstOrDefault(s => s.Field == groupByObject.Field);
-            if (groupByFieldPresentInSort != null)
-            {
-                newSort.Remove(groupByFieldPresentInSort);
-            }*/
             bool hasSortObjects = newSort.Any();
 
             var groupByOrderByFieldsExpressionX = hasSortObjects ?
                 "," + string.Join(",", newSort.Select(s => string.Format("{0} as OrderBy__{1}", ReplaceVM2E(s.Field).Split('.').Last(), s.Field))) :
                 string.Empty;
 
-            var groupByExpressionX = string.Format("new (new ({0}{1}) as GroupByFields)",
-                string.Join(",", request.GroupObjects.Select(s => string.Format("{0} as {1}", ReplaceVM2E(s.Field), s.Field))), groupByOrderByFieldsExpressionX);
+            var groupByFields = request.GroupObjects.Select(s => string.Format("{0} as {1}", ReplaceVM2E(s.Field), s.Field)).ToList();
+            var groupByExpressionX = string.Format("new (new ({0}{1}{2}) as GroupByFields)",
+                (includes != null ? string.Join(",", includes) + "," : string.Empty),
+                string.Join(",", groupByFields), groupByOrderByFieldsExpressionX);
 
             var selectExpressionBeforeOrderByX = string.Format("new (Key.GroupByFields, it as Grouping{0})", aggregatesExpression);
 
@@ -194,33 +198,6 @@ namespace KendoGridBinder
 
             return list;
         }
-        /*
-        private class GroupResult
-        {
-            public IGrouping<object, TEntity> Grouping { get; set; }
-            public object GroupByFields { get; set; }
-            public object Aggregates { get; set; }
-
-            public object AggregatesAsDictionary
-            {
-                get
-                {
-                    return Aggregates != null ? Aggregates.GetType().GetProperties().Where(p => p.Name.Contains("__"))
-
-                                // Split on __ to get the prefix and the field
-                                .Select(prop => new { PropertyInfo = prop, Data = prop.Name.Split(new[] {"__"}, StringSplitOptions.None)})
-
-                                // Return the Fieldname, Prefix and the the value ('First' , 'field' , 'First')
-                                .Select(x => new {Fieldname = x.Data.Last(),Prefix = x.Data.First(),Value = x.PropertyInfo.GetValue(Aggregates, null)})
-
-                                // Group by the field
-                                .GroupBy(groupBy => groupBy.Fieldname)
-
-                                // and return an anonymous dictionary
-                                .ToDictionary(x => x.Key, y => y.ToDictionary(k => k.Prefix, v => v.Value)) : null;
-                }
-            }
-        }*/
 
         protected string GetSorting(KendoGridRequest request)
         {
@@ -324,8 +301,8 @@ namespace KendoGridBinder
                 case "contains":
                     exStr = string.Format("{0}{2}.Contains({1})", field, param, caseMod);
                     break;
-					
-				case "doesnotcontain":
+
+                case "doesnotcontain":
                     exStr = string.Format("!{0}{2}.Contains({1})", field, param, caseMod);
                     break;
 
@@ -336,25 +313,25 @@ namespace KendoGridBinder
                 case "endswith":
                     exStr = string.Format("{0}{2}.EndsWith({1})", field, param, caseMod);
                     break;
-					
+
                 case "gte":
                     exStr = string.Format("{0}{2} >= {1}", field, param, caseMod);
                     break;
-					
+
                 case "gt":
                     exStr = string.Format("{0}{2} > {1}", field, param, caseMod);
                     break;
-					
+
                 case "lte":
                     exStr = string.Format("{0}{2} <= {1}", field, param, caseMod);
                     break;
-					
+
                 case "lt":
                     exStr = string.Format("{0}{2} < {1}", field, param, caseMod);
                     break;
-					
+
                 default:
-                    exStr = "";
+                    exStr = string.Empty;
                     break;
             }
 

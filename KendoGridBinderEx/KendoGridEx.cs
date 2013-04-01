@@ -26,16 +26,26 @@ namespace KendoGridBinderEx
 
     public class KendoGridEx<TEntity, TViewModel> : KendoGrid<TEntity, TViewModel>
     {
-        private static readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> AutoMapperConversion = query => 
+        private static readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> AutoMapperConversion = query =>
             SameTypes ? query.Cast<TViewModel>().ToList() : Mapper.Map<IEnumerable<TViewModel>>(query);
 
         public KendoGridEx(KendoGridRequest request, IQueryable<TEntity> query)
-            : base(request, query, GetModelMappings(), AutoMapperConversion)
+            : this(request, query, null)
+        {
+        }
+
+        public KendoGridEx(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
+            : base(request, query, includes, GetModelMappings(), AutoMapperConversion)
         {
         }
 
         public KendoGridEx(KendoGridRequest request, IEnumerable<TEntity> entities)
-            : this(request, entities.AsQueryable())
+            : this(request, entities, null)
+        {
+        }
+
+        public KendoGridEx(KendoGridRequest request, IEnumerable<TEntity> entities, IEnumerable<string> includes)
+            : this(request, entities.AsQueryable(), includes)
         {
         }
 
@@ -58,7 +68,7 @@ namespace KendoGridBinderEx
             }
 
             var mappings = new Dictionary<string, string>();
-            
+
             // We are only interested in custom expressions because they do not map field to field
             foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression != null))
             {
