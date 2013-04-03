@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>KendoGridBinder</id>
-        <version>1.7.1</version>
+        <version>1.7.2</version>
         <title>KendoGridBinder</title>
         <authors>Ryan Whitmire,Josh Ball,Carlos Adriano Portes,Stef Heyenrath</authors>
         <owners />
@@ -17,6 +17,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Debug\KendoGridBinder.dll" target="lib\net40\KendoGridBinder.dll" />
+        <file src="bin\Release\KendoGridBinder.dll" target="lib\net40\KendoGridBinder.dll" />
     </files>
 </package>
