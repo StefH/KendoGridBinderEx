@@ -881,6 +881,7 @@
     <Content Include="Views\Product\EditorTemplates\_EditProduct.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebDebug.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
