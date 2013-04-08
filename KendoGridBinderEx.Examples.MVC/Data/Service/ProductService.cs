@@ -1,9 +1,9 @@
-﻿using EntityFramework.Patterns;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Repository;
-using System.Linq;
+﻿using System.Linq;
+using EntityFramework.Patterns;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Repository;
 
-namespace KendoGridBinder.Examples.MVC.Data.Service
+namespace KendoGridBinderEx.Examples.MVC.Data.Service
 {
     public class ProductService : BaseService<Product>
     {

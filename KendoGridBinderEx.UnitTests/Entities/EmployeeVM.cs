@@ -23,5 +23,11 @@ namespace KendoGridBinderEx.UnitTests.Entities
         public string CompanyName { get; set; }
 
         public string MainCompanyName { get; set; }
+
+        public long CountryId { get; set; }
+
+        public string CountryCode { get; set; }
+
+        public string CountryName { get; set; }
     }
 }

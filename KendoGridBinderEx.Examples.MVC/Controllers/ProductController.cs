@@ -1,10 +1,11 @@
 ﻿using System.Web.Mvc;
 using FluentValidation.Results;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Service;
+using KendoGridBinder;
 using KendoGridBinder.Examples.MVC.Data.Validation;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
 
-namespace KendoGridBinder.Examples.MVC.Controllers
+namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class ProductController : BaseGridController<Product, Product>
     {

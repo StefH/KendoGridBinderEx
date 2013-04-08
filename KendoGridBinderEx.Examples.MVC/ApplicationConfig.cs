@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Configuration;
 
-namespace KendoGridBinder.Examples.MVC
+namespace KendoGridBinderEx.Examples.MVC
 {
     public static class ApplicationConfig
     {

@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Service;
-using KendoGridBinderEx;
+using KendoGridBinder;
+using KendoGridBinderEx.Examples.MVC.Data;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
 
-namespace KendoGridBinder.Examples.MVC.Controllers
+namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public abstract class BaseGridController<TEntity, TViewModel> : BaseController<TEntity, TViewModel>
         where TEntity : class, IEntity, new()
@@ -15,14 +17,29 @@ namespace KendoGridBinder.Examples.MVC.Controllers
         {
         }
 
-        protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridRequest request, IQueryable<TEntity> query)
+        protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryContext<TEntity> queryContext)
         {
-            return new KendoGridEx<TEntity, TViewModel>(request, query);
+            return Json(GetKendoGrid(request, queryContext.Query, queryContext.Includes));
+        }
+
+        protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
+        {
+            return Json(GetKendoGrid(request, query, includes));
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryable<TEntity> query)
         {
-            return Json(GetKendoGrid(request, query));
+            return GetKendoGridAsJson(request, query, null);
+        }
+
+        protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridRequest request, IQueryable<TEntity> query)
+        {
+            return GetKendoGrid(request, query, null);
+        }
+
+        protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
+        {
+            return new KendoGridEx<TEntity, TViewModel>(request, query, includes);
         }
 
         #region MVC Grid Actions

@@ -8,10 +8,10 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using FluentValidation.Mvc;
-using KendoGridBinder.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
 using StackExchange.Profiling;
 
-namespace KendoGridBinder.Examples.MVC
+namespace KendoGridBinderEx.Examples.MVC
 {
     public class MvcApplication : HttpApplication
     {
@@ -59,7 +59,7 @@ namespace KendoGridBinder.Examples.MVC
         private static void InitAutoMapper()
         {
             // Call static method 'InitAutoMapper' on all controllers.
-            var assemblies = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.FullName.Contains("KendoGridBinder.Examples.MVC.Controllers") && t.Name.EndsWith("Controller")).ToList();
+            var assemblies = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.FullName.Contains("KendoGridBinderEx.Examples.MVC.Controllers") && t.Name.EndsWith("Controller")).ToList();
             foreach (var controller in assemblies)
             {
                 var methodInfo = controller.GetMethod("InitAutoMapper");

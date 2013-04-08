@@ -4,12 +4,11 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Service;
-using KendoGridBinder.Examples.MVC.Data.Validation;
-using KendoGridBinderEx;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Data.Validation;
 
-namespace KendoGridBinder.Examples.MVC.Controllers
+namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public abstract class BaseController<TEntity, TViewModel> : Controller
         where TEntity : class, IEntity, new()

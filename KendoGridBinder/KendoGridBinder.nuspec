@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>KendoGridBinder</id>
-        <version>1.7.2</version>
+        <version>1.8.0</version>
         <title>KendoGridBinder</title>
         <authors>Ryan Whitmire,Josh Ball,Carlos Adriano Portes,Stef Heyenrath</authors>
         <owners />

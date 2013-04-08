@@ -23,6 +23,8 @@ namespace KendoGridBinderEx.UnitTests.Entities
 
         public Company Company { get; set; }
 
+        public Country Country { get; set; }
+
         public bool IsManager
         {
             get

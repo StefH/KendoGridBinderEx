@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Objects;
 using System.Linq;
 using System.Transactions;
-using KendoGridBinder.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
 
-namespace KendoGridBinder.Examples.MVC.Data
+namespace KendoGridBinderEx.Examples.MVC.Data
 {
     public class MyDataContext : DbContext
     {
@@ -17,6 +18,16 @@ namespace KendoGridBinder.Examples.MVC.Data
         public DbSet<MainCompany> MainCompanies { get; set; }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public ObjectContext ObjectContext
+        {
+            get
+            {
+                return (this as IObjectContextAdapter).ObjectContext;
+            }
+        }
 
         static MyDataContext()
         {
@@ -46,14 +57,12 @@ namespace KendoGridBinder.Examples.MVC.Data
                 throw new Exception();
             }
 
-            var objectContext = (context as IObjectContextAdapter).ObjectContext;
-
             // remove all tables if present
-            var tables = new[] { "KendoGrid_Product", "KendoGrid_Employee", "KendoGrid_Company", "KendoGrid_MainCompany" };
+            var tables = new[] { "KendoGrid_Product", "KendoGrid_Employee", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
 
             foreach (var table in tables)
             {
-                var results = objectContext.ExecuteStoreQuery<string>(string.Format("SELECT name FROM dbo.sysobjects WHERE xtype = 'U' AND name = '{0}'", table));
+                var results = context.ObjectContext.ExecuteStoreQuery<string>(string.Format("SELECT name FROM dbo.sysobjects WHERE xtype = 'U' AND name = '{0}'", table));
                 if (results.Any())
                 {
                     context.Database.ExecuteSqlCommand(string.Format("DROP TABLE [{0}]", table));
@@ -61,7 +70,7 @@ namespace KendoGridBinder.Examples.MVC.Data
             }
 
             // recreate all tables
-            var dbCreationScript = objectContext.CreateDatabaseScript();
+            var dbCreationScript = context.ObjectContext.CreateDatabaseScript();
             context.Database.ExecuteSqlCommand(dbCreationScript);
 
             Seed(context);
@@ -70,6 +79,11 @@ namespace KendoGridBinder.Examples.MVC.Data
 
         private void Seed(MyDataContext context)
         {
+            var countryNL = new Country { Id = 1, Code = "NL", Name = "The Netherlands" };
+            var countryBE = new Country { Id = 2, Code = "BE", Name = "Belgium" };
+            var countries = new List<Country> { countryNL, countryBE };
+            countries.ForEach(c => context.Countries.Add(c));
+
             var mainCompany1 = new MainCompany { Id = 10, Name = "M - 1" };
             var mainCompany2 = new MainCompany { Id = 20, Name = "M - 2" };
             var mainCompanies = new List<MainCompany> { mainCompany1, mainCompany2 };
@@ -83,18 +97,18 @@ namespace KendoGridBinder.Examples.MVC.Data
 
             var employees = new List<Employee>
             {
-                new Employee { Id = 1, Company = companyA, FirstName = "Bill", LastName = "Smith", Email = "bsmith@email.com", EmployeeNumber = 1001, HireDate = Convert.ToDateTime("01/12/1990")},
-                new Employee { Id = 2, Company = companyB, FirstName = "Jack", LastName = "Smith", Email = "jsmith@email.com", EmployeeNumber = 1002, HireDate = Convert.ToDateTime("12/12/1997")},
-                new Employee { Id = 3, Company = companyC, FirstName = "Mary", LastName = "Gates", Email = "mgates@email.com", EmployeeNumber = 1003, HireDate = Convert.ToDateTime("03/03/2000")},
-                new Employee { Id = 4, Company = companyA, FirstName = "John", LastName = "Doe", Email = "jd@email.com", EmployeeNumber = 1004, HireDate = Convert.ToDateTime("11/11/2011")},
-                new Employee { Id = 5, Company = companyB, FirstName = "Chris", LastName = "Cross", Email = "cc@email.com", EmployeeNumber = 1005, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 6, Company = companyC, FirstName = "Niki", LastName = "Myers", Email = "nm@email.com", EmployeeNumber = 1006, HireDate = Convert.ToDateTime("06/05/1995")},
-                new Employee { Id = 7, Company = companyA, FirstName = "Joseph", LastName = "Hall", Email = "jh@email.com", EmployeeNumber = 1007, HireDate = Convert.ToDateTime("07/05/1995")},
-                new Employee { Id = 8, Company = companyB, FirstName = "Daniel", LastName = "Wells", Email = "cc@email.com", EmployeeNumber = 1008, HireDate = Convert.ToDateTime("08/05/1995")},
-                new Employee { Id = 9, Company = companyC, FirstName = "Robert", LastName = "Lawrence", Email = "cc@email.com", EmployeeNumber = 1009, HireDate = Convert.ToDateTime("09/05/1995")},
-                new Employee { Id = 10, Company = companyA, FirstName = "Reginald", LastName = "Quinn", Email = "cc@email.com", EmployeeNumber = 1010, HireDate = Convert.ToDateTime("10/05/1995")},
-                new Employee { Id = 11, Company = companyB, FirstName = "Quinn", LastName = "Quick", Email = "cc@email.com", EmployeeNumber = 1011, HireDate = Convert.ToDateTime("11/05/1995")},
-                new Employee { Id = 12, Company = companyC, FirstName = "Test", LastName = "User", Email = "tu@email.com", EmployeeNumber = 1012, HireDate = Convert.ToDateTime("11/05/2012")},
+                new Employee { Id = 1, Country = countryNL, Company = companyA, FirstName = "Bill", LastName = "Smith", Email = "bsmith@email.com", EmployeeNumber = 1001, HireDate = Convert.ToDateTime("01/12/1990")},
+                new Employee { Id = 2, Country = countryNL, Company = companyB, FirstName = "Jack", LastName = "Smith", Email = "jsmith@email.com", EmployeeNumber = 1002, HireDate = Convert.ToDateTime("12/12/1997")},
+                new Employee { Id = 3, Country = countryNL, Company = companyC, FirstName = "Mary", LastName = "Gates", Email = "mgates@email.com", EmployeeNumber = 1003, HireDate = Convert.ToDateTime("03/03/2000")},
+                new Employee { Id = 4, Country = countryNL, Company = companyA, FirstName = "John", LastName = "Doe", Email = "jd@email.com", EmployeeNumber = 1004, HireDate = Convert.ToDateTime("11/11/2011")},
+                new Employee { Id = 5, Country = countryBE, Company = companyB, FirstName = "Chris", LastName = "Cross", Email = "cc@email.com", EmployeeNumber = 1005, HireDate = Convert.ToDateTime("05/05/1995")},
+                new Employee { Id = 6, Country = countryBE, Company = companyC, FirstName = "Niki", LastName = "Myers", Email = "nm@email.com", EmployeeNumber = 1006, HireDate = Convert.ToDateTime("06/05/1995")},
+                new Employee { Id = 7, Country = countryBE, Company = companyA, FirstName = "Joseph", LastName = "Hall", Email = "jh@email.com", EmployeeNumber = 1007, HireDate = Convert.ToDateTime("07/05/1995")},
+                new Employee { Id = 8, Country = countryBE, Company = companyB, FirstName = "Daniel", LastName = "Wells", Email = "cc@email.com", EmployeeNumber = 1008, HireDate = Convert.ToDateTime("08/05/1995")},
+                new Employee { Id = 9, Country = countryNL, Company = companyC, FirstName = "Robert", LastName = "Lawrence", Email = "cc@email.com", EmployeeNumber = 1009, HireDate = Convert.ToDateTime("09/05/1995")},
+                new Employee { Id = 10, Country = countryNL, Company = companyA, FirstName = "Reginald", LastName = "Quinn", Email = "cc@email.com", EmployeeNumber = 1010, HireDate = Convert.ToDateTime("10/05/1995")},
+                new Employee { Id = 11, Country = countryNL, Company = companyB, FirstName = "Quinn", LastName = "Quick", Email = "cc@email.com", EmployeeNumber = 1011, HireDate = Convert.ToDateTime("11/05/1995")},
+                new Employee { Id = 12, Country = countryNL, Company = companyC, FirstName = "Test", LastName = "User", Email = "tu@email.com", EmployeeNumber = 1012, HireDate = Convert.ToDateTime("11/05/2012")},
             };
             employees.ForEach(x => context.Employees.Add(x));
 

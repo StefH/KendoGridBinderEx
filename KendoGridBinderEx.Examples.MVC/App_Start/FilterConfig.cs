@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace KendoGridBinder.Examples.MVC
+namespace KendoGridBinderEx.Examples.MVC
 {
     public class FilterConfig
     {

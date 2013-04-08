@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="KendoGridBinder.Examples.MVC.MvcApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="KendoGridBinderEx.Examples.MVC.MvcApplication" Language="C#" %>

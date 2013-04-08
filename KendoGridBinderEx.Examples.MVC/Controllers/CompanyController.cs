@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
 
-namespace KendoGridBinder.Examples.MVC.Controllers
+namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class CompanyController : BaseGridController<Company, Company>
     {

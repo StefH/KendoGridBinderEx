@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using PropertyTranslator;
 
-namespace KendoGridBinder.Examples.MVC.Data.Entities
+namespace KendoGridBinderEx.Examples.MVC.Data.Entities
 {
     [Table("KendoGrid_Employee")]
     public class Employee : Entity
@@ -24,6 +24,8 @@ namespace KendoGridBinder.Examples.MVC.Data.Entities
         public DateTime HireDate { get; set; }
 
         public Company Company { get; set; }
+
+        public Country Country { get; set; }
 
         [NotMapped]
         public bool IsManager

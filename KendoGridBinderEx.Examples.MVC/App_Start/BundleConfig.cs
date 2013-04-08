@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace KendoGridBinder.Examples.MVC
+namespace KendoGridBinderEx.Examples.MVC
 {
     public class BundleConfig
     {

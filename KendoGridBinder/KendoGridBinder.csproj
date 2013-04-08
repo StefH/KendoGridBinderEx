@@ -46,6 +46,7 @@
     <Compile Include="Containers\FilterObject.cs" />
     <Compile Include="Containers\FilterObjectWrapper.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\LinqDynamicExtensions.cs" />
     <Compile Include="Extensions\QueryProviderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="KendoGroup.cs" />

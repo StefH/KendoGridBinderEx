@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using FluentValidation.Attributes;
 using KendoGridBinder.Examples.MVC.Data.Validation;
 
-namespace KendoGridBinder.Examples.MVC.Data.Entities
+namespace KendoGridBinderEx.Examples.MVC.Data.Entities
 {
     [Table("KendoGrid_Product")]
     [Validator(typeof(ProductValidator))]

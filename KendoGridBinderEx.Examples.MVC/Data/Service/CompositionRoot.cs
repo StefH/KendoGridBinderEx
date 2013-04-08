@@ -1,9 +1,9 @@
 ﻿using System.Data.Entity;
 using EntityFramework.Patterns;
-using KendoGridBinder.Examples.MVC.Data.Repository;
+using KendoGridBinderEx.Examples.MVC.Data.Repository;
 using Microsoft.Practices.Unity;
 
-namespace KendoGridBinder.Examples.MVC.Data.Service
+namespace KendoGridBinderEx.Examples.MVC.Data.Service
 {
     public static class CompositionRoot
     {
@@ -19,6 +19,8 @@ namespace KendoGridBinder.Examples.MVC.Data.Service
 
             // Every time we ask for a EF context, we'll pass our own Context.
             UnityContainer.RegisterType(typeof(DbContext), typeof(MyDataContext));
+
+
 
             UnityContainer.RegisterType<IObjectSetFactory>(new InjectionFactory(con => con.Resolve<DbContextAdapter>()));
 

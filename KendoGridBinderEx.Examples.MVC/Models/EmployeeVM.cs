@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using KendoGridBinder.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
 
-namespace KendoGridBinder.Examples.MVC.Models
+namespace KendoGridBinderEx.Examples.MVC.Models
 {
     public class EmployeeVM : IEntity
     {
@@ -33,6 +33,12 @@ namespace KendoGridBinder.Examples.MVC.Models
 
         [Display(ResourceType = typeof(GlobalResources), Name = GlobalResourceLiterals.CompanyName)]
         public string CompanyName { get; set; }
+
+        public long CountryId { get; set; }
+
+        public string CountryCode { get; set; }
+
+        public string CountryName { get; set; }
 
         public string MainCompanyName { get; set; }
     }

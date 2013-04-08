@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KendoGridBinder.Examples.MVC.Data.Entities
+namespace KendoGridBinderEx.Examples.MVC.Data.Entities
 {
     public abstract class Entity : IEntity
     {

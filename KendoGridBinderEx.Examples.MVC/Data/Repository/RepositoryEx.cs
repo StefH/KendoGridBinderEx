@@ -9,7 +9,7 @@ using EntityFramework.Patterns;
 using PropertyTranslator;
 using QueryInterceptor;
 
-namespace KendoGridBinder.Examples.MVC.Data.Repository
+namespace KendoGridBinderEx.Examples.MVC.Data.Repository
 {
     public class RepositoryEx<TEntity> : IRepositoryEx<TEntity> where TEntity : class
     {
@@ -30,9 +30,26 @@ namespace KendoGridBinder.Examples.MVC.Data.Repository
             return _objectSet.InterceptWith(new PropertyVisitor()).AsQueryable();
         }
 
+        // ReSharper disable MethodOverloadWithOptionalParameter
         public IQueryable<TEntity> AsQueryable(params Expression<Func<TEntity, object>>[] includeProperties)
+        // ReSharper restore MethodOverloadWithOptionalParameter
         {
             return PerformInclusions(includeProperties, _objectSet.AsQueryable()).InterceptWith(new PropertyVisitor());
+        }
+
+        public IQueryContext<TEntity> GetQueryContext(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            var includes = includeProperties != null ? includeProperties
+                .Select(p => new { Parameter = p.Parameters.First().ToString(), Body = p.Body.ToString() })
+                .Select(x => x.Body.Substring(x.Parameter.Length + 1, x.Body.Length - x.Parameter.Length - 1))
+                .ToList() : null;
+
+            return new QueryContext<TEntity>
+            {
+                Query = AsQueryable(includeProperties),
+                IncludeProperties = includeProperties,
+                Includes = includes
+            };
         }
 
         public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)

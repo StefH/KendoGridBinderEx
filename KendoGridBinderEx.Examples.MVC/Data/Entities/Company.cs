@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace KendoGridBinder.Examples.MVC.Data.Entities
+namespace KendoGridBinderEx.Examples.MVC.Data.Entities
 {
     [Table("KendoGrid_Company")]
     public class Company : Entity

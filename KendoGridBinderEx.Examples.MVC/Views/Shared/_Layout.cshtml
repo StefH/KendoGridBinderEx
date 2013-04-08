@@ -1,43 +1,57 @@
 ﻿@using StackExchange.Profiling
 <!DOCTYPE html>
-<html>
-<head>
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" rel="stylesheet" type="text/css" />
-    @Styles.Render("~/Content/css")
-    
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/common")
-    @Scripts.Render("~/bundles/kendo")
-    @Scripts.Render("~/bundles/knockout")
-</head>
-<body>
-    <div class="page">
-        <div id="header">
-            <div id="title">
-                <h1>KendoGridBinderEx MVC Demo</h1>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - KendoGridBinderEx MVC Demo</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" rel="stylesheet" type="text/css" />
+        @Styles.Render("~/Content/css")
+        
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/common")
+        @Scripts.Render("~/bundles/kendo")
+        @Scripts.Render("~/bundles/knockout")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("KendoGridBinderEx MVC Demo", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        Hello, <span class="username">@User.Identity.Name</span>!
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Employees (TEntity & TViewModel)", "Index", "Employee")</li>
+                            <li>@Html.ActionLink("Products (TEntity)", "Index", "Product")</li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - KendoGridBinderEx MVC Demo</p>
+                </div>
             </div>
-            <div id="menucontainer">
-                <ul id="menu">
-                    <li>@Html.ActionLink("Employees (TEntity & TViewModel)", "Index", "Employee")</li>
-                    <li>@Html.ActionLink("Products (TEntity)", "Index", "Product")</li>
-                </ul>
-            </div>
-        </div>
-        <div id="main">
-            @RenderBody()
-        </div>
-        <div id="footer">
-        </div>
-    </div>
-    
-    @RenderSection("scripts", false)
-    @MiniProfiler.RenderIncludes()
-</body>
+        </footer>
+
+        @RenderSection("scripts", false)
+        @MiniProfiler.RenderIncludes()
+    </body>
 </html>

@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
-namespace KendoGridBinder.Examples.MVC.Extensions
+namespace KendoGridBinderEx.Examples.MVC.Extensions
 {
     public static class FormExtensions
     {

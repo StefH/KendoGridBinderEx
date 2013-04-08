@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace KendoGridBinder.Examples.MVC
+namespace KendoGridBinderEx.Examples.MVC
 {
     public class RouteConfig
     {

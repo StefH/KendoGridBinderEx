@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using EntityFramework.Patterns;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Repository;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Repository;
 
-namespace KendoGridBinder.Examples.MVC.Data.Service
+namespace KendoGridBinderEx.Examples.MVC.Data.Service
 {
     public abstract class BaseService<TEntity> where TEntity : class, IEntity
     {
@@ -24,6 +24,11 @@ namespace KendoGridBinder.Examples.MVC.Data.Service
         public IQueryable<TEntity> AsQueryable(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return Repository.AsQueryable(includeProperties);
+        }
+
+        public IQueryContext<TEntity> GetQueryContext(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return Repository.GetQueryContext(includeProperties);
         }
 
         public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)

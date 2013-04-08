@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Data.Validation;
 
 namespace KendoGridBinder.Examples.MVC.Data.Validation
 {

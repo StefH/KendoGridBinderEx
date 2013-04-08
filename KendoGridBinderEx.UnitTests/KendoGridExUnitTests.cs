@@ -8,8 +8,8 @@ using AutoMapper;
 using KendoGridBinder;
 using KendoGridBinderEx.UnitTests.Entities;
 using KendoGridBinderEx.UnitTests.Helpers;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace KendoGridBinderEx.UnitTests
 {
@@ -160,7 +160,7 @@ namespace KendoGridBinderEx.UnitTests
             var gridRequest = SetupBinder(form, null);
 
             InitAutoMapper();
-            var employees = InitEmployees().AsQueryable();
+            var employees = InitEmployeesWithData().AsQueryable();
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees);
             Assert.IsNotNull(kendoGrid);
 
@@ -201,11 +201,11 @@ namespace KendoGridBinderEx.UnitTests
             var gridRequest = SetupBinder(form, null);
 
             InitAutoMapper();
-            var employees = InitEmployees();
+            var employees = InitEmployeesWithData();
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees);
             Assert.IsNotNull(kendoGrid);
 
-            Assert.AreEqual(11, kendoGrid.Total);
+            Assert.AreEqual(12, kendoGrid.Total);
             Assert.IsNotNull(kendoGrid.Data);
             Assert.AreEqual(4, kendoGrid.Data.Count());
 
@@ -218,7 +218,7 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         [Test]
-        public void Test_KendoGridModelBinder_Group()
+        public void Test_KendoGridModelBinder_One_GroupBy_WithIncludes()
         {
             var form = new NameValueCollection
             {
@@ -227,18 +227,60 @@ namespace KendoGridBinderEx.UnitTests
                 {"page", "1"},
                 {"pagesize", "5"},
 
-                {"group[0][field]", "First"},
-                {"group[0][dir]", "asc"},
-                {"group[1][field]", "Last"},
-                {"group[1][dir]", "asc"}
+                {"group[0][field]", "CountryName"},
+                {"group[0][dir]", "asc"}
             };
 
             var gridRequest = SetupBinder(form, null);
-            Assert.AreEqual(2, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.Count());
             Assert.AreEqual(0, gridRequest.GroupObjects.First().AggregateObjects.Count());
 
             InitAutoMapper();
-            var employees = InitEmployees();
+            var employees = InitEmployeesWithData().AsQueryable();
+            var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" });
+
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            Assert.AreEqual(2, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+
+            var employeesFromFirstGroup = groups.First().items as IEnumerable<EmployeeVM>;
+            Assert.IsNotNull(employeesFromFirstGroup);
+
+            var employeesFromFirstGroupList = employeesFromFirstGroup.ToList();
+            Assert.AreEqual(4, employeesFromFirstGroupList.Count);
+
+            var testEmployee = employeesFromFirstGroupList.First();
+            Assert.AreEqual("Belgium", testEmployee.CountryName);
+            Assert.AreEqual("B", testEmployee.CompanyName);
+        }
+
+        [Test]
+        public void Test_KendoGridModelBinder_One_GroupBy_WithoutIncludes()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"group[0][field]", "LastName"},
+                {"group[0][dir]", "asc"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.AreEqual(1, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(0, gridRequest.GroupObjects.First().AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployees().AsQueryable();
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees);
 
             Assert.IsNull(kendoGrid.Data);
@@ -250,11 +292,21 @@ namespace KendoGridBinderEx.UnitTests
             Assert.IsNotNull(groups);
 
             Assert.AreEqual(5, groups.Count());
-            Assert.AreEqual(11, kendoGrid.Total);
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+
+            var employeesFromFirstGroup = groups.First().items as IEnumerable<EmployeeVM>;
+            Assert.IsNotNull(employeesFromFirstGroup);
+
+            var employeesFromFirstGroupList = employeesFromFirstGroup.ToList();
+            Assert.AreEqual(1, employeesFromFirstGroupList.Count);
+
+            var testEmployee = employeesFromFirstGroupList.First();
+            Assert.IsNull(testEmployee.CountryName);
+            Assert.IsNull(testEmployee.CompanyName);
         }
 
         [Test]
-        public void Test_KendoGridModelBinder_Group_Aggregates()
+        public void Test_KendoGridModelBinder_One_GroupBy_One_Aggregate()
         {
             var form = new NameValueCollection
             {
@@ -269,17 +321,15 @@ namespace KendoGridBinderEx.UnitTests
                 {"group[0][field]", "First"},
                 {"group[0][dir]", "asc"},
                 {"group[0][aggregates][0][field]", "First"},
-                {"group[0][aggregates][0][aggregate]", "count"},
-                {"group[0][aggregates][1][field]", "Id"},
-                {"group[0][aggregates][1][aggregate]", "sum"}
+                {"group[0][aggregates][0][aggregate]", "count"}
             };
 
             var gridRequest = SetupBinder(form, null);
             Assert.AreEqual(1, gridRequest.GroupObjects.Count());
-            Assert.AreEqual(2, gridRequest.GroupObjects.First().AggregateObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.First().AggregateObjects.Count());
 
             InitAutoMapper();
-            var employees = InitEmployees();
+            var employees = InitEmployeesWithData().AsQueryable();
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees);
 
             Assert.IsNull(kendoGrid.Data);
@@ -291,7 +341,7 @@ namespace KendoGridBinderEx.UnitTests
             Assert.IsNotNull(groups);
 
             Assert.AreEqual(5, groups.Count());
-            Assert.AreEqual(11, kendoGrid.Total);
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
         }
 
         #region
@@ -305,6 +355,9 @@ namespace KendoGridBinderEx.UnitTests
                .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
                .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
                .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
+               .ForMember(vm => vm.CountryId, opt => opt.MapFrom(m => m.Country.Id))
+               .ForMember(vm => vm.CountryCode, opt => opt.MapFrom(m => m.Country.Code))
+               .ForMember(vm => vm.CountryName, opt => opt.MapFrom(m => m.Country.Name))
                ;
 
             Mapper.CreateMap<EmployeeVM, Employee>()
@@ -314,12 +367,17 @@ namespace KendoGridBinderEx.UnitTests
               .ForMember(e => e.HireDate, opt => opt.MapFrom(vm => vm.HireDate))
               .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.Last))
               .ForMember(e => e.Company, opt => opt.Ignore())
+              .ForMember(e => e.Country, opt => opt.Ignore())
               ;
 
             Mapper.AssertConfigurationIsValid();
         }
-        private static IEnumerable<Employee> InitEmployees()
+
+        private static IEnumerable<Employee> InitEmployeesWithData()
         {
+            var countryNL = new Country { Id = 1, Code = "NL", Name = "The Netherlands" };
+            var countryBE = new Country { Id = 2, Code = "BE", Name = "Belgium" };
+
             var mainCompany1 = new MainCompany { Id = 1, Name = "m-1" };
             var mainCompany2 = new MainCompany { Id = 2, Name = "m-2" };
 
@@ -327,19 +385,25 @@ namespace KendoGridBinderEx.UnitTests
             var companyB = new Company { Id = 2, Name = "B", MainCompany = mainCompany1 };
             var companyC = new Company { Id = 3, Name = "C", MainCompany = mainCompany2 };
 
+            return InitEmployees(countryNL, countryBE, companyA, companyB, companyC);
+        }
+
+        private static IEnumerable<Employee> InitEmployees(Country countryNL = null, Country countryBE = null, Company companyA = null, Company companyB = null, Company companyC = null)
+        {
             return new List<Employee>
             {
-                new Employee { Id = 1, Company = companyA, FirstName = "Bill", LastName = "Smith", Email = "bsmith@email.com", EmployeeNumber = 1001, HireDate = Convert.ToDateTime("01/12/1990")},
-                new Employee { Id = 2, Company = companyB, FirstName = "Jack", LastName = "Smith", Email = "jsmith@email.com", EmployeeNumber = 1002, HireDate = Convert.ToDateTime("12/12/1997")},
-                new Employee { Id = 3, Company = companyC, FirstName = "Mary", LastName = "Gates", Email = "mgates@email.com", EmployeeNumber = 1003, HireDate = Convert.ToDateTime("03/03/2000")},
-                new Employee { Id = 4, Company = companyA, FirstName = "John", LastName = "Doe", Email = "jd@email.com", EmployeeNumber = 1004, HireDate = Convert.ToDateTime("11/11/2011")},
-                new Employee { Id = 5, Company = companyB, FirstName = "Chris", LastName = "Cross", Email = "cc@email.com", EmployeeNumber = 1005, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 6, Company = companyC, FirstName = "Niki", LastName = "Myers", Email = "nm@email.com", EmployeeNumber = 1006, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 7, Company = companyA, FirstName = "Joseph", LastName = "Hall", Email = "jh@email.com", EmployeeNumber = 1007, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 8, Company = companyB, FirstName = "Daniel", LastName = "Wells", Email = "cc@email.com", EmployeeNumber = 1008, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 9, Company = companyC, FirstName = "Robert", LastName = "Lawrence", Email = "cc@email.com", EmployeeNumber = 1009, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 10, Company = companyA, FirstName = "Reginald", LastName = "Quinn", Email = "cc@email.com", EmployeeNumber = 1010, HireDate = Convert.ToDateTime("05/05/1995")},
-                new Employee { Id = 11, Company = companyB, FirstName = "Quinn", LastName = "Quick", Email = "cc@email.com", EmployeeNumber = 1011, HireDate = Convert.ToDateTime("05/05/1995")},
+                new Employee { Id = 1, Country = countryNL, Company = companyA, FirstName = "Bill", LastName = "Smith", Email = "bsmith@email.com", EmployeeNumber = 1001, HireDate = Convert.ToDateTime("01/12/1990")},
+                new Employee { Id = 2, Country = countryNL, Company = companyB, FirstName = "Jack", LastName = "Smith", Email = "jsmith@email.com", EmployeeNumber = 1002, HireDate = Convert.ToDateTime("12/12/1997")},
+                new Employee { Id = 3, Country = countryNL, Company = companyC, FirstName = "Mary", LastName = "Gates", Email = "mgates@email.com", EmployeeNumber = 1003, HireDate = Convert.ToDateTime("03/03/2000")},
+                new Employee { Id = 4, Country = countryNL, Company = companyA, FirstName = "John", LastName = "Doe", Email = "jd@email.com", EmployeeNumber = 1004, HireDate = Convert.ToDateTime("11/11/2011")},
+                new Employee { Id = 5, Country = countryBE, Company = companyB, FirstName = "Chris", LastName = "Cross", Email = "cc@email.com", EmployeeNumber = 1005, HireDate = Convert.ToDateTime("05/05/1995")},
+                new Employee { Id = 6, Country = countryBE, Company = companyC, FirstName = "Niki", LastName = "Myers", Email = "nm@email.com", EmployeeNumber = 1006, HireDate = Convert.ToDateTime("06/05/1995")},
+                new Employee { Id = 7, Country = countryBE, Company = companyA, FirstName = "Joseph", LastName = "Hall", Email = "jh@email.com", EmployeeNumber = 1007, HireDate = Convert.ToDateTime("07/05/1995")},
+                new Employee { Id = 8, Country = countryBE, Company = companyB, FirstName = "Daniel", LastName = "Wells", Email = "cc@email.com", EmployeeNumber = 1008, HireDate = Convert.ToDateTime("08/05/1995")},
+                new Employee { Id = 9, Country = countryNL, Company = companyC, FirstName = "Robert", LastName = "Lawrence", Email = "cc@email.com", EmployeeNumber = 1009, HireDate = Convert.ToDateTime("09/05/1995")},
+                new Employee { Id = 10, Country = countryNL, Company = companyA, FirstName = "Reginald", LastName = "Quinn", Email = "cc@email.com", EmployeeNumber = 1010, HireDate = Convert.ToDateTime("10/05/1995")},
+                new Employee { Id = 11, Country = countryNL, Company = companyB, FirstName = "Quinn", LastName = "Quick", Email = "cc@email.com", EmployeeNumber = 1011, HireDate = Convert.ToDateTime("11/05/1995")},
+                new Employee { Id = 12, Country = countryNL, Company = companyC, FirstName = "Test", LastName = "User", Email = "tu@email.com", EmployeeNumber = 1012, HireDate = Convert.ToDateTime("11/05/2012")},
             };
         }
         #endregion

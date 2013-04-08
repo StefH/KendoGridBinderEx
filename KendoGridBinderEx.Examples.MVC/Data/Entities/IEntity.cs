@@ -1,5 +1,5 @@
 ﻿
-namespace KendoGridBinder.Examples.MVC.Data.Entities
+namespace KendoGridBinderEx.Examples.MVC.Data.Entities
 {
     public interface IEntity
     {

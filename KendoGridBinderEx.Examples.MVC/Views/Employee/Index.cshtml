@@ -14,7 +14,7 @@
 <br/>
 <br/>
 <h3>Only Managers</h3>
-<div data-bind='kendoGrid: managers'></div>
+<div id="gridManagers"></div>
 <br/>
 
 
@@ -55,6 +55,7 @@
                         Full: { type: 'string' },
                         Email: { type: 'string' },
                         HireDate: { type: 'date' },
+                        CountryCode: { type: 'string' },
                         IsManager: { type: 'boolean' }
                     }
                 }
@@ -63,14 +64,14 @@
 
         $('#grid').kendoGrid({
             dataSource: dataSource,
-            height: '220px',
+            height: '240px',
             columns: [
                 {
-                    field: 'Id', width: '78px', filterable: false, sortable: false, title: ' ',
+                    field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
                     template:
                         '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
-                            '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                            '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                        '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                        '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
                 },
                 { field: 'CompanyName', title: 'Company' },
                 { field: 'MainCompanyName', title: 'Main Company' },
@@ -80,6 +81,7 @@
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
                 { field: 'HireDate', title: 'Hire Date', format: "{0:yyyy-MM-dd}" },
+                { field: 'CountryCode', title: 'Country' },
                 { field: 'IsManager', title: 'Manager' }
             ],
             filterable: true,
@@ -121,36 +123,26 @@
                         Full: { type: 'string' },
                         Email: { type: 'string' },
                         HireDate: { type: 'date' },
+                        CountryCode: { type: 'string' },
                         IsManager: { type: 'boolean' }
                     }
                 }
             },
-            /*
             group: [{
-                field: "CompanyName",
-                aggregates: [
-                    {
-                        field: "First",
-                        aggregate: "count"
-                    },
-                    {
-                        field: "Id",
-                        aggregate: "sum"
-                    }
-                ]
-            }]*/
+                field: "MainCompanyName"
+            }]
         };
         
         $('#gridWithGroup').kendoGrid({
             dataSource: dataSourceWithGroup,
-            height: '228px',
+            height: '250px',
             columns: [
                 {
-                     field: 'Id', width: '78px', filterable: false, sortable: false, title: ' ',
+                     field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
                      template:
-                         '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
-                             '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                             '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                        '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
+                        '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                        '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
                 },
                 { field: 'CompanyName', title: 'Company', groupHeaderTemplate: "Company : #= value#" },
                 { field: 'MainCompanyName', title: 'Main Company' },
@@ -160,6 +152,7 @@
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
                 { field: 'HireDate', title: 'Hire Date', format: "{0:MM/dd/yyyy}" },
+                { field: 'CountryCode', title: 'Country' },
                 { field: 'IsManager', title: 'Manager' }
             ],
             filterable: true,
@@ -201,31 +194,8 @@
                  }
              }
          };
-
-        var ViewModel = function () {
-            this.managers = {
-                data: null,
-                dataSource: dataSourceManagers,
-                columns: [
-                    { field: 'Number', title: 'Employee #' },
-                    { field: 'First', title: 'FirstName' },
-                    { field: 'Last', title: 'LastName' },
-                    { field: 'Full', title: 'FullName' },
-                    { field: 'Email' },
-                    { field: 'HireDate', title: 'Hire Date', format: "{0:MM/dd/yyyy}" }
-                ],
-                filterable: true,
-                sortable: {
-                    mode: 'multiple'
-                },
-                pageable: false
-            };
-        };
-
-        ko.applyBindings(new ViewModel());
        
-        /*
-        $('#gridManagersx').kendoGrid({
+        $('#gridManagers').kendoGrid({
             dataSource: dataSourceManagers,
             columns: [
                 { field: 'Number', title: 'Employee #' },
@@ -240,7 +210,7 @@
                 mode: 'multiple'
             },
             pageable: true
-        });*/
+        });
     });
    
 </script>

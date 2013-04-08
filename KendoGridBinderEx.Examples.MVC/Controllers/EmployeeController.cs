@@ -2,12 +2,14 @@
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
-using KendoGridBinder.Examples.MVC.Data.Entities;
-using KendoGridBinder.Examples.MVC.Data.Service;
-using KendoGridBinder.Examples.MVC.Data.Validation;
-using KendoGridBinder.Examples.MVC.Models;
+using KendoGridBinder;
+using KendoGridBinderEx.Examples.MVC.Data.Entities;
+using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Data.Validation;
+using KendoGridBinderEx.Examples.MVC.Models;
+using StackExchange.Profiling;
 
-namespace KendoGridBinder.Examples.MVC.Controllers
+namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class EmployeeController : BaseGridController<Employee, EmployeeVM>
     {
@@ -34,6 +36,9 @@ namespace KendoGridBinder.Examples.MVC.Controllers
                 .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
                 .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
                 .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
+                .ForMember(vm => vm.CountryId, opt => opt.MapFrom(m => m.Country.Id))
+                .ForMember(vm => vm.CountryCode, opt => opt.MapFrom(m => m.Country.Code))
+                .ForMember(vm => vm.CountryName, opt => opt.MapFrom(m => m.Country.Name))
                 ;
 
             Mapper.CreateMap<EmployeeVM, Employee>()
@@ -41,17 +46,18 @@ namespace KendoGridBinder.Examples.MVC.Controllers
                 .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
                 .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.Last))
                 .ForMember(e => e.Company, opt => opt.Ignore())
+                .ForMember(e => e.Country, opt => opt.Ignore())
                 ;
         }
 
         protected override IQueryable<Employee> GetQueryable()
         {
-            return _employeeService.AsQueryable(e => e.Company.MainCompany);
+            return _employeeService.AsQueryable(e => e.Company.MainCompany, e => e.Country);
         }
 
         protected override Employee GetById(long id)
         {
-            return _employeeService.GetById(id, e => e.Company.MainCompany);
+            return _employeeService.GetById(id, e => e.Company.MainCompany, e => e.Country);
         }
 
         protected override Employee Map(EmployeeVM viewModel)
@@ -65,8 +71,11 @@ namespace KendoGridBinder.Examples.MVC.Controllers
         [HttpPost]
         public JsonResult GridWithGroup(KendoGridRequest request)
         {
-            var query = GetQueryable();
-            return GetKendoGridAsJson(request, query);
+            using (MiniProfiler.Current.Step("GridWithGroup"))
+            {
+                var queryContext = _employeeService.GetQueryContext(e => e.Company, e=> e.Company.MainCompany, e => e.Country);
+                return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
+            }
         }
 
         [HttpPost]
@@ -75,7 +84,7 @@ namespace KendoGridBinder.Examples.MVC.Controllers
             var entities = _employeeService.GetManagers();
             return GetKendoGridAsJson(request, entities);
         }
-        
+
         protected override ValidationResult Validate(Employee employee, string ruleSet)
         {
             //return _employeeValidator.Validate(employee, ruleSet: "*");

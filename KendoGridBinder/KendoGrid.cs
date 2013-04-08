@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
+
 using KendoGridBinder.Containers;
 
 namespace KendoGridBinder
@@ -117,7 +117,7 @@ namespace KendoGridBinder
         {
             bool hasAggregates = request.GroupObjects.Any(g => g.AggregateObjects.Any());
             var aggregatesExpression = hasAggregates ?
-               string.Format(",new ({0}) as Aggregates", string.Join(", ", request.GroupObjects.SelectMany(g => g.AggregateObjects.Select(a => a.LinqAggregate)))) :
+               string.Format(", new ({0}) as Aggregates", string.Join(", ", request.GroupObjects.SelectMany(g => g.AggregateObjects.Select(a => a.LinqAggregate)))) :
                string.Empty;
 
             var newSort = request.SortObjects.ToList();
@@ -136,9 +136,9 @@ namespace KendoGridBinder
                 string.Join(",", newSort.Select(s => string.Format("GroupByFields.OrderBy__{0} {1}", s.Field, s.Direction))) :
                 "GroupByFields." + request.GroupObjects.First().Field;
 
-            var selectExpressionAfterOrderByX = string.Format("new (GroupByFields, Grouping{0})", hasAggregates ? ",Aggregates" : string.Empty);
+            var selectExpressionAfterOrderByX = string.Format("new (GroupByFields, Grouping{0})", hasAggregates ? ", Aggregates" : string.Empty);
 
-            var includesX = includes != null ? ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_"))) : string.Empty;
+            var includesX = includes != null && includes.Any() ? ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_"))) : string.Empty;
 
             var groupByQuery = query.GroupBy(groupByExpressionX, string.Format("new (it AS TEntity__ {0})", includesX));
             var selectQuery = groupByQuery.Select(selectExpressionBeforeOrderByX);
@@ -158,7 +158,7 @@ namespace KendoGridBinder
             var list = new List<KendoGroup>();
             foreach (DynamicClass item in tempQuery)
             {
-                var grouping = item.GetPropertyValue<IGrouping<DynamicClass, DynamicClass>>("Grouping");
+                var grouping = item.GetPropertyValue<IGrouping<object, object>>("Grouping");
                 var groupByDictionary = item.GetPropertyValue("GroupByFields").ToDictionary();
                 var aggregates = item.GetAggregatesAsDictionary();
 
@@ -168,7 +168,7 @@ namespace KendoGridBinder
             return list;
         }
 
-        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<DynamicClass> grouping, object aggregates, List<KendoGroup> kendoGroups)
+        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups)
         {
             var groupObjects = groupByFields as IList<GroupObject> ?? groupByFields.ToList();
             bool isLast = groupObjects.Count() == 1;
@@ -185,10 +185,9 @@ namespace KendoGridBinder
 
             if (isLast)
             {
-                var group = grouping.GetPropertyValue<IEnumerable>("Group").AsQueryable();
-                var query = group.Select("TEntity__").Cast<TEntity>().AsQueryable();
+                var entities = grouping.Select<TEntity>("TEntity__");
 
-                kendoGroup.items = _conversion(query).ToList();
+                kendoGroup.items = _conversion(entities.AsQueryable()).ToList();
             }
             else
             {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace KendoGridBinder.Examples.MVC
+namespace KendoGridBinderEx.Examples.MVC
 {
     public static class WebApiConfig
     {

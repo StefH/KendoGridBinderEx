@@ -1,5 +1,5 @@
 ﻿
-namespace KendoGridBinder.Examples.MVC.Data.Repository
+namespace KendoGridBinderEx.Examples.MVC.Data.Repository
 {
     public interface IRepositoryConfig
     {
