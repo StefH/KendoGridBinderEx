@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Service;
 
-namespace KendoGridBinderEx.Examples.MVC.Data.Service
+namespace KendoGridBinderEx.Examples.Business.Service
 {
     public interface IProductService : IBaseService<Product>
     {

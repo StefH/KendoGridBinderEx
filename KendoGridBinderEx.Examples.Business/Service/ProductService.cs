@@ -2,7 +2,6 @@
 using EntityFramework.Patterns;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Repository;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
 
 namespace KendoGridBinderEx.Examples.Business.Service
 {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
-using KendoGridBinderEx.Examples.MVC.Data.Entities;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.Service;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {

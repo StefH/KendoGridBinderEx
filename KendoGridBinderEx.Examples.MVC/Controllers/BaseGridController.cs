@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Web.Mvc;
 using KendoGridBinder;
-using KendoGridBinderEx.Examples.MVC.Data;
-using KendoGridBinderEx.Examples.MVC.Data.Entities;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.Business;
+using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.Service;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -12,7 +12,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
     {
-        public BaseGridController(IBaseService<TEntity> service)
+        protected BaseGridController(IBaseService<TEntity> service)
             : base(service)
         {
 

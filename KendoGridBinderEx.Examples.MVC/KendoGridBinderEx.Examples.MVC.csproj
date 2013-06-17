@@ -185,33 +185,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="CustomModelBinders.cs" />
-    <Compile Include="Data\Entities\Company.cs" />
-    <Compile Include="Data\Entities\Country.cs" />
-    <Compile Include="Data\Entities\Employee.cs" />
-    <Compile Include="Data\Entities\Entity.cs" />
-    <Compile Include="Data\Entities\IEntity.cs" />
-    <Compile Include="Data\Entities\MainCompany.cs" />
-    <Compile Include="Data\Entities\Product.cs" />
-    <Compile Include="Data\IQueryContext.cs" />
-    <Compile Include="Data\MyDataContext.cs" />
-    <Compile Include="Data\QueryContext.cs" />
-    <Compile Include="Data\Repository\IRepositoryConfig.cs" />
-    <Compile Include="Data\Repository\IRepositoryEx.cs" />
-    <Compile Include="Data\Repository\RepositoryConfig.cs" />
-    <Compile Include="Data\Repository\RepositoryEx.cs" />
-    <Compile Include="Data\Service\BaseService.cs" />
-    <Compile Include="Data\Service\CompanyService.cs" />
     <Compile Include="Models\ProductVM.cs" />
     <Compile Include="Unity\UnityBootstrapper.cs" />
-    <Compile Include="Data\Service\EmployeeService.cs" />
-    <Compile Include="Data\Service\IBaseService.cs" />
-    <Compile Include="Data\Service\ICompanyService.cs" />
-    <Compile Include="Data\Service\IEmployeeService.cs" />
-    <Compile Include="Data\Service\IProductService.cs" />
-    <Compile Include="Data\Service\ProductService.cs" />
-    <Compile Include="Data\Validation\BaseValidator.cs" />
-    <Compile Include="Data\Validation\EmployeeValidator.cs" />
-    <Compile Include="Data\Validation\ProductValidator.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -848,7 +823,7 @@
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Unity.Mvc4.README.txt" />
+    <Content Include="Unity\Unity.Mvc4.README.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -896,6 +871,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj">
+      <Project>{28b83391-37d5-4dff-8a32-6d508fb191b8}</Project>
+      <Name>KendoGridBinderEx.Examples.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.csproj">
       <Project>{b99bde11-9306-4736-97ac-b6640c342f4e}</Project>
       <Name>KendoGridBinderEx</Name>

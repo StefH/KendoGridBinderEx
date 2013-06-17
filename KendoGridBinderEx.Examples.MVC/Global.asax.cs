@@ -8,7 +8,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using FluentValidation.Mvc;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
 using KendoGridBinderEx.Examples.MVC.Unity;
 using StackExchange.Profiling;
 

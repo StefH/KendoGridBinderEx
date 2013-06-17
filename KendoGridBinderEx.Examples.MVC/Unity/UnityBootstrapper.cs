@@ -1,8 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
 using EntityFramework.Patterns;
-using KendoGridBinderEx.Examples.MVC.Data.Repository;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.Business.Repository;
+using KendoGridBinderEx.Examples.Business.Service;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Unity.Mvc4;

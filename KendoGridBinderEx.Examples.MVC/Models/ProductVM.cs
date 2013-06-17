@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using FluentValidation.Attributes;
-using KendoGridBinderEx.Examples.MVC.Data.Entities;
-using KendoGridBinderEx.Examples.MVC.Data.Validation;
+using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.Validation;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
 {

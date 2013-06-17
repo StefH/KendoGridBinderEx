@@ -1,13 +1,10 @@
 ﻿using System;
 using FluentValidation;
 using FluentValidation.Results;
-using KendoGridBinderEx.Examples.Business;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service;
-using KendoGridBinderEx.Examples.Business.Validation;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
 
-namespace KendoGridBinderEx.Examples.MVC.Data.Validation
+namespace KendoGridBinderEx.Examples.Business.Validation
 {
     public class EmployeeValidator : BaseValidator<Employee>
     {

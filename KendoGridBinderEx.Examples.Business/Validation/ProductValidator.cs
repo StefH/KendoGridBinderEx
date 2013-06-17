@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.Business.Service;
 
 namespace KendoGridBinderEx.Examples.Business.Validation
 {

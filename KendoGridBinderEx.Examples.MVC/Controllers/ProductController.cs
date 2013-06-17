@@ -2,9 +2,9 @@
 using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinder;
-using KendoGridBinderEx.Examples.MVC.Data.Entities;
-using KendoGridBinderEx.Examples.MVC.Data.Service;
-using KendoGridBinderEx.Examples.MVC.Data.Validation;
+using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
