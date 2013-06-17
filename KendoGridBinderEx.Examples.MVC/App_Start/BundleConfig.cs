@@ -14,7 +14,7 @@ namespace KendoGridBinderEx.Examples.MVC
 
             bundles.Add(new ScriptBundle("~/bundles/common").Include("~/Scripts/common.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/kendo").Include("~/Scripts/kendo/2012.3.1114/kendo.web.*"));
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include("~/Scripts/kendo/2013.1.319/kendo.web.*"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
