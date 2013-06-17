@@ -7,11 +7,11 @@ namespace KendoGridBinderEx.Examples.MVC.Data.Repository
         private readonly bool _insertAllowed;
         private readonly bool _updateAllowed;
 
-        public RepositoryConfig()
+        public RepositoryConfig(bool deleteAllowed, bool insertAllowed, bool updateAllowed)
         {
-            _deleteAllowed = ApplicationConfig.RepositoryDeleteAllowed;
-            _insertAllowed = ApplicationConfig.RepositoryInsertAllowed;
-            _updateAllowed = ApplicationConfig.RepositoryUpdateAllowed;
+            _deleteAllowed = deleteAllowed;
+            _insertAllowed = insertAllowed;
+            _updateAllowed = updateAllowed;
         }
 
         public bool DeleteAllowed

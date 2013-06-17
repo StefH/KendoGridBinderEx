@@ -9,14 +9,9 @@ namespace KendoGridBinderEx.Examples.MVC.Data.Validation
     public class EmployeeValidator : BaseValidator<Employee>
     {
         private const string RuleSetNames = "Names";
-        private readonly EmployeeService _employeeService;
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeValidator()
-            : this(CompositionRoot.ResolveService<EmployeeService>())
-        {
-        }
-
-        public EmployeeValidator(EmployeeService service)
+        public EmployeeValidator(IEmployeeService service)
             : base(service)
         {
             _employeeService = service;

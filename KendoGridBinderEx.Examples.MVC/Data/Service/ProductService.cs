@@ -5,7 +5,7 @@ using KendoGridBinderEx.Examples.MVC.Data.Repository;
 
 namespace KendoGridBinderEx.Examples.MVC.Data.Service
 {
-    public class ProductService : BaseService<Product>
+    public class ProductService : BaseService<Product>, IProductService
     {
         public ProductService(IRepositoryEx<Product> repository, IUnitOfWork unitOfWork)
             : base(repository, unitOfWork)

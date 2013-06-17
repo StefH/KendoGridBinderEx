@@ -9,6 +9,7 @@ using System.Web.Routing;
 using AutoMapper;
 using FluentValidation.Mvc;
 using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Unity;
 using StackExchange.Profiling;
 
 namespace KendoGridBinderEx.Examples.MVC
@@ -35,7 +36,7 @@ namespace KendoGridBinderEx.Examples.MVC
                 MiniProfilerEF.Initialize();
             }
 
-            CompositionRoot.RegisterServices();
+            UnityBootstrapper.Initialise();
 
             FluentValidationModelValidatorProvider.Configure();
         }

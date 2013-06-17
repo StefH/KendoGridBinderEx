@@ -12,9 +12,10 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
     {
-        protected BaseGridController(BaseService<TEntity> service)
+        public BaseGridController(IBaseService<TEntity> service)
             : base(service)
         {
+
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryContext<TEntity> queryContext)

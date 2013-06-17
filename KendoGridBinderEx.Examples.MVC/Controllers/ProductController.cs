@@ -1,23 +1,33 @@
 ﻿using System.Web.Mvc;
+using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinder;
-using KendoGridBinder.Examples.MVC.Data.Validation;
 using KendoGridBinderEx.Examples.MVC.Data.Entities;
 using KendoGridBinderEx.Examples.MVC.Data.Service;
+using KendoGridBinderEx.Examples.MVC.Data.Validation;
+using KendoGridBinderEx.Examples.MVC.Models;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class ProductController : BaseGridController<Product, Product>
+    public class ProductController : BaseGridController<Product, ProductVM>
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
         private readonly ProductValidator _productValidator;
 
-        public ProductController()
-            : base(CompositionRoot.ResolveService<ProductService>())
+        public ProductController(IProductService productService) : base(productService)
         {
-            _productService = (ProductService)Service;
+            _productService = productService;
 
             _productValidator = new ProductValidator(_productService);
+        }
+
+        public static void InitAutoMapper()
+        {
+            Mapper.CreateMap<Product, ProductVM>()
+                ;
+
+            Mapper.CreateMap<ProductVM, Product>()
+                ;
         }
 
         [HttpPost]

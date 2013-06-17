@@ -6,12 +6,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class CompanyController : BaseGridController<Company, Company>
     {
-        private readonly CompanyService _companyService;
+        private readonly ICompanyService _companyService;
 
-        public CompanyController()
-            : base(CompositionRoot.ResolveService<CompanyService>())
+        public CompanyController(CompanyService companyService)
+            : base(companyService)
         {
-            _companyService = (CompanyService)Service;
+            _companyService = companyService;
         }
 
         [HttpGet]

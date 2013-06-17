@@ -13,15 +13,15 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class EmployeeController : BaseGridController<Employee, EmployeeVM>
     {
-        private readonly EmployeeService _employeeService;
-        private readonly CompanyService _companyService;
+        private readonly IEmployeeService _employeeService;
+        private readonly ICompanyService _companyService;
         private readonly EmployeeValidator _employeeValidator;
 
-        public EmployeeController()
-            : base(CompositionRoot.ResolveService<EmployeeService>())
+        public EmployeeController(IEmployeeService employeeService, ICompanyService companyService)
+            : base(employeeService)
         {
-            _employeeService = (EmployeeService)Service;
-            _companyService = CompositionRoot.ResolveService<CompanyService>();
+            _employeeService = employeeService;
+            _companyService = companyService;
 
             _employeeValidator = new EmployeeValidator(_employeeService);
         }
@@ -73,7 +73,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             using (MiniProfiler.Current.Step("GridWithGroup"))
             {
-                var queryContext = _employeeService.GetQueryContext(e => e.Company, e=> e.Company.MainCompany, e => e.Country);
+                var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country);
                 return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
             }
         }

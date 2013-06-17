@@ -14,10 +14,10 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
     {
-        protected readonly BaseService<TEntity> Service;
+        protected readonly IBaseService<TEntity> Service;
         protected readonly Dictionary<string, List<string>> Mappings = new Dictionary<string, List<string>>();
 
-        protected BaseController(BaseService<TEntity> service)
+        protected BaseController(IBaseService<TEntity> service)
         {
             Service = service;
 

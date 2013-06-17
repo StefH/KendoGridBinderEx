@@ -1,21 +1,14 @@
 ﻿using FluentValidation;
-using KendoGridBinderEx.Examples.MVC;
 using KendoGridBinderEx.Examples.MVC.Data.Entities;
 using KendoGridBinderEx.Examples.MVC.Data.Service;
-using KendoGridBinderEx.Examples.MVC.Data.Validation;
 
-namespace KendoGridBinder.Examples.MVC.Data.Validation
+namespace KendoGridBinderEx.Examples.MVC.Data.Validation
 {
     public class ProductValidator : BaseValidator<Product>
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
 
-        public ProductValidator()
-            : this(CompositionRoot.ResolveService<ProductService>())
-        {
-        }
-
-        public ProductValidator(ProductService service)
+        public ProductValidator(IProductService service)
             : base(service)
         {
             _productService = service;

@@ -157,6 +157,9 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Unity.Mvc4">
+      <HintPath>..\packages\Unity.Mvc4.1.1.0.0\lib\net40\Unity.Mvc4.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivator">
       <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
     </Reference>
@@ -198,8 +201,13 @@
     <Compile Include="Data\Repository\RepositoryEx.cs" />
     <Compile Include="Data\Service\BaseService.cs" />
     <Compile Include="Data\Service\CompanyService.cs" />
-    <Compile Include="Data\Service\CompositionRoot.cs" />
+    <Compile Include="Models\ProductVM.cs" />
+    <Compile Include="Unity\UnityBootstrapper.cs" />
     <Compile Include="Data\Service\EmployeeService.cs" />
+    <Compile Include="Data\Service\IBaseService.cs" />
+    <Compile Include="Data\Service\ICompanyService.cs" />
+    <Compile Include="Data\Service\IEmployeeService.cs" />
+    <Compile Include="Data\Service\IProductService.cs" />
     <Compile Include="Data\Service\ProductService.cs" />
     <Compile Include="Data\Validation\BaseValidator.cs" />
     <Compile Include="Data\Validation\EmployeeValidator.cs" />
@@ -840,6 +848,7 @@
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

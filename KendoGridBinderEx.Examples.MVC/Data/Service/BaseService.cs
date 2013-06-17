@@ -8,7 +8,7 @@ using KendoGridBinderEx.Examples.MVC.Data.Repository;
 
 namespace KendoGridBinderEx.Examples.MVC.Data.Service
 {
-    public abstract class BaseService<TEntity> where TEntity : class, IEntity
+    public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, IEntity
     {
         private readonly IUnitOfWork _unitOfWork;
         protected readonly IRepositoryEx<TEntity> Repository;

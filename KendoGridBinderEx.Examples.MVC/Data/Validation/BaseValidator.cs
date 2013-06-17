@@ -18,9 +18,9 @@ namespace KendoGridBinderEx.Examples.MVC.Data.Validation
 
     public abstract class BaseValidator<T> : AbstractValidator<T> where T : class, IEntity, new()
     {
-        protected readonly BaseService<T> Service;
+        protected readonly IBaseService<T> Service;
 
-        protected BaseValidator(BaseService<T> service)
+        protected BaseValidator(IBaseService<T> service)
         {
             Service = service;
         }

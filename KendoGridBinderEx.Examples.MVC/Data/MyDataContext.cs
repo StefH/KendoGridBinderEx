@@ -21,23 +21,23 @@ namespace KendoGridBinderEx.Examples.MVC.Data
 
         public DbSet<Country> Countries { get; set; }
 
-        public ObjectContext ObjectContext
+        public MyDataContext(string nameOrConnectionString, bool initDatabase) : base(nameOrConnectionString)
         {
-            get
-            {
-                return (this as IObjectContextAdapter).ObjectContext;
-            }
-        }
-
-        static MyDataContext()
-        {
-            if (ApplicationConfig.DatabaseInit)
+            if (initDatabase)
             {
                 Database.SetInitializer(new InitDatabase());
             }
             else
             {
                 Database.SetInitializer<MyDataContext>(null); // must be turned off before mini profiler runs
+            }
+        }
+
+        public ObjectContext ObjectContext
+        {
+            get
+            {
+                return (this as IObjectContextAdapter).ObjectContext;
             }
         }
     }
