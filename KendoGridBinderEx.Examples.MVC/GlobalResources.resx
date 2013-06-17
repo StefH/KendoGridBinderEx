@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="CompanyName" xml:space="preserve">
+  <data name="CompanyName" xml:space="preserve">
     <value>CompanyName</value>
   </data>
   <data name="Employee_Company_Required" xml:space="preserve">
@@ -148,7 +148,7 @@
     <value>The LastName is required</value>
   </data>
   <data name="Employee_Number_NotUnique" xml:space="preserve">
-    <value>The Number s not unique</value>
+    <value>The Number is not unique</value>
   </data>
   <data name="Employee_Number_Required" xml:space="preserve">
     <value>The Number is required</value>

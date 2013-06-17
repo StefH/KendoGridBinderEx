@@ -151,7 +151,7 @@ namespace KendoGridBinderEx.Examples.MVC {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Number s not unique.
+        ///   Looks up a localized string similar to The Number is not unique.
         /// </summary>
         public static string Employee_Number_NotUnique {
             get {

@@ -1,15 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Web.Mvc;
-using FluentValidation.Attributes;
+﻿using System.Web.Mvc;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Validation;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
 {
-    [Table("KendoGrid_Product")]
-    [Validator(typeof(ProductValidator))]
-    public class ProductVM : Entity
+    public class ProductVM : IEntity
     {
+        public long Id { get; set; }
+
         [Remote("IsCodeUnique", "Product", AdditionalFields = "Id")]
         public string Code { get; set; }
 
