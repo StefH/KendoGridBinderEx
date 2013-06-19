@@ -8,7 +8,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
     {
         private readonly ICompanyService _companyService;
 
-        public CompanyController(CompanyService companyService)
+        public CompanyController(ICompanyService companyService)
             : base(companyService)
         {
             _companyService = companyService;
