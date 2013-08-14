@@ -147,7 +147,8 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Unity.Mvc4">
+    <Reference Include="Unity.Mvc4, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Unity.Mvc4.1.1.0.0\lib\net40\Unity.Mvc4.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
