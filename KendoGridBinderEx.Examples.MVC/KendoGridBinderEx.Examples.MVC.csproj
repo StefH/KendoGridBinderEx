@@ -1880,8 +1880,10 @@
     <Content Include="Scripts\kendo\2013.2.716\kendo.view.min.js" />
     <Content Include="Scripts\kendo\2013.2.716\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2013.2.716\kendo.window.min.js" />
+    <Content Include="Scripts\knockout-2.3.0.debug.js" />
     <Content Include="Scripts\knockout-2.3.0.js" />
-    <Content Include="Scripts\knockout-kendo-0.6.3.min.js" />
+    <Content Include="Scripts\knockout-kendo.js" />
+    <Content Include="Scripts\knockout-kendo.min.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -1921,7 +1923,6 @@
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Employee\DisplayTemplates\_ViewEmployee.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
-    <Content Include="Views\Employee\EditorTemplates\_EditEmployee.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
@@ -1932,6 +1933,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebDebug.config" />
+    <Content Include="Views\Employee\EditorTemplates\_EditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

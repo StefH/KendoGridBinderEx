@@ -31,7 +31,7 @@ namespace KendoGridBinderEx.Examples.MVC
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/knockout.mapping-latest.js",
-                "~/Scripts/knockout-kendo-{version}.js"
+                "~/Scripts/knockout-kendo.js"
                 )
             );
 

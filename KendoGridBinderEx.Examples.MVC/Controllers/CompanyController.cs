@@ -17,7 +17,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpGet]
         public JsonResult GetJson()
         {
-            var entities = _companyService.GetAll();
+            var entities = _companyService.GetAll(c => c.MainCompany);
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }

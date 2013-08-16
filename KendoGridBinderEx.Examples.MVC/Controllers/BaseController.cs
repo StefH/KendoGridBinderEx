@@ -57,6 +57,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Mapper.Map<TEntity>(viewModel);
         }
 
+        protected virtual TViewModel GetDefaultViewModel()
+        {
+            return new TViewModel();
+        }
+
         #region MVC Actions
         public ActionResult Index()
         {
@@ -106,9 +111,10 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View(viewModel);
         }
 
-        public ViewResult Create()
+        public virtual ViewResult Create()
         {
-            return View();
+            var viewModel = GetDefaultViewModel();
+            return View(viewModel);
         }
 
         [HttpPost]
