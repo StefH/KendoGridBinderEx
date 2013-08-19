@@ -63,19 +63,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\SubFunction.cs" />
+    <Compile Include="Entities\Function.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\MainCompany.cs" />
     <Compile Include="Entities\Product.cs" />
-    <Compile Include="GlobalResources.Designer.cs">
-      <DependentUpon>GlobalResources.resx</DependentUpon>
+    <Compile Include="GlobalResources_Business.Designer.cs">
+      <DependentUpon>GlobalResources_Business.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GlobalResourcesLiterals.cs">
-      <DependentUpon>GlobalResourcesLiterals.tt</DependentUpon>
+    <Compile Include="GlobalResourcesLiterals_Business.cs">
+      <DependentUpon>GlobalResourcesLiterals_Business.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -89,6 +91,10 @@
     <Compile Include="Repository\RepositoryEx.cs" />
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\CompanyService.cs" />
+    <Compile Include="Service\SubFunctionService.cs" />
+    <Compile Include="Service\FunctionService.cs" />
+    <Compile Include="Service\ISubFunctionService.cs" />
+    <Compile Include="Service\IFunctionService.cs" />
     <Compile Include="Service\EmployeeService.cs" />
     <Compile Include="Service\IBaseService.cs" />
     <Compile Include="Service\ICompanyService.cs" />
@@ -101,16 +107,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="GlobalResourcesLiterals.tt">
+    <Content Include="GlobalResourcesLiterals_Business.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GlobalResourcesLiterals.cs</LastGenOutput>
+      <LastGenOutput>GlobalResourcesLiterals_Business.cs</LastGenOutput>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GlobalResources.resx">
+    <EmbeddedResource Include="GlobalResources_Business.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>GlobalResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GlobalResources_Business.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

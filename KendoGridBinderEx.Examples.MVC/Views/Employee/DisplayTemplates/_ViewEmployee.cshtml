@@ -27,10 +27,10 @@
     </tr>
     <tr>
         <td>
-            @Html.LabelFor(model => model.Last)
+            @Html.LabelFor(model => model.LastName)
         </td>
         <td>
-            @Html.DisplayFor(model => model.Last)
+            @Html.DisplayFor(model => model.LastName)
         </td>
     </tr>
     <tr>
@@ -39,6 +39,22 @@
         </td>
         <td>
             @Html.DisplayFor(model => model.Email)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.FunctionId)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.FunctionName)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.SubFunctionId)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.SubFunctionName)
         </td>
     </tr>
     <tr>

@@ -6,7 +6,7 @@
             @Html.LabelFor(model => model.CompanyId)    
         </td>
         <td style="width: 400px;">
-            <input id="CompanyId" name="CompanyId" data-bind="kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: companies, value: companyId, optionLabel: 'Select ...' }" />
+            @Html.TextBoxFor(model => model.CompanyId, new { data_bind = "kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: companies, value: companyId, optionLabel: 'Select ...' }" })
         </td>
         <td style="width: 200px;">
             @Html.ValidationMessageFor(model => model.CompanyId)
@@ -17,7 +17,7 @@
             @Html.LabelFor(model => model.Number)
         </td>
         <td>
-            @Html.EditorFor(model => model.Number)
+            @Html.TextBoxFor(model => model.Number)
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.Number)
@@ -28,7 +28,7 @@
              @Html.LabelFor(model => model.First)
         </td>
         <td>
-            @Html.EditorFor(model => model.First)
+            @Html.TextBoxFor(model => model.First)
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.First)            
@@ -36,21 +36,30 @@
     </tr>
     <tr>
         <td>
-            @Html.LabelFor(model => model.Last)
+            @Html.LabelFor(model => model.LastName)
         </td>
         <td>
-            @Html.EditorFor(model => model.Last)
+            @Html.TextBoxFor(model => model.LastName, new { data_bind = "value: lastname"} )
         </td>
         <td>
-            @Html.ValidationMessageFor(model => model.Last)
+            @Html.ValidationMessageFor(model => model.LastName)
         </td>
+    </tr>
+    <tr data-bind="visible: isManager">
+        <td>
+            @Html.LabelFor(model => model.IsManager)
+        </td>
+        <td>
+            <input disabled="disabled" type="checkbox" checked="checked" />
+        </td>
+        <td></td>
     </tr>
     <tr>
         <td>
             @Html.LabelFor(model => model.Email)
         </td>
         <td>
-            @Html.EditorFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email)
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.Email)
@@ -58,10 +67,32 @@
     </tr>
     <tr>
         <td>
+            @Html.LabelFor(model => model.FunctionId)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.FunctionId, new { data_bind = "kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: functions, value: functionId, optionLabel: 'Select ...' }" })
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.FunctionId)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.LabelFor(model => model.SubFunctionId)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.SubFunctionId, new { data_bind = "kendoDropDownList: { readonly: subfunctionIdEditable, dataTextField: 'Name', dataValueField: 'Id', data: subfunctions, value: subfunctionId, optionLabel: 'Select ...' }" })
+        </td>
+        <td>
+            @Html.ValidationMessageFor(model => model.SubFunctionId)
+        </td>
+    </tr>
+    <tr>
+        <td>
             @Html.LabelFor(model => model.HireDate)
         </td>
         <td>
-            @Html.EditorFor(model => model.HireDate)
+            @Html.TextBoxFor(model => model.HireDate, new { data_bind = "kendoDatePicker: { value: hireDate, format: 'yyyy-MM-dd' }" })
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.HireDate)
@@ -71,22 +102,67 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var ViewModel = function () {
-            this.companies = ko.observableArray();
-            this.companyId = ko.observable();
+        var viewModelData = [@Html.Raw(Json.Encode(Model))][0];
+
+        var ViewModel = function() {
+            var self = this;
             
             this.Init = function () {
                 this.GetCompanies();
+                this.GetFunctions();
             };
 
+            self.companies = ko.observableArray();
+            self.functions = ko.observableArray();
+            self.subfunctions = ko.observableArray([{}]);
+            self.companyId = ko.observable();
+            self.functionId = ko.observable();
+            self.subfunctionId = ko.observable(viewModelData.SubFunctionId);
+            self.subfunctionIdEditable = ko.observable(false);
+            self.lastname = ko.observable(viewModelData.LastName);
+            self.hireDate = ko.observable(new Date());
+
+            self.isManager = ko.observable(viewModelData.IsManager);
+            
+            self.lastname.subscribe(function () {
+                var params = {
+                    last: self.lastname
+                };
+
+                $.getJSON('@Url.Action("IsManager", "Employee")', params, function (data) {
+                    self.isManager(data);
+                });
+            });
+            
+            self.functionId.subscribe(function () {
+                self.GetSubFunctions();
+            });
+
             this.GetCompanies = function () {
-                var vm = this;
+                $.getJSON('@Url.Action("GetCompaniesAsJson", "Company")', function (data) {
+                        self.companies(data);
+                        self.companyId(viewModelData.CompanyId);
+                    }
+                );
+            };
+            
+            this.GetFunctions = function () {
+                $.getJSON('@Url.Action("GetFunctionsAsJson", "Function")', function (data) {
+                        self.functions(data);
+                        self.functionId(viewModelData.FunctionId);
+                    }
+                );
+            };
+            
+            this.GetSubFunctions = function () {
+                var params = {
+                    functionId: self.functionId
+                };
                 
-                $.getJSON(
-                    '@Url.Action("GetJson", "Company")',
-                    function (data) {
-                        vm.companies(data);
-                        vm.companyId('@(Model != null ? @Model.CompanyId : 0)');
+                $.getJSON('@Url.Action("GetSubFunctionsByFunctionIdAsJson", "SubFunction")', params, function (data) {
+                        self.subfunctionIdEditable(true);
+                        self.subfunctions(data);
+                        self.subfunctionId(viewModelData.SubFunctionId);
                     }
                 );
             };
@@ -95,10 +171,5 @@
         var viewModel = new ViewModel();
         viewModel.Init();
         ko.applyBindings(viewModel);
-
-        $("#HireDate").kendoDatePicker({
-            value: new Date(),
-            format: 'yyyy-M-dd'
-        });
-    });
- </script>
+ });
+</script>

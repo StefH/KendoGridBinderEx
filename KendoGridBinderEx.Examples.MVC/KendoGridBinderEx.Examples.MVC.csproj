@@ -168,10 +168,14 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseGridController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\SubFunctionController.cs" />
+    <Compile Include="Controllers\FunctionController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="CustomModelBinders.cs" />
+    <Compile Include="Models\FunctionVM.cs" />
+    <Compile Include="Models\SubFunctionVM.cs" />
     <Compile Include="Models\ProductVM.cs" />
     <Compile Include="Unity\UnityBootstrapper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
@@ -179,15 +183,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GlobalResources.Designer.cs">
+    <Compile Include="GlobalResources_MVC.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GlobalResources.resx</DependentUpon>
+      <DependentUpon>GlobalResources_MVC.resx</DependentUpon>
     </Compile>
-    <Compile Include="GlobalResourcesLiterals.cs">
+    <Compile Include="GlobalResourcesLiterals_MVC.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GlobalResourcesLiterals.tt</DependentUpon>
+      <DependentUpon>GlobalResourcesLiterals_MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmployeeVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -653,9 +657,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="GlobalResourcesLiterals.tt">
+    <Content Include="GlobalResourcesLiterals_MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GlobalResourcesLiterals.cs</LastGenOutput>
+      <LastGenOutput>GlobalResourcesLiterals_MVC.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\common.js" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
@@ -1956,9 +1960,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GlobalResources.resx">
+    <EmbeddedResource Include="GlobalResources_MVC.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>GlobalResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GlobalResources_MVC.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

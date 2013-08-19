@@ -8,7 +8,7 @@ namespace KendoGridBinderEx.Examples.Business.Entities
     public class Employee : Entity
     {
         private static readonly CompiledExpressionMap<Employee, bool> IsManagerExpr =
-            DefaultTranslationOf<Employee>.Property(e => e.IsManager).Is(e => e.Email.Contains(("smith")));
+            DefaultTranslationOf<Employee>.Property(e => e.IsManager).Is(e => e.LastName != null && e.LastName.ToLower().Contains(("smith")));
 
         private static readonly CompiledExpressionMap<Employee, string> FullNameExpr =
             DefaultTranslationOf<Employee>.Property(e => e.FullName).Is(e => e.FirstName + " " + e.LastName);
@@ -26,6 +26,10 @@ namespace KendoGridBinderEx.Examples.Business.Entities
         public Company Company { get; set; }
 
         public Country Country { get; set; }
+
+        public Function Function { get; set; }
+
+        public SubFunction SubFunction { get; set; }
 
         [NotMapped]
         public bool IsManager

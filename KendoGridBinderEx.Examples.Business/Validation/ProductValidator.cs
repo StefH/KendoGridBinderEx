@@ -15,7 +15,7 @@ namespace KendoGridBinderEx.Examples.Business.Validation
 
             RuleFor(p => p.Code)
                 .NotEmpty()
-                .Must(IsCodeUnique).WithMessage(GlobalResources.Product_Code_NotUnique)
+                .Must(IsCodeUnique).WithMessage(GlobalResources_Business.Product_Code_NotUnique)
                 .Length(0, 10);
 
             RuleFor(p => p.Name)

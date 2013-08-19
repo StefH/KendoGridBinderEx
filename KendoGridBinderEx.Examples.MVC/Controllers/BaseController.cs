@@ -52,6 +52,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Mapper.Map<TViewModel>(entity);
         }
 
+        protected virtual ICollection<TViewModel> Map(IQueryable<TEntity> queryableEntities)
+        {
+            return Mapper.Map<ICollection<TViewModel>>(queryableEntities);
+        }
+
         protected virtual TEntity Map(TViewModel viewModel)
         {
             return Mapper.Map<TEntity>(viewModel);

@@ -32,6 +32,8 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.RegisterType<IEmployeeService>(new InjectionFactory(con => con.Resolve<EmployeeService>()));
             UnityContainer.RegisterType<IProductService>(new InjectionFactory(con => con.Resolve<ProductService>()));
             UnityContainer.RegisterType<ICompanyService>(new InjectionFactory(con => con.Resolve<CompanyService>()));
+            UnityContainer.RegisterType<IFunctionService>(new InjectionFactory(con => con.Resolve<FunctionService>()));
+            UnityContainer.RegisterType<ISubFunctionService>(new InjectionFactory(con => con.Resolve<SubFunctionService>()));
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityContainer));
         }

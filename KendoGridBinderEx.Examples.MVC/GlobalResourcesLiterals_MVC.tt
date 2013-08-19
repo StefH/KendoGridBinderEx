@@ -12,7 +12,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Xml.Linq" #>
 <#
-    string resourceFile = "GlobalResources";
+    string resourceFile = "GlobalResources_MVC";
     string PostFix = "";
 #>
 //------------------------------------------------------------------------------
@@ -31,16 +31,18 @@ namespace KendoGridBinderEx.Examples.MVC
     /// <summary>
     /// A static helper class which exposes all strings as const strings which are present in the resource file.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("GlobalResources.tt", "1.0.0.0")]
-    public static class GlobalResourceLiterals
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("GlobalResources_MVC.tt", "1.0.0.0")]
+    public static class <#=resourceFile#>Literals
     {
 <#
         string filename = Path.Combine(Path.GetDirectoryName(this.Host.TemplateFile), resourceFile + ".resx");
         var names = (from e in XElement.Load(filename).Elements("data") 
                      select e.Attribute("name").Value).ToList();
 
-    int idx = 0;
-    string name = names[0];
+		if (names.Count > 0)
+        {
+			int idx = 0;
+			string name = names[0];
 #>
         /// <summary>
         /// The string <#=name#>
@@ -57,6 +59,7 @@ namespace KendoGridBinderEx.Examples.MVC
         /// </summary>
         public const string <#=name#><#=PostFix#> = "<#=name#>";
 <#
+			}
         }
 #>
     }

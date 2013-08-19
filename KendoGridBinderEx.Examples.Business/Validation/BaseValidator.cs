@@ -65,7 +65,6 @@ namespace KendoGridBinderEx.Examples.Business.Validation
             else if (propertyExpression.Body is UnaryExpression)
             {
                 var unaryExpr = propertyExpression.Body as UnaryExpression;
-                if (unaryExpr == null) throw new ArgumentException();
                 memberExpr = unaryExpr.Operand as MemberExpression;
             }
             else
