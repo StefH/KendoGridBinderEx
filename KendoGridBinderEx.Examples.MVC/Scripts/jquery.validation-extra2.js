@@ -13,12 +13,10 @@ function initializeRemotelyValidatingElementsWithAdditionalFields($form) {
         var fieldNames = $.map(rawFieldNames, function (fieldName) { return fieldName.replace("*.", ""); });
 
         $.each(fieldNames, function (i, fieldName) {
-            $form.find("[id$="+fieldName+"]").change(function () {
-                 if ($element.is(':enabled'))
-                 {
+            $form.find("#" + fieldName).change(function () {
+                 if ($element.is(':enabled')) {
                      // force re-validation to occur
                      $element.removeData("previousValue");
-
                      $element.valid();
                  }
             });
