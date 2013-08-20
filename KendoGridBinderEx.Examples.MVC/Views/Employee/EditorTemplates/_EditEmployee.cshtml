@@ -3,7 +3,7 @@
 <table>
     <tr>
         <td style="width: 200px;">
-            @Html.LabelFor(model => model.CompanyId)    
+            @Html.LabelFor(model => model.CompanyId)
         </td>
         <td style="width: 400px;">
             @Html.TextBoxFor(model => model.CompanyId, new { data_bind = "kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: companies, value: companyId, optionLabel: 'Select ...' }" })
@@ -25,13 +25,13 @@
     </tr>
     <tr>
         <td>
-             @Html.LabelFor(model => model.First)
+            @Html.LabelFor(model => model.First)
         </td>
         <td>
             @Html.TextBoxFor(model => model.First)
         </td>
         <td>
-            @Html.ValidationMessageFor(model => model.First)            
+            @Html.ValidationMessageFor(model => model.First)
         </td>
     </tr>
     <tr>
@@ -39,7 +39,7 @@
             @Html.LabelFor(model => model.LastName)
         </td>
         <td>
-            @Html.TextBoxFor(model => model.LastName, new { data_bind = "value: lastname"} )
+            @Html.TextBoxFor(model => model.LastName)
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.LastName)
@@ -104,9 +104,9 @@
     $(document).ready(function () {
         var viewModelData = [@Html.Raw(Json.Encode(Model))][0];
 
-        var ViewModel = function() {
+        var ViewModel = function () {
             var self = this;
-            
+
             this.Init = function () {
                 this.GetCompanies();
                 this.GetFunctions();
@@ -123,7 +123,7 @@
             self.hireDate = ko.observable(new Date());
 
             self.isManager = ko.observable(viewModelData.IsManager);
-            
+
             self.lastname.subscribe(function () {
                 var params = {
                     last: self.lastname
@@ -133,37 +133,37 @@
                     self.isManager(data);
                 });
             });
-            
+
             self.functionId.subscribe(function () {
                 self.GetSubFunctions();
             });
 
             this.GetCompanies = function () {
                 $.getJSON('@Url.Action("GetCompaniesAsJson", "Company")', function (data) {
-                        self.companies(data);
-                        self.companyId(viewModelData.CompanyId);
-                    }
+                    self.companies(data);
+                    self.companyId(viewModelData.CompanyId);
+                }
                 );
             };
-            
+
             this.GetFunctions = function () {
                 $.getJSON('@Url.Action("GetFunctionsAsJson", "Function")', function (data) {
-                        self.functions(data);
-                        self.functionId(viewModelData.FunctionId);
-                    }
+                    self.functions(data);
+                    self.functionId(viewModelData.FunctionId);
+                }
                 );
             };
-            
+
             this.GetSubFunctions = function () {
                 var params = {
                     functionId: self.functionId
                 };
-                
+
                 $.getJSON('@Url.Action("GetSubFunctionsByFunctionIdAsJson", "SubFunction")', params, function (data) {
-                        self.subfunctionIdEditable(true);
-                        self.subfunctions(data);
-                        self.subfunctionId(viewModelData.SubFunctionId);
-                    }
+                    self.subfunctionIdEditable(true);
+                    self.subfunctions(data);
+                    self.subfunctionId(viewModelData.SubFunctionId);
+                }
                 );
             };
         };
@@ -171,8 +171,7 @@
         var viewModel = new ViewModel();
         viewModel.Init();
         ko.applyBindings(viewModel);
-		
-		initializeRemotelyValidatingElementsWithAdditionalFields($("form"));
-});
- });
+
+        initializeRemotelyValidatingElementsWithAdditionalFields($("form"));
+    });
 </script>

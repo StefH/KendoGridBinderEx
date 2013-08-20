@@ -23,7 +23,7 @@ namespace KendoGridBinderEx.Examples.MVC
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
                 "~/Scripts/jquery.validation-extra.js",
-				"~/Scripts/jquery.validation-extra2.js"
+                "~/Scripts/jquery.validation-extra2.js"
                 )
             );
 

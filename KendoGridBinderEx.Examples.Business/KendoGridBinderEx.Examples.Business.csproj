@@ -38,9 +38,6 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.Patterns">
-      <HintPath>..\packages\EntityFramework.Patterns.0.7\lib\net40\EntityFramework.Patterns.dll</HintPath>
-    </Reference>
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.4.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
@@ -81,14 +78,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="IQueryContext.cs" />
-    <Compile Include="MyDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryContext.cs" />
+    <Compile Include="QueryContext\IQueryContext.cs" />
+    <Compile Include="QueryContext\QueryContext.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IRepositoryConfig.cs" />
-    <Compile Include="Repository\IRepositoryEx.cs" />
+    <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RepositoryConfig.cs" />
-    <Compile Include="Repository\RepositoryEx.cs" />
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\CompanyService.cs" />
     <Compile Include="Service\SubFunctionService.cs" />
@@ -101,6 +97,9 @@
     <Compile Include="Service\IEmployeeService.cs" />
     <Compile Include="Service\IProductService.cs" />
     <Compile Include="Service\ProductService.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\MyDataContext.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Validation\BaseValidator.cs" />
     <Compile Include="Validation\EmployeeValidator.cs" />
     <Compile Include="Validation\ProductValidator.cs" />
@@ -125,8 +124,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)packages\EntityFramework.Patterns.0.7\tools\Afterthought.Amender.exe" "$(TargetPath)" "$(TargetDir)EntityFramework.Patterns.dll"
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

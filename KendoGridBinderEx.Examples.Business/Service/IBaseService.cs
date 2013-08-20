@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.QueryContext;
 
 namespace KendoGridBinderEx.Examples.Business.Service
 {

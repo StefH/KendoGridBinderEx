@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace KendoGridBinderEx.Examples.Business
+namespace KendoGridBinderEx.Examples.Business.QueryContext
 {
     public class QueryContext<TEntity> : IQueryContext<TEntity> where TEntity : class
     {

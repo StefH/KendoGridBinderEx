@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Web.Mvc;
 using KendoGridBinder;
-using KendoGridBinderEx.Examples.Business;
 using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.QueryContext;
 using KendoGridBinderEx.Examples.Business.Service;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers

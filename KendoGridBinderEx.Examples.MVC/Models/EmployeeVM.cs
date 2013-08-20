@@ -21,6 +21,7 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         [Remote("ValidateUniqueFullName", "Employee", AdditionalFields = "First,Id")]
         public string LastName { get; set; }
 
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         public DateTime HireDate { get; set; }

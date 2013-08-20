@@ -7,7 +7,7 @@ using System.Linq;
 using System.Transactions;
 using KendoGridBinderEx.Examples.Business.Entities;
 
-namespace KendoGridBinderEx.Examples.Business
+namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
     public class MyDataContext : DbContext
     {

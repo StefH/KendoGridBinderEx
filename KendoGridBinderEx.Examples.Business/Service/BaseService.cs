@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using EntityFramework.Patterns;
 using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.QueryContext;
 using KendoGridBinderEx.Examples.Business.Repository;
+using KendoGridBinderEx.Examples.Business.UnitOfWork;
 
 namespace KendoGridBinderEx.Examples.Business.Service
 {
     public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, IEntity
     {
         private readonly IUnitOfWork _unitOfWork;
-        protected readonly IRepositoryEx<TEntity> Repository;
+        protected readonly IRepository<TEntity> Repository;
 
         protected bool AutoCommit = false;
 
-        protected BaseService(IRepositoryEx<TEntity> repository, IUnitOfWork unitOfWork)
+        protected BaseService(IRepository<TEntity> repository, IUnitOfWork unitOfWork)
         {
             Repository = repository;
             _unitOfWork = unitOfWork;

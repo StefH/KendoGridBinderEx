@@ -1,13 +1,13 @@
 ﻿using System.Linq;
-using EntityFramework.Patterns;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Repository;
+using KendoGridBinderEx.Examples.Business.UnitOfWork;
 
 namespace KendoGridBinderEx.Examples.Business.Service
 {
     public class ProductService : BaseService<Product>, IProductService
     {
-        public ProductService(IRepositoryEx<Product> repository, IUnitOfWork unitOfWork)
+        public ProductService(IRepository<Product> repository, IUnitOfWork unitOfWork)
             : base(repository, unitOfWork)
         {
             AutoCommit = true;

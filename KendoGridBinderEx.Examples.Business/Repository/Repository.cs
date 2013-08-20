@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
-using EntityFramework.Patterns;
+using KendoGridBinderEx.Examples.Business.QueryContext;
 using PropertyTranslator;
 using QueryInterceptor;
 
 namespace KendoGridBinderEx.Examples.Business.Repository
 {
-    public class RepositoryEx<TEntity> : IRepositoryEx<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly IRepositoryConfig _config;
         private readonly IObjectSet<TEntity> _objectSet;
-        private readonly IObjectSetFactory _objectSetFactory;
+        private readonly ObjectContext _objectContext;
 
-        public RepositoryEx(IObjectSetFactory objectSetFactory, IRepositoryConfig config)
+        public Repository(DbContext dbContext, IRepositoryConfig config)
         {
-            _objectSet = objectSetFactory.CreateObjectSet<TEntity>();
-            _objectSetFactory = objectSetFactory;
+            _objectContext = (dbContext as IObjectContextAdapter).ObjectContext;
             _config = config;
+
+            _objectSet = _objectContext.CreateObjectSet<TEntity>();   
         }
 
         #region IRepositoryEx<T> Members
@@ -101,7 +103,7 @@ namespace KendoGridBinderEx.Examples.Business.Repository
             if (_config.InsertAllowed)
             {
                 _objectSet.Attach(entity);
-                _objectSetFactory.ChangeObjectState(entity, EntityState.Modified);
+                _objectContext.ObjectStateManager.ChangeObjectState(entity, EntityState.Modified);
             }
             else
             {

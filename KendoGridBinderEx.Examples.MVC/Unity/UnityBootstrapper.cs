@@ -1,8 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
-using EntityFramework.Patterns;
 using KendoGridBinderEx.Examples.Business.Repository;
 using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.UnitOfWork;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Unity.Mvc4;
@@ -20,14 +20,12 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.LoadConfiguration();
 
             // Registering interfaces of Unit Of Work & Generic Repository
-            UnityContainer.RegisterType(typeof(IRepositoryEx<>), typeof(RepositoryEx<>));
+            UnityContainer.RegisterType(typeof(IRepository<>), typeof(Repository<>));
             UnityContainer.RegisterType(typeof(IUnitOfWork), typeof(UnitOfWork));
 
-            UnityContainer.RegisterType<IObjectSetFactory>(new InjectionFactory(con => con.Resolve<DbContextAdapter>()));
+            UnityContainer.RegisterType<DbContext>(new InjectionFactory(con => con.Resolve<MyDataContext>()));
 
-            UnityContainer.RegisterType<IObjectContext>(new InjectionFactory(con => con.Resolve<DbContextAdapter>()));
-
-            UnityContainer.RegisterInstance(new DbContextAdapter(UnityContainer.Resolve<DbContext>()), new PerThreadLifetimeManager());
+            UnityContainer.RegisterInstance(UnityContainer.Resolve<DbContext>(), new PerThreadLifetimeManager());
 
             UnityContainer.RegisterType<IEmployeeService>(new InjectionFactory(con => con.Resolve<EmployeeService>()));
             UnityContainer.RegisterType<IProductService>(new InjectionFactory(con => con.Resolve<ProductService>()));
