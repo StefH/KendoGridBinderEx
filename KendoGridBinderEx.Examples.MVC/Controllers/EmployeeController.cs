@@ -116,12 +116,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpGet]
-        public JsonResult ValidateUniqueFullName(string first, string last, long? id)
+        public JsonResult ValidateUniqueFullName(string first, string lastName, long? id)
         {
             var viewModel = new EmployeeVM
             {
                 First = first,
-                LastName = last,
+                LastName = lastName,
                 Id = id ?? 0
             };
 
