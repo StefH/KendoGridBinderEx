@@ -676,6 +676,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.validation-extra.js" />
+	<Content Include="Scripts\jquery.validation-extra2.js" />
     <Content Include="Scripts\kendo\2012.3.1114\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\cultures\kendo.culture.af.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\cultures\kendo.culture.am-ET.min.js" />

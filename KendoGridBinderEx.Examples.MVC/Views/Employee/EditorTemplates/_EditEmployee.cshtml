@@ -171,5 +171,8 @@
         var viewModel = new ViewModel();
         viewModel.Init();
         ko.applyBindings(viewModel);
+		
+		initializeRemotelyValidatingElementsWithAdditionalFields($("form"));
+});
  });
 </script>

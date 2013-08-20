@@ -22,7 +22,8 @@ namespace KendoGridBinderEx.Examples.MVC
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
-                "~/Scripts/jquery.validation-extra.js"
+                "~/Scripts/jquery.validation-extra.js",
+				"~/Scripts/jquery.validation-extra2.js"
                 )
             );
 
