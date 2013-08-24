@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers

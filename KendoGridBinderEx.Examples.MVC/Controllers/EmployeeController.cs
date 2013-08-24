@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
 using StackExchange.Profiling;

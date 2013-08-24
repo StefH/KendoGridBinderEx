@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers

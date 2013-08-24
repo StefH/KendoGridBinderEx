@@ -160,12 +160,13 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseGridController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\OUController.cs" />
     <Compile Include="Controllers\SubFunctionController.cs" />
     <Compile Include="Controllers\FunctionController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="CustomModelBinders.cs" />
+    <Compile Include="Models\OUVM.cs" />
     <Compile Include="Models\FunctionVM.cs" />
     <Compile Include="Models\SubFunctionVM.cs" />
     <Compile Include="Models\ProductVM.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Copy of Site.css" />
     <Content Include="Content\Images\accept.png" />
     <Content Include="Content\Images\add.png" />
     <Content Include="Content\Images\addressbook.gif" />
@@ -899,9 +901,9 @@
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\EditorTemplates\_EditProduct.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebDebug.config" />
     <Content Include="Views\Employee\EditorTemplates\_EditEmployee.cshtml" />
+    <Content Include="Views\OU\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.QueryContext;
-using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.Service.Interface;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -47,7 +49,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpPost]
         public JsonResult Grid(KendoGridRequest request)
         {
-            var entities = GetQueryable();
+            var entities = GetQueryable().AsNoTracking();
             return GetKendoGridAsJson(request, entities);
         }
         #endregion

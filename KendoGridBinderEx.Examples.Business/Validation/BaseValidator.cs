@@ -5,7 +5,7 @@ using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Service;
+using KendoGridBinderEx.Examples.Business.Service.Interface;
 
 namespace KendoGridBinderEx.Examples.Business.Validation
 {

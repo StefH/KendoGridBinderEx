@@ -41,6 +41,9 @@
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.4.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
+    <Reference Include="NLipsum.Core">
+      <HintPath>..\packages\NLipsum.0.1.3\lib\net40\NLipsum.Core.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyTranslator">
       <HintPath>..\packages\Linq.PropertyTranslator.1.0.0.0\lib\net40\PropertyTranslator.dll</HintPath>
     </Reference>
@@ -60,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\OU.cs" />
     <Compile Include="Entities\SubFunction.cs" />
     <Compile Include="Entities\Function.cs" />
     <Compile Include="Entities\Country.cs" />
@@ -85,18 +89,20 @@
     <Compile Include="Repository\IRepositoryConfig.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RepositoryConfig.cs" />
-    <Compile Include="Service\BaseService.cs" />
-    <Compile Include="Service\CompanyService.cs" />
-    <Compile Include="Service\SubFunctionService.cs" />
-    <Compile Include="Service\FunctionService.cs" />
-    <Compile Include="Service\ISubFunctionService.cs" />
-    <Compile Include="Service\IFunctionService.cs" />
-    <Compile Include="Service\EmployeeService.cs" />
-    <Compile Include="Service\IBaseService.cs" />
-    <Compile Include="Service\ICompanyService.cs" />
-    <Compile Include="Service\IEmployeeService.cs" />
-    <Compile Include="Service\IProductService.cs" />
-    <Compile Include="Service\ProductService.cs" />
+    <Compile Include="Service\Implementation\BaseService.cs" />
+    <Compile Include="Service\Implementation\CompanyService.cs" />
+    <Compile Include="Service\Implementation\OUService.cs" />
+    <Compile Include="Service\Implementation\SubFunctionService.cs" />
+    <Compile Include="Service\Implementation\FunctionService.cs" />
+    <Compile Include="Service\Interface\IOUService.cs" />
+    <Compile Include="Service\Interface\ISubFunctionService.cs" />
+    <Compile Include="Service\Interface\IFunctionService.cs" />
+    <Compile Include="Service\Implementation\EmployeeService.cs" />
+    <Compile Include="Service\Interface\IBaseService.cs" />
+    <Compile Include="Service\Interface\ICompanyService.cs" />
+    <Compile Include="Service\Interface\IEmployeeService.cs" />
+    <Compile Include="Service\Interface\IProductService.cs" />
+    <Compile Include="Service\Implementation\ProductService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\MyDataContext.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Objects;
+using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using KendoGridBinderEx.Examples.Business.Entities;
+using NLipsum.Core;
 
 namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
@@ -24,6 +26,8 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
         public DbSet<Function> Functions { get; set; }
 
         public DbSet<SubFunction> SubFunctions { get; set; }
+
+        public DbSet<OU> OUs { get; set; }
 
         public MyDataContext(string nameOrConnectionString, bool initDatabase)
             : base(nameOrConnectionString)
@@ -80,12 +84,12 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             }
 
             // remove all tables if present
-            var dropTables = new[] { "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
+            var dropTables = new[] { "KendoGrid_OU", "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
             foreach (var table in dropTables)
             {
                 if (context.TableExists(table))
                 {
-                    context.Database.ExecuteSqlCommand(string.Format("DELETE FROM [{0}]", table));
+                    context.Database.ExecuteSqlCommand(string.Format("TRUNCATE TABLE [{0}]", table));
                     context.DeleteForeignKeys(table);
                     context.Database.ExecuteSqlCommand(string.Format("DROP TABLE [{0}]", table));
                 }
@@ -105,6 +109,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             var functionManagement = new Function { Id = 2, Code = "MAN", Name = "Management" };
             var functions = new List<Function> { functionIct, functionManagement };
             functions.ForEach(s => context.Functions.Add(s));
+            context.SaveChanges();
 
             for (int i = 1; i <= 10; i++)
             {
@@ -116,22 +121,26 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
                 var subFunctionManagement = new SubFunction { Id = 1, Code = "MAN-" + i, Name = "Management - " + i, Function = functionManagement };
                 context.SubFunctions.Add(subFunctionManagement);
             }
+            context.SaveChanges();
 
             var countryNL = new Country { Id = 1, Code = "NL", Name = "The Netherlands" };
             var countryBE = new Country { Id = 2, Code = "BE", Name = "Belgium" };
             var countries = new List<Country> { countryNL, countryBE };
             countries.ForEach(c => context.Countries.Add(c));
+            context.SaveChanges();
 
             var mainCompany1 = new MainCompany { Id = 10, Name = "M - 1" };
             var mainCompany2 = new MainCompany { Id = 20, Name = "M - 2" };
             var mainCompanies = new List<MainCompany> { mainCompany1, mainCompany2 };
             mainCompanies.ForEach(x => context.MainCompanies.Add(x));
+            context.SaveChanges();
 
             var companyA = new Company { Id = 1, Name = "A", MainCompany = mainCompany1 };
             var companyB = new Company { Id = 2, Name = "B", MainCompany = mainCompany1 };
             var companyC = new Company { Id = 3, Name = "C", MainCompany = mainCompany2 };
             var companies = new List<Company> { companyA, companyB, companyC };
             companies.ForEach(x => context.Companies.Add(x));
+            context.SaveChanges();
 
             var employees = new List<Employee>
             {
@@ -149,6 +158,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
                 new Employee { Id = 12, Country = countryNL, Company = companyC, FirstName = "Test", LastName = "User", Email = "tu@email.com", EmployeeNumber = 1012, HireDate = Convert.ToDateTime("11/05/2012"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[0]},
             };
             employees.ForEach(x => context.Employees.Add(x));
+            context.SaveChanges();
 
             var products = new List<Product>
             {
@@ -165,6 +175,23 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
                 new Product { Id = 322, Code = "CR-7833", Name = "Chainring"}
             };
             products.ForEach(x => context.Products.Add(x));
+            context.SaveChanges();
+
+            var generator = new LipsumGenerator();
+            for (int j = 0; j < 100; j++)
+            {
+                for (int i = 1000000 + (100 * j); i < 1000000 + (100 * (j + 1)); i++)
+                {
+                    var ou = new OU
+                    {
+                        Code = i.ToString(CultureInfo.InvariantCulture),
+                        Name = string.Join(" ", generator.GenerateWords(3))
+                    };
+
+                    context.OUs.Add(ou);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }
