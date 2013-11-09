@@ -11,5 +11,10 @@ namespace KendoGridBinderEx.Examples.MVC
         {
             get { return bool.Parse(Config["MiniProfiler.Enabled"]); }
         }
+
+        public static bool InitDatabase
+        {
+            get { return bool.Parse(Config["InitDatabase"]); }
+        }
     }
 }

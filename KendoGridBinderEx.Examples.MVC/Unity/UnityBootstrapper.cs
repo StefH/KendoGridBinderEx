@@ -24,7 +24,7 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.RegisterType(typeof(IRepository<>), typeof(Repository<>));
             UnityContainer.RegisterType(typeof(IUnitOfWork), typeof(UnitOfWork));
 
-            UnityContainer.RegisterType<DbContext>(new InjectionFactory(con => con.Resolve<MyDataContext>()));
+            UnityContainer.RegisterType<DbContext>(new InjectionFactory(con => con.Resolve<MyDataContextInitDb>()));
 
             UnityContainer.RegisterInstance(UnityContainer.Resolve<DbContext>(), new PerThreadLifetimeManager());
 
