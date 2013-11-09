@@ -2,13 +2,13 @@
 
 <table>
     <tr>
-        <td style="width: 200px;">
+        <td style="width: 150px;">
             @Html.LabelFor(model => model.CompanyId)
         </td>
         <td style="width: 400px;">
             @Html.TextBoxFor(model => model.CompanyId, new { data_bind = "kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: companies, value: companyId, optionLabel: 'Select ...' }" })
         </td>
-        <td style="width: 200px;">
+        <td style="width: 300px;">
             @Html.ValidationMessageFor(model => model.CompanyId)
         </td>
     </tr>
@@ -17,7 +17,7 @@
             @Html.LabelFor(model => model.Number)
         </td>
         <td>
-            @Html.TextBoxFor(model => model.Number)
+            @Html.TextBoxFor(model => model.Number, new { maxlength = 4, style = "width:30px;" })
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.Number)

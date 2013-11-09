@@ -19,6 +19,7 @@ namespace KendoGridBinderEx.Examples.Business.Validation
             RuleFor(e => e.EmployeeNumber)
                 .NotEmpty().WithMessage(GlobalResources_Business.Employee_Number_Required)
                 .Must(IsNumberUnique).WithMessage(GlobalResources_Business.Employee_Number_NotUnique)
+                .InclusiveBetween(1000, 9999).WithMessage(GlobalResources_Business.Employee_Number_Between1000and9999)
                 ;
 
             RuleFor(e => e.Company)

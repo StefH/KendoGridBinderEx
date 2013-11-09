@@ -153,6 +153,9 @@
   <data name="Employee_Last_Required" xml:space="preserve">
     <value>The LastName is required</value>
   </data>
+  <data name="Employee_Number_Between1000and9999" xml:space="preserve">
+    <value>The Number must be between 1000 and 9999</value>
+  </data>
   <data name="Employee_Number_NotUnique" xml:space="preserve">
     <value>The Number is not unique</value>
   </data>
