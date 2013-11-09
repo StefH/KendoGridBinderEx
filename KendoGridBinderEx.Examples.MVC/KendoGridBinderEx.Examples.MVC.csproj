@@ -177,7 +177,6 @@
     <Compile Include="Models\FunctionVM.cs" />
     <Compile Include="Models\SubFunctionVM.cs" />
     <Compile Include="Models\ProductVM.cs" />
-    <Compile Include="MyDataContextInitDb.cs" />
     <Compile Include="Unity\UnityBootstrapper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

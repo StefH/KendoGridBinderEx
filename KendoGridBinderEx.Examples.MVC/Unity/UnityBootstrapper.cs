@@ -22,18 +22,19 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
 
             // Registering interfaces of Unit Of Work & Generic Repository
             UnityContainer.RegisterType(typeof(IRepository<>), typeof(Repository<>));
-            UnityContainer.RegisterType(typeof(IUnitOfWork), typeof(UnitOfWork));
+            UnityContainer.RegisterType<IUnitOfWork, UnitOfWork>();
 
-            UnityContainer.RegisterType<DbContext>(new InjectionFactory(con => con.Resolve<MyDataContextInitDb>()));
-
+            UnityContainer.RegisterType<MyDataContextConfiguration>(new InjectionConstructor(ApplicationConfig.ConnectionString, ApplicationConfig.InitDatabase));
+            UnityContainer.RegisterType<DbContext>(new InjectionFactory(con => con.Resolve<MyDataContext>()));
+            
             UnityContainer.RegisterInstance(UnityContainer.Resolve<DbContext>(), new PerThreadLifetimeManager());
 
-            UnityContainer.RegisterType<IEmployeeService>(new InjectionFactory(con => con.Resolve<EmployeeService>()));
-            UnityContainer.RegisterType<IProductService>(new InjectionFactory(con => con.Resolve<ProductService>()));
-            UnityContainer.RegisterType<ICompanyService>(new InjectionFactory(con => con.Resolve<CompanyService>()));
-            UnityContainer.RegisterType<IFunctionService>(new InjectionFactory(con => con.Resolve<FunctionService>()));
-            UnityContainer.RegisterType<ISubFunctionService>(new InjectionFactory(con => con.Resolve<SubFunctionService>()));
-            UnityContainer.RegisterType<IOUService>(new InjectionFactory(con => con.Resolve<OUService>()));
+            UnityContainer.RegisterType<IEmployeeService, EmployeeService>();
+            UnityContainer.RegisterType<IProductService, ProductService>();
+            UnityContainer.RegisterType<ICompanyService, CompanyService>();
+            UnityContainer.RegisterType<IFunctionService, FunctionService>();
+            UnityContainer.RegisterType<ISubFunctionService, SubFunctionService>();
+            UnityContainer.RegisterType<IOUService, OUService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityContainer));
         }

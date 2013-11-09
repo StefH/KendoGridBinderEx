@@ -29,10 +29,10 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
         public DbSet<OU> OUs { get; set; }
 
-        public MyDataContext(string nameOrConnectionString, bool initDatabase)
-            : base(nameOrConnectionString)
+        public MyDataContext(MyDataContextConfiguration config)
+            : base(config.NameOrConnectionString)
         {
-            if (initDatabase)
+            if (config.InitDatabase)
             {
                 Database.SetInitializer(new InitDatabase());
             }

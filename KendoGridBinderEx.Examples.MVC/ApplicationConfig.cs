@@ -14,7 +14,12 @@ namespace KendoGridBinderEx.Examples.MVC
 
         public static bool InitDatabase
         {
-            get { return bool.Parse(Config["InitDatabase"]); }
+            get { return bool.Parse(Config["MyDataContextConfiguration.InitDatabase"]); }
+        }
+
+        public static string ConnectionString
+        {
+            get { return ConfigurationManager.ConnectionStrings["MyDataContext"].ConnectionString; }
         }
     }
 }

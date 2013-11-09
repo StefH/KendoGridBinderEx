@@ -115,6 +115,7 @@
     <Compile Include="Service\Implementation\ProductService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\MyDataContext.cs" />
+    <Compile Include="UnitOfWork\MyDataContextConfiguration.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Validation\BaseValidator.cs" />
     <Compile Include="Validation\EmployeeValidator.cs" />
