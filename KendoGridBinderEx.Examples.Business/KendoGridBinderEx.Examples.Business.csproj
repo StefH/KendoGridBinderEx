@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Database\Scripts\Add indexes.sql" />
     <Content Include="GlobalResourcesLiterals_Business.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalResourcesLiterals_Business.cs</LastGenOutput>
@@ -138,6 +139,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
