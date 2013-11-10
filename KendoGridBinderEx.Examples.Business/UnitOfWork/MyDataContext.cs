@@ -34,7 +34,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
         {
             if (config.InitDatabase)
             {
-                Database.SetInitializer(new InitDatabase());
+                Database.SetInitializer(new InitDatabase(config));
             }
             else
             {
@@ -70,6 +70,13 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
     public class InitDatabase : IDatabaseInitializer<MyDataContext>
     {
+        private readonly MyDataContextConfiguration _config;
+
+        public InitDatabase(MyDataContextConfiguration config)
+        {
+            _config = config;
+        }
+
         public void InitializeDatabase(MyDataContext context)
         {
             bool dbExists;
@@ -177,21 +184,70 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             products.ForEach(x => context.Products.Add(x));
             context.SaveChanges();
 
+            const int numOUs = 10000;
             var generator = new LipsumGenerator();
-            for (int j = 0; j < 100; j++)
+            var list = new List<OU>();
+            for (int i = 1000000; i < 1000000 + numOUs; i++)
             {
-                for (int i = 1000000 + (100 * j); i < 1000000 + (100 * (j + 1)); i++)
+                var ou = new OU
                 {
-                    var ou = new OU
-                    {
-                        Code = i.ToString(CultureInfo.InvariantCulture),
-                        Name = string.Join(" ", generator.GenerateWords(3))
-                    };
+                    Code = i.ToString(CultureInfo.InvariantCulture),
+                    Name = string.Join(" ", generator.GenerateWords(3))
+                };
 
-                    context.OUs.Add(ou);
-                }
-                context.SaveChanges();
+                list.Add(ou);
             }
+
+            BulkInsert(context, context.OUs, list);
+        }
+
+        private void BulkInsert<TEntity>(MyDataContext context, DbSet<TEntity> set, IEnumerable<TEntity> enumerable, int step = 100) where TEntity : class
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    context = new MyDataContext(_config);
+                    context.Configuration.AutoDetectChangesEnabled = false;
+
+                    int count = 0;
+                    foreach (var entityToInsert in enumerable)
+                    {
+                        ++count;
+                        context = AddToContext(context, set, entityToInsert, count, step, true);
+                    }
+
+                    context.SaveChanges();
+                }
+                finally
+                {
+                    if (context != null)
+                    {
+                        context.Dispose();
+                    }
+                }
+
+                scope.Complete();
+            }
+        }
+
+        private MyDataContext AddToContext<TEntity>(MyDataContext context, DbSet<TEntity> set, TEntity entity, int count, int commitCount, bool recreateContext) where TEntity : class
+        {
+
+            set.Add(entity);
+
+            if (count % commitCount == 0)
+            {
+                context.SaveChanges();
+                if (recreateContext)
+                {
+                    context.Dispose();
+                    context = new MyDataContext(_config);
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                }
+            }
+
+            return context;
         }
     }
 }
