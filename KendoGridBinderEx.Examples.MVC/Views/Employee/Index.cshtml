@@ -5,18 +5,12 @@
 <h3>All Employees</h3>
 <div id="grid"></div>
 <br/>
+<h3>All Employees Grouped</h3>
 <div id="gridWithGroup"></div>
-<br/>
 <br/>
 @using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
     <button class="buttonAdd" id="buttonAdd">Create new</button>
 }
-<br/>
-<br/>
-<h3>Only Managers</h3>
-<div id="gridManagers"></div>
-<br/>
-
 
 <script type="text/javascript">
     $(function () {
@@ -173,54 +167,5 @@
             },
             groupable: true
         });
-        
-        var dataSourceManagers = {
-            serverPaging: true,
-            serverSorting: true,
-            serverFiltering: true,
-            pageSize: 5,
-            transport: {
-                read: {
-                    type: 'post',
-                    dataType: 'json',
-                    url: '@Url.Action("GridManagers")'
-                }
-            },
-            schema: {
-                data: 'Data',
-                total: 'Total',
-                model: {
-                    id: 'Id',
-                    fields: {
-                        Number: { type: 'number' },
-                        First: { type: 'string' },
-                        Last: { type: 'string' },
-                        Full: { type: 'string' },
-                        Email: { type: 'string' },
-                        HireDate: { type: 'date' },
-                        FunctionCode: { type: 'string' },
-                        SubFunctionCode: { type: 'string' }
-                     }
-                 }
-             }
-         };
-       
-        $('#gridManagers').kendoGrid({
-            dataSource: dataSourceManagers,
-            columns: [
-                { field: 'Number', title: 'Employee #' },
-                { field: 'First', title: 'FirstName' },
-                { field: 'LastName', title: 'Last' },
-                { field: 'Full', title: 'FullName' },
-                { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: "{0:MM/dd/yyyy}" }
-            ],
-            filterable: true,
-            sortable: {
-                mode: 'multiple'
-            },
-            pageable: true
-        });
     });
-   
 </script>

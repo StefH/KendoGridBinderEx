@@ -9,24 +9,18 @@
 {
     background-color: #efeeef;
     clear: both;
-    padding-bottom: 35px;
+    padding-bottom: 10px;
 }
 
 .main-content
 {
-    background: url("../Images/accent.png") no-repeat;
     padding-left: 10px;
-    padding-top: 30px;
-}
-
-.featured + .main-content
-{
-    background: url("../Images/heroAccent.png") no-repeat;
+    padding-top: 5px;
 }
 
 header .content-wrapper
 {
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 footer
@@ -34,7 +28,7 @@ footer
     clear: both;
     background-color: #e2e2e2;
     font-size: .8em;
-    height: 100px;
+    height: 20px;
 }
 
 a
@@ -111,10 +105,9 @@ h5, h6
         text-decoration: none;
     }
 
-/* menu */
+/* menu 
 ul#menu
 {
-    /*font-size: 1.3em;*/
     font-weight: 600;
     margin: 0 0 5px;
     padding: 0;
@@ -140,7 +133,7 @@ ul#menu
                 color: #333;
                 text-decoration: none;
             }
-
+    */
 
 /* forms */
 fieldset

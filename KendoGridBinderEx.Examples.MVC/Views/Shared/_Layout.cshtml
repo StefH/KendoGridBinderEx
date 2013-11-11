@@ -21,19 +21,12 @@
     <body>
         <header>
             <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("KendoGridBinderEx MVC Demo", "Index", "Home")</p>
-                </div>
                 <div class="float-right">
                     <section id="login">
-                        Hello, <span class="username">@User.Identity.Name</span>!
+                        Hello, <span class="username">@User.Identity.Name</span>
                     </section>
                     <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Employees (TEntity & TViewModel)", "Index", "Employee")</li>
-                            <li>@Html.ActionLink("Products (TEntity & TViewModel)", "Index", "Product")</li>
-                            <li>@Html.ActionLink("Organizational Units (TEntity & TViewModel)", "Index", "OU")</li>
-                        </ul>
+                        @Html.MvcSiteMap().Menu()    
                     </nav>
                 </div>
             </div>
@@ -51,7 +44,12 @@
                 </div>
             </div>
         </footer>
-
+        
+        <script>
+            $(document).ready(function () {
+                $("#menu").kendoMenu();
+            });
+        </script>
         @RenderSection("scripts", false)
         @MiniProfiler.RenderIncludes()
     </body>

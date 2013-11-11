@@ -83,6 +83,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return employee;
         }
 
+        public ActionResult IndexManagers()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult GridWithGroup(KendoGridRequest request)
         {
