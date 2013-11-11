@@ -13,6 +13,6 @@
       <mvcSiteMapNode title="List Products" action="Index"/>
       <mvcSiteMapNode title="Create Product" action="Create"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="List OU" controller="OU"/>
+    <mvcSiteMapNode title="List OU" controller="OU" action="Index"/>
   </mvcSiteMapNode>
 </mvcSiteMap>
