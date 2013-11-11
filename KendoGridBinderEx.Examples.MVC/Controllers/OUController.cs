@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Web.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
@@ -28,6 +24,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 ;
         }
 
+        /*
         public void Bulk()
         {
             const int numOUs = 10000;
@@ -45,6 +42,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
             Func<IOUService> createService = () => DependencyResolver.Current.GetService<IOUService>();
             _ouService.BulkInsert(list, createService, 100);
-        }
+        }*/
     }
 }
