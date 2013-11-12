@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using KendoGridBinder.Containers;
+using KendoGridBinder.Extensions;
 
 namespace KendoGridBinder
 {

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
 using KendoGridBinder.Containers;
+using KendoGridBinder.Extensions;
 
 namespace KendoGridBinder
 {
@@ -267,7 +269,9 @@ namespace KendoGridBinder
                 type = info.PropertyType;
             }
 
-            return type.Name.ToLower();
+            bool bIsGenericOrNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+
+            return bIsGenericOrNullable ? type.GetGenericArguments()[0].Name.ToLower() : type.Name.ToLower();
         }
 
         protected static string GetExpression(string field, string op, string param)
@@ -283,13 +287,13 @@ namespace KendoGridBinder
 
             if (dataType == "datetime")
             {
-                var i = param.IndexOf("GMT");
+                var i = param.IndexOf("GMT", StringComparison.Ordinal);
                 if (i > 0)
                 {
                     param = param.Remove(i);
                 }
-                var date = DateTime.Parse(param, new System.Globalization.CultureInfo("en-US"));
-                
+                var date = DateTime.Parse(param, new CultureInfo("en-US"));
+
                 var str = string.Format("DateTime({0}, {1}, {2})", date.Year, date.Month, date.Day);
                 param = str;
             }

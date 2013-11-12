@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 
-namespace KendoGridBinder
+namespace KendoGridBinder.Extensions
 {
     public static class Extensions
     {

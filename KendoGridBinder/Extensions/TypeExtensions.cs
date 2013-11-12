@@ -2,33 +2,33 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace KendoGridBinder
+namespace KendoGridBinder.Extensions
 {
     public static class TypeExtensions
     {
-        internal static readonly Type[] PredefinedTypes = new[]
-		{
-			typeof(object),
-			typeof(bool),
-			typeof(char),
-			typeof(string),
-			typeof(sbyte),
-			typeof(byte),
-			typeof(short),
-			typeof(ushort),
-			typeof(int),
-			typeof(uint),
-			typeof(long),
-			typeof(ulong),
-			typeof(float),
-			typeof(double),
-			typeof(decimal),
-			typeof(DateTime),
-			typeof(TimeSpan),
-			typeof(Guid),
-			typeof(Math),
-			typeof(Convert)
-		};
+        internal static readonly Type[] PredefinedTypes =
+        {
+            typeof(object),
+            typeof(bool),
+            typeof(char),
+            typeof(string),
+            typeof(sbyte),
+            typeof(byte),
+            typeof(short),
+            typeof(ushort),
+            typeof(int),
+            typeof(uint),
+            typeof(long),
+            typeof(ulong),
+            typeof(float),
+            typeof(double),
+            typeof(decimal),
+            typeof(DateTime),
+            typeof(TimeSpan),
+            typeof(Guid),
+            typeof(Math),
+            typeof(Convert)
+        };
 
         public static bool IsPredefinedType(this Type type)
         {

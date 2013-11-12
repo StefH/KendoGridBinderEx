@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace KendoGridBinder
+namespace KendoGridBinder.Extensions
 {
     public static class QueryProviderExtensions
     {
@@ -15,8 +15,5 @@ namespace KendoGridBinder
         }
     }
 }
-
-
-
 
 

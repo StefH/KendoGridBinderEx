@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace KendoGridBinder
+namespace KendoGridBinder.Extensions
 {
     public static class DynamicQueryableExtensions
     {
