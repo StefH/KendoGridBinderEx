@@ -4,11 +4,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.QueryContext;
+using KendoGridBinderEx.Examples.Business.Repository;
+using KendoGridBinderEx.Examples.Business.UnitOfWork;
 
 namespace KendoGridBinderEx.Examples.Business.Service.Interface
 {
     public interface IBaseService<TEntity> where TEntity : class, IEntity
     {
+        void Dispose();
+        IUnitOfWork UnitOfWork { get; }
+        IRepository<TEntity> Repository { get; }
         IQueryable<TEntity> AsQueryable(params Expression<Func<TEntity, object>>[] includeProperties);
         IQueryContext<TEntity> GetQueryContext(params Expression<Func<TEntity, object>>[] includeProperties);
         IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
@@ -19,5 +24,6 @@ namespace KendoGridBinderEx.Examples.Business.Service.Interface
         void Insert(TEntity model);
         void Update(TEntity entity);
         void Delete(TEntity entity);
+        void BulkInsert(IEnumerable<TEntity> enumerable, Func<IBaseService<TEntity>> createService, int step);
     }
 }

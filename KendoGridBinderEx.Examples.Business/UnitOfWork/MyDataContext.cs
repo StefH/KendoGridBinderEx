@@ -13,6 +13,10 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
     public class MyDataContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Company> Companies { get; set; }
@@ -66,6 +70,19 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
                 Database.ExecuteSqlCommand(dropForeignKeys);
             }
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+              .HasMany<Role>(r => r.Roles)
+              .WithMany(u => u.Users)
+              .Map(m =>
+              {
+                  m.ToTable("KendoGrid_UserRoles");
+                  m.MapLeftKey("UserId");
+                  m.MapRightKey("RoleId");
+              });
+        }
     }
 
     public class InitDatabase : IDatabaseInitializer<MyDataContext>
@@ -91,7 +108,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             }
 
             // remove all tables if present
-            var dropTables = new[] { "KendoGrid_OU", "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
+            var dropTables = new[] { "KendoGrid_UserRoles", "KendoGrid_User", "KendoGrid_Role", "KendoGrid_OU", "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
             foreach (var table in dropTables)
             {
                 if (context.TableExists(table))
@@ -112,6 +129,18 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
         private void Seed(MyDataContext context)
         {
+            var roleAdmin = new Role { Id = 1, Name = "Administrator", Description = "Administrator" };
+            var roleSuperUser = new Role { Id = 2, Name = "SuperUser", Description = "Super User" };
+            context.Roles.Add(roleAdmin);
+            context.Roles.Add(roleSuperUser);
+            context.SaveChanges();
+
+            var userAdmin = new User { Id = 1, IdentityName = "00000001", DisplayName = "", EmailAddress = "a@a.com", Roles = new List<Role>() };
+            userAdmin.Roles.Add(roleAdmin);
+            userAdmin.Roles.Add(roleSuperUser);
+            context.Users.Add(userAdmin);
+            context.SaveChanges();
+
             var functionIct = new Function { Id = 1, Code = "ICT", Name = "ICT" };
             var functionManagement = new Function { Id = 2, Code = "MAN", Name = "Management" };
             var functions = new List<Function> { functionIct, functionManagement };
@@ -151,18 +180,18 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
             var employees = new List<Employee>
             {
-                new Employee { Id = 1, Country = countryNL, Company = companyA, FirstName = "Bill", LastName = "Smith", Email = "bsmith@email.com", EmployeeNumber = 1001, HireDate = Convert.ToDateTime("01/12/1990"), Function = functionManagement, SubFunction = functionManagement.SubFunctions.First()},
-                new Employee { Id = 2, Country = countryNL, Company = companyB, FirstName = "Jack", LastName = "Smith", Email = "jsmith@email.com", EmployeeNumber = 1002, HireDate = Convert.ToDateTime("12/12/1997"), Function = functionManagement, SubFunction = functionManagement.SubFunctions.First()},
-                new Employee { Id = 3, Country = countryNL, Company = companyC, FirstName = "Mary", LastName = "Gates", Email = "mgates@email.com", EmployeeNumber = 1003, HireDate = Convert.ToDateTime("03/03/2000"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[1]},
-                new Employee { Id = 4, Country = countryNL, Company = companyA, FirstName = "John", LastName = "Doe", Email = "jd@email.com", EmployeeNumber = 1004, HireDate = Convert.ToDateTime("11/11/2011"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[2]},
-                new Employee { Id = 5, Country = countryBE, Company = companyB, FirstName = "Chris", LastName = "Cross", Email = "cc@email.com", EmployeeNumber = 1005, HireDate = Convert.ToDateTime("05/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[3]},
-                new Employee { Id = 6, Country = countryBE, Company = companyC, FirstName = "Niki", LastName = "Myers", Email = "nm@email.com", EmployeeNumber = 1006, HireDate = Convert.ToDateTime("06/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[4]},
-                new Employee { Id = 7, Country = countryBE, Company = companyA, FirstName = "Joseph", LastName = "Hall", Email = "jh@email.com", EmployeeNumber = 1007, HireDate = Convert.ToDateTime("07/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[5]},
-                new Employee { Id = 8, Country = countryBE, Company = companyB, FirstName = "Daniel", LastName = "Wells", Email = "cc@email.com", EmployeeNumber = 1008, HireDate = Convert.ToDateTime("08/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[6]},
-                new Employee { Id = 9, Country = countryNL, Company = companyC, FirstName = "Robert", LastName = "Lawrence", Email = "cc@email.com", EmployeeNumber = 1009, HireDate = Convert.ToDateTime("09/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[7]},
-                new Employee { Id = 10, Country = countryNL, Company = companyA, FirstName = "Reginald", LastName = "Quinn", Email = "cc@email.com", EmployeeNumber = 1010, HireDate = Convert.ToDateTime("10/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[8]},
-                new Employee { Id = 11, Country = countryNL, Company = companyB, FirstName = "Quinn", LastName = "Quick", Email = "cc@email.com", EmployeeNumber = 1011, HireDate = Convert.ToDateTime("11/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[9]},
-                new Employee { Id = 12, Country = countryNL, Company = companyC, FirstName = "Test", LastName = "User", Email = "tu@email.com", EmployeeNumber = 1012, HireDate = Convert.ToDateTime("11/05/2012"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[0]},
+                new Employee { Id = 1, Assigned = null, Country = countryNL, Company = companyA, FirstName = "Bill", LastName = "Smith", Email = "bsmith@email.com", EmployeeNumber = 1001, HireDate = Convert.ToDateTime("01/12/1990"), Function = functionManagement, SubFunction = functionManagement.SubFunctions.First()},
+                new Employee { Id = 2, Assigned = 1, Country = countryNL, Company = companyB, FirstName = "Jack", LastName = "Smith", Email = "jsmith@email.com", EmployeeNumber = 1002, HireDate = Convert.ToDateTime("12/12/1997"), Function = functionManagement, SubFunction = functionManagement.SubFunctions.First()},
+                new Employee { Id = 3, Assigned = 2, Country = countryNL, Company = companyC, FirstName = "Mary", LastName = "Gates", Email = "mgates@email.com", EmployeeNumber = 1003, HireDate = Convert.ToDateTime("03/03/2000"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[1]},
+                new Employee { Id = 4, Assigned = null, Country = countryNL, Company = companyA, FirstName = "John", LastName = "Doe", Email = "jd@email.com", EmployeeNumber = 1004, HireDate = Convert.ToDateTime("11/11/2011"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[2]},
+                new Employee { Id = 5, Assigned = 0, Country = countryBE, Company = companyB, FirstName = "Chris", LastName = "Cross", Email = "cc@email.com", EmployeeNumber = 1005, HireDate = Convert.ToDateTime("05/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[3]},
+                new Employee { Id = 6, Assigned = 1, Country = countryBE, Company = companyC, FirstName = "Niki", LastName = "Myers", Email = "nm@email.com", EmployeeNumber = 1006, HireDate = Convert.ToDateTime("06/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[4]},
+                new Employee { Id = 7, Assigned = null, Country = countryBE, Company = companyA, FirstName = "Joseph", LastName = "Hall", Email = "jh@email.com", EmployeeNumber = 1007, HireDate = Convert.ToDateTime("07/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[5]},
+                new Employee { Id = 8, Assigned = 0, Country = countryBE, Company = companyB, FirstName = "Daniel", LastName = "Wells", Email = "cc@email.com", EmployeeNumber = 1008, HireDate = Convert.ToDateTime("08/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[6]},
+                new Employee { Id = 9, Assigned = 1, Country = countryNL, Company = companyC, FirstName = "Robert", LastName = "Lawrence", Email = "cc@email.com", EmployeeNumber = 1009, HireDate = Convert.ToDateTime("09/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[7]},
+                new Employee { Id = 10, Assigned = 0, Country = countryNL, Company = companyA, FirstName = "Reginald", LastName = "Quinn", Email = "cc@email.com", EmployeeNumber = 1010, HireDate = Convert.ToDateTime("10/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[8]},
+                new Employee { Id = 11, Assigned = 2, Country = countryNL, Company = companyB, FirstName = "Quinn", LastName = "Quick", Email = "cc@email.com", EmployeeNumber = 1011, HireDate = Convert.ToDateTime("11/05/1995"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[9]},
+                new Employee { Id = 12, Assigned = null, Country = countryNL, Company = companyC, FirstName = "Test", LastName = "User", Email = "tu@email.com", EmployeeNumber = 1012, HireDate = Convert.ToDateTime("11/05/2012"), Function = functionIct, SubFunction = functionIct.SubFunctions.ToArray()[0]},
             };
             employees.ForEach(x => context.Employees.Add(x));
             context.SaveChanges();
@@ -184,7 +213,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             products.ForEach(x => context.Products.Add(x));
             context.SaveChanges();
 
-            const int numOUs = 10000;
+            const int numOUs = 1000;
             var generator = new LipsumGenerator();
             var list = new List<OU>();
             for (int i = 1000000; i < 1000000 + numOUs; i++)

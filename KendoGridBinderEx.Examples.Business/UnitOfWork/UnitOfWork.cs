@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
@@ -28,6 +29,14 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
         public void Commit()
         {
             _dbContext.SaveChanges();
+        }
+
+        public DbContextConfiguration Configuration
+        {
+            get
+            {
+                return _dbContext.Configuration;
+            }
         }
         #endregion
     }
