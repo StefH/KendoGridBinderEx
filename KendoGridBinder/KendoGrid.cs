@@ -284,7 +284,13 @@ namespace KendoGridBinder
 
             if (dataType == "datetime")
             {
-                var date = DateTime.Parse(param);
+                var i = param.IndexOf("GMT");
+                if (i > 0)
+                {
+                    param = param.Remove(i);
+                }
+                var date = DateTime.Parse(param, new CultureInfo("en-US"));
+                
                 var str = string.Format("DateTime({0}, {1}, {2})", date.Year, date.Month, date.Day);
                 param = str;
             }
