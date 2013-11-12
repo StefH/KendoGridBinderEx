@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
-
 using KendoGridBinder.Containers;
 
 namespace KendoGridBinder
@@ -289,7 +288,7 @@ namespace KendoGridBinder
                 {
                     param = param.Remove(i);
                 }
-                var date = DateTime.Parse(param, new CultureInfo("en-US"));
+                var date = DateTime.Parse(param, new System.Globalization.CultureInfo("en-US"));
                 
                 var str = string.Format("DateTime({0}, {1}, {2})", date.Year, date.Month, date.Day);
                 param = str;
