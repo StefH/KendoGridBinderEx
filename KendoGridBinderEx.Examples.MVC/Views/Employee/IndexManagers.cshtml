@@ -18,7 +18,14 @@
                     type: 'post',
                     dataType: 'json',
                     url: '@Url.Action("GridManagers")'
+                },
+                // annyoing work-around for adding date types to the request
+                parameterMap: function (options) {
+                if (options.filter) {
+                    options.filter.filters[0].value = kendo.toString(options.filter.filters[0].value, "MM/dd/yyyy");
                 }
+        return options;
+    }
             },
             schema: {
                 data: 'Data',
