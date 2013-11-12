@@ -31,6 +31,8 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public SubFunction SubFunction { get; set; }
 
+        public int? Assigned { get; set; }
+
         [NotMapped]
         public bool IsManager
         {

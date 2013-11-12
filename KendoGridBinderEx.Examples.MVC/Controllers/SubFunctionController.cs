@@ -28,6 +28,14 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetSubFunctionsAsJson()
+        {
+            var entities = base.Map(_subFunctionService.AsQueryable());
+
+            return Json(entities, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult GetSubFunctionsByFunctionIdAsJson(long functionId)
         {
             var entities = base.Map(_subFunctionService.AsQueryable().Where(s => s.Function.Id == functionId));

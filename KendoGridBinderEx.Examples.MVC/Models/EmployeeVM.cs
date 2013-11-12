@@ -60,5 +60,7 @@ namespace KendoGridBinderEx.Examples.MVC.Models
 
         [Display(ResourceType = typeof(GlobalResources_Business), Name = GlobalResources_BusinessLiterals.SubFunction)]
         public string SubFunctionName { get; set; }
+
+        public int? Assigned { get; set; }
     }
 }

@@ -23,6 +23,24 @@
     });
 
     $(document).ready(function () {
+        var functionsDataSource = {
+            transport: {
+                read: {
+                    url: '@Url.Action("GetFunctionsAsJson", "Function")',
+                    dataType: "json"
+                }
+            }
+        };
+        
+        var subFunctionsDataSource = {
+            transport: {
+                read: {
+                    url: '@Url.Action("GetSubFunctionsAsJson", "SubFunction")',
+                    dataType: "json"
+                }
+            }
+        };
+
         var dataSource = {
             serverPaging: true,
             serverSorting: true,
@@ -52,7 +70,8 @@
                         CountryCode: { type: 'string' },
                         IsManager: { type: 'boolean' },
                         FunctionCode: { type: 'string' },
-                        SubFunctionCode: { type: 'string' }
+                        SubFunctionCode: { type: 'string' },
+                        Assigned: { type: 'number' }
                     }
                 }
             }
@@ -76,13 +95,41 @@
                 { field: 'LastName', title: 'LastName' },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: "{0:yyyy-MM-dd}" },
+                { field: 'HireDate', title: 'Hire Date', format: "{0:yyyy-MM-dd}", filterable: {
+                        ui: "datetimepicker" // use Kendo UI DateTimePicker
+                    }
+                },
                 { field: 'CountryCode', title: 'Country' },
                 { field: 'IsManager', title: 'Manager' },
-                { field: 'FunctionCode', title: 'Function' },
-                { field: 'SubFunctionCode', title: 'SubFunction' }
+                {
+                    field: 'FunctionCode', title: 'Function', filterable: {
+                        extra: false,
+                        operators: {
+                            string: {
+                                eq: "Is equal to",
+                                neq: "Is not equal to"
+                            }
+                        },
+                        ui: filterFunction
+                    }
+                },
+                {
+                    field: 'SubFunctionCode', title: 'SubFunction', filterable: {
+                        extra: false,
+                        operators: {
+                            string: {
+                                eq: "Is equal to",
+                                neq: "Is not equal to"
+                            }
+                        },
+                        ui: filterSubFunction
+                    }
+                },
+                { field: 'Assigned', title: 'Assigned' }
             ],
-            filterable: true,
+            filterable: {
+                extra: true
+            },
             sortable: {
                 mode: 'multiple'
             },
@@ -91,7 +138,25 @@
                 pageSizes: true
             }
         });
+
+        function filterFunction(element) {
+            element.kendoDropDownList({
+                dataSource: functionsDataSource,
+                dataTextField: 'Code',
+                dataValueField: 'Code',
+                optionLabel: 'Select ...'
+            });
+        }
         
+        function filterSubFunction(element) {
+            element.kendoDropDownList({
+                dataSource: subFunctionsDataSource,
+                dataTextField: 'Code',
+                dataValueField: 'Code',
+                optionLabel: 'Select ...'
+            });
+        }
+
         var dataSourceWithGroup = {
             serverPaging: true,
             serverSorting: true,
@@ -124,7 +189,8 @@
                         CountryCode: { type: 'string' },
                         IsManager: { type: 'boolean' },
                         FunctionCode: { type: 'string' },
-                        SubFunctionCode: { type: 'string' }
+                        SubFunctionCode: { type: 'string' },
+                        Assigned: { type: 'number' }
                     }
                 }
             },
@@ -132,17 +198,17 @@
                 field: "MainCompanyName"
             }]
         };
-        
+
         $('#gridWithGroup').kendoGrid({
             dataSource: dataSourceWithGroup,
             height: '250px',
             columns: [
                 {
-                     field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
-                     template:
-                        '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
-                        '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                        '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                    field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
+                    template:
+                       '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
+                       '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                       '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
                 },
                 { field: 'CompanyName', title: 'Company', groupHeaderTemplate: "Company : #= value#" },
                 { field: 'MainCompanyName', title: 'Main Company' },
@@ -155,7 +221,8 @@
                 { field: 'CountryCode', title: 'Country' },
                 { field: 'IsManager', title: 'Manager' },
                 { field: 'FunctionCode', title: 'Function' },
-                { field: 'SubFunctionCode', title: 'SubFunction' }
+                { field: 'SubFunctionCode', title: 'SubFunction' },
+                { field: 'Assigned', title: 'Assigned' }
             ],
             filterable: true,
             sortable: {
