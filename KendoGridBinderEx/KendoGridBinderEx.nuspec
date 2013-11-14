@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>KendoGridBinderEx</id>
-        <version>1.0.4</version>
+        <version>4.0.0.1</version>
         <title>KendoGridBinderEx</title>
         <authors>Stef Heyenrath</authors>
         <owners />
@@ -19,6 +19,5 @@
     </metadata>
     <files>
         <file src="bin\Release\KendoGridBinderEx.dll" target="lib\net40\KendoGridBinderEx.dll" />
-        <file src="bin\Release\KendoGridBinder.dll" target="lib\net40\KendoGridBinder.dll" />
     </files>
 </package>
