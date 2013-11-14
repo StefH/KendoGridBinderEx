@@ -102,9 +102,6 @@
     <Reference Include="PropertyTranslator">
       <HintPath>..\packages\Linq.PropertyTranslator.1.0.0.0\lib\net40\PropertyTranslator.dll</HintPath>
     </Reference>
-    <Reference Include="QueryInterceptor">
-      <HintPath>..\packages\QueryInterceptor.0.2\lib\net40\QueryInterceptor.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -465,6 +462,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.validation-extra.js" />
     <Content Include="Scripts\jquery.validation-extra2.js" />
+    <Content Include="Scripts\kendoExtensions.js" />
     <Content Include="Scripts\kendo\2013.2.716\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="Scripts\kendo\2013.2.716\cultures\kendo.culture.af.min.js" />
     <Content Include="Scripts\kendo\2013.2.716\cultures\kendo.culture.am-ET.min.js" />
@@ -884,7 +882,9 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Unity\Unity.Mvc4.README.txt" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

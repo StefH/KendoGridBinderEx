@@ -1,11 +1,13 @@
-﻿using System.Web.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
+using System.Data.Entity;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -14,7 +16,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         private readonly IProductService _productService;
         private readonly ProductValidator _productValidator;
 
-        public ProductController(IProductService productService) : base(productService)
+        public ProductController(IProductService productService)
+            : base(productService)
         {
             _productService = productService;
 
@@ -28,6 +31,14 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
             Mapper.CreateMap<ProductVM, Product>()
                 ;
+        }
+
+        public async Task<ActionResult> DetailsByCode(string code)
+        {
+            var entity = await _productService.FirstOrDefaultAsync(p => p.Code == code);
+            var viewModel = Map(entity);
+
+            return View("Details", viewModel);
         }
 
         [HttpPost]

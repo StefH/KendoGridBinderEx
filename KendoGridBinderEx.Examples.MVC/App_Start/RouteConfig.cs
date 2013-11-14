@@ -10,6 +10,11 @@ namespace KendoGridBinderEx.Examples.MVC
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ByCode",
+                url: "{controller}/{action}/code={code}"
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Employee", action = "Index", id = UrlParameter.Optional }

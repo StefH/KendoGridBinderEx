@@ -4,3 +4,6 @@
     }
     frm.submit();
 }
+
+var _DefaultDateFormat = "MM/dd/yyyy";
+var _DefaultDateTemplate = "{0:" + _DefaultDateFormat + "}";

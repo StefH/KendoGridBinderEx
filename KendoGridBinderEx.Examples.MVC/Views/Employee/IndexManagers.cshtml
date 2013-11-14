@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Employee Grid Example";
+    ViewBag.Title = "Managers Grid Example";
 }
 
 <h3>All Managers</h3>
@@ -8,6 +8,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        
+
         var dataSourceManagers = {
             serverPaging: true,
             serverSorting: true,
@@ -19,13 +21,13 @@
                     dataType: 'json',
                     url: '@Url.Action("GridManagers")'
                 },
-                // annyoing work-around for adding date types to the request
+
                 parameterMap: function (options) {
-                if (options.filter) {
-                    options.filter.filters[0].value = kendo.toString(options.filter.filters[0].value, "MM/dd/yyyy");
+                    if (options.filter) {
+                        KendoGrid_FixFilter(dataSourceManagers, options.filter);
+                    }
+                    return options;
                 }
-        return options;
-    }
             },
             schema: {
                 data: 'Data',
@@ -54,7 +56,7 @@
                 { field: 'LastName', title: 'Last' },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: "{0:MM/dd/yyyy}" }
+                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilter_DatePicker } }
             ],
             filterable: true,
             sortable: {

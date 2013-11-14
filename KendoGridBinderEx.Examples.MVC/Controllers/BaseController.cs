@@ -7,6 +7,7 @@ using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
+using System.Threading.Tasks;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -42,11 +43,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Service.AsQueryable();
         }
 
-        protected virtual TEntity GetById(long id)
-        {
-            return Service.GetById(id);
-        }
-
         protected virtual TViewModel Map(TEntity entity)
         {
             return Mapper.Map<TViewModel>(entity);
@@ -67,15 +63,25 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return new TViewModel();
         }
 
+        protected virtual TEntity GetById(long id)
+        {
+            return Service.GetById(id);
+        }
+
+        protected async virtual Task<TEntity> GetByIdAsync(long id)
+        {
+            return await Service.GetByIdAsync(id);
+        }
+
         #region MVC Actions
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Details(long id)
+        public async Task<ActionResult> Details(long id)
         {
-            var entity = GetById(id);
+            var entity = await GetByIdAsync(id);
             var viewModel = Map(entity);
 
             return View(viewModel);

@@ -23,24 +23,6 @@
     });
 
     $(document).ready(function () {
-        var functionsDataSource = {
-            transport: {
-                read: {
-                    url: '@Url.Action("GetFunctionsAsJson", "Function")',
-                    dataType: "json"
-                }
-            }
-        };
-        
-        var subFunctionsDataSource = {
-            transport: {
-                read: {
-                    url: '@Url.Action("GetSubFunctionsAsJson", "SubFunction")',
-                    dataType: "json"
-                }
-            }
-        };
-
         var dataSource = {
             serverPaging: true,
             serverSorting: true,
@@ -51,6 +33,12 @@
                     type: 'post',
                     dataType: 'json',
                     url: '@Url.Action("Grid")'
+                },
+                parameterMap: function (options) {
+                    if (options.filter) {
+                        KendoGrid_FixFilter(dataSource, options.filter);
+                    }
+                    return options;
                 }
             },
             schema: {
@@ -95,12 +83,9 @@
                 { field: 'LastName', title: 'LastName' },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: "{0:yyyy-MM-dd}", filterable: {
-                        ui: "datetimepicker" // use Kendo UI DateTimePicker
-                    }
-                },
+                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilter_DatePicker } },
                 { field: 'CountryCode', title: 'Country' },
-                { field: 'IsManager', title: 'Manager' },
+                { field: "IsManager", title: "Manager", template: "<input type=\"checkbox\" disabled='disabled' #= IsManager ? checked='checked' : '' # class=\"check_row\"/>" },
                 {
                     field: 'FunctionCode', title: 'Function', filterable: {
                         extra: false,
@@ -110,7 +95,7 @@
                                 neq: "Is not equal to"
                             }
                         },
-                        ui: filterFunction
+                        ui: KendoGridFilter_Function
                     }
                 },
                 {
@@ -122,7 +107,7 @@
                                 neq: "Is not equal to"
                             }
                         },
-                        ui: filterSubFunction
+                        ui: KendoGridFilter_SubFunction
                     }
                 },
                 { field: 'Assigned', title: 'Assigned' }
@@ -139,24 +124,6 @@
             }
         });
 
-        function filterFunction(element) {
-            element.kendoDropDownList({
-                dataSource: functionsDataSource,
-                dataTextField: 'Code',
-                dataValueField: 'Code',
-                optionLabel: 'Select ...'
-            });
-        }
-        
-        function filterSubFunction(element) {
-            element.kendoDropDownList({
-                dataSource: subFunctionsDataSource,
-                dataTextField: 'Code',
-                dataValueField: 'Code',
-                optionLabel: 'Select ...'
-            });
-        }
-
         var dataSourceWithGroup = {
             serverPaging: true,
             serverSorting: true,
@@ -168,6 +135,12 @@
                     type: 'post',
                     dataType: 'json',
                     url: '@Url.Action("GridWithGroup")'
+                },
+                parameterMap: function (options) {
+                    if (options.filter) {
+                        KendoGrid_FixFilter(dataSourceWithGroup, options.filter);
+                    }
+                    return options;
                 }
             },
             schema: {
@@ -217,7 +190,7 @@
                 { field: 'LastName', title: 'Last', groupHeaderTemplate: "LastName : #= value#" },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: "{0:MM/dd/yyyy}" },
+                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilter_DatePicker } },
                 { field: 'CountryCode', title: 'Country' },
                 { field: 'IsManager', title: 'Manager' },
                 { field: 'FunctionCode', title: 'Function' },

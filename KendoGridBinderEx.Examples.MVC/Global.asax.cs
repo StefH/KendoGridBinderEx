@@ -10,6 +10,7 @@ using FluentValidation.Mvc;
 using KendoGridBinderEx.Examples.MVC.Unity;
 using StackExchange.Profiling;
 using StackExchange.Profiling.EntityFramework6;
+using StackExchange.Profiling.SqlFormatters;
 
 namespace KendoGridBinderEx.Examples.MVC
 {
@@ -31,6 +32,9 @@ namespace KendoGridBinderEx.Examples.MVC
 
             if (_miniProfilerEnabled)
             {
+                MiniProfiler.Settings.PopupRenderPosition = RenderPosition.Right;
+                MiniProfiler.Settings.SqlFormatter = new SqlServerFormatter();
+                MiniProfiler.Settings.ShowControls = false;
                 MiniProfilerEF6.Initialize();
             }
 

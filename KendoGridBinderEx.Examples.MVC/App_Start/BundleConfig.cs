@@ -9,7 +9,10 @@ namespace KendoGridBinderEx.Examples.MVC
         {
             // Kendo JS and CSS
             const string kendoVersion = "2013.2.716";
-            bundles.Add(new ScriptBundle("~/bundles/kendo").Include("~/Scripts/kendo/" + kendoVersion + "/kendo.web.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/kendo")
+                .Include("~/Scripts/kendo/" + kendoVersion + "/kendo.web.min.js")
+                .Include("~/Scripts/kendoExtensions.js")
+            );
             bundles.Add(new StyleBundle("~/ContentKendo").Include(
                 "~/Content/kendo/" + kendoVersion + "/kendo.common.min.css",
                 "~/Content/kendo/" + kendoVersion + "/kendo.uniform.min.css"
@@ -27,7 +30,9 @@ namespace KendoGridBinderEx.Examples.MVC
                 )
             );
 
-            bundles.Add(new ScriptBundle("~/bundles/common").Include("~/Scripts/common.js"));
+            bundles.Add(new ScriptBundle("~/bundles/common")
+                .Include("~/Scripts/common.js")
+            );
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
