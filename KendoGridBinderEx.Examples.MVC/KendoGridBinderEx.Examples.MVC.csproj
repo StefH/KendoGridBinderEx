@@ -938,10 +938,6 @@
       <Project>{b99bde11-9306-4736-97ac-b6640c342f4e}</Project>
       <Name>KendoGridBinderEx</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KendoGridBinder\KendoGridBinder.csproj">
-      <Project>{d786207c-387a-4edb-a950-e92e0d69c1b0}</Project>
-      <Name>KendoGridBinder</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Web
+# Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A6398D29-1651-48BB-BB61-29884052E210}"
@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinder", "KendoGridBinder\KendoGridBinder.csproj", "{D786207C-387A-4EDB-A950-E92E0D69C1B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx", "KendoGridBinderEx\KendoGridBinderEx.csproj", "{B99BDE11-9306-4736-97AC-B6640C342F4E}"
 EndProject
@@ -30,10 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D786207C-387A-4EDB-A950-E92E0D69C1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D786207C-387A-4EDB-A950-E92E0D69C1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D786207C-387A-4EDB-A950-E92E0D69C1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D786207C-387A-4EDB-A950-E92E0D69C1B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B99BDE11-9306-4736-97AC-B6640C342F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B99BDE11-9306-4736-97AC-B6640C342F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B99BDE11-9306-4736-97AC-B6640C342F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU

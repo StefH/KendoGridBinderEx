@@ -56,7 +56,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -83,10 +83,6 @@
     <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.csproj">
       <Project>{b99bde11-9306-4736-97ac-b6640c342f4e}</Project>
       <Name>KendoGridBinderEx</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KendoGridBinder\KendoGridBinder.csproj">
-      <Project>{d786207c-387a-4edb-a950-e92e0d69c1b0}</Project>
-      <Name>KendoGridBinder</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

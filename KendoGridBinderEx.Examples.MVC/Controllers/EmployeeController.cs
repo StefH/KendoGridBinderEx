@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
-using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;

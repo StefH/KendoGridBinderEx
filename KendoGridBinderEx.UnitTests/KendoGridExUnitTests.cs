@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AutoMapper;
-using KendoGridBinder;
 using KendoGridBinderEx.UnitTests.Entities;
 using KendoGridBinderEx.UnitTests.Helpers;
 using Newtonsoft.Json;
