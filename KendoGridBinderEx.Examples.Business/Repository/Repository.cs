@@ -1,13 +1,14 @@
-﻿using System;
+﻿using KendoGridBinderEx.Examples.Business.QueryContext;
+using PropertyTranslator;
+using QueryInterceptor;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
-using KendoGridBinderEx.Examples.Business.QueryContext;
-using PropertyTranslator;
-using QueryInterceptor;
+using System.Threading.Tasks;
 
 namespace KendoGridBinderEx.Examples.Business.Repository
 {
@@ -55,12 +56,42 @@ namespace KendoGridBinderEx.Examples.Business.Repository
 
         public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable(includeProperties);
+            return AsQueryable(includeProperties).AsEnumerable();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        public Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return Task.FromResult(AsQueryable(includeProperties).AsEnumerable());
+        }
+
+        public IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return AsQueryable(includeProperties).Where(where);
+        }
+
+        public Task<IEnumerable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return Task.FromResult(AsQueryable(includeProperties).Where(where).AsEnumerable());
+        }
+
+        public TEntity First(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return AsQueryable().First(where);
+        }
+
+        public Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return AsQueryable().FirstAsync(where);
+        }
+
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return AsQueryable().FirstOrDefault(where);
+        }
+
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return AsQueryable().FirstOrDefaultAsync(where);
         }
 
         public TEntity Single(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -68,9 +99,9 @@ namespace KendoGridBinderEx.Examples.Business.Repository
             return AsQueryable().Single(where);
         }
 
-        public TEntity First(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        public Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().First(where);
+            return AsQueryable().SingleAsync(where);
         }
 
         public void Delete(TEntity entity)

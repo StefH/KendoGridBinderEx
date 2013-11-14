@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Transactions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.QueryContext;
@@ -62,14 +64,25 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
             return _repository.GetQueryContext(includeProperties);
         }
 
+
         public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return _repository.GetAll(includeProperties);
         }
 
+        public Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.GetAllAsync(includeProperties);
+        }
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return _repository.Find(where, includeProperties);
+            return _repository.Where(where, includeProperties);
+        }
+
+        public Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.WhereAsync(where, includeProperties);
         }
 
         public TEntity First(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -77,14 +90,39 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
             return _repository.First(where, includeProperties);
         }
 
+        public Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.FirstAsync(where, includeProperties);
+        }
+
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.FirstOrDefault(where, includeProperties);
+        }
+
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.FirstOrDefaultAsync(where, includeProperties);
+        }
+
         public TEntity Single(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return _repository.Single(where, includeProperties);
         }
 
+        public Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return _repository.SingleAsync(where, includeProperties);
+        }
+
         public TEntity GetById(long id, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return AsQueryable(includeProperties).FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<TEntity> GetByIdAsync(long id, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return await AsQueryable(includeProperties).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public void Insert(TEntity model)
@@ -95,6 +133,18 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
             {
                 _unitOfWork.Commit();
             }
+        }
+
+        public Task<TEntity> InsertAsync(TEntity model)
+        {
+            _repository.Insert(model);
+
+            if (AutoCommit)
+            {
+                _unitOfWork.Commit();
+            }
+
+            return Task.FromResult(model);
         }
 
         public void Update(TEntity entity)
