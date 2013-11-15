@@ -925,6 +925,8 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Employee\IndexManagers.cshtml" />
+    <Content Include="Views\Employee\IndexGrouped.cshtml" />
+    <Content Include="Views\Employee\IndexGroupedFixed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

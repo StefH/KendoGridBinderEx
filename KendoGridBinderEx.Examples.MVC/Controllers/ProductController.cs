@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
@@ -33,7 +34,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         public async Task<ActionResult> DetailsByCode(string code)
         {
-            var entity = await _productService.FirstOrDefaultAsync(p => p.Code == code);
+            if (string.IsNullOrEmpty(code))
+            {
+                throw new ArgumentException("code");
+            }
+           
+            var entity = await _productService.FirstAsync(p => p.Code == code);
             var viewModel = Map(entity);
 
             return View("Details", viewModel);

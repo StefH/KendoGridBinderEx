@@ -87,6 +87,16 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexGrouped()
+        {
+            return View();
+        }
+
+        public ActionResult IndexGroupedFixed()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult GridWithGroup(KendoGridRequest request)
         {

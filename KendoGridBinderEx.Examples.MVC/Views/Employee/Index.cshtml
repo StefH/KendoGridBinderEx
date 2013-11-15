@@ -5,9 +5,6 @@
 <h3>All Employees</h3>
 <div id="grid"></div>
 <br/>
-<h3>All Employees Grouped</h3>
-<div id="gridWithGroup"></div>
-<br/>
 @using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
     <button class="buttonAdd" id="buttonAdd">Create new</button>
 }
@@ -122,90 +119,6 @@
                 refresh: true,
                 pageSizes: true
             }
-        });
-
-        var dataSourceWithGroup = {
-            serverPaging: true,
-            serverSorting: true,
-            serverFiltering: true,
-            serverGrouping: true,
-            pageSize: 5,
-            transport: {
-                read: {
-                    type: 'post',
-                    dataType: 'json',
-                    url: '@Url.Action("GridWithGroup")'
-                },
-                parameterMap: function (options) {
-                    if (options.filter) {
-                        KendoGrid_FixFilter(dataSourceWithGroup, options.filter);
-                    }
-                    return options;
-                }
-            },
-            schema: {
-                groups: 'Groups',
-                aggregates: 'Aggregates',
-                data: 'Data',
-                total: 'Total',
-                model: {
-                    id: 'Id',
-                    fields: {
-                        CompanyName: { type: 'string' },
-                        MainCompanyName: { type: 'string' },
-                        Number: { type: 'number' },
-                        First: { type: 'string' },
-                        Last: { type: 'string' },
-                        Full: { type: 'string' },
-                        Email: { type: 'string' },
-                        HireDate: { type: 'date' },
-                        CountryCode: { type: 'string' },
-                        IsManager: { type: 'boolean' },
-                        FunctionCode: { type: 'string' },
-                        SubFunctionCode: { type: 'string' },
-                        Assigned: { type: 'number' }
-                    }
-                }
-            },
-            group: [{
-                field: "MainCompanyName"
-            }]
-        };
-
-        $('#gridWithGroup').kendoGrid({
-            dataSource: dataSourceWithGroup,
-            height: '250px',
-            columns: [
-                {
-                    field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
-                    template:
-                       '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
-                       '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                       '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
-                },
-                { field: 'CompanyName', title: 'Company', groupHeaderTemplate: "Company : #= value#" },
-                { field: 'MainCompanyName', title: 'Main Company' },
-                { field: 'Number', title: 'Employee #' },
-                { field: 'First', title: 'First' },
-                { field: 'LastName', title: 'Last', groupHeaderTemplate: "LastName : #= value#" },
-                { field: 'Full', title: 'FullName' },
-                { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilter_DatePicker } },
-                { field: 'CountryCode', title: 'Country' },
-                { field: 'IsManager', title: 'Manager' },
-                { field: 'FunctionCode', title: 'Function' },
-                { field: 'SubFunctionCode', title: 'SubFunction' },
-                { field: 'Assigned', title: 'Assigned' }
-            ],
-            filterable: true,
-            sortable: {
-                mode: 'multiple'
-            },
-            pageable: {
-                refresh: true,
-                pageSizes: true
-            },
-            groupable: true
         });
     });
 </script>

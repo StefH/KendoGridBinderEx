@@ -6,6 +6,8 @@
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="Employee" controller="Employee" clickable="false">
       <mvcSiteMapNode title="List Employees" action="Index"/>
+      <mvcSiteMapNode title="List Grouped Employees (Fixed)" action="IndexGroupedFixed"/>
+      <mvcSiteMapNode title="List Grouped Employees" action="IndexGrouped"/>
       <mvcSiteMapNode title="List Managers" action="IndexManagers"/>
       <mvcSiteMapNode title="Create Employee" action="Create"/>
     </mvcSiteMapNode>
