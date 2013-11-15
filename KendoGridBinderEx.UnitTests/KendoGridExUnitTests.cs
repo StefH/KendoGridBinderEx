@@ -305,7 +305,7 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         [Test]
-        public void Test_KendoGridModelBinder_One_GroupBy_One_Aggregate()
+        public void Test_KendoGridModelBinder_One_GroupBy_One_Aggregate_Count()
         {
             var form = new NameValueCollection
             {
@@ -343,7 +343,64 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual(employees.Count(), kendoGrid.Total);
         }
 
-        #region
+        [Test]
+        public void Test_KendoGridModelBinder_One_GroupBy_One_Aggregate_Sum()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "10"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "10"},
+
+                {"group[0][field]", "Last"},
+                {"group[0][dir]", "asc"},
+                {"group[0][aggregates][0][field]", "Number"},
+                {"group[0][aggregates][0][aggregate]", "sum"},
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.AreEqual(1, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.First().AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployeesWithData().AsQueryable();
+            var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees);
+
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            Assert.AreEqual(10, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+
+            var groupBySmith = groups.FirstOrDefault(g => g.value.ToString() == "Smith");
+            Assert.IsNotNull(groupBySmith);
+
+            var items = groupBySmith.items as List<EmployeeVM>;
+            Assert.IsNotNull(items);
+            Assert.AreEqual(2, items.Count);
+            Assert.AreEqual(2, items.Count(e => e.Last == "Smith"));
+
+            var aggregates = groupBySmith.aggregates as Dictionary<string, Dictionary<string, object>>;
+            Assert.IsNotNull(aggregates);
+
+            Assert.IsTrue(aggregates.ContainsKey("Number"));
+            var aggregatesNumber = aggregates["Number"];
+            Assert.IsNotNull(aggregatesNumber);
+            Assert.AreEqual(1, aggregatesNumber.Count);
+
+            var aggregateSum = aggregatesNumber.First();
+            Assert.IsNotNull(aggregateSum);
+            Assert.AreEqual("sum", aggregateSum.Key);
+            Assert.AreEqual(2003, aggregateSum.Value);
+        }
+
+        #region InitAutoMapper
         private static void InitAutoMapper()
         {
             Mapper.CreateMap<Employee, EmployeeVM>()
@@ -371,7 +428,9 @@ namespace KendoGridBinderEx.UnitTests
 
             Mapper.AssertConfigurationIsValid();
         }
+        #endregion
 
+        #region InitEmployees
         private static IEnumerable<Employee> InitEmployeesWithData()
         {
             var countryNL = new Country { Id = 1, Code = "NL", Name = "The Netherlands" };
@@ -407,7 +466,7 @@ namespace KendoGridBinderEx.UnitTests
         }
         #endregion
 
-        #region
+        #region Check helper methods
         private static void CheckTake(KendoGridRequest gridRequest, int take)
         {
             Assert.IsNotNull(gridRequest.Take);
