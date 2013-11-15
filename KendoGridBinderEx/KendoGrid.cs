@@ -117,36 +117,68 @@ namespace KendoGridBinderEx
         protected IEnumerable<KendoGroup> ApplyGroupingAndSorting(IQueryable<TEntity> query, IEnumerable<string> includes, KendoGridRequest request)
         {
             bool hasAggregates = request.GroupObjects.Any(g => g.AggregateObjects.Any());
-            var aggregatesExpression = hasAggregates ?
-               string.Format(", new ({0}) as Aggregates", string.Join(", ", request.GroupObjects.SelectMany(g => g.AggregateObjects.Select(a => a.LinqAggregate)))) :
-               string.Empty;
+            string aggregatesExpression = string.Empty;
+
+            if (hasAggregates)
+            {
+                // In case of sum, min or max: convert it to sum(TEntity__.XXX) as sum_XXX
+                // In case of count, convert it to count() as count_XXX
+                var convertedAggregateObjects = request.GroupObjects
+                    .SelectMany(g => g.AggregateObjects)
+                    .Select(a => a.GetLinqAggregate(ReplaceVM2E));
+
+                // , new (sum(TEntity__.EmployeeNumber) as sum__Number) as Aggregates
+                aggregatesExpression = string.Format(", new ({0}) as Aggregates", string.Join(", ", convertedAggregateObjects));
+            }
 
             var newSort = request.SortObjects.ToList();
             bool hasSortObjects = newSort.Any();
 
-            var groupByOrderByFieldsExpressionX = hasSortObjects ?
-                "," + string.Join(",", newSort.Select(s => string.Format("{0} as OrderBy__{1}", ReplaceVM2E(s.Field).Split('.').Last(), s.Field))) :
-                string.Empty;
+            string groupByOrderByFieldsExpressionX = string.Empty;
+            if (hasSortObjects)
+            {
+                // ,FullName as OrderBy__Full
+                groupByOrderByFieldsExpressionX = "," + string.Join(",", newSort.Select(s => string.Format("{0} as OrderBy__{1}", ReplaceVM2E(s.Field).Split('.').Last(), s.Field)));
+            }
 
+            // List[0] = LastName as Last
             var groupByFields = request.GroupObjects.Select(s => string.Format("{0} as {1}", ReplaceVM2E(s.Field), s.Field)).ToList();
+
+            // new (new (LastName as Last) as GroupByFields)
             var groupByExpressionX = string.Format("new (new ({0}{1}) as GroupByFields)", string.Join(",", groupByFields), groupByOrderByFieldsExpressionX);
 
+            // new (Key.GroupByFields, it as Grouping, new (sum(TEntity__.EmployeeNumber) as sum__TEntity___EmployeeNumber) as Aggregates)
             var selectExpressionBeforeOrderByX = string.Format("new (Key.GroupByFields, it as Grouping{0})", aggregatesExpression);
 
+
+            // GroupByFields.OrderBy__Full asc
             var orderByFieldsExpression = hasSortObjects ?
                 string.Join(",", newSort.Select(s => string.Format("GroupByFields.OrderBy__{0} {1}", s.Field, s.Direction))) :
                 "GroupByFields." + request.GroupObjects.First().Field;
 
+            // new (GroupByFields, Grouping, Aggregates)
             var selectExpressionAfterOrderByX = string.Format("new (GroupByFields, Grouping{0})", hasAggregates ? ", Aggregates" : string.Empty);
 
-            var includesX = includes != null && includes.Any() ? ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_"))) : string.Empty;
+            // 
+            string includesX = string.Empty;
+            if (includes != null && includes.Any())
+            {
+                includesX = ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_")));
+            }
 
+            // Execute the Dynamic Linq "GroupBy"
             var groupByQuery = query.GroupBy(groupByExpressionX, string.Format("new (it AS TEntity__ {0})", includesX));
+
+            // Execute the Dynamic Linq "Select"
             var selectQuery = groupByQuery.Select(selectExpressionBeforeOrderByX);
+
+            // Execute the Dynamic Linq "OrderBy"
             var orderByQuery = selectQuery.OrderBy(orderByFieldsExpression);
+
+            // Execute the Dynamic Linq "Select" to get back the TEntity objects
             var tempQuery = orderByQuery.Select(selectExpressionAfterOrderByX, typeof(TEntity));
 
-            // Paging
+            // Execute the Dynamic Linq for Paging
             if (request.Skip.HasValue && request.Skip > 0)
             {
                 tempQuery = tempQuery.Skip(request.Skip.Value);
@@ -156,6 +188,7 @@ namespace KendoGridBinderEx
                 tempQuery = tempQuery.Take(request.Take.Value);
             }
 
+            // Create a valid List<KendoGroup> object
             var list = new List<KendoGroup>();
             foreach (DynamicClass item in tempQuery)
             {

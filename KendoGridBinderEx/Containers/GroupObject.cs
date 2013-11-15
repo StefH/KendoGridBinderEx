@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace KendoGridBinderEx.Containers
 {
@@ -15,35 +16,33 @@ namespace KendoGridBinderEx.Containers
         public string Field { get; set; }
         public string Aggregate { get; set; }
 
-        public string FieldToken
+        /// <summary>
+        /// Get the Linq Aggregate
+        /// </summary>
+        /// <param name="fieldConverter">Convert which can be used to convert ViewModel to Model if needed.</param>
+        /// <returns>string</returns>
+        public string GetLinqAggregate(Func<string, string> fieldConverter = null)
         {
-            get
+            string convertedField = fieldConverter != null ? fieldConverter.Invoke(Field) : Field;
+            switch (Aggregate)
             {
-                return string.Format("{0}__{1}", Aggregate, Field);
-            }
-        }
+                case "count":
+                    return string.Format("Count() as count__{0}", Field);
 
-        public string LinqAggregate
-        {
-            get
-            {
-                switch (Aggregate)
-                {
-                    case "count":
-                        return string.Format("count() as {0}", FieldToken);
+                case "sum":
+                    return string.Format("Sum(TEntity__.{0}) as sum__{1}", convertedField, Field);
 
-                    case "sum":
-                        return string.Format("sum({0}) as {1}", Field, FieldToken);
+                case "max":
+                    return string.Format("Max(TEntity__.{0}) as max__{1}", convertedField, Field);
 
-                    case "max":
-                        return string.Format("max({0}) as {1}", Field, FieldToken);
+                case "min":
+                    return string.Format("Min(TEntity__.{0}) as min__{1}", convertedField, Field);
 
-                    case "min":
-                        return string.Format("min({0}) as {1}", Field, FieldToken);
+                case "average":
+                    return string.Format("Average(TEntity__.{0}) as average__{1}", convertedField, Field);
 
-                    default:
-                        return string.Empty;
-                }
+                default:
+                    return string.Empty;
             }
         }
     }
