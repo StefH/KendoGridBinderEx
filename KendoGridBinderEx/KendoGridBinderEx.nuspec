@@ -15,6 +15,7 @@
         <dependencies>
             <dependency id="System.Linq.Dynamic" version="1.0" />
             <dependency id="AutoMapper" version="3.0.0" />
+            <dependency id="Microsoft.AspNet.Mvc" version="5.0.0" />
         </dependencies>
     </metadata>
     <files>
