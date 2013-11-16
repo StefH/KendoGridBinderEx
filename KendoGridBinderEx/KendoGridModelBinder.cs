@@ -140,19 +140,30 @@ namespace KendoGridBinderEx
             foreach (int index in GetIndexArr(fieldKeys))
             {
                 var group = filterKeys.Where(x => GetFilterIndex(x) == index && !x.Contains("logic")).ToList();
+                var field1 = group.First(g => g.Contains("field"));
+                var operator1 = group.First(g => g.Contains("operator"));
+                var value1 = group.First(g => g.Contains("value"));
+                var ignoreCase1 = group.FirstOrDefault(g => g.Contains("ignoreCase"));
 
                 var filterObject = new FilterObject
                 {
-                    Field1 = GetQueryStringValue(group[0]),
-                    Operator1 = GetQueryStringValue(group[1]),
-                    Value1 = GetQueryStringValue(group[2])
+                    Field1 = GetQueryStringValue(field1),
+                    Operator1 = GetQueryStringValue(operator1),
+                    Value1 = GetQueryStringValue(value1),
+                    IgnoreCase1 = ignoreCase1 != null ? GetQueryStringValue(ignoreCase1) : null
                 };
 
-                if (group.Count == 6)
+                if (group.Count == 6 || group.Count == 8)
                 {
-                    filterObject.Field2 = GetQueryStringValue(group[3]);
-                    filterObject.Operator2 = GetQueryStringValue(group[4]);
-                    filterObject.Value2 = GetQueryStringValue(group[5]);
+                    var field2 = group.Last(g => g.Contains("field"));
+                    var operator2 = group.Last(g => g.Contains("operator"));
+                    var value2 = group.Last(g => g.Contains("value"));
+                    var ignoreCase2 = group.LastOrDefault(g => g.Contains("ignoreCase"));
+
+                    filterObject.Field2 = GetQueryStringValue(field2);
+                    filterObject.Operator2 = GetQueryStringValue(operator2);
+                    filterObject.Value2 = GetQueryStringValue(value2);
+                    filterObject.IgnoreCase2 = ignoreCase2 != null ? GetQueryStringValue(ignoreCase2) : null;
                     filterObject.Logic = GetValue(filterKeys, index, "logic");
                 }
 

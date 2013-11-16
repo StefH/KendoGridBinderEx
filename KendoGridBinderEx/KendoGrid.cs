@@ -259,14 +259,14 @@ namespace KendoGridBinderEx
 
                 if (filterObject.IsConjugate)
                 {
-                    var expression1 = GetExpression(filterObject.Field1, filterObject.Operator1, filterObject.Value1);
-                    var expression2 = GetExpression(filterObject.Field2, filterObject.Operator2, filterObject.Value2);
+                    var expression1 = GetExpression(filterObject.Field1, filterObject.Operator1, filterObject.Value1, filterObject.IgnoreCase1);
+                    var expression2 = GetExpression(filterObject.Field2, filterObject.Operator2, filterObject.Value2, filterObject.IgnoreCase2);
                     var combined = string.Format("({0} {1} {2})", expression1, filterObject.LogicToken, expression2);
                     finalExpression += combined;
                 }
                 else
                 {
-                    var expression = GetExpression(filterObject.Field1, filterObject.Operator1, filterObject.Value1);
+                    var expression = GetExpression(filterObject.Field1, filterObject.Operator1, filterObject.Value1, filterObject.IgnoreCase1);
                     finalExpression += expression;
                 }
             }
@@ -307,7 +307,7 @@ namespace KendoGridBinderEx
             return bIsGenericOrNullable ? type.GetGenericArguments()[0].Name.ToLower() : type.Name.ToLower();
         }
 
-        protected static string GetExpression(string field, string op, string param)
+        protected static string GetExpression(string field, string op, string param, string ignoreCase)
         {
             var dataType = GetPropertyType(typeof(TEntity), field);
             var caseMod = string.Empty;
@@ -315,7 +315,7 @@ namespace KendoGridBinderEx
             if (dataType == "string")
             {
                 param = @"""" + param.ToLower() + @"""";
-                caseMod = ".ToLower()";
+                caseMod = ".ToLower()"; // always ignore case
             }
 
             if (dataType == "datetime")
