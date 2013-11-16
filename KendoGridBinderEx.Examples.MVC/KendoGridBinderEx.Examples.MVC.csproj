@@ -927,6 +927,7 @@
     <Content Include="Views\Employee\IndexManagers.cshtml" />
     <Content Include="Views\Employee\IndexGrouped.cshtml" />
     <Content Include="Views\Employee\IndexGroupedFixed.cshtml" />
+    <Content Include="Views\Shared\_KendoDataSources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

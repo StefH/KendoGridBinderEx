@@ -1,0 +1,19 @@
+﻿<script type="text/javascript">
+    KendoDataSource_Functions = {
+        transport: {
+            read: {
+                url: '@Url.Action("GetFunctionsAsJson", "Function")',
+                dataType: "json"
+            }
+        }
+    };
+
+    KendoDataSource_SubFunctions = {
+        transport: {
+            read: {
+                url: '@Url.Action("GetSubFunctionsAsJson", "SubFunction")',
+                dataType: "json"
+            }
+        }
+    };
+ </script>

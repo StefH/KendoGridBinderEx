@@ -1,20 +1,6 @@
-﻿var KendoDataSource_Functions = {
-    transport: {
-        read: {
-            url: '@Url.Action("GetFunctionsAsJson", "Function")',
-            dataType: "json"
-        }
-    }
-};
-
-var KendoDataSource_SubFunctions = {
-    transport: {
-        read: {
-            url: '@Url.Action("GetSubFunctionsAsJson", "SubFunction")',
-            dataType: "json"
-        }
-    }
-};
+﻿// Define javascript objects here, datasource is initialized in ../Views/Shared/_KendoDataSources.cshtml
+var KendoDataSource_Functions;
+var KendoDataSource_SubFunctions;
 
 
 function KendoGridFilter_DatePicker(element) {
@@ -23,21 +9,29 @@ function KendoGridFilter_DatePicker(element) {
     });
 }
 
-function KendoGridFilter_Function(element) {
+function KendoGridFilter_Function(element, valueField, textField, optionLabel) {
+    if (!textField) textField = "Id";
+    if (!valueField) textField = "Value";
+    if (!optionLabel) optionLabel = "Select ...";
+    
     element.kendoDropDownList({
         dataSource: KendoDataSource_Functions,
-        dataTextField: 'Code',
-        dataValueField: 'Code',
-        optionLabel: 'Select ...'
+        dataTextField: textField,
+        dataValueField: valueField,
+        optionLabel: optionLabel
     });
 }
 
-function KendoGridFilter_SubFunction(element) {
+function KendoGridFilter_SubFunction(element, valueField, textField, optionLabel) {
+    if (!textField) textField = "Id";
+    if (!valueField) textField = "Value";
+    if (!optionLabel) optionLabel = "Select ...";
+    
     element.kendoDropDownList({
         dataSource: KendoDataSource_SubFunctions,
-        dataTextField: 'Code',
-        dataValueField: 'Code',
-        optionLabel: 'Select ...'
+        dataTextField: textField,
+        dataValueField: valueField,
+        optionLabel: optionLabel
     });
 }
 

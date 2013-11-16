@@ -92,7 +92,7 @@
                                 neq: "Is not equal to"
                             }
                         },
-                        ui: KendoGridFilter_Function
+                        ui: function (element) { KendoGridFilter_Function(element, "Code", "Code"); }
                     }
                 },
                 {
@@ -104,7 +104,7 @@
                                 neq: "Is not equal to"
                             }
                         },
-                        ui: KendoGridFilter_SubFunction
+                        ui: function(element) { KendoGridFilter_SubFunction(element, "Code", "Code"); }
                     }
                 },
                 { field: 'Assigned', title: 'Assigned' }
