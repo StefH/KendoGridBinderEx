@@ -73,6 +73,45 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         [Test]
+        public void Test_KendoGridModelBinder_Page_Filter_DifferentOrder()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"filter[filters][0][operator]", "eq"}, // Different order
+                {"filter[filters][0][field]", "CompanyName"}, // Different order
+                {"filter[filters][0][value]", "A"}, // Different order
+                {"filter[logic]", "and"},
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            CheckTake(gridRequest, 5);
+            CheckSkip(gridRequest, 0);
+            CheckPage(gridRequest, 1);
+            CheckPageSize(gridRequest, 5);
+
+            Assert.IsNotNull(gridRequest.FilterObjectWrapper);
+            Assert.AreEqual("and", gridRequest.FilterObjectWrapper.Logic);
+            Assert.AreEqual("&&", gridRequest.FilterObjectWrapper.LogicToken);
+
+            Assert.IsNotNull(gridRequest.FilterObjectWrapper.FilterObjects);
+            Assert.AreEqual(1, gridRequest.FilterObjectWrapper.FilterObjects.Count());
+
+            var filterObjects = gridRequest.FilterObjectWrapper.FilterObjects.ToList();
+            var filter1 = filterObjects[0];
+            Assert.AreEqual(false, filter1.IsConjugate);
+            Assert.AreEqual("CompanyName", filter1.Field1);
+            Assert.AreEqual("eq", filter1.Operator1);
+            Assert.AreEqual("A", filter1.Value1);
+            Assert.AreEqual(null, filter1.Logic);
+            Assert.AreEqual(null, filter1.LogicToken);
+        }
+
+        [Test]
         public void Test_KendoGridModelBinder_Page_Filter_Sort()
         {
             var form = new NameValueCollection
