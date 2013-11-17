@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
 using KendoGridBinderEx.Containers;
@@ -125,7 +124,7 @@ namespace KendoGridBinderEx
                 // In case of count, convert it to count() as count_XXX
                 var convertedAggregateObjects = request.GroupObjects
                     .SelectMany(g => g.AggregateObjects)
-                    .Select(a => a.GetLinqAggregate(ReplaceVM2E));
+                    .Select(a => a.GetLinqAggregate(MapFieldfromViewModeltoEntity));
 
                 // , new (sum(TEntity__.EmployeeNumber) as sum__Number) as Aggregates
                 aggregatesExpression = string.Format(", new ({0}) as Aggregates", string.Join(", ", convertedAggregateObjects));
@@ -138,11 +137,11 @@ namespace KendoGridBinderEx
             if (hasSortObjects)
             {
                 // ,FullName as OrderBy__Full
-                groupByOrderByFieldsExpressionX = "," + string.Join(",", newSort.Select(s => string.Format("{0} as OrderBy__{1}", ReplaceVM2E(s.Field).Split('.').Last(), s.Field)));
+                groupByOrderByFieldsExpressionX = "," + string.Join(",", newSort.Select(s => string.Format("{0} as OrderBy__{1}", MapFieldfromViewModeltoEntity(s.Field).Split('.').Last(), s.Field)));
             }
 
             // List[0] = LastName as Last
-            var groupByFields = request.GroupObjects.Select(s => string.Format("{0} as {1}", ReplaceVM2E(s.Field), s.Field)).ToList();
+            var groupByFields = request.GroupObjects.Select(s => string.Format("{0} as {1}", MapFieldfromViewModeltoEntity(s.Field), s.Field)).ToList();
 
             // new (new (LastName as Last) as GroupByFields)
             var groupByExpressionX = string.Format("new (new ({0}{1}) as GroupByFields)", string.Join(",", groupByFields), groupByOrderByFieldsExpressionX);
@@ -238,7 +237,7 @@ namespace KendoGridBinderEx
 
         protected string GetSorting(KendoGridRequest request)
         {
-            var expression = string.Join(",", request.SortObjects.Select(s => ReplaceVM2E(s.Field) + " " + s.Direction));
+            var expression = string.Join(",", request.SortObjects.Select(s => MapFieldfromViewModeltoEntity(s.Field) + " " + s.Direction));
 
             return expression.Length > 1 ? expression : null;
         }
@@ -249,8 +248,8 @@ namespace KendoGridBinderEx
 
             foreach (var filterObject in request.FilterObjectWrapper.FilterObjects)
             {
-                filterObject.Field1 = ReplaceVM2E(filterObject.Field1);
-                filterObject.Field2 = ReplaceVM2E(filterObject.Field2);
+                filterObject.Field1 = MapFieldfromViewModeltoEntity(filterObject.Field1);
+                filterObject.Field2 = MapFieldfromViewModeltoEntity(filterObject.Field2);
 
                 if (finalExpression.Length > 0)
                 {
@@ -259,14 +258,14 @@ namespace KendoGridBinderEx
 
                 if (filterObject.IsConjugate)
                 {
-                    var expression1 = GetExpression(filterObject.Field1, filterObject.Operator1, filterObject.Value1, filterObject.IgnoreCase1);
-                    var expression2 = GetExpression(filterObject.Field2, filterObject.Operator2, filterObject.Value2, filterObject.IgnoreCase2);
+                    var expression1 = filterObject.GetExpression1<TEntity>();
+                    var expression2 = filterObject.GetExpression2<TEntity>();
                     var combined = string.Format("({0} {1} {2})", expression1, filterObject.LogicToken, expression2);
                     finalExpression += combined;
                 }
                 else
                 {
-                    var expression = GetExpression(filterObject.Field1, filterObject.Operator1, filterObject.Value1, filterObject.IgnoreCase1);
+                    var expression = filterObject.GetExpression1<TEntity>();
                     finalExpression += expression;
                 }
             }
@@ -274,113 +273,14 @@ namespace KendoGridBinderEx
             return finalExpression.Length == 0 ? "true" : finalExpression;
         }
 
-        protected string ReplaceVM2E(string field)
+        protected string MapFieldfromViewModeltoEntity(string field)
         {
             return (_mappings != null && field != null && _mappings.ContainsKey(field)) ? _mappings[field] : field;
         }
 
-        protected string ReplaceE2VM(string field)
+        protected string MapFieldfromEntitytoViewModel(string field)
         {
             return (_mappings != null && field != null && _mappings.ContainsValue(field)) ? _mappings.First(kvp => kvp.Value == field).Key : field;
-        }
-
-        protected static string GetPropertyType(Type type, string field)
-        {
-            foreach (var part in field.Split('.'))
-            {
-                if (type == null)
-                {
-                    return null;
-                }
-
-                var info = type.GetProperty(part);
-                if (info == null)
-                {
-                    return null;
-                }
-
-                type = info.PropertyType;
-            }
-
-            bool bIsGenericOrNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
-
-            return bIsGenericOrNullable ? type.GetGenericArguments()[0].Name.ToLower() : type.Name.ToLower();
-        }
-
-        protected static string GetExpression(string field, string op, string param, string ignoreCase)
-        {
-            var dataType = GetPropertyType(typeof(TEntity), field);
-            var caseMod = string.Empty;
-
-            if (dataType == "string")
-            {
-                param = @"""" + param.ToLower() + @"""";
-                caseMod = ".ToLower()"; // always ignore case
-            }
-
-            if (dataType == "datetime")
-            {
-                var i = param.IndexOf("GMT", StringComparison.Ordinal);
-                if (i > 0)
-                {
-                    param = param.Remove(i);
-                }
-                var date = DateTime.Parse(param, new CultureInfo("en-US"));
-
-                var str = string.Format("DateTime({0}, {1}, {2})", date.Year, date.Month, date.Day);
-                param = str;
-            }
-
-            string exStr;
-
-            switch (op)
-            {
-                case "eq":
-                    exStr = string.Format("{0}{2} == {1}", field, param, caseMod);
-                    break;
-
-                case "neq":
-                    exStr = string.Format("{0}{2} != {1}", field, param, caseMod);
-                    break;
-
-                case "contains":
-                    exStr = string.Format("{0}{2}.Contains({1})", field, param, caseMod);
-                    break;
-
-                case "doesnotcontain":
-                    exStr = string.Format("!{0}{2}.Contains({1})", field, param, caseMod);
-                    break;
-
-                case "startswith":
-                    exStr = string.Format("{0}{2}.StartsWith({1})", field, param, caseMod);
-                    break;
-
-                case "endswith":
-                    exStr = string.Format("{0}{2}.EndsWith({1})", field, param, caseMod);
-                    break;
-
-                case "gte":
-                    exStr = string.Format("{0}{2} >= {1}", field, param, caseMod);
-                    break;
-
-                case "gt":
-                    exStr = string.Format("{0}{2} > {1}", field, param, caseMod);
-                    break;
-
-                case "lte":
-                    exStr = string.Format("{0}{2} <= {1}", field, param, caseMod);
-                    break;
-
-                case "lt":
-                    exStr = string.Format("{0}{2} < {1}", field, param, caseMod);
-                    break;
-
-                default:
-                    exStr = string.Empty;
-                    break;
-            }
-
-            return exStr;
         }
     }
 }
