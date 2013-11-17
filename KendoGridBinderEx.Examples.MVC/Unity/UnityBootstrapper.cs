@@ -38,6 +38,7 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.RegisterType<IEmployeeService, EmployeeService>();
             UnityContainer.RegisterType<IProductService, ProductService>();
             UnityContainer.RegisterType<ICompanyService, CompanyService>();
+            UnityContainer.RegisterType<IMainCompanyService, MainCompanyService>();
             UnityContainer.RegisterType<IFunctionService, FunctionService>();
             UnityContainer.RegisterType<ISubFunctionService, SubFunctionService>();
             UnityContainer.RegisterType<IOUService, OUService>();

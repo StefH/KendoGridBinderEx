@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
-using System.Threading.Tasks;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -16,22 +17,23 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TViewModel : class, IEntity, new()
     {
         protected readonly IBaseService<TEntity> Service;
+        protected readonly Dictionary<string, string> KendoGridExMappings;
         protected readonly Dictionary<string, List<string>> Mappings = new Dictionary<string, List<string>>();
 
         protected BaseController(IBaseService<TEntity> service)
         {
             Service = service;
 
-            var kendoGridMappings = KendoGridEx<TEntity, TViewModel>.GetModelMappings();
+            KendoGridExMappings = KendoGridEx<TEntity, TViewModel>.GetModelMappings();
 
-            if (kendoGridMappings != null)
+            if (KendoGridExMappings != null)
             {
-                foreach (var mapping in kendoGridMappings)
+                foreach (var mapping in KendoGridExMappings)
                 {
                     Mappings.Add(mapping.Key, new List<string> { mapping.Value });
                 }
 
-                foreach (var mapping in kendoGridMappings.Where(m => m.Value.Contains('.')))
+                foreach (var mapping in KendoGridExMappings.Where(m => m.Value.Contains('.')))
                 {
                     Mappings[mapping.Key].Add(mapping.Value.Split('.').First());
                 }
@@ -41,6 +43,17 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected virtual IQueryable<TEntity> GetQueryable()
         {
             return Service.AsQueryable();
+        }
+
+        #region AutoMapper
+        protected string MapFieldfromViewModeltoEntity(string field)
+        {
+            return (KendoGridExMappings != null && field != null && KendoGridExMappings.ContainsKey(field)) ? KendoGridExMappings[field] : field;
+        }
+
+        protected string MapFieldfromEntitytoViewModel(string field)
+        {
+            return (KendoGridExMappings != null && field != null && KendoGridExMappings.ContainsValue(field)) ? KendoGridExMappings.First(kvp => kvp.Value == field).Key : field;
         }
 
         protected virtual TViewModel Map(TEntity entity)
@@ -57,6 +70,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             return Mapper.Map<TEntity>(viewModel);
         }
+        #endregion
 
         protected virtual TViewModel GetDefaultViewModel()
         {
@@ -207,6 +221,32 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             }
 
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region AutoComplete
+        protected IQueryable GetAutoCompleteResults(KendoGridRequest request)
+        {
+            var filter = request.FilterObjectWrapper.FilterObjects.First();
+            string fieldOriginal = filter.Field1;
+            filter.Field1 = MapFieldfromViewModeltoEntity(filter.Field1);
+
+            var query = Service.AsQueryable().Where(filter.GetExpression1<TEntity>());
+            if (request.PageSize != null)
+            {
+                query = query.Take(request.PageSize.Value);
+            }
+
+            var groupingQuery = query.GroupBy(string.Format("it.{0}", filter.Field1), string.Format("new (it.{0} as Key)", filter.Field1));
+            var selectQuery = groupingQuery.Select(string.Format("new (Key as {0})", fieldOriginal));
+
+            return selectQuery;
+        }
+
+        protected JsonResult GetAutoCompleteResultsAsJson(KendoGridRequest request)
+        {
+            var results = GetAutoCompleteResults(request);
+            return Json(results, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

@@ -16,4 +16,16 @@
             }
         }
     };
- </script>
+    
+    KendoDataSource_SubFunctionsByFunction = {
+        transport: {
+            read: {
+                url: '@Url.Action("GetSubFunctionsByFunctionIdAsJson", "SubFunction")',
+                dataType: "json",
+                data: {
+                    functionId: "1"
+                }
+            }
+        }
+    };
+</script>

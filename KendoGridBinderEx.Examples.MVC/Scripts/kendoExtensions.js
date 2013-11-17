@@ -1,45 +1,52 @@
 ﻿// Define javascript objects here, datasource is initialized in ../Views/Shared/_KendoDataSources.cshtml
 var KendoDataSource_Functions;
 var KendoDataSource_SubFunctions;
+var KendoDataSource_SubFunctionsByFunction;
 
 
-function KendoGridFilter_DatePicker(element) {
+function KendoGridFilterDatePicker(element) {
     element.kendoDatePicker({
         format: _DefaultDateFormat
     });
 }
 
-function KendoGridFilter_Function(element, valueField, textField, optionLabel) {
-    if (!textField) textField = "Id";
-    if (!valueField) textField = "Value";
+function KendoGridFilterAutoComplete(element, kendoDataSource, textField) {
+    // console.log(JSON.stringify(element));
+    // console.log(textField);
+
+    element.kendoAutoComplete({
+        minLength: 3,
+        filter: "startswith",
+        dataSource: kendoDataSource,
+        dataTextField: textField
+    });
+}
+
+function KendoGridFilterDropDownList_Function(element, valueField, textField, optionLabel) {
+    KendoGridFilterDropDownList(element, KendoDataSource_Functions, valueField, textField, optionLabel);
+}
+
+function KendoGridFilterDropDownList_SubFunction(element, valueField, textField, optionLabel) {
+    KendoGridFilterDropDownList(element, KendoDataSource_SubFunctions, valueField, textField, optionLabel);
+}
+
+function KendoGridFilterDropDownList(element, kendoDataSource, valueField, textField, optionLabel) {
+    if (!valueField) valueField = "Id";
+    if (!textField) textField = "Value";
     if (!optionLabel) optionLabel = "Select ...";
-    
+
     element.kendoDropDownList({
-        dataSource: KendoDataSource_Functions,
-        dataTextField: textField,
+        dataSource: kendoDataSource,
         dataValueField: valueField,
+        dataTextField: textField,
         optionLabel: optionLabel
     });
 }
 
-function KendoGridFilter_SubFunction(element, valueField, textField, optionLabel) {
-    if (!textField) textField = "Id";
-    if (!valueField) textField = "Value";
-    if (!optionLabel) optionLabel = "Select ...";
-    
-    element.kendoDropDownList({
-        dataSource: KendoDataSource_SubFunctions,
-        dataTextField: textField,
-        dataValueField: valueField,
-        optionLabel: optionLabel
-    });
-}
-
-
-// kendoDS = kendo.data.DataSource
+// kendoDataSource = kendo.data.DataSource
 // filter = kendo filter
-function KendoGrid_FixFilter(kendoDS, kendoFilter, depth) {
-    if ((!kendoDS) || (!kendoFilter)) return;
+function KendoGrid_FixFilter(kendoDataSource, kendoFilter, depth) {
+    if ((!kendoDataSource) || (!kendoFilter)) return;
 
     if (!depth) depth = 0;
     // console.log(depth + " - FixDatesInFilter:" + JSON.stringify(kendoFilter));
@@ -49,10 +56,10 @@ function KendoGrid_FixFilter(kendoDS, kendoFilter, depth) {
 
         if (filter.hasOwnProperty("filters")) {
             depth++;
-            KendoGrid_FixFilter(kendoDS, filter, depth)
+            KendoGrid_FixFilter(kendoDataSource, filter, depth)
         }
         else {
-            $.each(kendoDS.schema.model.fields, function (propertyName, propertyValue) {
+            $.each(kendoDataSource.schema.model.fields, function (propertyName, propertyValue) {
                 if (filter.field == propertyName && propertyValue.type == 'date') {
                     filter.value = kendo.toString(filter.value, _DefaultDateFormat); // "MM/dd/yyyy"
                     // console.log("changed = " + filter.value);

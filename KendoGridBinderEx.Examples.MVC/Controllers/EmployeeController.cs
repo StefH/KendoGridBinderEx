@@ -60,6 +60,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(e => e.Function, opt => opt.Ignore())
                 .ForMember(e => e.SubFunction, opt => opt.Ignore())
                 ;
+
+            Mapper.CreateMap<Employee, AutoCompleteEmployeeVM>()
+                .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
+                .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
+                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
+                ;
         }
 
         protected override IQueryable<Employee> GetQueryable()
@@ -112,6 +118,18 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             var entities = _employeeService.GetManagers();
             return GetKendoGridAsJson(request, entities);
+        }
+
+        [HttpGet]
+        public JsonResult GetEmployeesByFirstName(KendoGridRequest request)
+        {
+            return GetAutoCompleteResultsAsJson(request);
+        }
+
+        [HttpGet]
+        public JsonResult GetEmployeesByLastName(KendoGridRequest request)
+        {
+            return GetAutoCompleteResultsAsJson(request);
         }
 
         protected override ValidationResult Validate(Employee employee, string ruleSet)

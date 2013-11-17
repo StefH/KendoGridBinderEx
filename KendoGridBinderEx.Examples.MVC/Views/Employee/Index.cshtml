@@ -3,6 +3,7 @@
 }
 
 <h3>All Employees</h3>
+Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
 <div id="grid"></div>
 <br/>
 @using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
@@ -18,8 +19,46 @@
             text: true
         });
     });
+    
+    var KendoDataSource_EmployeeAutoCompleteByFirstName = {
+        serverFiltering: true,
+        serverPaging: true,
+        serverSorting: true,
+        pageSize: 10,
+        transport: {
+            read: {
+                url: '@Url.Action("GetEmployeesByFirstName", "Employee")',
+                dataType: "json"
+            }
+        }/*,
+        schema: {
+            data: 'Data',
+            total: 'Total'
+        }*/
+    };
+    
+    var KendoDataSource_EmployeeAutoCompleteByLastName = {
+        serverFiltering: true,
+        serverPaging: true,
+        serverSorting: true,
+        pageSize: 10,
+        transport: {
+            read: {
+                url: '@Url.Action("GetEmployeesByLastName", "Employee")',
+                dataType: "json"
+            }
+        }/*,
+        schema: {
+            data: 'Data',
+            total: 'Total'
+        }*/
+    };
 
     $(document).ready(function () {
+        $('#multi').click(function () {
+            $("#grid").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
+        });
+        
         var dataSource = {
             serverPaging: true,
             serverSorting: true,
@@ -33,7 +72,7 @@
                 },
                 parameterMap: function (options) {
                     if (options.filter) {
-                        KendoGrid_FixFilter(dataSource, options.filter);
+                       KendoGrid_FixFilter(dataSource, options.filter);
                     }
                     return options;
                 }
@@ -76,11 +115,11 @@
                 { field: 'CompanyName', title: 'Company' },
                 { field: 'MainCompanyName', title: 'Main Company' },
                 { field: 'Number', title: 'Employee #' },
-                { field: 'First', title: 'FirstName' },
-                { field: 'LastName', title: 'LastName' },
+                { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByFirstName, "First"); } }  },
+                { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByLastName, "LastName"); } } },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilter_DatePicker } },
+                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilterDatePicker } },
                 { field: 'CountryCode', title: 'Country' },
                 { field: "IsManager", title: "Manager", template: "<input type=\"checkbox\" disabled='disabled' #= IsManager ? checked='checked' : '' # class=\"check_row\"/>" },
                 {
@@ -92,7 +131,7 @@
                                 neq: "Is not equal to"
                             }
                         },
-                        ui: function (element) { KendoGridFilter_Function(element, "Code", "Code"); }
+                        ui: function (element) { KendoGridFilterDropDownList_Function(element, "Code", "Code"); }
                     }
                 },
                 {
@@ -104,7 +143,7 @@
                                 neq: "Is not equal to"
                             }
                         },
-                        ui: function(element) { KendoGridFilter_SubFunction(element, "Code", "Code"); }
+                        ui: function (element) { KendoGridFilterDropDownList_SubFunction(element, "Code", "Code"); }
                     }
                 },
                 { field: 'Assigned', title: 'Assigned' }

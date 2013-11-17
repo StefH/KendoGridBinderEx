@@ -4,9 +4,10 @@ using System.Web.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC
 {
+    [ModelBinder(typeof(MyDateTimeBinder))]
     public class MyDateTimeBinder : IModelBinder
     {
-        private const string DatePattern = "yyyy-M-dd";
+        private const string DatePattern = "MM/dd/yyyy";
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {

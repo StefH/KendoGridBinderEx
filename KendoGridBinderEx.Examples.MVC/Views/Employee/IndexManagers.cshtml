@@ -3,12 +3,15 @@
 }
 
 <h3>All Managers</h3>
+Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
 <div id="gridManagers"></div>
 <br/>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        
+        $('#multi').click(function () {
+            $("#gridManagers").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
+        });
 
         var dataSourceManagers = {
             serverPaging: true,
@@ -56,7 +59,7 @@
                 { field: 'LastName', title: 'Last' },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
-                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilter_DatePicker } }
+                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilterDatePicker } }
             ],
             filterable: true,
             sortable: {

@@ -4,6 +4,7 @@
 }
 
 <h3>All Products</h3>
+Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
 <div id="grid"></div>
 <br/>
 @Html.ImageActionLink("add", "Create", "Create New Product", null)
@@ -15,6 +16,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#multi').click(function () {
+            $("#grid").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
+        });
+        
         var url = '@Url.Action("Grid")';
 
         var dataSource = new kendo.data.DataSource({
