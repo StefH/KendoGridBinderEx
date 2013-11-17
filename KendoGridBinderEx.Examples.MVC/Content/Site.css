@@ -310,6 +310,11 @@ input[type="checkbox"].input-validation-error
     background-image: url('/Content/Images/add.png');
 }
 
+.buttonSearch > span.ui-icon-search
+{
+    background-image: url('/Content/Images/search.gif');
+}
+
 table, td
 {
     font: 12px Arial, Helvetica, sans-serif;

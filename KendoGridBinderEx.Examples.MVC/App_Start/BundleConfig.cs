@@ -69,7 +69,7 @@ namespace KendoGridBinderEx.Examples.MVC
             bundles.IgnoreList.Ignore("*-vsdoc.js");
             bundles.IgnoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
 
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

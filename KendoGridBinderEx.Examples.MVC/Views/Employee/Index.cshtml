@@ -3,23 +3,24 @@
 }
 
 <h3>All Employees</h3>
-Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
+Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br/><br/>
+LastName contains : <input id="txtLastName" type="text" /><br />
+<button class="buttonSearch">Search</button>
 <div id="grid"></div>
 <br/>
 @using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
-    <button class="buttonAdd" id="buttonAdd">Create new</button>
+    <button class="buttonAdd">Create new</button>
 }
 
 <script type="text/javascript">
+    /*
     $(function () {
-        $("#buttonAdd").button({
-            icons: {
-                primary: "ui-icon-add"
-            },
-            text: true
-        });
-    });
+        
+    });*/
     
+
+   
+        
     var KendoDataSource_EmployeeAutoCompleteByFirstName = {
         serverFiltering: true,
         serverPaging: true,
@@ -59,6 +60,15 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
             $("#grid").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
         });
         
+        $("#buttonSearch").click(function () {
+            var filters = new Array();
+            var lastname = $("#txtLastName").val();
+            if (lastname) {
+                filters.push({ field: "LastName", operator: "contains", value: lastname });
+            }
+            $("#grid").data("kendoGrid").dataSource.filter(filters);
+        });
+        
         var dataSource = {
             serverPaging: true,
             serverSorting: true,
@@ -72,7 +82,7 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                 },
                 parameterMap: function (options) {
                     if (options.filter) {
-                       KendoGrid_FixFilter(dataSource, options.filter);
+                        KendoGrid_FixFilter(dataSource, options.filter);
                     }
                     return options;
                 }
@@ -87,7 +97,7 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                         MainCompanyName: { type: 'string' },
                         Number: { type: 'number' },
                         First: { type: 'string' },
-                        Last: { type: 'string' },
+                        LastName: { type: 'string' },
                         Full: { type: 'string' },
                         Email: { type: 'string' },
                         HireDate: { type: 'date' },
@@ -109,8 +119,8 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                     field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
                     template:
                         '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
-                        '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                        '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                            '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                            '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
                 },
                 { field: 'CompanyName', title: 'Company' },
                 { field: 'MainCompanyName', title: 'Main Company' },
@@ -152,7 +162,8 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                 extra: true
             },
             sortable: {
-                mode: 'multiple'
+                mode: 'multiple',
+                allowUnsort: true
             },
             pageable: {
                 refresh: true,

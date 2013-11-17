@@ -933,6 +933,7 @@
     <Content Include="Views\Employee\IndexGrouped.cshtml" />
     <Content Include="Views\Employee\IndexGroupedFixed.cshtml" />
     <Content Include="Views\Shared\_KendoDataSources.cshtml" />
+    <Content Include="Views\Shared\_Icons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
