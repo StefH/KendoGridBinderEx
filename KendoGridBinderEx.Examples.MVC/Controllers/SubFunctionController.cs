@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
@@ -20,6 +21,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public static void InitAutoMapper()
         {
             Mapper.CreateMap<SubFunction, SubFunctionVM>()
+                .ForMember(vm => vm.FunctionId, opt => opt.MapFrom(e => e.Function.Id))
                 ;
 
             Mapper.CreateMap<SubFunctionVM, SubFunction>()
@@ -27,10 +29,17 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 ;
         }
 
+        [HttpPost]
+        public JsonResult GridByFunctionId(KendoGridRequest request, long? functionId)
+        {
+            var entities = GetQueryable().Where(s => s.Function.Id == functionId).AsNoTracking();
+            return GetKendoGridAsJson(request, entities);
+        }
+
         [HttpGet]
         public JsonResult GetSubFunctionsAsJson()
         {
-            var entities = base.Map(_subFunctionService.AsQueryable());
+            var entities = base.Map(GetQueryable());
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }
@@ -38,7 +47,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpGet]
         public JsonResult GetSubFunctionsByFunctionIdAsJson(long functionId)
         {
-            var entities = base.Map(_subFunctionService.AsQueryable().Where(s => s.Function.Id == functionId));
+            var entities = base.Map(GetQueryable().Where(s => s.Function.Id == functionId));
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }

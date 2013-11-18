@@ -4,15 +4,12 @@
 
 <h3>All Employees</h3>
 Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br/><br/>
-LastName contains : <input id="txtLastName" type="text" /><br />
-<button id="buttonSearch" class="buttonSearch">Search</button>
 <div id="grid"></div>
 <br/>
-@using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
-    <button class="buttonAdd">Create new</button>
-}
+<div id="gridDetail"></div>
 
 <script type="text/javascript">
+       
     var KendoDataSource_EmployeeAutoCompleteByFirstName = {
         serverFiltering: true,
         serverPaging: true,
@@ -38,22 +35,24 @@ LastName contains : <input id="txtLastName" type="text" /><br />
             }
         }
     };
-
+  
     $(document).ready(function () {
         $('#multi').click(function () {
             $("#grid").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
         });
         
-        $("#buttonSearch").click(function () {
-            var filters = new Array();
-            
-            var lastname = $("#txtLastName").val();
-            if (lastname) {
-                filters.push({ field: "LastName", operator: "contains", value: lastname });
-            }
-            $("#grid").data("kendoGrid").dataSource.filter(filters);
-        });
-        
+        function onChange(arg) {
+            var thiz = this;
+            console.log("ss");
+            $.map(this.select(), function (item) {
+                var selectedEmployeeId = JSON.stringify(thiz.dataItem(item).id);
+                console.log(selectedEmployeeId);
+                var filters = new Array();
+                filters.push({ field: "Id", operator: "eq", value: selectedEmployeeId });
+                $("#gridDetail").data("kendoGrid").dataSource.filter(filters);
+            });
+        }
+       
         var dataSource = {
             serverPaging: true,
             serverSorting: true,
@@ -78,6 +77,49 @@ LastName contains : <input id="txtLastName" type="text" /><br />
                 model: {
                     id: 'Id',
                     fields: {
+                        Id: { type: 'number' },
+                        CompanyName: { type: 'string' },
+                        MainCompanyName: { type: 'string' },
+                        Number: { type: 'number' },
+                        First: { type: 'string' },
+                        LastName: { type: 'string' },
+                        Full: { type: 'string' },
+                        Email: { type: 'string' },
+                        HireDate: { type: 'date' },
+                        CountryCode: { type: 'string' },
+                        IsManager: { type: 'boolean' },
+                        FunctionCode: { type: 'string' },
+                        SubFunctionCode: { type: 'string' },
+                        Assigned: { type: 'number' }
+                    }
+                }
+            }
+        };
+        
+        var dataSourceDetails = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("GridDetails")'
+                },
+                parameterMap: function (options) {
+                    if (options.filter) {
+                        KendoGrid_FixFilter(dataSource, options.filter);
+                    }
+                    return options;
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Id: { type: 'number' },
                         CompanyName: { type: 'string' },
                         MainCompanyName: { type: 'string' },
                         Number: { type: 'number' },
@@ -98,21 +140,38 @@ LastName contains : <input id="txtLastName" type="text" /><br />
 
         $('#grid').kendoGrid({
             dataSource: dataSource,
+            selectable: "single",
+            change: onChange,
             height: '240px',
             columns: [
-                {
-                    field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
-                    template:
-                        '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
-                            '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                            '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
-                },
-                { field: 'CompanyName', title: 'Company' },
-                { field: 'MainCompanyName', title: 'Main Company' },
+                { field: 'Id',  hidden: true },
                 { field: 'Number', title: 'Employee #' },
                 { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByFirstName, "First"); } }  },
                 { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByLastName, "LastName"); } } },
-                { field: 'Full', title: 'FullName' },
+                { field: 'Full', title: 'FullName' }
+            ],
+            filterable: {
+                extra: true
+            },
+            sortable: {
+                mode: 'multiple',
+                allowUnsort: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            }
+        });
+        
+        $('#gridDetail').kendoGrid({
+            dataSource: dataSourceDetails,
+            autoBind: false,
+            height: '75px',
+            columns: [
+                { field: 'Id', hidden: true },
+                { field: 'Number', title: 'Employee #' },
+                { field: 'CompanyName', title: 'Company' },
+                { field: 'MainCompanyName', title: 'Main Company' },
                 { field: 'Email' },
                 { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilterDatePicker } },
                 { field: 'CountryCode', title: 'Country' },
@@ -143,17 +202,7 @@ LastName contains : <input id="txtLastName" type="text" /><br />
                 },
                 { field: 'Assigned', title: 'Assigned' }
             ],
-            filterable: {
-                extra: true
-            },
-            sortable: {
-                mode: 'multiple',
-                allowUnsort: true
-            },
-            pageable: {
-                refresh: true,
-                pageSizes: true
-            }
+            filterable: true
         });
     });
 </script>

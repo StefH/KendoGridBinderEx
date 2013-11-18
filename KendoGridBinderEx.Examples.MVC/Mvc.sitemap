@@ -5,9 +5,10 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="Employee" controller="Employee" clickable="false">
-      <mvcSiteMapNode title="List Employees" action="Index"/>
-      <mvcSiteMapNode title="List Grouped Employees (Fixed)" action="IndexGroupedFixed"/>
-      <mvcSiteMapNode title="List Grouped Employees" action="IndexGrouped"/>
+      <mvcSiteMapNode title="List" action="Index"/>
+      <mvcSiteMapNode title="List Master Detail" action="IndexMasterDetail"/>
+      <mvcSiteMapNode title="List Grouped (Fixed)" action="IndexGroupedFixed"/>
+      <mvcSiteMapNode title="List Grouped " action="IndexGrouped"/>
       <mvcSiteMapNode title="List Managers" action="IndexManagers"/>
       <mvcSiteMapNode title="Create Employee" action="Create"/>
     </mvcSiteMapNode>
@@ -15,6 +16,7 @@
       <mvcSiteMapNode title="List Products" action="Index"/>
       <mvcSiteMapNode title="Create Product" action="Create"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="List OU" controller="OU" action="Index"/>
+    <mvcSiteMapNode title="OUs" controller="OU" action="Index"/>
+    <mvcSiteMapNode title="Functions" controller="Function" action="Index"/>
   </mvcSiteMapNode>
 </mvcSiteMap>

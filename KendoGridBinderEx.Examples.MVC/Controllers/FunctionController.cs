@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
@@ -16,10 +16,21 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             _functionService = service;
         }
 
+        public static void InitAutoMapper()
+        {
+            Mapper.CreateMap<Function, FunctionVM>()
+                ;
+
+            Mapper.CreateMap<FunctionVM, Function>()
+                .ForMember(e => e.Employees, opt => opt.Ignore())
+                .ForMember(e => e.SubFunctions, opt => opt.Ignore())
+                ;
+        }
+
         [HttpGet]
         public JsonResult GetFunctionsAsJson()
         {
-            var entities = _functionService.GetAll().Select(x => new Function { Id = x.Id, Code = x.Code, Name = x.Name });
+            var entities = Map(_functionService.AsQueryable());
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }

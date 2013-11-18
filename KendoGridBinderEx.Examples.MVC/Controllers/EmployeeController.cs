@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -60,12 +61,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(e => e.Function, opt => opt.Ignore())
                 .ForMember(e => e.SubFunction, opt => opt.Ignore())
                 ;
-
-            Mapper.CreateMap<Employee, AutoCompleteEmployeeVM>()
-                .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
-                .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
-                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
-                ;
         }
 
         protected override IQueryable<Employee> GetQueryable()
@@ -103,6 +98,18 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexMasterDetail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GridBySubFunctionId(KendoGridRequest request, long? subFunctionId)
+        {
+            var entities = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
+            return GetKendoGridAsJson(request, entities);
+        }
+
         [HttpPost]
         public JsonResult GridWithGroup(KendoGridRequest request)
         {
@@ -111,6 +118,13 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
                 return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
             }
+        }
+
+        [HttpPost]
+        public JsonResult GridDetails(KendoGridRequest request)
+        {
+            var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
+            return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
         }
 
         [HttpPost]

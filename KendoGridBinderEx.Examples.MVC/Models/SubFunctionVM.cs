@@ -9,5 +9,7 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public string Code { get; set; }
 
         public string Name { get; set; }
+
+        public long FunctionId { get; set; }
     }
 }

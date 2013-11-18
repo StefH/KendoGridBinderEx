@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Function Grid Example";
+}
+<h3>All Functions</h3>
+<div id="grid"></div>
+<br/>
+<h3>SubFunctions related to Function '<span id="relatedFunction"></span>'</h3>
+<div id="gridSubFunctions"></div>
+<br />
+<h3>Employees related to SubFunction '<span id="relatedSubFunction"></span>'</h3>
+<div id="gridEmployees"></div>
+<input type="hidden" id="selectedFunctionId"/>
+<script type="text/javascript">
+    var selectedFunctionId = 0;
+    var selectedSubFunctionId = 0;
+    
+    $(document).ready(function () {
+        var dataSource = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("Grid")'
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Id: { type: 'number' },
+                        Code: { type: 'string' },
+                        Name: { type: 'string' }
+                    }
+                }
+            }
+        };
+
+        var dataSourceSubFunctions = {
+            serverPaging: true,
+            serverSorting: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("GridByFunctionId","SubFunction")',
+                    data: function () {
+                        return {
+                            functionId: selectedFunctionId
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Id: { type: 'number' },
+                        Code: { type: 'string' },
+                        Name: { type: 'string' },
+                        FunctionId: { type: 'number' },
+                    }
+                }
+            }
+        };
+        
+        var dataSourceEmployees = {
+            serverPaging: true,
+            serverSorting: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("GridBySubFunctionId","Employee")',
+                    data: function () {
+                        return {
+                            subFunctionId: selectedSubFunctionId
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Id: { type: 'number' },
+                        First: { type: 'string' },
+                        Lastname: { type: 'string' },
+                        Full: { type: 'string' },
+                        SubFunctionId: { type: 'number' },
+                    }
+                }
+            }
+        };
+
+        $('#grid').kendoGrid({
+            dataSource: dataSource,
+            selectable: "single",
+            height: '100px',
+            columns: [
+                { field: 'Id', hidden: true },
+                { field: 'Code' },
+                { field: 'Name' }
+            ],
+            filterable: true,
+            sortable: {
+                mode: 'single',
+                allowUnsort: true
+            },
+            change: function () {
+                selectedFunctionId = this.dataItem(this.select()).Id;
+                $("#relatedFunction").text(this.dataItem(this.select()).Name);
+                
+                $('#gridSubFunctions').data().kendoGrid.dataSource.read({ functionId: selectedFunctionId });
+            }
+        });
+        
+        $('#gridSubFunctions').kendoGrid({
+            dataSource: dataSourceSubFunctions,
+            autoBind: false,
+            selectable: "single",
+            height: '240px',
+            columns: [
+                { field: 'Id', hidden: true },
+                { field: 'Code' },
+                { field: 'Name' },
+                { field: 'FunctionId', hidden: true }
+            ],
+            filterable: false,
+            sortable: {
+                mode: 'single',
+                allowUnsort: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            },
+            change: function () {
+                selectedSubFunctionId = this.dataItem(this.select()).Id;
+                $("#relatedSubFunction").text(this.dataItem(this.select()).Name);
+                
+                $('#gridEmployees').data().kendoGrid.dataSource.read({ subFunctionId: selectedSubFunctionId });
+            }
+        });
+        
+        $('#gridEmployees').kendoGrid({
+            dataSource: dataSourceEmployees,
+            autoBind: false,
+            selectable: "single",
+            height: '240px',
+            columns: [
+                { field: 'Id', hidden: true },
+                { field: 'First' },
+                { field: 'LastName' },
+                { field: 'SubFunctionId', hidden: true }
+            ],
+            filterable: false,
+            sortable: {
+                mode: 'single',
+                allowUnsort: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            }
+        });
+    });
+</script>
