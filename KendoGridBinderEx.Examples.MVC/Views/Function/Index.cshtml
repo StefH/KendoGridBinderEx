@@ -123,6 +123,7 @@
                 $("#relatedFunction").text(this.dataItem(this.select()).Name);
                 
                 $('#gridSubFunctions').data().kendoGrid.dataSource.read({ functionId: selectedFunctionId });
+                $("#gridEmployees").data("kendoGrid").dataSource.data([]);
             }
         });
         
@@ -157,7 +158,6 @@
         $('#gridEmployees').kendoGrid({
             dataSource: dataSourceEmployees,
             autoBind: false,
-            selectable: "single",
             height: '240px',
             columns: [
                 { field: 'Id', hidden: true },
