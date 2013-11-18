@@ -10,27 +10,14 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br
 
 <script type="text/javascript">
        
-    var KendoDataSource_EmployeeAutoCompleteByFirstName = {
+    var KendoDataSource_EmployeeAutoComplete = {
         serverFiltering: true,
         serverPaging: true,
         serverSorting: true,
         pageSize: 10,
         transport: {
             read: {
-                url: '@Url.Action("GetEmployeesByFirstName", "Employee")',
-                dataType: "json"
-            }
-        }
-    };
-    
-    var KendoDataSource_EmployeeAutoCompleteByLastName = {
-        serverFiltering: true,
-        serverPaging: true,
-        serverSorting: true,
-        pageSize: 10,
-        transport: {
-            read: {
-                url: '@Url.Action("GetEmployeesByLastName", "Employee")',
+                url: '@Url.Action("KendoDataSource_EmployeeAutoComplete", "Employee")',
                 dataType: "json"
             }
         }
@@ -146,8 +133,8 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br
             columns: [
                 { field: 'Id',  hidden: true },
                 { field: 'Number', title: 'Employee #' },
-                { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByFirstName, "First"); } }  },
-                { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByLastName, "LastName"); } } },
+                { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoComplete, "First"); } }  },
+                { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoComplete, "LastName"); } } },
                 { field: 'Full', title: 'FullName' }
             ],
             filterable: {

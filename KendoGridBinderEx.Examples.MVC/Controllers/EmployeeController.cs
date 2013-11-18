@@ -134,18 +134,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return GetKendoGridAsJson(request, entities);
         }
 
-        [HttpGet]
-        public JsonResult GetEmployeesByFirstName(KendoGridRequest request)
-        {
-            return GetAutoCompleteResultsAsJson(request);
-        }
-
-        [HttpGet]
-        public JsonResult GetEmployeesByLastName(KendoGridRequest request)
-        {
-            return GetAutoCompleteResultsAsJson(request);
-        }
-
         protected override ValidationResult Validate(Employee employee, string ruleSet)
         {
             //return _employeeValidator.Validate(employee, ruleSet: "*");

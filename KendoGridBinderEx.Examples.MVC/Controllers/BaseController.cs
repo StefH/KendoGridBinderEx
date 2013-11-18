@@ -225,27 +225,34 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         #endregion
 
         #region AutoComplete
-        protected IQueryable GetAutoCompleteResults(KendoGridRequest request)
+        public virtual IQueryable GetAutoComplete(KendoGridRequest request)
         {
+            // Get filter from KendoGridRequest (in case of kendoAutoComplete there is only 1 filter)
             var filter = request.FilterObjectWrapper.FilterObjects.First();
+
+            // Change the field-name in the filter from ViewModel to Entity
             string fieldOriginal = filter.Field1;
             filter.Field1 = MapFieldfromViewModeltoEntity(filter.Field1);
 
+            // Query the database with the filter
             var query = Service.AsQueryable().Where(filter.GetExpression1<TEntity>());
+
+            // Apply paging if needed
             if (request.PageSize != null)
             {
                 query = query.Take(request.PageSize.Value);
             }
 
+            // Do a linq dynamic query GroupBy to get only unique results
             var groupingQuery = query.GroupBy(string.Format("it.{0}", filter.Field1), string.Format("new (it.{0} as Key)", filter.Field1));
-            var selectQuery = groupingQuery.Select(string.Format("new (Key as {0})", fieldOriginal));
 
-            return selectQuery;
+            // Make sure to return new objects which are defined as { "FieldName" : "Value" }, { "FieldName" : "Value" } else the kendoAutoComplete will not display search results.
+            return groupingQuery.Select(string.Format("new (Key as {0})", fieldOriginal));
         }
 
-        protected JsonResult GetAutoCompleteResultsAsJson(KendoGridRequest request)
+        public virtual JsonResult GetAutoCompleteAsJson(KendoGridRequest request)
         {
-            var results = GetAutoCompleteResults(request);
+            var results = GetAutoComplete(request);
             return Json(results, JsonRequestBehavior.AllowGet);
         }
         #endregion

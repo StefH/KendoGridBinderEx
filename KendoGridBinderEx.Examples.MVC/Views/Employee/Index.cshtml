@@ -13,27 +13,14 @@ LastName contains : <input id="txtLastName" type="text" /><br />
 }
 
 <script type="text/javascript">
-    var KendoDataSource_EmployeeAutoCompleteByFirstName = {
+    var KendoDataSource_EmployeeAutoComplete = {
         serverFiltering: true,
         serverPaging: true,
         serverSorting: true,
         pageSize: 10,
         transport: {
             read: {
-                url: '@Url.Action("GetEmployeesByFirstName", "Employee")',
-                dataType: "json"
-            }
-        }
-    };
-    
-    var KendoDataSource_EmployeeAutoCompleteByLastName = {
-        serverFiltering: true,
-        serverPaging: true,
-        serverSorting: true,
-        pageSize: 10,
-        transport: {
-            read: {
-                url: '@Url.Action("GetEmployeesByLastName", "Employee")',
+                url: '@Url.Action("GetAutoCompleteAsJson", "Employee")',
                 dataType: "json"
             }
         }
@@ -110,8 +97,8 @@ LastName contains : <input id="txtLastName" type="text" /><br />
                 { field: 'CompanyName', title: 'Company' },
                 { field: 'MainCompanyName', title: 'Main Company' },
                 { field: 'Number', title: 'Employee #' },
-                { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByFirstName, "First"); } }  },
-                { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoCompleteByLastName, "LastName"); } } },
+                { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoComplete, "First"); } }  },
+                { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoComplete, "LastName"); } } },
                 { field: 'Full', title: 'FullName' },
                 { field: 'Email' },
                 { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilterDatePicker } },
