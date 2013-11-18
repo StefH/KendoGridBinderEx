@@ -27,7 +27,12 @@
                         Hello, <span class="username">@User.Identity.Name</span>
                     </section>
                     <nav>
-                        @Html.MvcSiteMap().Menu()    
+                        @Html.MvcSiteMap().Menu()
+                        <script>
+                            //$(document).ready(function () {
+                                $("#menu").kendoMenu();
+                            //});
+                        </script>
                     </nav>
                 </div>
             </div>
@@ -46,11 +51,7 @@
             </div>
         </footer>
         
-        <script>
-            $(document).ready(function () {
-                $("#menu").kendoMenu();
-            });
-        </script>
+        
         @Html.Partial("_KendoDataSources")
         @Html.Partial("_Icons")
         @RenderSection("scripts", false)

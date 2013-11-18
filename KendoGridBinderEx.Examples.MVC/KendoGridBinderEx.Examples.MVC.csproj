@@ -215,6 +215,8 @@
     <Content Include="Content\Images\addressbook.gif" />
     <Content Include="Content\Images\addressbook.png" />
     <Content Include="Content\Images\add_disabled.png" />
+    <Content Include="Content\Images\arrow_refresh.png" />
+    <Content Include="Content\Images\arrow_refresh_disabled.png" />
     <Content Include="Content\Images\busy.gif" />
     <Content Include="Content\Images\buttons.gif" />
     <Content Include="Content\Images\calendar.gif" />

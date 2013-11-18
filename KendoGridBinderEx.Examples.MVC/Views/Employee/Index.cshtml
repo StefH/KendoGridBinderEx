@@ -3,9 +3,9 @@
 }
 
 <h3>All Employees</h3>
-Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br/><br/>
-LastName contains : <input id="txtLastName" type="text" /><br />
-<button id="buttonSearch" class="buttonSearch">Search</button>
+Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br/>
+LastName contains : <input id="txtLastName" type="text" /><button id="buttonSearch" class="buttonSearch">Search</button>
+<br /><button id="buttonRefresh" class="buttonRefresh">Refresh</button>
 <div id="grid"></div>
 <br/>
 @using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
@@ -39,6 +39,12 @@ LastName contains : <input id="txtLastName" type="text" /><br />
                 filters.push({ field: "LastName", operator: "contains", value: lastname });
             }
             $("#grid").data("kendoGrid").dataSource.filter(filters);
+        });
+
+        $("#buttonRefresh").click(function () {
+            var ds = $("#grid").data("kendoGrid").dataSource;
+            ds.filter(new Array())
+            ds.sort(new Array())
         });
         
         var dataSource = {

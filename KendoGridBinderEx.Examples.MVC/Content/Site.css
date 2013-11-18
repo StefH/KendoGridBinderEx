@@ -297,7 +297,7 @@ input[type="checkbox"].input-validation-error
 
 .ui-button
 {
-    font-size: 12px;
+    font-size: 10.5px;
 }
 
 .ui-button-text-only .ui-button-text
@@ -310,9 +310,14 @@ input[type="checkbox"].input-validation-error
     background-image: url('/Content/Images/add.png');
 }
 
-.buttonSearch > span.ui-icon-search
+.buttonSearch > span.ui-icon-add
 {
     background-image: url('/Content/Images/search.gif');
+}
+
+.buttonRefresh > span.ui-icon-add
+{
+    background-image: url('/Content/Images/arrow_refresh.png');
 }
 
 table, td
