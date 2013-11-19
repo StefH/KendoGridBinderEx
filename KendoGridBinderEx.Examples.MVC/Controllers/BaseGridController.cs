@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.QueryContext;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
@@ -20,12 +21,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryContext<TEntity> queryContext)
         {
-            return Json(GetKendoGrid(request, queryContext.Query, queryContext.Includes));
+            return Json(queryContext.ToKendoGrid<TViewModel>(request));
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
         {
-            return Json(GetKendoGrid(request, query, includes));
+            return Json(query.ToKendoGridEx<TEntity, TViewModel>(includes, request));
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryable<TEntity> query)
@@ -35,14 +36,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridRequest request, IQueryable<TEntity> query)
         {
-            return GetKendoGrid(request, query, null);
+            return query.ToKendoGridEx<TEntity, TViewModel>(request);
         }
-
-        protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
-        {
-            return new KendoGridEx<TEntity, TViewModel>(request, query, includes);
-        }
-
         #region MVC Grid Actions
         [HttpPost]
         public JsonResult Grid(KendoGridRequest request)
