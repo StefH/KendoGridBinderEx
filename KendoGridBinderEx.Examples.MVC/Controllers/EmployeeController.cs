@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
+using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
@@ -118,7 +119,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public JsonResult GridBySubFunctionId(KendoGridRequest request, long? subFunctionId)
         {
             var query = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
-            return Json(new KendoGridEx<Employee, EmployeeDetailVM>(request, query));
+            return Json(query.ToKendoGridEx<Employee, EmployeeDetailVM>(request));
         }
 
         [HttpPost]
