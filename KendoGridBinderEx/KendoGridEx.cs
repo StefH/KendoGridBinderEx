@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace KendoGridBinderEx
 {
@@ -26,7 +27,7 @@ namespace KendoGridBinderEx
     public class KendoGridEx<TEntity, TViewModel> : KendoGrid<TEntity, TViewModel>
     {
         private static readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> AutoMapperConversion = query =>
-            SameTypes ? query.Cast<TViewModel>().ToList() : Mapper.Map<IEnumerable<TViewModel>>(query);
+            SameTypes ? query.Cast<TViewModel>().ToList() : query.Project().To<TViewModel>().ToList();
 
         public KendoGridEx(KendoGridRequest request, IQueryable<TEntity> query)
             : this(request, query, null)
