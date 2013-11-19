@@ -99,6 +99,8 @@
                         Lastname: { type: 'string' },
                         Full: { type: 'string' },
                         SubFunctionId: { type: 'number' },
+                        FunctionCode: { type: 'string' },
+                        SubFunctionCode: { type: 'string' }
                     }
                 }
             }
@@ -163,6 +165,8 @@
                 { field: 'Id', hidden: true },
                 { field: 'First' },
                 { field: 'LastName' },
+                { field: 'FunctionCode' },
+                { field: 'SubFunctionCode' },
                 { field: 'SubFunctionId', hidden: true }
             ],
             filterable: false,

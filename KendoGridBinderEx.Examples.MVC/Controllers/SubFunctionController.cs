@@ -39,7 +39,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpGet]
         public JsonResult GetSubFunctionsAsJson()
         {
-            var entities = base.Map(GetQueryable());
+            var entities = base.ProjectToList(GetQueryable());
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }
@@ -47,7 +47,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpGet]
         public JsonResult GetSubFunctionsByFunctionIdAsJson(long functionId)
         {
-            var entities = base.Map(GetQueryable().Where(s => s.Function.Id == functionId));
+            var entities = base.ProjectToList(GetQueryable().Where(s => s.Function.Id == functionId));
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }

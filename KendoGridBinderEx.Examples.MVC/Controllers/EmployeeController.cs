@@ -61,6 +61,17 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(e => e.Function, opt => opt.Ignore())
                 .ForMember(e => e.SubFunction, opt => opt.Ignore())
                 ;
+
+            Mapper.CreateMap<Employee, EmployeeDetailVM>()
+                .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
+                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
+                .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
+                .ForMember(vm => vm.FunctionCode, opt => opt.MapFrom(m => m.Function.Code))
+                .ForMember(vm => vm.SubFunctionCode, opt => opt.MapFrom(m => m.SubFunction.Code))
+                ;
+
+            Mapper.CreateMap<EmployeeDetailVM, Employee>()
+                .ForAllMembers(opt => opt.Ignore());
         }
 
         protected override IQueryable<Employee> GetQueryable()
@@ -106,8 +117,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpPost]
         public JsonResult GridBySubFunctionId(KendoGridRequest request, long? subFunctionId)
         {
-            var entities = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
-            return GetKendoGridAsJson(request, entities);
+            var query = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
+            return Json(new KendoGridEx<Employee, EmployeeDetailVM>(request, query));
         }
 
         [HttpPost]

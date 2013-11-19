@@ -30,7 +30,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpGet]
         public JsonResult GetFunctionsAsJson()
         {
-            var entities = Map(_functionService.AsQueryable());
+            var entities = ProjectToList(_functionService.AsQueryable());
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }

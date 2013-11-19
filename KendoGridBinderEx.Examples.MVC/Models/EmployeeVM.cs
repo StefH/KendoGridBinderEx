@@ -6,6 +6,25 @@ using KendoGridBinderEx.Examples.Business.Entities;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
 {
+    public class EmployeeDetailVM : IEntity
+    {
+        public long Id { get; set; }
+
+        public string First { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Full { get; set; }
+
+        public long FunctionId { get; set; }
+
+        public string FunctionCode { get; set; }
+
+        public long SubFunctionId { get; set; }
+
+        public string SubFunctionCode { get; set; }
+    }
+
     public class EmployeeVM : IEntity
     {
         public long Id { get; set; }

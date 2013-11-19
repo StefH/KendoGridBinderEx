@@ -30,10 +30,8 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br
         
         function onChange(arg) {
             var thiz = this;
-            console.log("ss");
             $.map(this.select(), function (item) {
                 var selectedEmployeeId = JSON.stringify(thiz.dataItem(item).id);
-                console.log(selectedEmployeeId);
                 var filters = new Array();
                 filters.push({ field: "Id", operator: "eq", value: selectedEmployeeId });
                 $("#gridDetail").data("kendoGrid").dataSource.filter(filters);

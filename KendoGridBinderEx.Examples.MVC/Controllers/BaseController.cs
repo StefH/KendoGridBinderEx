@@ -5,6 +5,7 @@ using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
@@ -61,9 +62,14 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Mapper.Map<TViewModel>(entity);
         }
 
-        protected virtual ICollection<TViewModel> Map(IQueryable<TEntity> queryableEntities)
+        protected virtual ICollection<TViewModel> ProjectToList(IQueryable<TEntity> queryableEntities)
         {
-            return Mapper.Map<ICollection<TViewModel>>(queryableEntities);
+            return queryableEntities.Project().To<TViewModel>().ToList();
+        }
+
+        protected virtual IQueryable<TViewModel> ProjectToQueryable(IQueryable<TEntity> queryableEntities)
+        {
+            return queryableEntities.Project().To<TViewModel>();
         }
 
         protected virtual TEntity Map(TViewModel viewModel)
