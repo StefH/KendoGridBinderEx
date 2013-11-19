@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Dynamic;
 
 namespace KendoGridBinderEx.Extensions
 {
-    public static class Extensions
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static class Extensions
     {
         public class DataItem
         {
@@ -79,7 +82,6 @@ namespace KendoGridBinderEx.Extensions
                 .ToDictionary(x => x.Key, y => y.ToDictionary(k => k.Prefix, v => v.Value))
             ;
         }
-
 
         public static IDictionary<string, object> ToDictionary(this object a)
         {

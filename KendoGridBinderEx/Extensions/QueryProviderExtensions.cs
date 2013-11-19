@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 
 namespace KendoGridBinderEx.Extensions
 {
-    public static class QueryProviderExtensions
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static class QueryProviderExtensions
     {
         public static bool IsEntityFrameworkProvider(this IQueryProvider provider)
         {
@@ -15,5 +18,3 @@ namespace KendoGridBinderEx.Extensions
         }
     }
 }
-
-

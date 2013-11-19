@@ -4,7 +4,9 @@ using System.Linq;
 
 namespace KendoGridBinderEx.Extensions
 {
-    public static class TypeExtensions
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static class TypeExtensions
     {
         internal static readonly Type[] PredefinedTypes =
         {

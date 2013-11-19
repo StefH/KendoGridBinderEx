@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace KendoGridBinderEx.Extensions
 {
-    public static class DynamicQueryableExtensions
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static class DynamicQueryableExtensions
     {
         public static IEnumerable<TEntity> Select<TEntity>(this IEnumerable<object> source, string propertyName)
         {

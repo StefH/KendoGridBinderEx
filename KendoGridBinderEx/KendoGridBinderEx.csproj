@@ -84,6 +84,7 @@
     <Compile Include="Containers\GroupObject.cs" />
     <Compile Include="Containers\SortObject.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="QueryableExtensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\LinqDynamicExtensions.cs" />
     <Compile Include="Extensions\QueryProviderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
