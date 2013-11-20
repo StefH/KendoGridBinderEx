@@ -8,14 +8,15 @@ namespace KendoGridBinderEx.Examples.MVC
         public static void RegisterBundles(BundleCollection bundles)
         {
             // Kendo JS and CSS
-            const string kendoVersion = "2013.2.716";
+            const string kendoVersion = "2013.3.1119";
             bundles.Add(new ScriptBundle("~/bundles/kendo")
                 .Include("~/Scripts/kendo/" + kendoVersion + "/kendo.web.min.js")
                 .Include("~/Scripts/kendoExtensions.js")
             );
             bundles.Add(new StyleBundle("~/ContentKendo").Include(
                 "~/Content/kendo/" + kendoVersion + "/kendo.common.min.css",
-                "~/Content/kendo/" + kendoVersion + "/kendo.uniform.min.css"
+                "~/Content/kendo/" + kendoVersion + "/kendo.uniform.min.css",
+                "~/Content/kendo/" + kendoVersion + "/kendo.silver.min.css"
                 )
             );
 

@@ -7,8 +7,8 @@
         <title>@ViewBag.Title - KendoGridBinderEx MVC Demo</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        <link href="@Url.Content("~/Content/kendo/2013.2.716/kendo.common.min.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/kendo/2013.2.716/kendo.silver.min.css")" rel="stylesheet" type="text/css" />
+        
+        @Styles.Render("~/ContentKendo")
         @Styles.Render("~/Content/css")
         
         @Scripts.Render("~/bundles/jquery")
@@ -16,7 +16,6 @@
         @Scripts.Render("~/bundles/jqueryval")
         @Scripts.Render("~/bundles/common")
         @Scripts.Render("~/bundles/kendo")
-        <script src="@Url.Content("~/Scripts/kendo/2013.2.716/cultures/kendo.culture.en-US.min.js")"></script>
         @Scripts.Render("~/bundles/knockout")
     </head>
     <body>
