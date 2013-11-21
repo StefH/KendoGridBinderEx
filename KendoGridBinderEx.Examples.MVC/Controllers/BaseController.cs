@@ -12,6 +12,24 @@ using KendoGridBinderEx.Examples.Business.Validation;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
+    public class EntityResolver<TEntity> : IValueResolver where TEntity : class, IEntity, new()
+    {
+        public ResolutionResult Resolve(ResolutionResult source)
+        {
+            if (!source.Context.Options.Items.ContainsKey("Services")) return null;
+
+            var services = (List<object>)source.Context.Options.Items["Services"];
+            var item = services.FirstOrDefault(s => s is IBaseService<TEntity>);
+            if (item == null) return null;
+
+            var id = (long)source.Value;
+            if (id <= 0) return null;
+
+            var service = (IBaseService<TEntity>)item;
+            return source.New(service.GetById(id));
+        }
+    }
+
     public abstract class BaseController<TEntity, TViewModel> : Controller
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
@@ -43,6 +61,16 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected virtual IQueryable<TEntity> GetQueryable()
         {
             return Service.AsQueryable();
+        }
+
+        /// <summary>
+        /// Get all services needed for this controller
+        /// </summary>
+        /// <returns></returns>
+        protected virtual List<object> GetServices()
+        {
+            var baseServices = new List<IBaseService<TEntity>> { Service };
+            return baseServices.Cast<object>().ToList();
         }
 
         #region AutoMapper
@@ -89,7 +117,9 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         /// <returns>Entity</returns>
         protected virtual TEntity Map(TViewModel viewModel, TEntity entity)
         {
-            return entity == null ? Mapper.Map<TEntity>(viewModel) : Mapper.Map(viewModel, entity);
+            return entity == null ?
+                Mapper.Map<TEntity>(viewModel, opt => opt.Items["Services"] = GetServices()) :
+                Mapper.Map(viewModel, entity, opt => opt.Items["Services"] = GetServices());
         }
         #endregion
 

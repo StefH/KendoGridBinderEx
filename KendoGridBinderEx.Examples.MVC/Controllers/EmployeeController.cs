@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -59,10 +60,10 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(e => e.EmployeeNumber, opt => opt.MapFrom(vm => vm.Number))
                 .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
                 .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.LastName))
-                .ForMember(e => e.Company, opt => opt.Ignore())
-                .ForMember(e => e.Country, opt => opt.Ignore())
-                .ForMember(e => e.Function, opt => opt.Ignore())
-                .ForMember(e => e.SubFunction, opt => opt.Ignore())
+                .ForMember(e => e.Company, opt => opt.ResolveUsing<EntityResolver<Company>>().FromMember(vm => vm.CompanyId))
+                .ForMember(e => e.Country, opt => opt.ResolveUsing<EntityResolver<Country>>().FromMember(vm => vm.CountryId))
+                .ForMember(e => e.Function, opt => opt.ResolveUsing<EntityResolver<Function>>().FromMember(vm => vm.FunctionId))
+                .ForMember(e => e.SubFunction, opt => opt.ResolveUsing<EntityResolver<SubFunction>>().FromMember(vm => vm.SubFunctionId))
                 ;
 
             Mapper.CreateMap<Employee, EmployeeDetailVM>()
@@ -77,25 +78,25 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForAllMembers(opt => opt.Ignore());
         }
 
+        protected override List<object> GetServices()
+        {
+            var services = base.GetServices();
+            services.Add(_companyService);
+            services.Add(_functionService);
+            services.Add(_subfunctionService);
+            services.Add(_countryService);
+
+            return services;
+        }
+
         protected override IQueryable<Employee> GetQueryable()
         {
-            return _employeeService.AsQueryable(e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction, e=> e.Country);
+            return _employeeService.AsQueryable(e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction, e => e.Country);
         }
 
         protected override Employee GetById(long id)
         {
             return _employeeService.GetById(id, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction, e => e.Country);
-        }
-
-        protected override Employee Map(EmployeeVM viewModel, Employee employee)
-        {
-            employee = base.Map(viewModel, employee);
-            employee.Country = viewModel.CountryId > 0 ? _countryService.GetById(viewModel.CountryId) : null;
-            employee.Company = viewModel.CompanyId > 0 ? _companyService.GetById(viewModel.CompanyId, c => c.MainCompany) : null;
-            employee.Function = viewModel.FunctionId > 0 ? _functionService.GetById(viewModel.FunctionId) : null;
-            employee.SubFunction = viewModel.SubFunctionId > 0 ? _subfunctionService.GetById(viewModel.SubFunctionId) : null;
-
-            return employee;
         }
 
         public ActionResult IndexManagers()
