@@ -174,6 +174,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseGridController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\MainCompanyController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

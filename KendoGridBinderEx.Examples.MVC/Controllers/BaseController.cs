@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -72,9 +71,25 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return queryableEntities.Project().To<TViewModel>();
         }
 
+        /// <summary>
+        /// Map a ViewModel to Entity
+        /// </summary>
+        /// <param name="viewModel">The ViewModel</param>
+        /// <returns>Entity</returns>
         protected virtual TEntity Map(TViewModel viewModel)
         {
-            return Mapper.Map<TEntity>(viewModel);
+            return Map(viewModel, null);
+        }
+
+        /// <summary>
+        /// Map a ViewModel to Entity
+        /// </summary>
+        /// <param name="viewModel">The ViewModel</param>
+        /// <param name="entity">The Entity. If present then update, else create new.</param>
+        /// <returns>Entity</returns>
+        protected virtual TEntity Map(TViewModel viewModel, TEntity entity)
+        {
+            return entity == null ? Mapper.Map<TEntity>(viewModel) : Mapper.Map(viewModel, entity);
         }
         #endregion
 
@@ -88,20 +103,15 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Service.GetById(id);
         }
 
-        protected async virtual Task<TEntity> GetByIdAsync(long id)
-        {
-            return await Service.GetByIdAsync(id);
-        }
-
         #region MVC Actions
         public ActionResult Index()
         {
             return View();
         }
 
-        public async Task<ActionResult> Details(long id)
+        public ActionResult Details(long id)
         {
-            var entity = await GetByIdAsync(id);
+            var entity = GetById(id);
             var viewModel = Map(entity);
 
             return View(viewModel);
@@ -122,7 +132,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             {
                 ModelState.Clear();
 
-                var entity = Map(viewModel);
+                var entity = GetById(viewModel.Id);
+                entity = Map(viewModel, entity);
                 var result = Validate(entity, ValidationRuleSets.Edit);
 
                 if (result.IsValid)

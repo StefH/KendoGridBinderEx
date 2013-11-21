@@ -8,15 +8,6 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
 <br/>
 
 <script type="text/javascript">
-    $(function () {
-        $("#buttonAdd").button({
-            icons: {
-                primary: "ui-icon-add"
-            },
-            text: true
-        });
-    });
-
     $(document).ready(function () {
         $('#multi').click(function () {
             $("#gridWithGroup").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";

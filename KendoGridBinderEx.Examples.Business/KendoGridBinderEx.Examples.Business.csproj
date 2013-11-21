@@ -35,6 +35,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.1.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.1.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
@@ -103,11 +110,13 @@
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RepositoryConfig.cs" />
     <Compile Include="Service\Implementation\BaseService.cs" />
+    <Compile Include="Service\Implementation\CountryService.cs" />
     <Compile Include="Service\Implementation\MainCompanyService.cs" />
     <Compile Include="Service\Implementation\CompanyService.cs" />
     <Compile Include="Service\Implementation\OUService.cs" />
     <Compile Include="Service\Implementation\SubFunctionService.cs" />
     <Compile Include="Service\Implementation\FunctionService.cs" />
+    <Compile Include="Service\Interface\ICountryService.cs" />
     <Compile Include="Service\Interface\IMainCompanyService.cs" />
     <Compile Include="Service\Interface\IOUService.cs" />
     <Compile Include="Service\Interface\ISubFunctionService.cs" />

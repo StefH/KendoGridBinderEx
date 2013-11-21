@@ -118,10 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CompanyName" xml:space="preserve">
-    <value>CompanyName</value>
+    <value>Company</value>
+  </data>
+  <data name="CountryName" xml:space="preserve">
+    <value>Country</value>
   </data>
   <data name="Employee_Company_Required" xml:space="preserve">
-    <value>The Company Name is required</value>
+    <value>The Company is required</value>
+  </data>
+  <data name="Employee_Country_Required" xml:space="preserve">
+    <value>The Country is required</value>
   </data>
   <data name="Employee_Email_Invalid" xml:space="preserve">
     <value>The Email is invalid</value>

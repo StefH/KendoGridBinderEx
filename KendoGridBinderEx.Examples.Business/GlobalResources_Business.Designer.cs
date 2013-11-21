@@ -61,7 +61,7 @@ namespace KendoGridBinderEx.Examples.Business {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CompanyName.
+        ///   Looks up a localized string similar to Company.
         /// </summary>
         public static string CompanyName {
             get {
@@ -70,11 +70,29 @@ namespace KendoGridBinderEx.Examples.Business {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Company Name is required.
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string CountryName {
+            get {
+                return ResourceManager.GetString("CountryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Company is required.
         /// </summary>
         public static string Employee_Company_Required {
             get {
                 return ResourceManager.GetString("Employee_Company_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Country is required.
+        /// </summary>
+        public static string Employee_Country_Required {
+            get {
+                return ResourceManager.GetString("Employee_Country_Required", resourceCulture);
             }
         }
         

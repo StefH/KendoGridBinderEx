@@ -26,6 +26,10 @@ namespace KendoGridBinderEx.Examples.Business.Validation
                 .NotNull().WithMessage(GlobalResources_Business.Employee_Company_Required)
                 ;
 
+            RuleFor(e => e.Country)
+                .NotNull().WithMessage(GlobalResources_Business.Employee_Country_Required)
+                ;
+
             RuleFor(e => e.Function)
                 .NotNull().WithMessage(GlobalResources_Business.Employee_Function_Required)
                 ;

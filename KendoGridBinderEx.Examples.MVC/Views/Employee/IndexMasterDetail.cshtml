@@ -17,7 +17,7 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br
         pageSize: 10,
         transport: {
             read: {
-                url: '@Url.Action("KendoDataSource_EmployeeAutoComplete", "Employee")',
+                url: '@Url.Action("GetAutoCompleteAsJson", "Employee")',
                 dataType: "json"
             }
         }

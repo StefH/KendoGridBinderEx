@@ -13,6 +13,17 @@
         </td>
     </tr>
     <tr>
+        <td style="width: 150px;">
+            @Html.LabelFor(model => model.CountryId)
+        </td>
+        <td style="width: 400px;">
+            @Html.TextBoxFor(model => model.CountryId, new { data_bind = "kendoDropDownList: { dataTextField: 'Name', dataValueField: 'Id', data: countries, value: countryId, optionLabel: 'Select ...' }" })
+        </td>
+        <td style="width: 300px;">
+            @Html.ValidationMessageFor(model => model.CountryId)
+        </td>
+    </tr>
+    <tr>
         <td>
             @Html.LabelFor(model => model.Number)
         </td>
@@ -92,7 +103,7 @@
             @Html.LabelFor(model => model.HireDate)
         </td>
         <td>
-            @Html.TextBoxFor(model => model.HireDate, new { data_bind = "kendoDatePicker: { value: hireDate, format: 'yyyy-MM-dd' }" })
+            @Html.TextBoxFor(model => model.HireDate, new { data_bind = "kendoDatePicker: { value: hireDate, format: 'MM/dd/yyyy' }" })
         </td>
         <td>
             @Html.ValidationMessageFor(model => model.HireDate)
@@ -108,19 +119,22 @@
             var self = this;
 
             this.Init = function () {
+                this.GetCountries();
                 this.GetCompanies();
                 this.GetFunctions();
             };
 
             self.companies = ko.observableArray();
+            self.countries = ko.observableArray();
             self.functions = ko.observableArray();
             self.subfunctions = ko.observableArray([{}]);
             self.companyId = ko.observable();
+            self.countryId = ko.observable();
             self.functionId = ko.observable();
             self.subfunctionId = ko.observable(viewModelData.SubFunctionId);
             self.subfunctionIdEditable = ko.observable(false);
             self.lastname = ko.observable(viewModelData.LastName);
-            self.hireDate = ko.observable(new Date());
+            self.hireDate = ko.observable(viewModelData.HireDate);
 
             self.isManager = ko.observable(viewModelData.IsManager);
 
@@ -142,6 +156,14 @@
                 $.getJSON('@Url.Action("GetCompaniesAsJson", "Company")', function (data) {
                     self.companies(data);
                     self.companyId(viewModelData.CompanyId);
+                }
+                );
+            };
+            
+            this.GetCountries = function () {
+                $.getJSON('@Url.Action("GetCountriesAsJson", "Country")', function (data) {
+                    self.countries(data);
+                    self.countryId(viewModelData.CountryId);
                 }
                 );
             };

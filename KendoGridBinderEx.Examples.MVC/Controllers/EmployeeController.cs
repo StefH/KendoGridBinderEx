@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
-using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
+using KendoGridBinderEx.QueryableExtensions;
 using StackExchange.Profiling;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
@@ -16,18 +16,20 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
     public class EmployeeController : BaseGridController<Employee, EmployeeVM>
     {
         private readonly IEmployeeService _employeeService;
+        private readonly ICountryService _countryService;
         private readonly ICompanyService _companyService;
         private readonly IFunctionService _functionService;
         private readonly ISubFunctionService _subfunctionService;
         private readonly EmployeeValidator _employeeValidator;
 
-        public EmployeeController(IEmployeeService employeeService, ICompanyService companyService, IFunctionService functionService, ISubFunctionService subfunctionService)
+        public EmployeeController(IEmployeeService employeeService, ICompanyService companyService, IFunctionService functionService, ISubFunctionService subfunctionService, ICountryService countryService)
             : base(employeeService)
         {
             _employeeService = employeeService;
             _companyService = companyService;
             _functionService = functionService;
             _subfunctionService = subfunctionService;
+            _countryService = countryService;
 
             _employeeValidator = new EmployeeValidator(_employeeService);
         }
@@ -77,17 +79,18 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         protected override IQueryable<Employee> GetQueryable()
         {
-            return _employeeService.AsQueryable(e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
+            return _employeeService.AsQueryable(e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction, e=> e.Country);
         }
 
         protected override Employee GetById(long id)
         {
-            return _employeeService.GetById(id, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
+            return _employeeService.GetById(id, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction, e => e.Country);
         }
 
-        protected override Employee Map(EmployeeVM viewModel)
+        protected override Employee Map(EmployeeVM viewModel, Employee employee)
         {
-            var employee = Mapper.Map<Employee>(viewModel);
+            employee = base.Map(viewModel, employee);
+            employee.Country = viewModel.CountryId > 0 ? _countryService.GetById(viewModel.CountryId) : null;
             employee.Company = viewModel.CompanyId > 0 ? _companyService.GetById(viewModel.CompanyId, c => c.MainCompany) : null;
             employee.Function = viewModel.FunctionId > 0 ? _functionService.GetById(viewModel.FunctionId) : null;
             employee.SubFunction = viewModel.SubFunctionId > 0 ? _subfunctionService.GetById(viewModel.SubFunctionId) : null;

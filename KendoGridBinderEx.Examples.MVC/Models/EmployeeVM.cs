@@ -56,10 +56,12 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         [Display(ResourceType = typeof(GlobalResources_Business), Name = GlobalResources_BusinessLiterals.CompanyName)]
         public string CompanyName { get; set; }
 
+        [Display(ResourceType = typeof(GlobalResources_Business), Name = GlobalResources_BusinessLiterals.CountryName)]
         public long CountryId { get; set; }
 
         public string CountryCode { get; set; }
 
+        [Display(ResourceType = typeof(GlobalResources_Business), Name = GlobalResources_BusinessLiterals.CountryName)]
         public string CountryName { get; set; }
 
         public string MainCompanyName { get; set; }
