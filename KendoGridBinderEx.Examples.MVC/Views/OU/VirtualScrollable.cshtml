@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Organizational Units Virtual Scrollable Example";
+}
+
+<h3>All Organizational Units</h3>
+<div id="grid"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dataSource = new kendo.data.DataSource({
+            type: "json",
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 100,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("GridVirtualScrollable")'
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Code: { type: 'string' },
+                        Name: { type: 'string' }
+                    }
+                }
+            }
+        });
+
+        $('#grid').kendoGrid({
+            dataSource: dataSource,
+            height: '500px',
+            columns: [
+                {
+                    field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
+                    template:
+                        '<a href="/OU/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
+                        '<a href="/OU/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                        '<a href="/OU/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                },
+                { field: 'Code' },
+                { field: 'Name' }
+            ],
+            filterable: true,
+            sortable: {
+                mode: 'single'
+            },
+            scrollable: {
+                virtual: true
+            }
+        });
+    });
+</script>

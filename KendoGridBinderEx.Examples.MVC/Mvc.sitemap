@@ -16,7 +16,10 @@
       <mvcSiteMapNode title="List Products" action="Index"/>
       <mvcSiteMapNode title="Create Product" action="Create"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="OUs" controller="OU" action="Index"/>
+    <mvcSiteMapNode title="OUs" controller="OU" action="Index" clickable="false">
+      <mvcSiteMapNode title="Pageable" action="Index"/>
+      <mvcSiteMapNode title="VirtualScrollable" action="VirtualScrollable"/>
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Functions" controller="Function" action="Index"/>
   </mvcSiteMapNode>
 </mvcSiteMap>

@@ -1,7 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Data.Entity;
+using System.Web.Mvc;
+using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
+using KendoGridBinderEx.QueryableExtensions;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -22,6 +25,18 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
             Mapper.CreateMap<OUVM, OU>()
                 ;
+        }
+
+        public ActionResult VirtualScrollable()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GridVirtualScrollable(KendoGridRequest request)
+        {
+            var query = GetQueryable().AsNoTracking();
+            return Json(query.ToKendoGridEx<OU, OUVM>(request));
         }
 
         /*

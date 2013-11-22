@@ -213,7 +213,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             products.ForEach(x => context.Products.Add(x));
             context.SaveChanges();
 
-            const int numOUs = 1000;
+            const int numOUs = 10000;
             var generator = new LipsumGenerator();
             var list = new List<OU>();
             for (int i = 1000000; i < 1000000 + numOUs; i++)
