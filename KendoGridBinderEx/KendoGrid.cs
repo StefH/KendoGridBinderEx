@@ -124,7 +124,9 @@ namespace KendoGridBinderEx
                 // In case of count, convert it to count() as count_XXX
                 var convertedAggregateObjects = request.GroupObjects
                     .SelectMany(g => g.AggregateObjects)
-                    .Select(a => a.GetLinqAggregate(MapFieldfromViewModeltoEntity));
+                    .Select(a => a.GetLinqAggregate(MapFieldfromViewModeltoEntity))
+                    .Distinct()
+                    .ToList();
 
                 // , new (sum(TEntity__.EmployeeNumber) as sum__Number) as Aggregates
                 aggregatesExpression = string.Format(", new ({0}) as Aggregates", string.Join(", ", convertedAggregateObjects));

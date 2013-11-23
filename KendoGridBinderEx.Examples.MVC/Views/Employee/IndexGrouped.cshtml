@@ -2,7 +2,7 @@
     ViewBag.Title = "Employee Grid Example";
 }
 
-<h3>All Employees Grouped</h3>
+<h3>All Employees Grouped (Dynamic)</h3>
 Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
 <div id="gridWithGroup"></div>
 <br/>
@@ -55,7 +55,16 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                         Assigned: { type: 'number' }
                     }
                 }
-            }
+            },
+            group: [{
+                field: "CompanyName", aggregates: [
+                    { field: "CompanyName", aggregate: "count" },
+                    { field: "Number", aggregate: "min" },
+                    { field: "Number", aggregate: "max" },
+                    { field: "Number", aggregate: "average" },
+                    { field: "Number", aggregate: "sum" }
+                ]
+            }]
         };
 
         $('#gridWithGroup').kendoGrid({
@@ -71,7 +80,7 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                 },
                 { field: 'CompanyName', title: 'Company' },
                 { field: 'MainCompanyName', title: 'Main Company'},
-                { field: 'Number', title: 'Employee #' },
+                { field: 'Number', title: 'Employee #', aggregates: ["min", "max", "average", "sum"], groupFooterTemplate: "Min: #= min#<br>Max: #= max#<br>Avg: #= average#<br>Sum: #= sum #" },
                 { field: 'First', title: 'First' },
                 { field: 'LastName', title: 'Last' },
                 { field: 'Full', title: 'FullName' },
