@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AutoMapper;
+using KendoGridBinderEx.Examples.Business.Extensions;
+using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.UnitTests.Entities;
 using KendoGridBinderEx.UnitTests.Helpers;
 using Newtonsoft.Json;
@@ -299,6 +301,7 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual("B", testEmployee.CompanyName);
         }
 
+        /*
         [Test]
         public void Test_KendoGridModelBinder_One_GroupBy_WithoutIncludes()
         {
@@ -342,6 +345,7 @@ namespace KendoGridBinderEx.UnitTests
             Assert.IsNull(testEmployee.CountryName);
             Assert.IsNull(testEmployee.CompanyName);
         }
+        */
 
         [Test]
         public void Test_KendoGridModelBinder_One_GroupBy_One_Aggregate_Count()
@@ -439,6 +443,95 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual(2003, aggregateSum.Value);
         }
 
+        /*
+        take=10&skip=0&page=1&pageSize=10&
+        group[0][field]=CompanyName&
+        group[0][dir]=asc&
+        group[0][aggregates][0][field]=Number&
+        group[0][aggregates][0][aggregate]=min&
+        group[0][aggregates][1][field]=Number&
+        group[0][aggregates][1][aggregate]=max&
+        group[0][aggregates][2][field]=Number&
+        group[0][aggregates][2][aggregate]=average&
+        group[0][aggregates][3][field]=Number&
+        group[0][aggregates][3][aggregate]=count&
+
+        group[1][field]=LastName&
+        group[1][dir]=asc&
+        group[1][aggregates][0][field]=Number&
+        group[1][aggregates][0][aggregate]=min&
+        group[1][aggregates][1][field]=Number&
+        group[1][aggregates][1][aggregate]=max&
+        group[1][aggregates][2][field]=Number&
+        group[1][aggregates][2][aggregate]=average&
+        group[1][aggregates][3][field]=Number&
+        group[1][aggregates][3][aggregate]=count
+         * */
+        [Test]
+        public void Test_KendoGridModelBinder_Two_GroupBy_One_Aggregate_Min()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "10"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "10"},
+
+                {"group[0][field]", "CompanyName"},
+                {"group[0][dir]", "asc"},
+                {"group[0][aggregates][0][field]", "Number"},
+                {"group[0][aggregates][0][aggregate]", "min"},
+          
+                {"group[1][field]", "LastName"},
+                {"group[1][dir]", "asc"},
+                {"group[1][aggregates][0][field]", "Number"},
+                {"group[1][aggregates][0][aggregate]", "min"},
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.AreEqual(2, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.First().AggregateObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.Last().AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployeesWithData().AsQueryable();
+            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest);
+
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            /*
+            Assert.AreEqual(10, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+
+            var groupBySmith = groups.FirstOrDefault(g => g.value.ToString() == "Smith");
+            Assert.IsNotNull(groupBySmith);
+
+            var items = groupBySmith.items as List<EmployeeVM>;
+            Assert.IsNotNull(items);
+            Assert.AreEqual(2, items.Count);
+            Assert.AreEqual(2, items.Count(e => e.Last == "Smith"));
+
+            var aggregates = groupBySmith.aggregates as Dictionary<string, Dictionary<string, object>>;
+            Assert.IsNotNull(aggregates);
+
+            Assert.IsTrue(aggregates.ContainsKey("Number"));
+            var aggregatesNumber = aggregates["Number"];
+            Assert.IsNotNull(aggregatesNumber);
+            Assert.AreEqual(1, aggregatesNumber.Count);
+
+            var aggregateSum = aggregatesNumber.First();
+            Assert.IsNotNull(aggregateSum);
+            Assert.AreEqual("sum", aggregateSum.Key);
+            Assert.AreEqual(2003, aggregateSum.Value);
+            */
+        }
+
         #region InitAutoMapper
         private static void InitAutoMapper()
         {
@@ -447,12 +540,21 @@ namespace KendoGridBinderEx.UnitTests
                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
                .ForMember(vm => vm.Last, opt => opt.MapFrom(m => m.LastName))
                .ForMember(vm => vm.Number, opt => opt.MapFrom(m => m.EmployeeNumber))
+
                .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
                .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
                .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
                .ForMember(vm => vm.CountryId, opt => opt.MapFrom(m => m.Country.Id))
                .ForMember(vm => vm.CountryCode, opt => opt.MapFrom(m => m.Country.Code))
                .ForMember(vm => vm.CountryName, opt => opt.MapFrom(m => m.Country.Name))
+               /*
+               .ForMember(vm => vm.CompanyId, opt => opt.ResolveUsing<IdResolver>().FromMember(x => x.Company))
+               .ForMember(vm => vm.CompanyName, opt => opt.ResolveUsing<CompanyNameResolver>().FromMember(x => x.Company))
+               .ForMember(vm => vm.MainCompanyName, opt => opt.ResolveUsing<MainCompanyNameResolver>().FromMember(x => x.Company))
+               .ForMember(vm => vm.CountryId, opt => opt.ResolveUsing<IdResolver>().FromMember(x => x.Country))
+               .ForMember(vm => vm.CountryCode, opt => opt.ResolveUsing<CountryCodeResolver>().FromMember(x => x.Country))
+               .ForMember(vm => vm.CountryName, opt => opt.ResolveUsing<CountryNameResolver>().FromMember(x => x.Country))
+               */
                ;
 
             Mapper.CreateMap<EmployeeVM, Employee>()
@@ -469,6 +571,46 @@ namespace KendoGridBinderEx.UnitTests
         }
         #endregion
 
+        public class IdResolver : ValueResolver<IEntity, long>
+        {
+            protected override long ResolveCore(IEntity source)
+            {
+                return source!=null ? source.Id : 0;
+            }
+        }
+
+        public class CompanyNameResolver : ValueResolver<Company, string>
+        {
+            protected override string ResolveCore(Company source)
+            {
+                return source != null ? source.Name : string.Empty;
+            }
+        }
+
+        public class MainCompanyNameResolver : ValueResolver<Company, string>
+        {
+            protected override string ResolveCore(Company source)
+            {
+                return source.NullSafeGetValue(x => x.MainCompany.Name, string.Empty);
+            }
+        }
+
+        public class CountryCodeResolver : ValueResolver<Country, string>
+        {
+            protected override string ResolveCore(Country source)
+            {
+                return source != null ? source.Code : string.Empty;
+            }
+        }
+
+        public class CountryNameResolver : ValueResolver<Country, string>
+        {
+            protected override string ResolveCore(Country source)
+            {
+                return source != null ? source.Name : string.Empty;
+            }
+        }
+        
         #region InitEmployees
         private static IEnumerable<Employee> InitEmployeesWithData()
         {
