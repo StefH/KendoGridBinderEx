@@ -15,7 +15,7 @@ using KendoGridBinderEx.Examples.Business.Validation;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class NullSafeResolver<TSource, TResult> : ValueResolver<TSource, TResult>
+    public class NullSafeResolver<TSource, TResult> : KendoGridExValueResolver<TSource, TResult>
     {
         private readonly Expression<Func<TSource, TResult>> _expression;
 
@@ -27,6 +27,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected override TResult ResolveCore(TSource source)
         {
             return source.NullSafeGetValue(_expression, default(TResult));
+        }
+
+        public Expression<Func<TSource, TResult>> GetExpression()
+        {
+            return _expression;
         }
     }
 

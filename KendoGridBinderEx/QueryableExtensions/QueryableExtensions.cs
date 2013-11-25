@@ -5,9 +5,9 @@ namespace KendoGridBinderEx.QueryableExtensions
 {
     public static class QueryableExtensions
     {
-        public static KendoGrid<TModel> ToKendoGrid<TModel>(this IQueryable<TModel> query, KendoGridRequest request)
+        public static KendoGridEx<TModel> ToKendoGrid<TModel>(this IQueryable<TModel> query, KendoGridRequest request)
         {
-            return new KendoGrid<TModel>(request, query);
+            return new KendoGridEx<TModel>(request, query);
         }
 
         public static KendoGridEx<TEntity, TViewModel> ToKendoGridEx<TEntity, TViewModel>(this IQueryable<TEntity> query, KendoGridRequest request)

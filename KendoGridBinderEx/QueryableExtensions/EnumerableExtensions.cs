@@ -1,27 +1,28 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace KendoGridBinderEx.QueryableExtensions
 {
     public static class EnumerableExtensions
     {
-        public static KendoGrid<TModel> ToKendoGrid<TModel>(this IEnumerable<TModel> query, KendoGridRequest request)
+        public static KendoGridEx<TModel> ToKendoGrid<TModel>(this IEnumerable<TModel> query, KendoGridRequest request)
         {
-            return new KendoGrid<TModel>(request, query);
+            return new KendoGridEx<TModel>(request, query);
         }
 
-        public static KendoGrid<TModel> ToKendoGrid<TModel>(this IEnumerable<TModel> query, int totalCount)
+        public static KendoGridEx<TModel> ToKendoGrid<TModel>(this IEnumerable<TModel> query, int totalCount)
         {
-            return new KendoGrid<TModel>(query, totalCount);
+            return new KendoGridEx<TModel>(query, totalCount);
         }
 
         public static KendoGridEx<TEntity, TViewModel> ToKendoGridEx<TEntity, TViewModel>(this IEnumerable<TEntity> query, KendoGridRequest request)
         {
-            return new KendoGridEx<TEntity, TViewModel>(request, query);
+            return new KendoGridEx<TEntity, TViewModel>(request, query.AsQueryable());
         }
 
         public static KendoGridEx<TEntity, TViewModel> ToKendoGridEx<TEntity, TViewModel>(this IEnumerable<TEntity> query, IEnumerable<string> includes, KendoGridRequest request)
         {
-            return new KendoGridEx<TEntity, TViewModel>(request, query, includes);
+            return new KendoGridEx<TEntity, TViewModel>(request, query.AsQueryable(), includes);
         }
 
         public static KendoGridEx<TEntity, TViewModel> ToKendoGridEx<TEntity, TViewModel>(this IEnumerable<TViewModel> query, int totalCount)

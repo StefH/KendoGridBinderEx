@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using KendoGridBinderEx.Extensions;
 
 namespace KendoGridBinderEx.AutoMapperExtensions
 {
@@ -36,6 +37,18 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                 if (!mappings.ContainsKey(source))
                 {
                     mappings.Add(source, destination);
+                }
+            }
+
+            foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression == null))
+            {
+                object customResolver = propertyMap.GetFieldValue("_customResolver");
+                if (customResolver is KendoGridExValueResolver<TEntity,TViewModel>)
+                {
+                    var kendoResolver = customResolver as KendoGridExValueResolver<TEntity, TViewModel>;
+
+                    var expression = kendoResolver.GetExpression();
+                    string param = expression.Body.ToString().Replace(expression.Parameters[0] + ".", string.Empty);
                 }
             }
 

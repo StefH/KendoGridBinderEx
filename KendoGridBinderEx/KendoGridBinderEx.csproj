@@ -86,13 +86,15 @@
     <Compile Include="Containers\GroupObject.cs" />
     <Compile Include="Containers\SortObject.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\ReflectionHelper.cs" />
+    <Compile Include="KendoGridExValueResolver.cs" />
     <Compile Include="QueryableExtensions\EnumerableExtensions.cs" />
     <Compile Include="QueryableExtensions\QueryableExtensions.cs" />
     <Compile Include="Extensions\LinqDynamicExtensions.cs" />
     <Compile Include="Extensions\QueryProviderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="KendoGrid.cs" />
     <Compile Include="KendoGridEx.cs" />
+    <Compile Include="KendoGridEx2.cs" />
     <Compile Include="KendoGridModelBinder.cs" />
     <Compile Include="KendoGridRequest.cs" />
     <Compile Include="KendoGroup.cs" />
