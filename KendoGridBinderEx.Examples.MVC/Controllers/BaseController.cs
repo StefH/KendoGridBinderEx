@@ -2,16 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentValidation.Results;
+using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
+using KendoGridBinderEx.Examples.Business.Extensions;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
+    public class NullSafeResolver<TSource, TResult> : ValueResolver<TSource, TResult>
+    {
+        private readonly Expression<Func<TSource, TResult>> _expression;
+
+        public NullSafeResolver(Expression<Func<TSource, TResult>> expression)
+        {
+            _expression = expression;
+        }
+
+        protected override TResult ResolveCore(TSource source)
+        {
+            return source.NullSafeGetValue(_expression, default(TResult));
+        }
+    }
+
     public class EntityResolver<TEntity> : IValueResolver where TEntity : class, IEntity, new()
     {
         public ResolutionResult Resolve(ResolutionResult source)
@@ -42,7 +60,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             Service = service;
 
-            KendoGridExMappings = KendoGridEx<TEntity, TViewModel>.GetModelMappings();
+            KendoGridExMappings = AutoMapperUtils.GetModelMappings<TEntity, TViewModel>();
 
             if (KendoGridExMappings != null)
             {

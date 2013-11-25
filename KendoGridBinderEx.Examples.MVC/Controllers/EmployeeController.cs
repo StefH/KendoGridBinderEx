@@ -42,7 +42,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
                 .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
                 .ForMember(vm => vm.Number, opt => opt.MapFrom(m => m.EmployeeNumber))
-                .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
+                .ForMember(vm => vm.CompanyId, opt => opt.ResolveUsing(new NullSafeResolver<Employee, long>(e => e.Company.Id)))
                 .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
                 .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
                 .ForMember(vm => vm.CountryId, opt => opt.MapFrom(m => m.Country.Id))

@@ -18,7 +18,7 @@ namespace KendoGridBinderEx.Examples.Business.Extensions
         /// <returns></returns>
         public static TResult NullSafeGetValue<TSource, TResult>(this TSource source, Expression<Func<TSource, TResult>> expression, TResult defaultValue)
         {
-            var value = GetValue(expression, source);
+            object value = GetValue(expression, source);
             return value == null ? defaultValue : (TResult)value;
         }
 
@@ -32,7 +32,7 @@ namespace KendoGridBinderEx.Examples.Business.Extensions
         /// <returns></returns>
         public static TResult NullSafeGetValue<TSource, TResult>(this TSource source, Expression<Func<TSource, TResult>> expression)
         {
-            var value = GetValue(expression, source);
+            object value = GetValue(expression, source);
             return value == null ? default(TResult) : (TResult)value;
         }
 
@@ -49,7 +49,7 @@ namespace KendoGridBinderEx.Examples.Business.Extensions
         /// <returns></returns>
         public static TCastResultType NullSafeGetValue<TSource, TResult, TCastResultType>(this TSource source, Expression<Func<TSource, TResult>> expression, TCastResultType defaultValue, Func<object, TCastResultType> convertToResultToAction)
         {
-            var value = GetValue(expression, source);
+            object value = GetValue(expression, source);
             return value == null ? defaultValue : convertToResultToAction.Invoke(value);
         }
 
@@ -58,10 +58,11 @@ namespace KendoGridBinderEx.Examples.Business.Extensions
             return expression.Body.ToString().Replace(expression.Parameters[0] + ".", string.Empty);
         }
 
-        private static object GetValue<TSource, TResult>(Expression<Func<TSource, TResult>> expression, TSource source)
+        public static TResult GetValue<TSource, TResult>(Expression<Func<TSource, TResult>> expression, TSource source)
         {
             string fullPropertyPathName = GetFullPropertyPathName(expression);
-            return GetNestedPropertyValue(fullPropertyPathName, source);
+            object value = GetNestedPropertyValue(fullPropertyPathName, source);
+            return value == null ? default(TResult) : (TResult)value;
         }
 
         private static object GetNestedPropertyValue(string name, object obj)
@@ -98,6 +99,7 @@ namespace KendoGridBinderEx.Examples.Business.Extensions
                     obj = info.GetValue(obj, null);
                 }
             }
+
             return obj;
         }
         #endregion

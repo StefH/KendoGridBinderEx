@@ -16,7 +16,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected BaseGridController(IBaseService<TEntity> service)
             : base(service)
         {
-
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryContext<TEntity> queryContext)
@@ -38,6 +37,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             return query.ToKendoGridEx<TEntity, TViewModel>(request);
         }
+
         #region MVC Grid Actions
         [HttpPost]
         public JsonResult Grid(KendoGridRequest request)
