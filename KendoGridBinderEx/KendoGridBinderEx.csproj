@@ -80,12 +80,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperExtensions\AutoMapperUtils.cs" />
     <Compile Include="Containers\FilterObject.cs" />
     <Compile Include="Containers\FilterObjectWrapper.cs" />
     <Compile Include="Containers\GroupObject.cs" />
     <Compile Include="Containers\SortObject.cs" />
     <Compile Include="Extensions\Extensions.cs" />
-    <Compile Include="QueryableExtensions\IQueryableExtensions.cs" />
+    <Compile Include="QueryableExtensions\EnumerableExtensions.cs" />
+    <Compile Include="QueryableExtensions\QueryableExtensions.cs" />
     <Compile Include="Extensions\LinqDynamicExtensions.cs" />
     <Compile Include="Extensions\QueryProviderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />

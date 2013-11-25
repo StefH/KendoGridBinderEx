@@ -7,6 +7,11 @@ namespace KendoGridBinderEx.Extensions
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal static class QueryProviderExtensions
     {
+        public static bool IsQueryTranslatorProvider(this IQueryProvider provider)
+        {
+            return provider.GetType().FullName.Contains("QueryInterceptor.QueryTranslatorProvider");
+        }
+
         public static bool IsEntityFrameworkProvider(this IQueryProvider provider)
         {
             return provider.GetType().FullName == "System.Data.Objects.ELinq.ObjectQueryProvider" || provider.GetType().FullName.StartsWith("System.Data.Entity.Internal.Linq");

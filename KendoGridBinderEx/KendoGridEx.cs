@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using KendoGridBinderEx.AutoMapperExtensions;
 
 namespace KendoGridBinderEx
 {
@@ -26,16 +27,18 @@ namespace KendoGridBinderEx
 
     public class KendoGridEx<TEntity, TViewModel> : KendoGrid<TEntity, TViewModel>
     {
-        private static readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> AutoMapperConversion = query =>
-            SameTypes ? query.Cast<TViewModel>().ToList() : query.Project().To<TViewModel>().ToList();
-
         public KendoGridEx(KendoGridRequest request, IQueryable<TEntity> query)
             : this(request, query, null)
         {
         }
 
         public KendoGridEx(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
-            : base(request, query, includes, GetModelMappings(), AutoMapperConversion)
+            : base(request, query, includes, AutoMapperUtils.GetModelMappings<TEntity, TViewModel>(), GetAutoMapperConversion(query))
+        {
+        }
+
+        public KendoGridEx(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes, Dictionary<string, string> mappings, bool canUseAutoMapperProjection = true)
+            : base(request, query, includes, AutoMapperUtils.GetModelMappings<TEntity, TViewModel>(mappings), GetAutoMapperConversion(query, canUseAutoMapperProjection))
         {
         }
 
@@ -54,42 +57,32 @@ namespace KendoGridBinderEx
         {
         }
 
-        public static Dictionary<string, string> GetModelMappings()
+        public static Func<IQueryable<TEntity>, IEnumerable<TViewModel>> GetAutoMapperConversion(IQueryable<TEntity> query, bool canUseAutoMapperProjection = true)
         {
-            if (SameTypes)
+            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion;
+
+            if (AutoMapperUtils.SameTypes<TEntity, TViewModel>())
             {
-                return null;
+                conversion = q => q.Cast<TViewModel>().ToList();
+            }
+            else
+            {
+                // https://github.com/AutoMapper/AutoMapper/issues/362
+                // The idea behind Project().To is to be passed to a query provider like EF or NHibernate that will then do the appropriate SQL creation, 
+                // not necessarily that the in-memory-execution will work.
+                // Project.To has a TON of limitations as it's built explicitly for real query providers, and only does things like MapFrom etc.
+                // To put it another way - don't use Project.To unless you're passing that to EF or NH or another DB query provider that knows what to do with the expression tree.
+                if (canUseAutoMapperProjection)
+                {
+                    conversion = q => q.Project().To<TViewModel>().ToList();
+                }
+                else
+                {
+                    conversion = Mapper.Map<IEnumerable<TViewModel>>;
+                }
             }
 
-            var map = Mapper.FindTypeMapFor<TEntity, TViewModel>();
-            if (map == null)
-            {
-                return null;
-            }
-
-            var mappings = new Dictionary<string, string>();
-
-            // We are only interested in custom expressions because they do not map field to field
-            foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression != null))
-            {
-                // Get the linq expression body
-                string body = propertyMap.CustomExpression.Body.ToString();
-
-                // Get the item tag
-                string tag = propertyMap.CustomExpression.Parameters[0].Name;
-
-                string destination = body.Replace(string.Format("{0}.", tag), string.Empty);
-                string source = propertyMap.DestinationProperty.Name;
-
-                mappings.Add(source, destination);
-            }
-
-            return mappings;
-        }
-
-        private static bool SameTypes
-        {
-            get { return typeof(TEntity) == typeof(TViewModel); }
+            return conversion;
         }
     }
 }
