@@ -43,6 +43,7 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.RegisterType<IFunctionService, FunctionService>();
             UnityContainer.RegisterType<ISubFunctionService, SubFunctionService>();
             UnityContainer.RegisterType<IOUService, OUService>();
+            UnityContainer.RegisterType<IUserService, UserService>();
 
             RegisterMvcSiteMapProvider();
 

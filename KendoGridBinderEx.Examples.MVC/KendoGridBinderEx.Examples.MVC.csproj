@@ -178,6 +178,7 @@
     <Compile Include="Controllers\MainCompanyController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\OUController.cs" />
     <Compile Include="Controllers\SubFunctionController.cs" />
     <Compile Include="Controllers\FunctionController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="DI\CommonConventions.cs" />
     <Compile Include="DI\Unity\ContainerExtensions\MvcSiteMapProviderContainerExtension.cs" />
     <Compile Include="Extensions\KendoGridExtensions.cs" />
+    <Compile Include="Models\UserVM.cs" />
     <Compile Include="Models\OUVM.cs" />
     <Compile Include="Models\FunctionVM.cs" />
     <Compile Include="Models\SubFunctionVM.cs" />

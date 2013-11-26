@@ -115,11 +115,13 @@
     <Compile Include="Service\Implementation\MainCompanyService.cs" />
     <Compile Include="Service\Implementation\CompanyService.cs" />
     <Compile Include="Service\Implementation\OUService.cs" />
+    <Compile Include="Service\Implementation\UserService.cs" />
     <Compile Include="Service\Implementation\SubFunctionService.cs" />
     <Compile Include="Service\Implementation\FunctionService.cs" />
     <Compile Include="Service\Interface\ICountryService.cs" />
     <Compile Include="Service\Interface\IMainCompanyService.cs" />
     <Compile Include="Service\Interface\IOUService.cs" />
+    <Compile Include="Service\Interface\IUserService.cs" />
     <Compile Include="Service\Interface\ISubFunctionService.cs" />
     <Compile Include="Service\Interface\IFunctionService.cs" />
     <Compile Include="Service\Implementation\EmployeeService.cs" />
