@@ -23,7 +23,14 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
             Mapper.CreateMap<UserVM, User>()
                 .ForMember(e => e.Id, opt => opt.Ignore())
-                .ForMember(e => e.Roles, opt => opt.Ignore())
+                //.ForMember(e => e.Roles, opt => opt.Ignore())
+                ;
+
+            Mapper.CreateMap<Role, RoleVM>()
+               ;
+
+            Mapper.CreateMap<RoleVM, Role>()
+                .ForAllMembers(opt => opt.Ignore())
                 ;
         }
     }

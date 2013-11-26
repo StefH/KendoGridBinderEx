@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "User Grid Example";
+}
+
+<h3>All Users</h3>
+<div id="grid"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dataSource = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("Grid")'
+                },
+                parameterMap: function (options) {
+                    if (options.filter) {
+                        KendoGrid_FixFilter(dataSource, options.filter);
+                    }
+                    return options;
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        IdentityName: { type: 'string' },
+                        DisplayName: { type: 'string' },
+                        EmailAddress: { type: 'string' },
+                        IsAdministrator: { type: 'boolean' },
+                        IsSuperUser: { type: 'boolean' }
+                    }
+                }
+            }
+        };
+
+        $('#grid').kendoGrid({
+            dataSource: dataSource,
+            height: '240px',
+            columns: [
+                { field: 'IdentityName', title: 'IdentityName' },
+                { field: 'DisplayName', title: 'DisplayName' },
+                { field: 'EmailAddress', title: 'EmailAddress' },
+                { field: 'IsAdministrator', title: 'Administrator' },
+                { field: 'IsSuperUser', title: 'SuperUser' }
+            ],
+            filterable: {
+                extra: true
+            },
+            sortable: {
+                mode: 'single',
+                allowUnsort: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            }
+        });
+    });
+</script>

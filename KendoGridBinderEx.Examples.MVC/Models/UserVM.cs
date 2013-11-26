@@ -1,4 +1,5 @@
-﻿using KendoGridBinderEx.Examples.Business.Entities;
+﻿using System.Collections.Generic;
+using KendoGridBinderEx.Examples.Business.Entities;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
 {
@@ -11,5 +12,13 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public string DisplayName { get; set; }
 
         public string EmailAddress { get; set; }
+
+        public List<RoleVM> Roles { get; set; }
+
+        //public string RolesAsString { get; set; }
+
+        public bool IsAdministrator { get; set; }
+
+        public bool IsSuperUser { get; set; }
     }
 }

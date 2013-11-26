@@ -21,5 +21,6 @@
       <mvcSiteMapNode title="VirtualScrollable" action="VirtualScrollable"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Functions" controller="Function" action="Index"/>
+    <mvcSiteMapNode title="Users" controller="User" action="Index"/>
   </mvcSiteMapNode>
 </mvcSiteMap>

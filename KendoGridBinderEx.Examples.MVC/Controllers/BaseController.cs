@@ -1,15 +1,15 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
+using System.Web.Mvc;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentValidation.Results;
 using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic;
-using System.Web.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -38,6 +38,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
     {
         public ResolutionResult Resolve(ResolutionResult source)
         {
+            return source.New(ResolveObject(source));
+        }
+
+        private object ResolveObject(ResolutionResult source)
+        {
             if (!source.Context.Options.Items.ContainsKey("Services")) return null;
 
             var services = (List<object>)source.Context.Options.Items["Services"];
@@ -48,7 +53,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             if (id <= 0) return null;
 
             var service = (IBaseService<TEntity>)item;
-            return source.New(service.GetById(id));
+            return service.GetById(id);
         }
     }
 

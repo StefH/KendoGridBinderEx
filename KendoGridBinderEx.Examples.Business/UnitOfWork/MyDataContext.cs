@@ -135,7 +135,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             context.Roles.Add(roleSuperUser);
             context.SaveChanges();
 
-            var userAdmin = new User { Id = 1, IdentityName = "00000001", DisplayName = "", EmailAddress = "a@a.com", Roles = new List<Role>() };
+            var userAdmin = new User { Id = 1, IdentityName = "00000001", DisplayName = "00000001 : DisplayName", EmailAddress = "a@a.com", Roles = new List<Role>() };
             userAdmin.Roles.Add(roleAdmin);
             userAdmin.Roles.Add(roleSuperUser);
             context.Users.Add(userAdmin);
