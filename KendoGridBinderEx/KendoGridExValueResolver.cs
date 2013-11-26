@@ -4,8 +4,8 @@ using AutoMapper;
 
 namespace KendoGridBinderEx
 {
-    public abstract class KendoGridExValueResolver<TSource, TResult> : ValueResolver<TSource, TResult>
+    public interface IKendoGridExValueResolver
     {
-        public abstract Expression<Func<TSource, TResult>> GetExpression();
+        string GetDestinationProperty();
     }
 }

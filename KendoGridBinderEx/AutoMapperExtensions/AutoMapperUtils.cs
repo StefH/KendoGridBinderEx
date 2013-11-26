@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using KendoGridBinderEx.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KendoGridBinderEx.AutoMapperExtensions
 {
@@ -22,7 +22,7 @@ namespace KendoGridBinderEx.AutoMapperExtensions
 
             mappings = mappings ?? new Dictionary<string, string>();
 
-            // We are only interested in custom expressions because they do not map field to field
+            // Custom expressions because they do not map field to field
             foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression != null))
             {
                 // Get the linq expression body
@@ -43,12 +43,17 @@ namespace KendoGridBinderEx.AutoMapperExtensions
             foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression == null))
             {
                 object customResolver = propertyMap.GetFieldValue("_customResolver");
-                if (customResolver is KendoGridExValueResolver<TEntity,TViewModel>)
+                if (customResolver is IKendoGridExValueResolver)
                 {
-                    var kendoResolver = customResolver as KendoGridExValueResolver<TEntity, TViewModel>;
+                    string source = propertyMap.DestinationProperty.Name;
 
-                    var expression = kendoResolver.GetExpression();
-                    string param = expression.Body.ToString().Replace(expression.Parameters[0] + ".", string.Empty);
+                    var kendoResolver = customResolver as IKendoGridExValueResolver;
+                    string destination = kendoResolver.GetDestinationProperty();
+
+                    if (!mappings.ContainsKey(source))
+                    {
+                        mappings.Add(source, destination);
+                    }
                 }
             }
 

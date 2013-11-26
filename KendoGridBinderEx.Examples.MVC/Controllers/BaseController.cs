@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic;
-using System.Linq.Expressions;
-using System.Web.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentValidation.Results;
 using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Extensions;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
+using System.Web.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class NullSafeResolver<TSource, TResult> : KendoGridExValueResolver<TSource, TResult>
+    /*
+    public class NullSafeResolver<TSource, TResult> : ValueResolver<TSource, TResult>, IKendoGridExValueResolver
     {
         private readonly Expression<Func<TSource, TResult>> _expression;
 
@@ -29,12 +28,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return source.NullSafeGetValue(_expression, default(TResult));
         }
 
-        public Expression<Func<TSource, TResult>> GetExpression()
+        public string GetDestinationProperty()
         {
-            return _expression;
+            return _expression.Body.ToString().Replace(_expression.Parameters[0] + ".", string.Empty);
         }
     }
-
+    */
     public class EntityResolver<TEntity> : IValueResolver where TEntity : class, IEntity, new()
     {
         public ResolutionResult Resolve(ResolutionResult source)

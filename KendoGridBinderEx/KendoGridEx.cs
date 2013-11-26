@@ -28,9 +28,8 @@ namespace KendoGridBinderEx
         }
     }
 
-    public abstract class KendoGridEx<TEntity, TViewModel>
+    public class KendoGridEx<TEntity, TViewModel>
     {
-        private readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> _defaultConversion = query => query.Cast<TViewModel>();
         private readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> _conversion;
         private readonly Dictionary<string, string> _mappings;
         private readonly IQueryable<TEntity> _query;
@@ -46,8 +45,8 @@ namespace KendoGridBinderEx
             Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion = null,
             bool canUseAutoMapperProjection = true)
         {
-            _mappings = mappings;
-            _conversion = conversion ?? _defaultConversion;
+            _mappings = AutoMapperUtils.GetModelMappings<TEntity, TViewModel>(mappings);
+            _conversion = conversion ?? GetAutoMapperConversion(canUseAutoMapperProjection);
 
             Total = query.Count();
 
@@ -284,7 +283,7 @@ namespace KendoGridBinderEx
             return (_mappings != null && field != null && _mappings.ContainsValue(field)) ? _mappings.First(kvp => kvp.Value == field).Key : field;
         }
 
-        public static Func<IQueryable<TEntity>, IEnumerable<TViewModel>> GetAutoMapperConversion(IQueryable<TEntity> query, bool canUseAutoMapperProjection = true)
+        public static Func<IQueryable<TEntity>, IEnumerable<TViewModel>> GetAutoMapperConversion(bool canUseAutoMapperProjection = true)
         {
             Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion;
 
@@ -301,7 +300,7 @@ namespace KendoGridBinderEx
                 // To put it another way - don't use Project.To unless you're passing that to EF or NH or another DB query provider that knows what to do with the expression tree.
                 if (canUseAutoMapperProjection)
                 {
-                    conversion = q => q.Project().To<TViewModel>().ToList();
+                    conversion = q => q.Project().To<TViewModel>().AsEnumerable();
                 }
                 else
                 {

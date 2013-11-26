@@ -100,7 +100,8 @@
                         Full: { type: 'string' },
                         SubFunctionId: { type: 'number' },
                         FunctionCode: { type: 'string' },
-                        SubFunctionCode: { type: 'string' }
+                        SubFunctionCode: { type: 'string' },
+                        IsAssigned: { type: 'boolean' }
                     }
                 }
             }
@@ -167,6 +168,7 @@
                 { field: 'LastName' },
                 { field: 'FunctionCode' },
                 { field: 'SubFunctionCode' },
+                { field: 'IsAssigned', title: 'Is Assigned' },
                 { field: 'SubFunctionId', hidden: true }
             ],
             filterable: false,

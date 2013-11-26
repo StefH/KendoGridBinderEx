@@ -1,8 +1,8 @@
-﻿using System;
+﻿using KendoGridBinderEx.Examples.Business;
+using KendoGridBinderEx.Examples.Business.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using KendoGridBinderEx.Examples.Business;
-using KendoGridBinderEx.Examples.Business.Entities;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
 {
@@ -23,6 +23,8 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public long SubFunctionId { get; set; }
 
         public string SubFunctionCode { get; set; }
+
+        public bool IsAssigned { get; set; }
     }
 
     public class EmployeeVM : IEntity
@@ -83,5 +85,7 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public string SubFunctionName { get; set; }
 
         public int? Assigned { get; set; }
+
+        public bool IsAssigned { get; set; }
     }
 }

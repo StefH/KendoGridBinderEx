@@ -1,6 +1,6 @@
-﻿using System;
+﻿using PropertyTranslator;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using PropertyTranslator;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
@@ -12,6 +12,9 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         private static readonly CompiledExpressionMap<Employee, string> FullNameExpr =
             DefaultTranslationOf<Employee>.Property(e => e.FullName).Is(e => e.FirstName + " " + e.LastName);
+
+        private static readonly CompiledExpressionMap<Employee, bool> IsAssignedExpr =
+            DefaultTranslationOf<Employee>.Property(e => e.IsAssigned).Is(e => e.Assigned >= 1);
 
         public int EmployeeNumber { get; set; }
 
@@ -32,6 +35,15 @@ namespace KendoGridBinderEx.Examples.Business.Entities
         public SubFunction SubFunction { get; set; }
 
         public int? Assigned { get; set; }
+
+        [NotMapped]
+        public bool IsAssigned
+        {
+            get
+            {
+                return IsAssignedExpr.Evaluate(this);
+            }
+        }
 
         [NotMapped]
         public bool IsManager

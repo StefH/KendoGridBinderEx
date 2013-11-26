@@ -25,7 +25,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
         {
-            return Json(query.ToKendoGridEx<TEntity, TViewModel>(includes, request));
+            return Json(query.ToKendoGridEx<TEntity, TViewModel>(request, includes));
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridRequest request, IQueryable<TEntity> query)

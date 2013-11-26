@@ -83,7 +83,8 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
                         IsManager: { type: 'boolean' },
                         FunctionCode: { type: 'string' },
                         SubFunctionCode: { type: 'string' },
-                        Assigned: { type: 'number' }
+                        Assigned: { type: 'number' },
+                        IsAssigned: { type: 'boolean' }
                     }
                 }
             }
@@ -134,7 +135,8 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
                         ui: function (element) { KendoGridFilterDropDownList_SubFunction(element, "Code", "Code"); }
                     }
                 },
-                { field: 'Assigned', title: 'Assigned' }
+                { field: 'Assigned', title: 'Assigned' },
+                { field: 'IsAssigned', title: 'Is Assigned' }
             ],
             filterable: {
                 extra: true
