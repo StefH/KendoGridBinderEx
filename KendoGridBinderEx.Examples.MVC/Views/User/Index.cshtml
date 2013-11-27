@@ -34,7 +34,8 @@
                         DisplayName: { type: 'string' },
                         EmailAddress: { type: 'string' },
                         IsAdministrator: { type: 'boolean' },
-                        IsSuperUser: { type: 'boolean' }
+                        IsSuperUser: { type: 'boolean' },
+                        RolesAsCSVString: { type: 'string' }
                     }
                 }
             }
@@ -48,7 +49,8 @@
                 { field: 'DisplayName', title: 'DisplayName' },
                 { field: 'EmailAddress', title: 'EmailAddress' },
                 { field: 'IsAdministrator', title: 'Administrator' },
-                { field: 'IsSuperUser', title: 'SuperUser' }
+                { field: 'IsSuperUser', title: 'SuperUser' },
+                { field: 'RolesAsCSVString', title: 'All Roles', filterable: false, sortable: false }
             ],
             filterable: {
                 extra: true

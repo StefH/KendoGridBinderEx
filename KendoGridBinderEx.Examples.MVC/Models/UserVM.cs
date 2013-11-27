@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using KendoGridBinderEx.Examples.Business.Entities;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
@@ -15,7 +16,13 @@ namespace KendoGridBinderEx.Examples.MVC.Models
 
         public List<RoleVM> Roles { get; set; }
 
-        //public string RolesAsString { get; set; }
+        public string RolesAsCSVString
+        {
+            get
+            {
+                return Roles != null ? string.Join(",", Roles.Select(r => r.Name)) : string.Empty;
+            }
+        }
 
         public bool IsAdministrator { get; set; }
 
