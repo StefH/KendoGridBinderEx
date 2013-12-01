@@ -15,5 +15,10 @@ namespace KendoGridBinderEx.QueryableExtensions
         {
             return new KendoGridEx<TEntity, TViewModel>(request, query, includes, mappings, conversion, canUseAutoMapperProjection);
         }
+
+        public static IEnumerable<TViewModel> FilterBy<TEntity, TViewModel>(this IQueryable<TEntity> query, KendoGridRequest request, IEnumerable<string> includes = null, Dictionary<string, string> mappings = null, Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion = null, bool canUseAutoMapperProjection = true)
+        {
+            return new KendoGridEx<TEntity, TViewModel>(request, query, includes, mappings, conversion, canUseAutoMapperProjection).Data;
+        }
     }
 }

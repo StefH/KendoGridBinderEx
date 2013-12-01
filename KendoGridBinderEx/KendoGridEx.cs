@@ -50,7 +50,7 @@ namespace KendoGridBinderEx
 
             Total = query.Count();
 
-            var tempQuery = ApplyFiltering(query, request);
+            var tempQuery = request.FilterObjectWrapper != null ? ApplyFiltering(query, request.FilterObjectWrapper) : query;
 
             if (request.GroupObjects != null)
             {
@@ -61,7 +61,7 @@ namespace KendoGridBinderEx
             }
             else
             {
-                tempQuery = ApplySorting(tempQuery, request);
+                tempQuery = ApplySorting(tempQuery, request.SortObjects);
 
                 // Paging
                 if (request.Skip.HasValue && request.Skip > 0)
@@ -99,15 +99,15 @@ namespace KendoGridBinderEx
             return _query;
         }
 
-        private IQueryable<TEntity> ApplyFiltering(IQueryable<TEntity> query, KendoGridRequest request)
+        private IQueryable<TEntity> ApplyFiltering(IQueryable<TEntity> query, FilterObjectWrapper filter)
         {
-            var filtering = GetFiltering(request);
+            var filtering = GetFiltering(filter);
             return filtering != null ? query.Where(filtering) : query;
         }
 
-        private IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, KendoGridRequest request)
+        private IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, IEnumerable<SortObject> sortObjects)
         {
-            var sorting = GetSorting(request) ?? query.ElementType.FirstSortableProperty();
+            var sorting = GetSorting(sortObjects) ?? query.ElementType.FirstSortableProperty();
             return query.OrderBy(sorting);
         }
 
@@ -235,25 +235,29 @@ namespace KendoGridBinderEx
             kendoGroups.Add(kendoGroup);
         }
 
-        protected string GetSorting(KendoGridRequest request)
+        protected string GetSorting(IEnumerable<SortObject> sortObjects)
         {
-            var expression = string.Join(",", request.SortObjects.Select(s => MapFieldfromViewModeltoEntity(s.Field) + " " + s.Direction));
+            if (sortObjects == null)
+            {
+                return null;
+            }
 
+            var expression = string.Join(",", sortObjects.Select(s => MapFieldfromViewModeltoEntity(s.Field) + " " + s.Direction));
             return expression.Length > 1 ? expression : null;
         }
 
-        protected string GetFiltering(KendoGridRequest request)
+        protected string GetFiltering(FilterObjectWrapper filter)
         {
             var finalExpression = string.Empty;
 
-            foreach (var filterObject in request.FilterObjectWrapper.FilterObjects)
+            foreach (var filterObject in filter.FilterObjects)
             {
                 filterObject.Field1 = MapFieldfromViewModeltoEntity(filterObject.Field1);
                 filterObject.Field2 = MapFieldfromViewModeltoEntity(filterObject.Field2);
 
                 if (finalExpression.Length > 0)
                 {
-                    finalExpression += " " + request.FilterObjectWrapper.LogicToken + " ";
+                    finalExpression += " " + filter.LogicToken + " ";
                 }
 
                 if (filterObject.IsConjugate)

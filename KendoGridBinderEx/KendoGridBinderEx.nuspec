@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>KendoGridBinderEx</id>
-        <version>5.0.0.3</version>
+        <version>5.0.0.4</version>
         <title>KendoGridBinderEx</title>
         <authors>Stef Heyenrath</authors>
         <licenseUrl>http://www.gnu.org/copyleft/gpl.html</licenseUrl>
@@ -10,13 +10,13 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
         <summary />
-        <releaseNotes>* Added IQueryableExtensions and IEnumerableExtensions : ToKendoGrid
-* Upgraded AutoMapper to 3.1.0</releaseNotes>
+        <releaseNotes>Added KendoGridFilter (JSON)</releaseNotes>
         <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
         <dependencies>
             <dependency id="System.Linq.Dynamic" version="1.0" />
             <dependency id="AutoMapper" version="3.1.0" />
             <dependency id="Microsoft.AspNet.Mvc" version="5.0.0" />
+            <dependency id="Newtonsoft.Json" version="5.0.8" />
         </dependencies>
     </metadata>
     <files>
