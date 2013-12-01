@@ -1,4 +1,10 @@
 ﻿/* main layout */
+html
+{
+    overflow-y:scroll;
+    font:75% Arial,Helvetica,sans-serif;
+}
+
 .content-wrapper
 {
     margin: 0 auto;
@@ -305,6 +311,11 @@ input[type="checkbox"].input-validation-error
     padding: .1em .6em .2em;
 }
 
+.text-button 
+{
+    padding-left: 3px;
+}
+
 .buttonAdd > span.ui-icon-add
 {
     background-image: url('/Content/Images/add.png');
@@ -318,6 +329,11 @@ input[type="checkbox"].input-validation-error
 .buttonRefresh > span.ui-icon-add
 {
     background-image: url('/Content/Images/arrow_refresh.png');
+}
+
+.buttonExcel > span.ui-icon-add
+{
+    background-image: url('/Content/Images/excel_16x16.png');
 }
 
 table, td

@@ -4,12 +4,18 @@
 
 <h3>All Employees</h3>
 Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br/>
-LastName contains : <input id="txtLastName" type="text" /><button id="buttonSearch" class="buttonSearch">Search</button>
-<br /><button id="buttonRefresh" class="buttonRefresh">Refresh</button>
+LastName contains : <input id="txtLastName" type="text" /><button id="buttonSearch" class="text-button buttonSearch">Search</button>
+<br /><button id="buttonRefresh" class="text-button buttonRefresh">Refresh</button>
 <div id="grid"></div>
 <br/>
-@using (Html.BeginForm("Create", "Employee", FormMethod.Get)) {
-    <button class="buttonAdd">Create new</button>
+
+<input type="hidden" id="filterasjson" name="filterasjson" />
+<button id="export" class="text-button buttonExcel"> Export to Excel</button>
+<br />
+<br />
+@using (Html.BeginForm("Create", "Employee", FormMethod.Get))
+{
+    <button class="text-button buttonAdd"> Create new</button>
 }
 
 <script type="text/javascript">
@@ -31,6 +37,29 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
             $("#grid").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
         });
         
+        $('#export').click(function () {
+            var title = "EmployeeData";
+            var id = guid();
+            var filter = $("#grid").data("kendoGrid").dataSource._filter;
+            
+            var data = {
+                filter: filter,
+                title: title,
+                guid: id
+            };
+            
+            $.ajax({
+                url: '@Url.Action("Export")',
+                type: "POST",
+                dataType: 'json',
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    window.location = kendo.format("{0}?guid={1}", '@Url.Action("GetGeneratedExcel")', id);
+                }
+            });
+        });
+        
         $("#buttonSearch").click(function () {
             var filters = new Array();
             
@@ -38,6 +67,7 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
             if (lastname) {
                 filters.push({ field: "LastName", operator: "contains", value: lastname });
             }
+            
             $("#grid").data("kendoGrid").dataSource.filter(filters);
         });
 
@@ -47,7 +77,7 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
             ds.sort(new Array());
         });
         
-        var dataSource = {
+        var employeeDataSource = {
             serverPaging: true,
             serverSorting: true,
             serverFiltering: true,
@@ -60,7 +90,7 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
                 },
                 parameterMap: function (options) {
                     if (options.filter) {
-                        KendoGrid_FixFilter(dataSource, options.filter);
+                        KendoGrid_FixFilter(employeeDataSource, options.filter);
                     }
                     return options;
                 }
@@ -91,7 +121,10 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
         };
 
         $('#grid').kendoGrid({
-            dataSource: dataSource,
+            dataSource: employeeDataSource,
+            dataBound: function () {
+                DisplayNoResultsFound($('#grid'));
+            },
             height: '240px',
             columns: [
                 {

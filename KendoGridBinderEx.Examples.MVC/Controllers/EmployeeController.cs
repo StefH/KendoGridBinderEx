@@ -1,16 +1,18 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
 using KendoGridBinderEx.QueryableExtensions;
+using OfficeOpenXml;
 using StackExchange.Profiling;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -117,6 +119,57 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public ActionResult IndexMasterDetail()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Export(KendoGridFilter filter, string guid)
+        {
+            var gridRequest = new KendoGridRequest();
+            if (filter != null)
+            {
+                gridRequest.FilterObjectWrapper = filter.Filters != null ? filter.ToFilterObjectWrapper() : null;
+                gridRequest.Logic = filter.Logic;
+            }
+
+            var query = GetQueryable().AsNoTracking();
+            var results = query.FilterBy<Employee, EmployeeVM>(gridRequest);
+
+            using (var stream = new MemoryStream())
+            {
+                using (var excel = new ExcelPackage(stream))
+                {
+                    excel.Workbook.Worksheets.Add("Employees");
+                    var ws = excel.Workbook.Worksheets[1];
+                    ws.Cells.LoadFromCollection(results);
+                    ws.Cells.AutoFitColumns();
+
+                    excel.Save();
+                    Session[guid] = stream.ToArray();
+                    return Json(new { success = true });
+                }
+            }
+        }
+
+        [HttpGet]
+        public FileResult GetGeneratedExcel(string title, string guid)
+        {
+            // Is there a spreadsheet stored in session?
+            if (Session[guid] == null)
+            {
+                throw new Exception(string.Format("{0} not found", title));
+            }
+
+            // Get the spreadsheet from session.
+            var file = Session[guid] as byte[];
+            string filename = string.Format("{0}.xlsx", title);
+
+            // Remove the spreadsheet from session.
+            Session.Remove(title);
+
+            // Return the spreadsheet.
+            Response.Buffer = true;
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}", filename));
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
         }
 
         [HttpPost]

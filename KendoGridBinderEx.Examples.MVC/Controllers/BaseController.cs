@@ -46,6 +46,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             if (!source.Context.Options.Items.ContainsKey("Services")) return null;
 
             var services = (List<object>)source.Context.Options.Items["Services"];
+            if (services == null) return null;
+
             var item = services.FirstOrDefault(s => s is IBaseService<TEntity>);
             if (item == null) return null;
 
