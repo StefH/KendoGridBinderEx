@@ -55,7 +55,7 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-                    window.location = kendo.format("{0}?guid={1}", '@Url.Action("GetGeneratedExcel")', id);
+                    window.location = kendo.format("{0}?title={1}&guid={2}", '@Url.Action("GetGeneratedExcel")', title, id);
                 }
             });
         });
