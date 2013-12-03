@@ -6,7 +6,6 @@ using KendoGridBinderEx.Examples.Business.Repository;
 using KendoGridBinderEx.Examples.Business.Service.Implementation;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.UnitOfWork;
-using KendoGridBinderEx.Examples.MVC.DI.Unity.ContainerExtensions;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using MvcSiteMapProvider.Loader;
@@ -45,25 +44,7 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.RegisterType<IOUService, OUService>();
             UnityContainer.RegisterType<IUserService, UserService>();
 
-            RegisterMvcSiteMapProvider();
-
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityContainer));
-        }
-
-        private static void RegisterMvcSiteMapProvider()
-        {
-            // Add the extension module (required)
-            UnityContainer.AddNewExtension<MvcSiteMapProviderContainerExtension>();
-
-            // Setup global sitemap loader (required)
-            MvcSiteMapProvider.SiteMaps.Loader = UnityContainer.Resolve<ISiteMapLoader>();
-
-            // Check all configured .sitemap files to ensure they follow the XSD for MvcSiteMapProvider (optional)
-            var validator = UnityContainer.Resolve<ISiteMapXmlValidator>();
-            validator.ValidateXml(HostingEnvironment.MapPath("~/Mvc.sitemap"));
-
-            // Register the Sitemaps routes for search engines (optional)
-            XmlSiteMapController.RegisterRoutes(RouteTable.Routes);
         }
     }
 }

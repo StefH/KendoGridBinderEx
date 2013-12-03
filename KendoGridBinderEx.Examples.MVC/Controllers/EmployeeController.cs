@@ -12,7 +12,6 @@ using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
 using KendoGridBinderEx.QueryableExtensions;
 using OfficeOpenXml;
-using StackExchange.Profiling;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -182,11 +181,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpPost]
         public JsonResult GridWithGroup(KendoGridRequest request)
         {
-            using (MiniProfiler.Current.Step("GridWithGroup"))
-            {
-                var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
-                return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
-            }
+            var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
+            return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
         }
 
         [HttpPost]

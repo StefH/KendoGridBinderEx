@@ -97,8 +97,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\MiniProfiler.EntityFramework6.dll</HintPath>
     </Reference>
-    <Reference Include="MvcSiteMapProvider">
-      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.4.5\lib\net45\MvcSiteMapProvider.dll</HintPath>
+    <Reference Include="MvcSiteMapProvider, Version=4.4.6.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.4.6\lib\net45\MvcSiteMapProvider.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -188,8 +189,6 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="CustomModelBinders.cs" />
-    <Compile Include="DI\CommonConventions.cs" />
-    <Compile Include="DI\Unity\ContainerExtensions\MvcSiteMapProviderContainerExtension.cs" />
     <Compile Include="Extensions\KendoGridExtensions.cs" />
     <Compile Include="Models\RoleVM.cs" />
     <Compile Include="Models\UserVM.cs" />
@@ -461,7 +460,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <Content Include="DI\Unity\ReadMe.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="GlobalResourcesLiterals_MVC.tt">
