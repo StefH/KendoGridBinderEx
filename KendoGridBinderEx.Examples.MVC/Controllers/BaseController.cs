@@ -92,6 +92,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Service.AsQueryable();
         }
 
+        protected virtual IQueryable<TEntity> GetQueryableNoTracking()
+        {
+            return Service.AsQueryableNoTracking();
+        }
+
         /// <summary>
         /// Get all services needed for this controller
         /// </summary>

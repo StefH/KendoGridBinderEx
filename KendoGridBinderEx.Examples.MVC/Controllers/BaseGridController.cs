@@ -42,7 +42,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpPost]
         public JsonResult Grid(KendoGridRequest request)
         {
-            var entities = GetQueryable().AsNoTracking();
+            var entities = GetQueryableNoTracking();
             return GetKendoGridAsJson(request, entities);
         }
         #endregion

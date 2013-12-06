@@ -23,7 +23,7 @@
             <div class="content-wrapper">
                 <div class="float-right">
                     <section id="login">
-                        Hello, <span class="username">@User.Identity.Name</span>
+                        Hello, '<span class="username">@User.Identity.Name</span>' : Roles '@string.Join(",", Roles.GetRolesForUser(User.Identity.Name))' (All Roles: @string.Join(",", Roles.GetAllRoles()) )
                     </section>
                     <nav>
                         @Html.MvcSiteMap().Menu()

@@ -17,12 +17,14 @@ namespace KendoGridBinderEx.Examples.Business.Service.Interface
         IUnitOfWork UnitOfWork { get; }
         IRepository<TEntity> Repository { get; }
         IQueryable<TEntity> AsQueryable(params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> AsQueryableNoTracking(params Expression<Func<TEntity, object>>[] includeProperties);
         IQueryContext<TEntity> GetQueryContext(params Expression<Func<TEntity, object>>[] includeProperties);
 
         void Insert(TEntity model);
         void Update(TEntity entity);
         void Delete(TEntity entity);
         void BulkInsert(IEnumerable<TEntity> enumerable, Func<IBaseService<TEntity>> createService, int step);
+        void Save();
         #endregion
 
         #region Synchronous

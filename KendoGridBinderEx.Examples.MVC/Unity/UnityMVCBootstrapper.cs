@@ -1,27 +1,18 @@
-﻿using System.Data.Entity;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using System.Web.Routing;
-using KendoGridBinderEx.Examples.Business.Repository;
+﻿using KendoGridBinderEx.Examples.Business.Repository;
 using KendoGridBinderEx.Examples.Business.Service.Implementation;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.UnitOfWork;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using MvcSiteMapProvider.Loader;
-using MvcSiteMapProvider.Web.Mvc;
-using MvcSiteMapProvider.Xml;
+using System.Data.Entity;
+using System.Web.Mvc;
 using Unity.Mvc4;
 
 namespace KendoGridBinderEx.Examples.MVC.Unity
 {
-    public static class UnityBootstrapper
+    public static class UnityMVCBootstrapper
     {
-        private static readonly IUnityContainer UnityContainer = new UnityContainer();
-
-        public static IUnityContainer Container { get { return UnityContainer; } }
-
-        public static void Initialise()
+        public static void Initialise(IUnityContainer UnityContainer)
         {
             UnityContainer.LoadConfiguration();
 
@@ -43,6 +34,8 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             UnityContainer.RegisterType<ISubFunctionService, SubFunctionService>();
             UnityContainer.RegisterType<IOUService, OUService>();
             UnityContainer.RegisterType<IUserService, UserService>();
+            UnityContainer.RegisterType<IRoleService, RoleService>();
+            UnityContainer.RegisterType<IUserRoleService, UserRoleService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityContainer));
         }

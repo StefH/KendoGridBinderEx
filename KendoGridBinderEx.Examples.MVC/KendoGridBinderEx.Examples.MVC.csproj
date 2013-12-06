@@ -175,7 +175,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseGridController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
@@ -196,7 +195,7 @@
     <Compile Include="Models\FunctionVM.cs" />
     <Compile Include="Models\SubFunctionVM.cs" />
     <Compile Include="Models\ProductVM.cs" />
-    <Compile Include="Unity\UnityBootstrapper.cs" />
+    <Compile Include="Unity\UnityMVCBootstrapper.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -469,7 +468,9 @@
     <Content Include="MiniProfiler.dll" />
     <Content Include="MiniProfiler.EntityFramework6.dll" />
     <Content Include="Scripts\common.js" />
-    <Content Include="Mvc.sitemap" />
+    <Content Include="Mvc.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1380,6 +1381,10 @@
     <ProjectReference Include="..\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj">
       <Project>{28b83391-37d5-4dff-8a32-6d508fb191b8}</Project>
       <Name>KendoGridBinderEx.Examples.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj">
+      <Project>{b67d5a1d-8963-43df-8167-5887cbb73e7f}</Project>
+      <Name>KendoGridBinderEx.Examples.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.csproj">
       <Project>{b99bde11-9306-4736-97ac-b6640c342f4e}</Project>

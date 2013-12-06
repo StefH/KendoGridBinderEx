@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio Express 2013 for Web
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A6398D29-1651-48BB-BB61-29884052E210}"
@@ -21,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.MVC", "KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj", "{568C9351-94C2-412A-86BC-F1A10FD4DF01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Business", "KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj", "{28B83391-37D5-4DFF-8A32-6D508FB191B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Security", "KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj", "{B67D5A1D-8963-43DF-8167-5887CBB73E7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{28B83391-37D5-4DFF-8A32-6D508FB191B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B83391-37D5-4DFF-8A32-6D508FB191B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28B83391-37D5-4DFF-8A32-6D508FB191B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

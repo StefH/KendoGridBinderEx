@@ -11,6 +11,7 @@ using KendoGridBinderEx.Examples.MVC.Unity;
 using StackExchange.Profiling;
 using StackExchange.Profiling.EntityFramework6;
 using StackExchange.Profiling.SqlFormatters;
+using KendoGridBinderEx.Examples.Business.Unity;
 
 namespace KendoGridBinderEx.Examples.MVC
 {
@@ -38,7 +39,7 @@ namespace KendoGridBinderEx.Examples.MVC
                 MiniProfilerEF6.Initialize();
             }
 
-            UnityBootstrapper.Initialise();
+            UnityMVCBootstrapper.Initialise(UnityBootstrapper.Container);
 
             FluentValidationModelValidatorProvider.Configure();
         }

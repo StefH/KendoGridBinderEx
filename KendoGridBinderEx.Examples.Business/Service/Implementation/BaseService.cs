@@ -59,6 +59,11 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
             return _repository.AsQueryable(includeProperties);
         }
 
+        public IQueryable<TEntity> AsQueryableNoTracking(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return AsQueryable(includeProperties).AsNoTracking();
+        }
+
         public IQueryContext<TEntity> GetQueryContext(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return _repository.GetQueryContext(includeProperties);
@@ -161,6 +166,14 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
         {
             _repository.Delete(entity);
 
+            if (AutoCommit)
+            {
+                _unitOfWork.Commit();
+            }
+        }
+
+        public void Save()
+        {
             if (AutoCommit)
             {
                 _unitOfWork.Commit();
