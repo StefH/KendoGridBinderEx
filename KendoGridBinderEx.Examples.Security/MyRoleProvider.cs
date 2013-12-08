@@ -1,40 +1,38 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Security;
-using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
-using Microsoft.Practices.Unity;
 using KendoGridBinderEx.Examples.Business.Unity;
 
 namespace KendoGridBinderEx.Examples.Security
 {
     public class MyRoleProvider : RoleProvider
     {
-        private string applicationName;
+        private string _applicationName;
 
         /// <inheritdoc />
         public override string ApplicationName
         {
             get
             {
-                return applicationName;
+                return _applicationName;
             }
             set
             {
-                applicationName = value;
+                _applicationName = value;
             }
         }
 
         /// <inheritdoc />
         public override void AddUsersToRoles(string[] userNames, string[] roleNames)
         {
-            //new RoleManager().AddUsersToRoles(userNames, roleNames);
+            UserRoleService.AddUsersToRoles(userNames, roleNames);
         }
 
         /// <inheritdoc />
         public override void RemoveUsersFromRoles(string[] userNames, string[] roleNames)
         {
-            //new RoleManager().DeleteUsersFromRoles(userNames, roleNames);
+            UserRoleService.DeleteUsersFromRoles(userNames, roleNames);
         }
 
         /// <inheritdoc />
@@ -92,7 +90,7 @@ namespace KendoGridBinderEx.Examples.Security
             return RoleService.AsQueryableNoTracking().Any(r => r.Name == roleName);
         }
 
-        private IRoleService RoleService
+        private static IRoleService RoleService
         {
             get
             {
@@ -100,7 +98,7 @@ namespace KendoGridBinderEx.Examples.Security
             }
         }
 
-        private IUserRoleService UserRoleService
+        private static IUserRoleService UserRoleService
         {
             get
             {

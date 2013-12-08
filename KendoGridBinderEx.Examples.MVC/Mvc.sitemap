@@ -3,7 +3,7 @@
             xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
-  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+  <mvcSiteMapNode title="Home" controller="Home" action="Index" >
     <mvcSiteMapNode title="Employee" controller="Employee" clickable="false">
       <mvcSiteMapNode title="List" action="Index"/>
       <mvcSiteMapNode title="List Master Detail" action="IndexMasterDetail"/>
@@ -21,6 +21,6 @@
       <mvcSiteMapNode title="VirtualScrollable" action="VirtualScrollable"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Functions" controller="Function" action="Index"/>
-    <mvcSiteMapNode title="Users" controller="User" action="Index"/>
+    <mvcSiteMapNode title="Users" controller="User" action="Index" roles="Administrator, SuperUser, ApplicationUser"/>
   </mvcSiteMapNode>
 </mvcSiteMap>

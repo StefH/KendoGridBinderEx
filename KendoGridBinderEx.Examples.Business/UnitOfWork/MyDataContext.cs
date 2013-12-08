@@ -131,14 +131,27 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
         {
             var roleAdmin = new Role { Id = 1, Name = "Administrator", Description = "Administrator" };
             var roleSuperUser = new Role { Id = 2, Name = "SuperUser", Description = "Super User" };
+            var roleApplicationUser = new Role { Id = 4, Name = "ApplicationUser", Description = "Application User" };
             context.Roles.Add(roleAdmin);
             context.Roles.Add(roleSuperUser);
+            context.Roles.Add(roleApplicationUser);
             context.SaveChanges();
 
-            var userAdmin = new User { Id = 1, IdentityName = "00000001", DisplayName = "00000001 : DisplayName", EmailAddress = "a@a.com", Roles = new List<Role>() };
+            var userAdmin = new User { Id = 1, IdentityName = "admin", DisplayName = "admin", EmailAddress = "a@x.com", Roles = new List<Role>() };
             userAdmin.Roles.Add(roleAdmin);
             userAdmin.Roles.Add(roleSuperUser);
+            userAdmin.Roles.Add(roleApplicationUser);
             context.Users.Add(userAdmin);
+
+            var superUser = new User { Id = 2, IdentityName = "super user", DisplayName = "super user", EmailAddress = "su@x.com", Roles = new List<Role>() };
+            superUser.Roles.Add(roleSuperUser);
+            superUser.Roles.Add(roleApplicationUser);
+            context.Users.Add(superUser);
+
+            var appUser = new User { Id = 3, IdentityName = "app user", DisplayName = "app user", EmailAddress = "u@x.com", Roles = new List<Role>() };
+            appUser.Roles.Add(roleApplicationUser);
+            context.Users.Add(appUser);
+
             context.SaveChanges();
 
             var functionIct = new Function { Id = 1, Code = "ICT", Name = "ICT" };

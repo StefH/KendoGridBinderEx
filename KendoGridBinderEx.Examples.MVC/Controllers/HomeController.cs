@@ -4,7 +4,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        // [Authorize(Roles="Guest")]
+        //[Authorize(Roles="Administrator, SuperUser, ApplicationUser")]
         public ActionResult Index()
         {
             return View();

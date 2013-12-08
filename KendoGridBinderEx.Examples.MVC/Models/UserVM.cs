@@ -27,5 +27,7 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public bool IsAdministrator { get; set; }
 
         public bool IsSuperUser { get; set; }
+
+        public bool IsApplicationUser { get; set; }
     }
 }

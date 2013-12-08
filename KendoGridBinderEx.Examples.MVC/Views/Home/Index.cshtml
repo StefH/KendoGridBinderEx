@@ -1,7 +1,37 @@
-﻿
+﻿@using KendoGridBinderEx.Examples.MVC.Extensions
+@model KendoGridBinderEx.Examples.MVC.Models.LoginUserVM
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Home</h2>
 
+<h3>Login</h3>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    <table>
+        <tr>
+            <td style="width: 150px;">
+                @Html.LabelFor(model => model.IdentityName)
+            </td>
+            <td style="width: 400px;">
+                @Html.TextBoxFor(model => model.IdentityName)
+            </td>
+            <td style="width: 300px;">
+                @Html.ValidationMessageFor(model => model.IdentityName)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">
+                @Html.LabelFor(model => model.Password)
+            </td>
+            <td style="width: 400px;">
+                @Html.TextBoxFor(model => model.Password)
+            </td>
+            <td style="width: 300px;">
+                @Html.ValidationMessageFor(model => model.Password)
+            </td>
+        </tr>
+    </table>
+    <button type="submit">Login</button>
+}

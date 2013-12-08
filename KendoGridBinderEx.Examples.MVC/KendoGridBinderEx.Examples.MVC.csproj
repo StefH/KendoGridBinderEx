@@ -178,6 +178,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseGridController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MainCompanyController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="CustomModelBinders.cs" />
     <Compile Include="Extensions\KendoGridExtensions.cs" />
     <Compile Include="Models\RoleVM.cs" />
+    <Compile Include="Models\LoginUserVM.cs" />
     <Compile Include="Models\UserVM.cs" />
     <Compile Include="Models\OUVM.cs" />
     <Compile Include="Models\FunctionVM.cs" />
@@ -1373,6 +1375,7 @@
     <Content Include="Scripts\kendo\2013.3.1119\cultures\kendo.culture.af.min.js.map" />
     <Content Include="Views\OU\VirtualScrollable.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

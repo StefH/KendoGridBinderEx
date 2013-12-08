@@ -8,6 +8,9 @@ namespace KendoGridBinderEx.Examples.Business.Enums
         Administrator = 1,
 
         [Description("SuperUser")]
-        SuperUser = 2
+        SuperUser = 2,
+
+        [Description("ApplicationUser")]
+        ApplicationUser = 4
     }
 }

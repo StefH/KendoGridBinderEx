@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using KendoGridBinderEx.Examples.Business.Enums;
 using PropertyTranslator;
-using System.Data.Entity.SqlServer;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
@@ -16,9 +15,9 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         private static readonly CompiledExpressionMap<User, bool> IsSuperUserExpr =
             DefaultTranslationOf<User>.Property(u => u.IsSuperUser).Is(u => u.Roles.Any(r => r.Id == (long)ERole.SuperUser));
-        /*
-        private static readonly CompiledExpressionMap<User, string> RolesAsCSVStringExpr =
-            DefaultTranslationOf<User>.Property(u => u.RolesAsCSVString).Is(u => SqlFunctions.Stuff(;*/
+
+        private static readonly CompiledExpressionMap<User, bool> IsApplicationUserExpr =
+            DefaultTranslationOf<User>.Property(u => u.IsApplicationUser).Is(u => u.Roles.Any(r => r.Id == (long)ERole.ApplicationUser));
         #endregion
 
         public string IdentityName { get; set; }
@@ -47,14 +46,14 @@ namespace KendoGridBinderEx.Examples.Business.Entities
                 return IsSuperUserExpr.Evaluate(this);
             }
         }
-        /*
+
         [NotMapped]
-        public string RolesAsCSVString
+        public bool IsApplicationUser
         {
             get
             {
-                return RolesAsCSVStringrExpr.Evaluate(this);
+                return IsApplicationUserExpr.Evaluate(this);
             }
-        }*/
+        }
     }
 }
