@@ -29,5 +29,10 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
         {
             return user.Roles != null ? user.Roles.Any(r => r.Id == (long) role) : false;
         }
+
+        public User GetByIdentityName(string name)
+        {
+            return FirstOrDefault(u => u.IdentityName == name);
+        }
     }
 }

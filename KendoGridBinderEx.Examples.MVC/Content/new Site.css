@@ -1,0 +1,95 @@
+﻿body {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.iconLink
+{
+    position: relative;
+    top: 3px;
+    padding-right: 3px;
+    border: 0;
+}
+
+.ui-button
+{
+    font-size: 10.5px;
+}
+
+.ui-button-text-only .ui-button-text
+{
+    padding: .1em .6em .2em;
+}
+
+.text-button 
+{
+    padding-left: 3px;
+}
+
+.buttonAdd > span.ui-icon-add
+{
+    background-image: url('/Content/Images/add.png');
+}
+
+.buttonSearch > span.ui-icon-add
+{
+    background-image: url('/Content/Images/search.gif');
+}
+
+.buttonRefresh > span.ui-icon-add
+{
+    background-image: url('/Content/Images/arrow_refresh.png');
+}
+
+.buttonExcel > span.ui-icon-add
+{
+    background-image: url('/Content/Images/excel_16x16.png');
+}
+
+table, td
+{
+    font: 12px Arial, Helvetica, sans-serif;
+}
+
+.k-state-active .k-active-filter
+{
+    background-color: #5c87b2;
+}

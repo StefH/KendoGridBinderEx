@@ -1,59 +1,58 @@
 ﻿@using StackExchange.Profiling
 
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - KendoGridBinderEx MVC Demo</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        
-        @Styles.Render("~/ContentKendo")
-        @Styles.Render("~/Content/css")
-        
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryui")
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/bundles/common")
-        @Scripts.Render("~/bundles/kendo")
-        @Scripts.Render("~/bundles/knockout")
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-right">
-                    <section id="login">
-                        Hello, '<span class="username">@User.Identity.Name</span>' : Roles '@string.Join(",", Roles.GetRolesForUser(User.Identity.Name))' (All Roles: @string.Join(",", Roles.GetAllRoles()) )
-                    </section>
-                    <nav>
-                        @Html.MvcSiteMap().Menu()
-                        <script>
-                            //$(document).ready(function () {
-                                $("#menu").kendoMenu();
-                            //});
-                        </script>
-                    </nav>
-                </div>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - KendoGridBinderEx MVC Demo</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/ContentKendo")
+    @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/knockout")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+               @Html.MvcSiteMap().Menu()
+                <script>
+                    //$(document).ready(function () {
+                    $("#menu").kendoMenu();
+                    //});
+                </script>
+
+                Hello, '<span class="username">@User.Identity.Name</span>' : Roles '@string.Join(",", Roles.GetRolesForUser(User.Identity.Name))' (All Roles: @string.Join(",", Roles.GetAllRoles()) )
             </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
         </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
         <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - KendoGridBinderEx MVC Demo</p>
-                </div>
-            </div>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
-        
-        
-        @Html.Partial("_KendoDataSources")
-        @Html.Partial("_Icons")
-        @RenderSection("scripts", false)
-        @MiniProfiler.RenderIncludes()
-    </body>
+    </div>
+
+    @Html.Partial("_KendoDataSources")
+    @Html.Partial("_Icons")
+    @RenderSection("scripts", false)
+    @MiniProfiler.RenderIncludes()
+</body>
 </html>

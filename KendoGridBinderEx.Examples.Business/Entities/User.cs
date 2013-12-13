@@ -55,5 +55,10 @@ namespace KendoGridBinderEx.Examples.Business.Entities
                 return IsApplicationUserExpr.Evaluate(this);
             }
         }
+
+        public bool HasRole(string role)
+        {
+            return Roles.Any(r => r.Name == role);
+        }
     }
 }

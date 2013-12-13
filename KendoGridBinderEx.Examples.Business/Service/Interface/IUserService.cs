@@ -8,5 +8,7 @@ namespace KendoGridBinderEx.Examples.Business.Service.Interface
         bool UserHasRole(User user, Role role);
         bool UserHasRole(User user, string role);
         bool UserHasRole(User user, ERole role);
+
+        User GetByIdentityName(string name);
     }
 }
