@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Security", "KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj", "{B67D5A1D-8963-43DF-8167-5887CBB73E7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Infrastructure", "KendoGridBinderEx.Examples.Infrastructure\KendoGridBinderEx.Examples.Infrastructure.csproj", "{B69F4BED-660D-47B7-891B-EB1CC1421279}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B67D5A1D-8963-43DF-8167-5887CBB73E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
