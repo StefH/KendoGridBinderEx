@@ -23,18 +23,11 @@ namespace KendoGridBinderEx.Examples.Business.Repository
             _objectContext = (dbContext as IObjectContextAdapter).ObjectContext;
             _config = config;
 
-            _objectSet = _objectContext.CreateObjectSet<TEntity>();   
+            _objectSet = _objectContext.CreateObjectSet<TEntity>();
         }
 
         #region IRepositoryEx<T> Members
-        public IQueryable<TEntity> AsQueryable()
-        {
-            return _objectSet.InterceptWith(new PropertyVisitor()).AsQueryable();
-        }
-
-        // ReSharper disable MethodOverloadWithOptionalParameter
         public IQueryable<TEntity> AsQueryable(params Expression<Func<TEntity, object>>[] includeProperties)
-        // ReSharper restore MethodOverloadWithOptionalParameter
         {
             return PerformInclusions(includeProperties, _objectSet.AsQueryable()).InterceptWith(new PropertyVisitor());
         }
@@ -76,32 +69,32 @@ namespace KendoGridBinderEx.Examples.Business.Repository
 
         public TEntity First(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().First(where);
+            return AsQueryable(includeProperties).First(where);
         }
 
         public Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().FirstAsync(where);
+            return AsQueryable(includeProperties).FirstAsync(where);
         }
 
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().FirstOrDefault(where);
+            return AsQueryable(includeProperties).FirstOrDefault(where);
         }
 
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().FirstOrDefaultAsync(where);
+            return AsQueryable(includeProperties).FirstOrDefaultAsync(where);
         }
 
         public TEntity Single(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().Single(where);
+            return AsQueryable(includeProperties).Single(where);
         }
 
         public Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return AsQueryable().SingleAsync(where);
+            return AsQueryable(includeProperties).SingleAsync(where);
         }
 
         public void Delete(TEntity entity)
