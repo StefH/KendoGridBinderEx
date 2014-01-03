@@ -32,7 +32,7 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
             {
                 foreach (var role in _roleService.AsQueryable().Where(r => roleNames.Contains(r.Name)))
 				{
-					if (!user.Roles.Any(r=> r.Id == role.Id))
+					if (user.Roles.All(r => r.Id != role.Id))
 					{
 						role.Users.Add(user);
 					}

@@ -14,7 +14,7 @@ namespace KendoGridBinderEx.Examples.Business.Entities
             DefaultTranslationOf<Employee>.Property(e => e.FullName).Is(e => e.FirstName + " " + e.LastName);
 
         private static readonly CompiledExpressionMap<Employee, bool> IsAssignedExpr =
-            DefaultTranslationOf<Employee>.Property(e => e.IsAssigned).Is(e => e.Assigned >= 1);
+            DefaultTranslationOf<Employee>.Property(e => e.IsAssigned).Is(e => e.Assigned != null && e.Assigned >= 1);
 
         public int EmployeeNumber { get; set; }
 

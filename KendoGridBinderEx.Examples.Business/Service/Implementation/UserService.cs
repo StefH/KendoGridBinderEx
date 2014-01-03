@@ -17,17 +17,17 @@ namespace KendoGridBinderEx.Examples.Business.Service.Implementation
 
         public bool UserHasRole(User user, Role role)
         {
-            return user.Roles != null ? user.Roles.Any(r => r.Id == role.Id) : false;
+            return user.Roles != null && user.Roles.Any(r => r.Id == role.Id);
         }
-        
+
         public bool UserHasRole(User user, string role)
         {
-            return user.Roles != null ? user.Roles.Any(r => r.Name == role) : false;
+            return user.Roles != null && user.Roles.Any(r => r.Name == role);
         }
 
         public bool UserHasRole(User user, ERole role)
         {
-            return user.Roles != null ? user.Roles.Any(r => r.Id == (long) role) : false;
+            return user.Roles != null && user.Roles.Any(r => r.Id == (long)role);
         }
 
         public User GetByIdentityName(string name)
