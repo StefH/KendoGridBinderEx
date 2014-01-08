@@ -1387,6 +1387,7 @@
     <Content Include="Views\OU\VirtualScrollable.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Country\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
