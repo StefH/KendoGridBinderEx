@@ -240,6 +240,10 @@
       <Link>AutoMapper.Net4.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Copy of Site.css" />
     <Content Include="Content\Images\accept.png" />
     <Content Include="Content\Images\add.png" />
@@ -494,6 +498,8 @@
     </Content>
     <Content Include="MiniProfiler.dll" />
     <Content Include="MiniProfiler.EntityFramework6.dll" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Mvc.sitemap">
       <SubType>Designer</SubType>
@@ -937,7 +943,7 @@
     <Content Include="Scripts\knockout-kendo.min.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-2.7.1.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />

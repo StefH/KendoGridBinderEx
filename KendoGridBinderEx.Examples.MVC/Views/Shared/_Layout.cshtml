@@ -1,13 +1,5 @@
 ﻿@using StackExchange.Profiling
 
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,13 +17,12 @@
     @Scripts.Render("~/bundles/common")
     @Scripts.Render("~/bundles/kendo")
     @Scripts.Render("~/bundles/knockout")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
-               @Html.MvcSiteMap().Menu()
+                @Html.MvcSiteMap().Menu()
                 <script>
                     //$(document).ready(function () {
                     $("#menu").kendoMenu();
