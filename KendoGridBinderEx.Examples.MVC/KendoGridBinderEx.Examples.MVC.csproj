@@ -89,13 +89,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler, Version=3.0.7.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+    <Reference Include="MiniProfiler, Version=3.0.10.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MiniProfiler.dll</HintPath>
+      <HintPath>..\packages\MiniProfiler.3.0.10-beta2\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler.EntityFramework6, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+    <Reference Include="MiniProfiler.EntityFramework6, Version=3.0.10.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MiniProfiler.EntityFramework6.dll</HintPath>
+      <HintPath>..\packages\MiniProfiler.EF6.3.0.10-beta2\lib\net40\MiniProfiler.EntityFramework6.dll</HintPath>
     </Reference>
     <Reference Include="MvcSiteMapProvider, Version=4.4.6.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -496,8 +496,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalResourcesLiterals_MVC.cs</LastGenOutput>
     </Content>
-    <Content Include="MiniProfiler.dll" />
-    <Content Include="MiniProfiler.EntityFramework6.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
