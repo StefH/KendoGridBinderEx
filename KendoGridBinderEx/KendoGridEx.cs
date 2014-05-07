@@ -133,27 +133,19 @@ namespace KendoGridBinderEx
             var newSort = request.SortObjects.ToList();
             bool hasSortObjects = newSort.Any();
 
-            string groupByOrderByFieldsExpressionX = string.Empty;
-            if (hasSortObjects)
-            {
-                // ,FullName as OrderBy__Full
-                groupByOrderByFieldsExpressionX = "," + string.Join(",", newSort.Select(s => string.Format("{0} as OrderBy__{1}", MapFieldfromViewModeltoEntity(s.Field).Split('.').Last(), s.Field)));
-            }
-
             // List[0] = LastName as Last
             var groupByFields = request.GroupObjects.Select(s => string.Format("{0} as {1}", MapFieldfromViewModeltoEntity(s.Field), s.Field)).ToList();
 
             // new (new (LastName as Last) as GroupByFields)
-            var groupByExpressionX = string.Format("new (new ({0}{1}) as GroupByFields)", string.Join(",", groupByFields), groupByOrderByFieldsExpressionX);
+            var groupByExpressionX = string.Format("new (new ({0}) as GroupByFields)", string.Join(",", groupByFields));
 
             // new (Key.GroupByFields, it as Grouping, new (sum(TEntity__.EmployeeNumber) as sum__TEntity___EmployeeNumber) as Aggregates)
-            var selectExpressionBeforeOrderByX = string.Format("new (Key.GroupByFields, it as Grouping{0})", aggregatesExpression);
+            var selectExpressionBeforeOrderByX = string.Format("new (Key.GroupByFields, it as Grouping {0})", aggregatesExpression);
 
-
-            // GroupByFields.OrderBy__Full asc
+            // Adam Downs moved sort to Process vs During grouping
             var orderByFieldsExpression = hasSortObjects ?
-                string.Join(",", newSort.Select(s => string.Format("GroupByFields.OrderBy__{0} {1}", s.Field, s.Direction))) :
-                "GroupByFields." + request.GroupObjects.First().Field;
+                string.Join(",", newSort.Select(s => string.Format("{0} {1}", MapFieldfromViewModeltoEntity(s.Field), s.Direction))) :
+                MapFieldfromViewModeltoEntity(request.GroupObjects.First().Field);
 
             // new (GroupByFields, Grouping, Aggregates)
             var selectExpressionAfterOrderByX = string.Format("new (GroupByFields, Grouping{0})", hasAggregates ? ", Aggregates" : string.Empty);
@@ -172,7 +164,7 @@ namespace KendoGridBinderEx
             var selectQuery = groupByQuery.Select(selectExpressionBeforeOrderByX);
 
             // Execute the Dynamic Linq "OrderBy"
-            var orderByQuery = selectQuery.OrderBy(orderByFieldsExpression);
+            var orderByQuery = selectQuery.OrderBy("GroupByFields." + request.GroupObjects.First().Field);
 
             // Execute the Dynamic Linq "Select" to get back the TEntity objects
             var tempQuery = orderByQuery.Select(selectExpressionAfterOrderByX, typeof(TEntity));
@@ -195,13 +187,13 @@ namespace KendoGridBinderEx
                 var groupByDictionary = item.GetPropertyValue("GroupByFields").ToDictionary();
                 var aggregates = item.GetAggregatesAsDictionary();
 
-                Process(request.GroupObjects, groupByDictionary, grouping, aggregates, list);
+                Process(request.GroupObjects, groupByDictionary, grouping, aggregates, list, orderByFieldsExpression);
             }
 
             return list;
         }
 
-        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups)
+        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups, string orderByFieldsExpression)
         {
             var groupObjects = groupByFields as IList<GroupObject> ?? groupByFields.ToList();
             bool isLast = groupObjects.Count() == 1;
@@ -220,7 +212,7 @@ namespace KendoGridBinderEx
             {
                 var entities = grouping.Select<TEntity>("TEntity__");
 
-                kendoGroup.items = _conversion(entities.AsQueryable()).ToList();
+                kendoGroup.items = _conversion(entities.AsQueryable().OrderBy(orderByFieldsExpression)).ToList();
             }
             else
             {
@@ -228,7 +220,7 @@ namespace KendoGridBinderEx
                 newGroupByFields.Remove(groupObject);
 
                 var newList = new List<KendoGroup>();
-                Process(newGroupByFields.ToArray(), values, grouping, aggregates, newList);
+                Process(newGroupByFields.ToArray(), values, grouping, aggregates, newList, orderByFieldsExpression);
                 kendoGroup.items = newList;
             }
 
