@@ -141,24 +141,38 @@ namespace KendoGridBinderEx
 
             // new (Key.GroupByFields, it as Grouping, new (sum(TEntity__.EmployeeNumber) as sum__TEntity___EmployeeNumber) as Aggregates)
             var selectExpressionBeforeOrderByX = string.Format("new (Key.GroupByFields, it as Grouping {0})", aggregatesExpression);
+            var groupSort = string.Join(",",
+                request.GroupObjects.ToList()
+                    .Select(s => string.Format("{0} {1}", MapFieldfromViewModeltoEntity(s.Field), s.Direction)));
 
-            // Adam Downs moved sort to Process vs During grouping
             var orderByFieldsExpression = hasSortObjects ?
-                string.Join(",", newSort.Select(s => string.Format("{0} {1}", MapFieldfromViewModeltoEntity(s.Field), s.Direction))) :
-                MapFieldfromViewModeltoEntity(request.GroupObjects.First().Field);
+            string.Join(",", newSort.Select(s => string.Format("{0} {1}", MapFieldfromViewModeltoEntity(s.Field), s.Direction))) :
+            MapFieldfromViewModeltoEntity(request.GroupObjects.First().Field);
 
             // new (GroupByFields, Grouping, Aggregates)
             var selectExpressionAfterOrderByX = string.Format("new (GroupByFields, Grouping{0})", hasAggregates ? ", Aggregates" : string.Empty);
 
-            // 
             string includesX = string.Empty;
             if (includes != null && includes.Any())
             {
                 includesX = ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_")));
             }
 
+            //Adam Downs Limit items to page count First ordering by groups then sorts
+            var limitedQuery = query.OrderBy(string.Join(",", new[] { groupSort, orderByFieldsExpression }));
+
+            // Execute the Dynamic Linq for Paging
+            if (request.Skip.HasValue && request.Skip > 0)
+            {
+                limitedQuery = limitedQuery.Skip(request.Skip.Value);
+            }
+            if (request.Take.HasValue && request.Take > 0)
+            {
+                limitedQuery = limitedQuery.Take(request.Take.Value);
+            }
+
             // Execute the Dynamic Linq "GroupBy"
-            var groupByQuery = query.GroupBy(groupByExpressionX, string.Format("new (it AS TEntity__ {0})", includesX));
+            var groupByQuery = limitedQuery.GroupBy(groupByExpressionX, string.Format("new (it AS TEntity__ {0})", includesX));
 
             // Execute the Dynamic Linq "Select"
             var selectQuery = groupByQuery.Select(selectExpressionBeforeOrderByX);
@@ -169,16 +183,6 @@ namespace KendoGridBinderEx
             // Execute the Dynamic Linq "Select" to get back the TEntity objects
             var tempQuery = orderByQuery.Select(selectExpressionAfterOrderByX, typeof(TEntity));
 
-            // Execute the Dynamic Linq for Paging
-            if (request.Skip.HasValue && request.Skip > 0)
-            {
-                tempQuery = tempQuery.Skip(request.Skip.Value);
-            }
-            if (request.Take.HasValue && request.Take > 0)
-            {
-                tempQuery = tempQuery.Take(request.Take.Value);
-            }
-
             // Create a valid List<KendoGroup> object
             var list = new List<KendoGroup>();
             foreach (DynamicClass item in tempQuery)
@@ -187,13 +191,13 @@ namespace KendoGridBinderEx
                 var groupByDictionary = item.GetPropertyValue("GroupByFields").ToDictionary();
                 var aggregates = item.GetAggregatesAsDictionary();
 
-                Process(request.GroupObjects, groupByDictionary, grouping, aggregates, list, orderByFieldsExpression);
+                Process(request.GroupObjects, groupByDictionary, grouping, aggregates, list);
             }
 
             return list;
         }
 
-        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups, string orderByFieldsExpression)
+        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups)
         {
             var groupObjects = groupByFields as IList<GroupObject> ?? groupByFields.ToList();
             bool isLast = groupObjects.Count() == 1;
@@ -210,9 +214,8 @@ namespace KendoGridBinderEx
 
             if (isLast)
             {
-                var entities = grouping.Select<TEntity>("TEntity__");
-
-                kendoGroup.items = _conversion(entities.AsQueryable().OrderBy(orderByFieldsExpression)).ToList();
+                var entities = grouping.Select<TEntity>("TEntity__").AsQueryable();
+                kendoGroup.items = _conversion(entities).ToList();
             }
             else
             {
@@ -220,13 +223,12 @@ namespace KendoGridBinderEx
                 newGroupByFields.Remove(groupObject);
 
                 var newList = new List<KendoGroup>();
-                Process(newGroupByFields.ToArray(), values, grouping, aggregates, newList, orderByFieldsExpression);
+                Process(newGroupByFields.ToArray(), values, grouping, aggregates, newList);
                 kendoGroup.items = newList;
             }
 
             kendoGroups.Add(kendoGroup);
         }
-
         protected string GetSorting(IEnumerable<SortObject> sortObjects)
         {
             if (sortObjects == null)
