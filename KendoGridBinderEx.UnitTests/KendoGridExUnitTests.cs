@@ -422,7 +422,7 @@ namespace KendoGridBinderEx.UnitTests
             var groups = kendoGrid.Groups as List<KendoGroup>;
             Assert.IsNotNull(groups);
 
-            Assert.AreEqual(10, groups.Count());
+            Assert.AreEqual(9, groups.Count());
             Assert.AreEqual(employees.Count(), kendoGrid.Total);
 
             var groupBySmith = groups.FirstOrDefault(g => g.value.ToString() == "Smith");
