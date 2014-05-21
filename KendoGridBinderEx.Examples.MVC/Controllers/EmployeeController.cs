@@ -105,6 +105,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexPaulJame()
+        {
+            return View();
+        }
+
         public ActionResult IndexGrouped()
         {
             return View();
@@ -196,6 +201,13 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public JsonResult GridManagers(KendoGridRequest request)
         {
             var entities = _employeeService.GetManagers();
+            return GetKendoGridAsJson(request, entities);
+        }
+
+        [HttpPost]
+        public JsonResult GridPaulJame(KendoGridRequest request)
+        {
+            var entities = _employeeService.AsQueryable();
             return GetKendoGridAsJson(request, entities);
         }
 

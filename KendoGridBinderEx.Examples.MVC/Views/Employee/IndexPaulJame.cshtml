@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Employee Grid Example Test";
+}
+
+<h3>All Employees Paul Jame</h3>
+<div id="grid"></div>
+<br />
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var employeeDataSource = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 10,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("GridPaulJame")'
+                },
+                parameterMap: function (options) {
+                    if (options.filter) {
+                        KendoGrid_FixFilter(employeeDataSource, options.filter);
+                    }
+                    return options;
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        CompanyName: { type: 'string' },
+                        MainCompanyName: { type: 'string' },
+                        Number: { type: 'number' },
+                        First: { type: 'string' },
+                        LastName: { type: 'string' },
+                        Full: { type: 'string' },
+                        Email: { type: 'string' },
+                        HireDate: { type: 'date' },
+                        CountryCode: { type: 'string' },
+                        IsManager: { type: 'boolean' },
+                        FunctionCode: { type: 'string' },
+                        SubFunctionCode: { type: 'string' },
+                        Assigned: { type: 'number' },
+                        IsAssigned: { type: 'boolean' }
+                    }
+                }
+            }
+        };
+
+        jQuery(function () {
+            jQuery("#grid").kendoGrid({
+                "columns": [
+                    { "title": "Id", "hidden": false, "field": "Id", "filterable": { "messages": { "info": "Exibir linhas com valores que", "isTrue": "É verdade", "isFalse": "É falso", "filter": "Filtrar", "clear": "Limpar", "and": "E", "or": "Ou", "operator": "Operador", "value": "Valor", "cancel": "Cancelar" }, "operators": { "string": { "eq": "É igual a", "neq": "Não é igual a", "startswith": "Começa com", "endswith": "Termina com", "contains": "Contém", "doesnotcontain": "Não contém" }, "number": { "eq": "É igual a", "neq": "Não é igual a", "gte": "É maior que ou igual a", "gt": "É maior que", "lte": "É menor que ou igual a", "lt": "É menor que" }, "date": { "eq": "É igual a", "neq": "Não é igual a", "gte": "É posterior ou igual a", "gt": "É posterior a", "lte": "É anterior ou igual a", "lt": "É anterior a" }, "enums": { "eq": "É igual a", "neq": "Não é igual a" } } }, "encoded": true },
+                    { "title": "First", "field": "First", "filterable": { "messages": { "info": "Exibir linhas com valores que", "isTrue": "É verdade", "isFalse": "É falso", "filter": "Filtrar", "clear": "Limpar", "and": "E", "or": "Ou", "operator": "Operador", "value": "Valor", "cancel": "Cancelar" }, "operators": { "string": { "eq": "É igual a", "neq": "Não é igual a", "startswith": "Começa com", "endswith": "Termina com", "contains": "Contém", "doesnotcontain": "Não contém" }, "number": { "eq": "É igual a", "neq": "Não é igual a", "gte": "É maior que ou igual a", "gt": "É maior que", "lte": "É menor que ou igual a", "lt": "É menor que" }, "date": { "eq": "É igual a", "neq": "Não é igual a", "gte": "É posterior ou igual a", "gt": "É posterior a", "lte": "É anterior ou igual a", "lt": "É anterior a" }, "enums": { "eq": "É igual a", "neq": "Não é igual a" } } }, "encoded": true },
+                    { "title": "LastName", "field": "LastName", "filterable": { "messages": { "info": "Exibir linhas com valores que", "isTrue": "É verdade", "isFalse": "É falso", "filter": "Filtrar", "clear": "Limpar", "and": "E", "or": "Ou", "operator": "Operador", "value": "Valor", "cancel": "Cancelar" }, "operators": { "string": { "eq": "É igual a", "neq": "Não é igual a", "startswith": "Começa com", "endswith": "Termina com", "contains": "Contém", "doesnotcontain": "Não contém" }, "number": { "eq": "É igual a", "neq": "Não é igual a", "gte": "É maior que ou igual a", "gt": "É maior que", "lte": "É menor que ou igual a", "lt": "É menor que" }, "date": { "eq": "É igual a", "neq": "Não é igual a", "gte": "É posterior ou igual a", "gt": "É posterior a", "lte": "É anterior ou igual a", "lt": "É anterior a" }, "enums": { "eq": "É igual a", "neq": "Não é igual a" } } }, "encoded": true }
+                ],
+                "groupable": { "messages": { "empty": "Arraste aqui o cabeçalho de uma coluna para agrupar por esta coluna" } },
+                "pageable": {
+                    "pageSizes": [1, 5, 10, 20],
+                    "buttonCount": 10,
+                    "messages": { "display": "Exibindo itens {0} - {1} de {2}", "empty": "Nenhum registro encontrado.", "page": "Página", "of": "de {0}", "itemsPerPage": "itens por página", "first": "Ir para a primeira página", "previous": "Vá para a página anterior", "next": "Ir para a próxima página", "last": "Ir para a última página", "refresh": "Atualizar", "morePages": "Mais páginas" }
+                },
+                "sortable": true,
+                "scrollable": false,
+                "dataSource": employeeDataSource
+            });
+        });
+        /*
+        $('#grid').kendoGrid({
+            dataSource: employeeDataSource,
+            dataBound: function () {
+                DisplayNoResultsFound($('#grid'));
+            },
+            height: '240px',
+            columns: [
+                {
+                    field: 'Id', width: '90px', filterable: false, sortable: false, title: ' ',
+                    template:
+                        '<a href="/Employee/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
+                            '<a href="/Employee/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
+                            '<a href="/Employee/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                },
+                { field: 'CompanyName', title: 'Company' },
+                { field: 'MainCompanyName', title: 'Main Company' },
+                { field: 'Number', title: 'Employee #' },
+                { field: 'First', title: 'FirstName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoComplete, "First"); } }  },
+                { field: 'LastName', title: 'LastName', filterable: { ui: function (element) { KendoGridFilterAutoComplete(element, KendoDataSource_EmployeeAutoComplete, "LastName"); } } },
+                { field: 'Full', title: 'FullName' },
+                { field: 'Email' },
+                { field: 'HireDate', title: 'Hire Date', format: _DefaultDateTemplate, filterable: { ui: KendoGridFilterDatePicker } },
+                { field: 'CountryCode', title: 'Country' },
+                { field: "IsManager", title: "Manager", template: "<input type=\"checkbox\" disabled='disabled' #= IsManager ? checked='checked' : '' # class=\"check_row\"/>" },
+                {
+                    field: 'FunctionCode', title: 'Function', filterable: {
+                        extra: false,
+                        operators: {
+                            string: {
+                                eq: "Is equal to",
+                                neq: "Is not equal to"
+                            }
+                        },
+                        ui: function (element) { KendoGridFilterDropDownList_Function(element, "Code", "Code"); }
+                    }
+                },
+                {
+                    field: 'SubFunctionCode', title: 'SubFunction', filterable: {
+                        extra: false,
+                        operators: {
+                            string: {
+                                eq: "Is equal to",
+                                neq: "Is not equal to"
+                            }
+                        },
+                        ui: function (element) { KendoGridFilterDropDownList_SubFunction(element, "Code", "Code"); }
+                    }
+                },
+                { field: 'Assigned', title: 'Assigned' },
+                { field: 'IsAssigned', title: 'Is Assigned' }
+            ],
+            filterable: {
+                extra: true
+            },
+            sortable: {
+                mode: 'multiple',
+                allowUnsort: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            }
+        });*/
+    });
+</script>
