@@ -48,9 +48,10 @@ namespace KendoGridBinderEx
             _mappings = AutoMapperUtils.GetModelMappings<TEntity, TViewModel>(mappings);
             _conversion = conversion ?? GetAutoMapperConversion(canUseAutoMapperProjection);
 
-            Total = query.Count();
-
+          
             var tempQuery = request.FilterObjectWrapper != null ? ApplyFiltering(query, request.FilterObjectWrapper) : query;
+
+            Total = tempQuery.Count();
 
             if (request.GroupObjects != null)
             {
