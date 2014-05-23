@@ -139,7 +139,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 {
                     excel.Workbook.Worksheets.Add("Employees");
                     var ws = excel.Workbook.Worksheets[1];
-                    ws.Cells.LoadFromCollection(results);
+                    ws.Cells.LoadFromCollection(results,true);
                     ws.Cells.AutoFitColumns();
 
                     excel.Save();

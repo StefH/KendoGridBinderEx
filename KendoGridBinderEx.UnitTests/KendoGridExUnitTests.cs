@@ -247,7 +247,7 @@ namespace KendoGridBinderEx.UnitTests
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
             Assert.IsNotNull(kendoGrid);
 
-            Assert.AreEqual(12, kendoGrid.Total);
+            Assert.AreEqual(4, kendoGrid.Total);
             Assert.IsNotNull(kendoGrid.Data);
             Assert.AreEqual(4, kendoGrid.Data.Count());
 
