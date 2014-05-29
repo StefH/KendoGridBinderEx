@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Employee Grid Grouped (Dynamic) Api";
+}
+
+<h3>All Employees Grouped (Dynamic) Api</h3>
+Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
+<div id="gridWithGroup"></div>
+<br/>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#multi').click(function () {
+            $("#gridWithGroup").data("kendoGrid").options.sortable.mode = $(this).is(":checked") ? "multiple" : "single";
+        });
+        
+        var dataSourceWithGroup = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            serverGrouping: true,
+            pageSize: 10,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '/api/EmployeeApi/Grid'
+                },
+                parameterMap: function (options) {
+                    if (options.filter) {
+                        KendoGrid_FixFilter(dataSourceWithGroup, options.filter);
+                    }
+                    return options;
+                }
+            },
+            schema: {
+                groups: 'Groups',
+                aggregates: 'Aggregates',
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        FirstName: { type: 'string' },
+                        LastName: { type: 'string' },
+                        Email: { type: 'string' }
+                    }
+                }
+            }
+        };
+
+        $('#gridWithGroup').kendoGrid({
+            dataSource: dataSourceWithGroup,
+            height: '600px',
+            columns: [
+                {
+                    field: 'Id', width: '100px', filterable: false, sortable: false, title: ' '
+                },
+                { field: 'FirstName' },
+                { field: 'LastName' },
+                { field: 'Email' }
+            ],
+            filterable: true,
+            sortable: {
+                mode: 'multiple'
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true
+            },
+            groupable: true
+        });
+    });
+</script>

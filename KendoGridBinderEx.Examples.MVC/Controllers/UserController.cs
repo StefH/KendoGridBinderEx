@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class UserController : BaseGridController<User, UserVM>
+    public class UserController : BaseMvcGridController<User, UserVM>
     {
         private readonly IUserService _userService;
 

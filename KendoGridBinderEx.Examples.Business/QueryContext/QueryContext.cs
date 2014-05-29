@@ -40,7 +40,7 @@ namespace KendoGridBinderEx.Examples.Business.QueryContext
             return this;
         }
 
-        public KendoGridEx<TEntity, TViewModel> ToKendoGrid<TViewModel>(KendoGridRequest request)
+        public KendoGridEx<TEntity, TViewModel> ToKendoGrid<TViewModel>(KendoGridBaseRequest request)
         {
             return new KendoGridEx<TEntity, TViewModel>(request, Query, Includes);
         }

@@ -6,7 +6,7 @@ using KendoGridBinderEx.Examples.MVC.Models;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class FunctionController : BaseGridController<Function, FunctionVM>
+    public class FunctionController : BaseMvcGridController<Function, FunctionVM>
     {
         private readonly IFunctionService _functionService;
 

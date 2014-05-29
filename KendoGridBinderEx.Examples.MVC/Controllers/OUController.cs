@@ -4,11 +4,12 @@ using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
+using KendoGridBinderEx.ModelBinder.Mvc;
 using KendoGridBinderEx.QueryableExtensions;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class OUController : BaseGridController<OU, OUVM>
+    public class OUController : BaseMvcGridController<OU, OUVM>
     {
         private readonly IOUService _ouService;
 
@@ -33,7 +34,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult GridVirtualScrollable(KendoGridRequest request)
+        public JsonResult GridVirtualScrollable(KendoGridMvcRequest request)
         {
             var query = GetQueryable().AsNoTracking();
             return Json(query.ToKendoGridEx<OU, OUVM>(request));

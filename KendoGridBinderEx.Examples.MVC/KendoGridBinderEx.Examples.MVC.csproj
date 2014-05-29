@@ -194,10 +194,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BaseGridController.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AutoMapper\EntityResolver.cs" />
+    <Compile Include="Controllers\BaseMvcController.cs" />
+    <Compile Include="Controllers\BaseMvcGridController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeeApiController.cs" />
     <Compile Include="Controllers\MainCompanyController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1410,6 +1413,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Employee\IndexPaulJame.cshtml" />
+    <Content Include="Views\Employee\IndexApiGrouped.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

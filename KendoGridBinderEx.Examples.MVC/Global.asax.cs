@@ -27,6 +27,7 @@ namespace KendoGridBinderEx.Examples.MVC
 
             GlobalConfiguration.Configuration.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

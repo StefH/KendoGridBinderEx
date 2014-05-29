@@ -5,10 +5,11 @@ using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
+using KendoGridBinderEx.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class SubFunctionController : BaseGridController<SubFunction, SubFunctionVM>
+    public class SubFunctionController : BaseMvcGridController<SubFunction, SubFunctionVM>
     {
         private readonly ISubFunctionService _subFunctionService;
 
@@ -30,7 +31,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult GridByFunctionId(KendoGridRequest request, long? functionId)
+        public JsonResult GridByFunctionId(KendoGridMvcRequest request, long? functionId)
         {
             var entities = GetQueryable().Where(s => s.Function.Id == functionId).AsNoTracking();
             return GetKendoGridAsJson(request, entities);

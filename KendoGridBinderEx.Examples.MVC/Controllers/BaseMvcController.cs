@@ -10,6 +10,7 @@ using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
+using KendoGridBinderEx.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -34,32 +35,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
     }
     */
-    public class EntityResolver<TEntity> : IValueResolver where TEntity : class, IEntity, new()
-    {
-        public ResolutionResult Resolve(ResolutionResult source)
-        {
-            return source.New(ResolveObject(source));
-        }
 
-        private object ResolveObject(ResolutionResult source)
-        {
-            if (!source.Context.Options.Items.ContainsKey("Services")) return null;
-
-            var services = (List<object>)source.Context.Options.Items["Services"];
-            if (services == null) return null;
-
-            var item = services.FirstOrDefault(s => s is IBaseService<TEntity>);
-            if (item == null) return null;
-
-            var id = (long)source.Value;
-            if (id <= 0) return null;
-
-            var service = (IBaseService<TEntity>)item;
-            return service.GetById(id);
-        }
-    }
-
-    public abstract class BaseController<TEntity, TViewModel> : Controller
+    public abstract class BaseMvcController<TEntity, TViewModel> : Controller
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
     {
@@ -67,7 +44,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected readonly Dictionary<string, string> KendoGridExMappings;
         protected readonly Dictionary<string, List<string>> Mappings = new Dictionary<string, List<string>>();
 
-        protected BaseController(IBaseService<TEntity> service)
+        protected BaseMvcController(IBaseService<TEntity> service)
         {
             Service = service;
 
@@ -306,7 +283,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         #endregion
 
         #region AutoComplete
-        public virtual IQueryable GetAutoComplete(KendoGridRequest request)
+        public virtual IQueryable GetAutoComplete(KendoGridMvcRequest request)
         {
             // Get filter from KendoGridRequest (in case of kendoAutoComplete there is only 1 filter)
             var filter = request.FilterObjectWrapper.FilterObjects.First();
@@ -331,7 +308,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return groupingQuery.Select(string.Format("new (Key as {0})", fieldOriginal));
         }
 
-        public virtual JsonResult GetAutoCompleteAsJson(KendoGridRequest request)
+        public virtual JsonResult GetAutoCompleteAsJson(KendoGridMvcRequest request)
         {
             var results = GetAutoComplete(request);
             return Json(results, JsonRequestBehavior.AllowGet);

@@ -4,7 +4,7 @@ using KendoGridBinderEx.Examples.Business.Service.Interface;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class CountryController : BaseGridController<Country, Country>
+    public class CountryController : BaseMvcGridController<Country, Country>
     {
         private readonly ICountryService _countryService;
 

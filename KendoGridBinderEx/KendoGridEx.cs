@@ -12,12 +12,12 @@ namespace KendoGridBinderEx
 {
     public class KendoGridEx<TModel> : KendoGridEx<TModel, TModel>
     {
-        public KendoGridEx(KendoGridRequest request, IQueryable<TModel> query)
+        public KendoGridEx(KendoGridBaseRequest request, IQueryable<TModel> query)
             : base(request, query, null, null)
         {
         }
 
-        public KendoGridEx(KendoGridRequest request, IEnumerable<TModel> list)
+        public KendoGridEx(KendoGridBaseRequest request, IEnumerable<TModel> list)
             : this(request, list.AsQueryable())
         {
         }
@@ -38,7 +38,7 @@ namespace KendoGridBinderEx
         public IEnumerable<TViewModel> Data { get; set; }
         public int Total { get; set; }
 
-        public KendoGridEx(KendoGridRequest request,
+        public KendoGridEx(KendoGridBaseRequest request,
             IQueryable<TEntity> query,
             IEnumerable<string> includes = null,
             Dictionary<string, string> mappings = null,
@@ -81,7 +81,7 @@ namespace KendoGridBinderEx
             }
         }
 
-        protected KendoGridEx(KendoGridRequest request, IEnumerable<TEntity> entities,
+        protected KendoGridEx(KendoGridBaseRequest request, IEnumerable<TEntity> entities,
             Dictionary<string, string> mappings,
             Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion
             )
@@ -112,7 +112,7 @@ namespace KendoGridBinderEx
             return query.OrderBy(sorting);
         }
 
-        protected IEnumerable<KendoGroup> ApplyGroupingAndSorting(IQueryable<TEntity> query, IEnumerable<string> includes, KendoGridRequest request)
+        protected IEnumerable<KendoGroup> ApplyGroupingAndSorting(IQueryable<TEntity> query, IEnumerable<string> includes, KendoGridBaseRequest request)
         {
             bool hasAggregates = request.GroupObjects.Any(g => g.AggregateObjects.Any());
             string aggregatesExpression = string.Empty;

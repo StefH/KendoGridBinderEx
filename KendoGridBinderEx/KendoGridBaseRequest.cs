@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using KendoGridBinderEx.Containers;
 
 namespace KendoGridBinderEx
 {
-    [ModelBinder(typeof(KendoGridModelBinder))]
-    public class KendoGridRequest
+    public abstract class KendoGridBaseRequest
     {
         public int? Take { get; set; }
         public int? Skip { get; set; }

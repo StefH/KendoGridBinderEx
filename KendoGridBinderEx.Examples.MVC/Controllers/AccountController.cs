@@ -9,7 +9,7 @@ using System.Web.Security;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class AccountController : BaseController<User, UserVM>
+    public class AccountController : BaseMvcController<User, UserVM>
     {
         private readonly IUserService _userService;
 

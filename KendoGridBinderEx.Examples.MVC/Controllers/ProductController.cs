@@ -7,10 +7,11 @@ using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
+using KendoGridBinderEx.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class ProductController : BaseGridController<Product, ProductVM>
+    public class ProductController : BaseMvcGridController<Product, ProductVM>
     {
         private readonly IProductService _productService;
         private readonly ProductValidator _productValidator;
@@ -46,7 +47,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult GridTop3(KendoGridRequest request)
+        public JsonResult GridTop3(KendoGridMvcRequest request)
         {
             var entities = _productService.GetTop3Products();
             return GetKendoGridAsJson(request, entities);

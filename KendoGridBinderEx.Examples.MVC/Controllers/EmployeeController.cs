@@ -9,13 +9,15 @@ using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
+using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.Examples.MVC.Models;
+using KendoGridBinderEx.ModelBinder.Mvc;
 using KendoGridBinderEx.QueryableExtensions;
 using OfficeOpenXml;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class EmployeeController : BaseGridController<Employee, EmployeeVM>
+    public class EmployeeController : BaseMvcGridController<Employee, EmployeeVM>
     {
         private readonly IEmployeeService _employeeService;
         private readonly ICountryService _countryService;
@@ -110,6 +112,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexApiGrouped()
+        {
+            return View();
+        }
+
         public ActionResult IndexGrouped()
         {
             return View();
@@ -128,7 +135,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpPost]
         public JsonResult Export(KendoGridFilter filter, string guid)
         {
-            var gridRequest = new KendoGridRequest();
+            var gridRequest = new KendoGridMvcRequest();
             if (filter != null)
             {
                 gridRequest.FilterObjectWrapper = filter.Filters != null ? filter.ToFilterObjectWrapper() : null;
@@ -177,35 +184,35 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult GridBySubFunctionId(KendoGridRequest request, long? subFunctionId)
+        public JsonResult GridBySubFunctionId(KendoGridMvcRequest request, long? subFunctionId)
         {
             var query = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
             return Json(query.ToKendoGridEx<Employee, EmployeeDetailVM>(request));
         }
 
         [HttpPost]
-        public JsonResult GridWithGroup(KendoGridRequest request)
+        public JsonResult GridWithGroup(KendoGridMvcRequest request)
         {
             var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
             return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
         }
 
         [HttpPost]
-        public JsonResult GridDetails(KendoGridRequest request)
+        public JsonResult GridDetails(KendoGridMvcRequest request)
         {
             var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
             return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
         }
 
         [HttpPost]
-        public JsonResult GridManagers(KendoGridRequest request)
+        public JsonResult GridManagers(KendoGridMvcRequest request)
         {
             var entities = _employeeService.GetManagers();
             return GetKendoGridAsJson(request, entities);
         }
 
         [HttpPost]
-        public JsonResult GridPaulJame(KendoGridRequest request)
+        public JsonResult GridPaulJame(KendoGridMvcRequest request)
         {
             var entities = _employeeService.AsQueryable();
             return GetKendoGridAsJson(request, entities);

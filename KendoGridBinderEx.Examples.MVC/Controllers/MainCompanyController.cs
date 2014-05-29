@@ -3,7 +3,7 @@ using KendoGridBinderEx.Examples.Business.Service.Interface;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
-    public class MainCompanyController : BaseGridController<MainCompany, MainCompany>
+    public class MainCompanyController : BaseMvcGridController<MainCompany, MainCompany>
     {
         private readonly IMainCompanyService _mainCompanyService;
 

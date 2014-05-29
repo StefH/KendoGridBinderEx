@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Extensions;
+using KendoGridBinderEx.ModelBinder.Mvc;
 using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.UnitTests.Entities;
 using KendoGridBinderEx.UnitTests.Helpers;
@@ -536,6 +537,108 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual(2003, aggregateSum.Value);
             */
         }
+        
+        [Test]
+        //{"take":5,"skip":0,"page":1,"pageSize":5,"group":[{"field":"LastName","dir":"asc","aggregates":[]}]}
+        public void Test_KendoGridModelBinder_JsonGroups_One_GroupBy_WithoutIncludes()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"group", "[{\"field\":\"LastName\",\"dir\":\"asc\",\"aggregates\":[]}]"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.AreEqual(1, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(0, gridRequest.GroupObjects.First().AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployees().AsQueryable();
+            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            Assert.IsNotNull(employeeVMs);
+
+            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            Assert.AreEqual(5, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+
+            var employeesFromFirstGroup = groups.First().items as IEnumerable<EmployeeVM>;
+            Assert.IsNotNull(employeesFromFirstGroup);
+
+            var employeesFromFirstGroupList = employeesFromFirstGroup.ToList();
+            Assert.AreEqual(1, employeesFromFirstGroupList.Count);
+
+            var testEmployee = employeesFromFirstGroupList.First();
+            Assert.IsNull(testEmployee.CountryName);
+        }
+
+        [Test]
+        //{"take":5,"skip":0,"page":1,"pageSize":5,"group":[{"field":"LastName","dir":"asc","aggregates":["field":"Number","aggregate":"Sum"]}]}
+        public void Test_KendoGridModelBinder_JsonGroups_One_GroupBy_One_Aggregate_Sum()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "10"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "10"},
+
+                {"group", "[{\"field\":\"LastName\",\"dir\":\"asc\",\"aggregates\":[{\"field\":\"Number\",\"aggregate\":\"sum\"}]}]"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.AreEqual(1, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.First().AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployeesWithData().AsQueryable();
+            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, null, null, false);
+
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            Assert.AreEqual(9, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+
+            var groupBySmith = groups.FirstOrDefault(g => g.value.ToString() == "Smith");
+            Assert.IsNotNull(groupBySmith);
+
+            var items = groupBySmith.items as List<EmployeeVM>;
+            Assert.IsNotNull(items);
+            Assert.AreEqual(2, items.Count);
+            Assert.AreEqual(2, items.Count(e => e.Last == "Smith"));
+
+            var aggregates = groupBySmith.aggregates as Dictionary<string, Dictionary<string, object>>;
+            Assert.IsNotNull(aggregates);
+
+            Assert.IsTrue(aggregates.ContainsKey("Number"));
+            var aggregatesNumber = aggregates["Number"];
+            Assert.IsNotNull(aggregatesNumber);
+            Assert.AreEqual(1, aggregatesNumber.Count);
+
+            var aggregateSum = aggregatesNumber.First();
+            Assert.IsNotNull(aggregateSum);
+            Assert.AreEqual("sum", aggregateSum.Key);
+            Assert.AreEqual(2003, aggregateSum.Value);
+        }
 
         #region InitAutoMapper
         private static void InitAutoMapper()
@@ -699,31 +802,31 @@ namespace KendoGridBinderEx.UnitTests
         #endregion
 
         #region Check helper methods
-        private static void CheckTake(KendoGridRequest gridRequest, int take)
+        private static void CheckTake(KendoGridBaseRequest gridRequest, int take)
         {
             Assert.IsNotNull(gridRequest.Take);
             Assert.AreEqual(take, gridRequest.Take.Value);
         }
 
-        private static void CheckSkip(KendoGridRequest gridRequest, int skip)
+        private static void CheckSkip(KendoGridBaseRequest gridRequest, int skip)
         {
             Assert.IsNotNull(gridRequest.Skip);
             Assert.AreEqual(skip, gridRequest.Skip.Value);
         }
 
-        private static void CheckPage(KendoGridRequest gridRequest, int page)
+        private static void CheckPage(KendoGridBaseRequest gridRequest, int page)
         {
             Assert.IsNotNull(gridRequest.Page);
             Assert.AreEqual(page, gridRequest.Page.Value);
         }
 
-        private static void CheckPageSize(KendoGridRequest gridRequest, int pagesize)
+        private static void CheckPageSize(KendoGridBaseRequest gridRequest, int pagesize)
         {
             Assert.IsNotNull(gridRequest.PageSize);
             Assert.AreEqual(pagesize, gridRequest.PageSize.Value);
         }
 
-        private static KendoGridRequest SetupBinder(NameValueCollection form, NameValueCollection queryString)
+        private static KendoGridBaseRequest SetupBinder(NameValueCollection form, NameValueCollection queryString)
         {
             var fakeRequest = new FakeRequest("POST", form, queryString ?? new NameValueCollection());
             var httpContext = new FakeContext(fakeRequest);
@@ -732,11 +835,11 @@ namespace KendoGridBinderEx.UnitTests
             var controllerContext = new ControllerContext(new RequestContext(httpContext, new RouteData()), controller);
             var modelBindingContext = new ModelBindingContext();
 
-            var binder = new KendoGridModelBinder();
+            var binder = new KendoGridMvcModelBinder();
             var model = binder.BindModel(controllerContext, modelBindingContext);
             Assert.IsNotNull(model);
 
-            var gridRequest = model as KendoGridRequest;
+            var gridRequest = model as KendoGridMvcRequest;
             Assert.IsNotNull(gridRequest);
 
             return gridRequest;
