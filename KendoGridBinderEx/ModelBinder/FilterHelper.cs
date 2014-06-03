@@ -2,12 +2,132 @@
 using System.Collections.Specialized;
 using System.Linq;
 using KendoGridBinderEx.Containers;
+using KendoGridBinderEx.Containers.Json;
+using Newtonsoft.Json;
 
 namespace KendoGridBinderEx.ModelBinder
 {
     public static class FilterHelper
     {
-        public static FilterObjectWrapper GetFilterObjects(NameValueCollection queryString, IList<string> filterKeys, string filterLogic)
+        public static FilterObjectWrapper Parse(NameValueCollection queryString)
+        {
+            // If there is a filter query parameter, try to parse the value as json
+            if (queryString.AllKeys.Contains("filter"))
+            {
+                string filterAsJson = queryString["filter"];
+                if (!string.IsNullOrEmpty(filterAsJson))
+                {
+                    return GetFilterObjects(filterAsJson);
+                }
+            }
+            else
+            {
+                // Just get the filters the old way
+                string filterLogic = queryString["filter[logic]"];
+
+                if (filterLogic != null)
+                {
+                    var filterKeys = queryString.AllKeys.Where(x => x.StartsWith("filter") && x != "filter[logic]").ToList();
+                    return GetFilterObjects(queryString, filterKeys, filterLogic);
+                }
+            }
+
+            return null;
+        }
+
+        /*
+        "filter":{
+            "logic":"and",
+            "filters":[
+                {
+                "field":"LastName",
+                "operator":"eq",
+                "value":"d"
+                },
+                {
+                "field":"LastName",
+                "operator":"eq",
+                "value":"ddd"
+                },
+                {
+                "field":"Email",
+                "operator":"startswith",
+                "value":"d"
+                },
+                {
+                "logic":"or",
+                "filters":[
+                    {
+                        "field":"FirstName",
+                        "operator":"contains",
+                        "value":"s"
+                    },
+                    {
+                        "field":"FirstName",
+                        "operator":"contains",
+                        "value":"d"
+                    }
+                ]
+                }
+            ]
+        }
+        */
+        public static FilterObjectWrapper MapRootFilter(Filter mainFilter)
+        {
+            if (mainFilter != null)
+            {
+                var filters = new List<FilterObject>();
+
+                foreach (var filter in mainFilter.Filters)
+                {
+                    FilterObject filterObject;
+                    if (filter.Logic == "or" || filter.Logic == "and")
+                    {
+                        var filter1 = filter.Filters.First();
+                        filterObject = Map(filter1);
+
+                        var filter2 = filter.Filters.Last();
+                        filterObject.Field2 = filter2.Field;
+                        filterObject.Operator2 = filter2.Operator;
+                        filterObject.Value2 = filter2.Value;
+                        filterObject.IgnoreCase2 = filter2.IgnoreCase;
+                        filterObject.Logic = filter.Logic;
+                    }
+                    else
+                    {
+                        filterObject = Map(filter);
+                    }
+
+                    filters.Add(filterObject);
+                }
+
+                return new FilterObjectWrapper(mainFilter.Logic, filters);
+            }
+
+            return null;
+        }
+
+        private static FilterObject Map(Filter filter)
+        {
+            return new FilterObject
+            {
+                Field1 = filter.Field,
+                Operator1 = filter.Operator,
+                Value1 = filter.Value,
+                IgnoreCase1 = filter.IgnoreCase,
+                Logic = filter.Logic
+            };
+        }
+
+        // "filter":{"logic":"and","filters":[{"field":"LastName","operator":"contains","value":"s"}]}
+        public static FilterObjectWrapper GetFilterObjects(string filterAsJson)
+        {
+            var parseResult = JsonConvert.DeserializeObject<Filter>(filterAsJson);
+
+            return parseResult != null ? MapRootFilter(parseResult) : null;
+        }
+
+        private static FilterObjectWrapper GetFilterObjects(NameValueCollection queryString, IList<string> filterKeys, string filterLogic)
         {
             var list = new List<FilterObject>();
 

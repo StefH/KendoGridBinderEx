@@ -1414,6 +1414,7 @@
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Employee\IndexPaulJame.cshtml" />
     <Content Include="Views\Employee\IndexApiGrouped.cshtml" />
+    <Content Include="Views\Employee\IndexApiJsonGrouped.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

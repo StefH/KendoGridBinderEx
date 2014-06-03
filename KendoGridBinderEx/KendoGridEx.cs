@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Containers;
+using KendoGridBinderEx.Containers.Json;
 using KendoGridBinderEx.Extensions;
 
 namespace KendoGridBinderEx
@@ -131,7 +132,7 @@ namespace KendoGridBinderEx
                 aggregatesExpression = string.Format(", new ({0}) as Aggregates", string.Join(", ", convertedAggregateObjects));
             }
 
-            var newSort = request.SortObjects.ToList();
+            var newSort = request.SortObjects != null ? request.SortObjects.ToList() : new List<SortObject>();
             bool hasSortObjects = newSort.Any();
 
             // List[0] = LastName as Last
@@ -200,9 +201,9 @@ namespace KendoGridBinderEx
             return list;
         }
 
-        private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups)
+        private void Process(IEnumerable<Group> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups)
         {
-            var groupObjects = groupByFields as IList<GroupObject> ?? groupByFields.ToList();
+            var groupObjects = groupByFields as IList<Group> ?? groupByFields.ToList();
             bool isLast = groupObjects.Count() == 1;
 
             var groupObject = groupObjects.First();
@@ -222,7 +223,7 @@ namespace KendoGridBinderEx
             }
             else
             {
-                var newGroupByFields = new List<GroupObject>(groupObjects);
+                var newGroupByFields = new List<Group>(groupObjects);
                 newGroupByFields.Remove(groupObject);
 
                 var newList = new List<KendoGroup>();

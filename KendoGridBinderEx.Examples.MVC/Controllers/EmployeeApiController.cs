@@ -24,6 +24,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return _employeeService.AsQueryable().ToKendoGridEx<Employee, Employee>(request);
         }
 
+        [HttpPost]
+        public KendoGridEx<Employee, Employee> GridWithJson(KendoGridApiRequest request)
+        {
+            return _employeeService.AsQueryable().ToKendoGridEx<Employee, Employee>(request);
+        }
+
         public IEnumerable<string> Get()
         {
             return new[] { "value1", "value2" };

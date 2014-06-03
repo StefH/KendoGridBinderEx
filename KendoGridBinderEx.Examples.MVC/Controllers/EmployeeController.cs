@@ -117,6 +117,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexApiJsonGrouped()
+        {
+            return View();
+        }
+
         public ActionResult IndexGrouped()
         {
             return View();

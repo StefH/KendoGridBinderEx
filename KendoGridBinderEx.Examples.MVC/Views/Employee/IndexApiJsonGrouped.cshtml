@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Employee Grid Grouped (Dynamic) Web Api";
+    ViewBag.Title = "Employee Grid Grouped (Dynamic) Api";
 }
 
-<h3>All Employees Grouped (Dynamic) WebApi</h3>
+<h3>All Employees Grouped (Dynamic) WebAPI Json</h3>
 Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
 <div id="gridWithGroup"></div>
 <br/>
@@ -23,11 +23,16 @@ Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" />
                 read: {
                     type: 'post',
                     dataType: 'json',
-                    url: '/api/EmployeeApi/Grid'
+                    url: '/api/EmployeeApi/GridWithJson'
                 },
                 parameterMap: function (options, operation) {
                     if (options.filter) {
                         KendoGrid_FixFilter(dataSourceWithGroup, options.filter);
+                    }
+
+                    if (operation === "read") {
+                        // convert the parameters to a json object
+                        return kendo.stringify(options);
                     }
 
                     return options;

@@ -20,7 +20,7 @@ namespace KendoGridBinderEx.UnitTests
     public class KendoGridExUnitTests
     {
         [Test]
-        public void Test_KendoGridModelBinder_Page()
+        public void TestParse_KendoGridModelBinder_Page()
         {
             var form = new NameValueCollection
             {
@@ -38,7 +38,7 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         [Test]
-        public void Test_KendoGridModelBinder_Page_Filter()
+        public void TestParse_KendoGridModelBinder_Page_Filter()
         {
             var form = new NameValueCollection
             {
@@ -76,8 +76,103 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual(null, filter1.LogicToken);
         }
 
+        //{"take":5,"skip":0,"page":1,"pageSize":5,"filter":{"logic":"and","filters":[{"field":"CompanyName","operator":"eq","value":"A"}]},"group":[]}
         [Test]
-        public void Test_KendoGridModelBinder_Page_Filter_DifferentOrder()
+        public void TestParseJson_KendoGridModelBinder_Page_Filter()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"group", "[]"},
+                {"filter", "{\"logic\":\"and\",\"filters\":[{\"field\":\"CompanyName\",\"operator\":\"eq\",\"value\":\"A\"}]}"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            CheckTake(gridRequest, 5);
+            CheckSkip(gridRequest, 0);
+            CheckPage(gridRequest, 1);
+            CheckPageSize(gridRequest, 5);
+
+            Assert.IsNotNull(gridRequest.FilterObjectWrapper);
+            Assert.AreEqual("and", gridRequest.FilterObjectWrapper.Logic);
+            Assert.AreEqual("&&", gridRequest.FilterObjectWrapper.LogicToken);
+
+            Assert.IsNotNull(gridRequest.FilterObjectWrapper.FilterObjects);
+            Assert.AreEqual(1, gridRequest.FilterObjectWrapper.FilterObjects.Count());
+
+            var filterObjects = gridRequest.FilterObjectWrapper.FilterObjects.ToList();
+            var filter1 = filterObjects[0];
+            Assert.AreEqual(false, filter1.IsConjugate);
+            Assert.AreEqual("CompanyName", filter1.Field1);
+            Assert.AreEqual("eq", filter1.Operator1);
+            Assert.AreEqual("A", filter1.Value1);
+            Assert.AreEqual(null, filter1.Logic);
+            Assert.AreEqual(null, filter1.LogicToken);
+        }
+
+        //{"take":5,"skip":0,"page":1,"pageSize":5,"sort":[{"field":"FirstName","dir":"asc","compare":null}],"filter":{"logic":"and","filters":[{"field":"CompanyName","operator":"eq","value":"A"}]},"group":[]}
+        [Test]
+        public void TestParseJson_KendoGridModelBinder_Page_Filter_Sort()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"group", "[]"},
+                {"filter", "{\"logic\":\"and\",\"filters\":[{\"logic\":\"or\",\"filters\":[{\"field\":\"LastName\",\"operator\":\"contains\",\"value\":\"s\"},{\"field\":\"LastName\",\"operator\":\"endswith\",\"value\":\"ll\"}]},{\"field\":\"FirstName\",\"operator\":\"startswith\",\"value\":\"n\"}]}"},
+                {"sort", "[{\"field\":\"FirstName\",\"dir\":\"asc\",\"compare\":null},{\"field\":\"LastName\",\"dir\":\"desc\",\"compare\":null}]"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            CheckTake(gridRequest, 5);
+            CheckSkip(gridRequest, 0);
+            CheckPage(gridRequest, 1);
+            CheckPageSize(gridRequest, 5);
+
+            Assert.IsNotNull(gridRequest.FilterObjectWrapper);
+            Assert.AreEqual("and", gridRequest.FilterObjectWrapper.Logic);
+            Assert.AreEqual("&&", gridRequest.FilterObjectWrapper.LogicToken);
+
+            Assert.IsNotNull(gridRequest.FilterObjectWrapper.FilterObjects);
+            Assert.AreEqual(2, gridRequest.FilterObjectWrapper.FilterObjects.Count());
+
+            var filterObjects = gridRequest.FilterObjectWrapper.FilterObjects.ToList();
+            var filter1 = filterObjects[0];
+            Assert.AreEqual(true, filter1.IsConjugate);
+            Assert.AreEqual("LastName", filter1.Field1);
+            Assert.AreEqual("contains", filter1.Operator1);
+            Assert.AreEqual("s", filter1.Value1);
+            Assert.AreEqual("LastName", filter1.Field2);
+            Assert.AreEqual("endswith", filter1.Operator2);
+            Assert.AreEqual("ll", filter1.Value2);
+
+            var filter2 = filterObjects[1];
+            Assert.AreEqual(false, filter2.IsConjugate);
+            Assert.AreEqual("FirstName", filter2.Field1);
+            Assert.AreEqual("startswith", filter2.Operator1);
+            Assert.AreEqual("n", filter2.Value1);
+            Assert.AreEqual(null, filter2.Logic);
+            Assert.AreEqual(null, filter2.LogicToken);
+
+            var sortObjects = gridRequest.SortObjects;
+            Assert.IsNotNull(sortObjects);
+
+            var sortList = sortObjects.ToList();
+            Assert.AreEqual("FirstName", sortList.First().Field);
+            Assert.AreEqual("asc", sortList.First().Direction);
+            Assert.AreEqual("LastName", sortList.Last().Field);
+            Assert.AreEqual("desc", sortList.Last().Direction);
+        }
+
+        [Test]
+        public void TestParse_KendoGridModelBinder_Page_Filter_DifferentOrder()
         {
             var form = new NameValueCollection
             {
@@ -116,7 +211,7 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         [Test]
-        public void Test_KendoGridModelBinder_Page_Filter_Sort()
+        public void TestParse_KendoGridModelBinder_Page_Filter_Sort()
         {
             var form = new NameValueCollection
             {
@@ -511,10 +606,10 @@ namespace KendoGridBinderEx.UnitTests
             var groups = kendoGrid.Groups as List<KendoGroup>;
             Assert.IsNotNull(groups);
 
-            /*
             Assert.AreEqual(10, groups.Count());
             Assert.AreEqual(employees.Count(), kendoGrid.Total);
 
+            /*
             var groupBySmith = groups.FirstOrDefault(g => g.value.ToString() == "Smith");
             Assert.IsNotNull(groupBySmith);
 
@@ -537,10 +632,80 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual(2003, aggregateSum.Value);
             */
         }
-        
+
+        [Test]
+        //{"take":5,"skip":0,"page":1,"pageSize":5,"group":[]}
+        public void Test_KendoGridModelBinder_Json_WithoutIncludes()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"group", "[]"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.IsNull(gridRequest.GroupObjects);
+
+            InitAutoMapper();
+            var employees = InitEmployees().AsQueryable();
+            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            Assert.IsNotNull(employeeVMs);
+
+            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            Assert.IsNotNull(kendoGrid);
+            Assert.IsNull(kendoGrid.Groups);
+            Assert.NotNull(kendoGrid.Data);
+
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+            Assert.IsNotNull(kendoGrid.Data);
+            Assert.AreEqual(5, kendoGrid.Data.Count());
+        }
+
+        [Test]
+        public void Test_KendoGridModelBinder_Json_Filter()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"group", "[]"},
+                //{"filter", "{\"logic\":\"and\",\"filters\":[{\"field\":\"CompanyName\",\"operator\":\"eq\",\"value\":\"A\"}]}"},
+                {"filter", "{\"logic\":\"and\",\"filters\":[{\"logic\":\"or\",\"filters\":[{\"field\":\"LastName\",\"operator\":\"contains\",\"value\":\"s\"},{\"field\":\"LastName\",\"operator\":\"endswith\",\"value\":\"ll\"}]},{\"field\":\"FirstName\",\"operator\":\"startswith\",\"value\":\"n\"}]}"},
+                {"sort", "[{\"field\":\"FirstName\",\"dir\":\"asc\",\"compare\":null},{\"field\":\"LastName\",\"dir\":\"desc\",\"compare\":null}]"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.IsNull(gridRequest.GroupObjects);
+
+            InitAutoMapper();
+            var employees = InitEmployees().AsQueryable();
+            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            Assert.IsNotNull(employeeVMs);
+
+            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            Assert.IsNotNull(kendoGrid);
+            Assert.IsNull(kendoGrid.Groups);
+            Assert.NotNull(kendoGrid.Data);
+
+            Assert.AreEqual(1, kendoGrid.Total);
+            Assert.IsNotNull(kendoGrid.Data);
+            Assert.AreEqual(1, kendoGrid.Data.Count());
+        }
+
         [Test]
         //{"take":5,"skip":0,"page":1,"pageSize":5,"group":[{"field":"LastName","dir":"asc","aggregates":[]}]}
-        public void Test_KendoGridModelBinder_JsonGroups_One_GroupBy_WithoutIncludes()
+        public void Test_KendoGridModelBinder_Json_One_GroupBy_WithoutIncludes()
         {
             var form = new NameValueCollection
             {
@@ -587,7 +752,7 @@ namespace KendoGridBinderEx.UnitTests
 
         [Test]
         //{"take":5,"skip":0,"page":1,"pageSize":5,"group":[{"field":"LastName","dir":"asc","aggregates":["field":"Number","aggregate":"Sum"]}]}
-        public void Test_KendoGridModelBinder_JsonGroups_One_GroupBy_One_Aggregate_Sum()
+        public void Test_KendoGridModelBinder_Json_One_GroupBy_One_Aggregate_Sum()
         {
             var form = new NameValueCollection
             {

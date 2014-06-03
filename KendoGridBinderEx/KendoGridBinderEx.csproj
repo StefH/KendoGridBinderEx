@@ -53,12 +53,14 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Linq.Dynamic">
       <HintPath>..\packages\System.Linq.Dynamic.1.0.0\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -88,10 +90,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperExtensions\AutoMapperUtils.cs" />
+    <Compile Include="Containers\Json\Filter.cs" />
+    <Compile Include="Containers\Json\GridRequest.cs" />
+    <Compile Include="Containers\Json\Sort.cs" />
     <Compile Include="KendoGridFilter.cs" />
     <Compile Include="Containers\FilterObject.cs" />
     <Compile Include="Containers\FilterObjectWrapper.cs" />
-    <Compile Include="Containers\GroupObject.cs" />
+    <Compile Include="Containers\Json\Group.cs" />
     <Compile Include="Containers\SortObject.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\ReflectionHelper.cs" />
@@ -99,6 +104,7 @@
     <Compile Include="ModelBinder\Api\KendoGridApiModelBinder.cs" />
     <Compile Include="KendoGridBaseRequest.cs" />
     <Compile Include="ModelBinder\FilterHelper.cs" />
+    <Compile Include="ModelBinder\GridHelper.cs" />
     <Compile Include="ModelBinder\GroupHelper.cs" />
     <Compile Include="ModelBinder\Mvc\KendoGridMvcRequest.cs" />
     <Compile Include="ModelBinder\SortHelper.cs" />

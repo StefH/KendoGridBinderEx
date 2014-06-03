@@ -1,19 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
-namespace KendoGridBinderEx.Containers
+namespace KendoGridBinderEx.Containers.Json
 {
-    public class GroupObject
+    /// <summary>
+    /// This class maps 1 : 1 to JSON Group
+    /// </summary>
+    [DataContract(Name = "group")]
+    public class Group
     {
+        [DataMember(Name = "field")]
         public string Field { get; set; }
+
+        [DataMember(Name = "dir")]
         public string Direction { get; set; }
 
+        [DataMember(Name = "aggregates")]
         public IEnumerable<AggregateObject> AggregateObjects { get; set; }
     }
 
+    /// <summary>
+    /// This class maps 1 : 1 to JSON Aggregate
+    /// </summary>
+    [DataContract(Name = "aggregate")]
     public class AggregateObject
     {
+        [DataMember(Name = "field")]
         public string Field { get; set; }
+
+        [DataMember(Name = "aggregate")]
         public string Aggregate { get; set; }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KendoGridBinderEx.Containers;
+using KendoGridBinderEx.Containers.Json;
 
 namespace KendoGridBinderEx
 {
@@ -13,6 +14,6 @@ namespace KendoGridBinderEx
 
         public FilterObjectWrapper FilterObjectWrapper { get; set; }
         public IEnumerable<SortObject> SortObjects { get; set; }
-        public IEnumerable<GroupObject> GroupObjects { get; set; }
+        public IEnumerable<Group> GroupObjects { get; set; }
     }
 }
