@@ -3,6 +3,7 @@ using System.Web.Http;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Unity;
+using KendoGridBinderEx.Examples.MVC.Custom;
 using KendoGridBinderEx.ModelBinder.Api;
 using KendoGridBinderEx.QueryableExtensions;
 using Microsoft.Practices.Unity;
@@ -26,6 +27,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         [HttpPost]
         public KendoGridEx<Employee, Employee> GridWithJson(KendoGridApiRequest request)
+        {
+            return _employeeService.AsQueryable().ToKendoGridEx<Employee, Employee>(request);
+        }
+
+        [HttpPost]
+        public KendoGridEx<Employee, Employee> GridWithJsonCustom(CustomApiRequest request)
         {
             return _employeeService.AsQueryable().ToKendoGridEx<Employee, Employee>(request);
         }

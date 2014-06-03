@@ -10,6 +10,7 @@
       <mvcSiteMapNode title="List Grouping (Dynamic)" action="IndexGrouped"/>
       <mvcSiteMapNode title="List Grouping (Dynamic) WebApi" action="IndexApiGrouped"/>
       <mvcSiteMapNode title="List Grouping (Dynamic) WebApi + Json" action="IndexApiJsonGrouped"/>
+      <mvcSiteMapNode title="List Grouping (Dynamic) WebApi + CustomJson" action="IndexApiJsonCustom"/>
       <mvcSiteMapNode title="List Grouping (Fixed)" action="IndexGroupedFixed"/>
       <mvcSiteMapNode title="List Managers" action="IndexManagers"/>
       <mvcSiteMapNode title="Create Employee" action="Create"/>

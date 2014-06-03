@@ -3,10 +3,12 @@ using System.Collections.Specialized;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
+using KendoGridBinderEx.ModelBinder;
+using Newtonsoft.Json;
 
-namespace KendoGridBinderEx.ModelBinder.Api
+namespace KendoGridBinderEx.Examples.MVC.Custom
 {
-    public class KendoGridApiModelBinder : IModelBinder
+    public class CustomApiModelBinder : IModelBinder
     {
         private NameValueCollection _queryString;
 
@@ -26,13 +28,13 @@ namespace KendoGridBinderEx.ModelBinder.Api
             try
             {
                 // Try to parse as Json
-                bindingContext.Model = GridHelper.Parse(content);
+                bindingContext.Model = Parse(content);
             }
             catch (Exception)
             {
                 // Parse the QueryString
                 _queryString = GetQueryString(content);
-                bindingContext.Model = GridHelper.Parse<KendoGridApiRequest>(_queryString);
+                bindingContext.Model = GridHelper.Parse<CustomApiRequest>(_queryString);
             }
 
             return true;
@@ -41,6 +43,24 @@ namespace KendoGridBinderEx.ModelBinder.Api
         private NameValueCollection GetQueryString(string content)
         {
             return HttpUtility.ParseQueryString(content);
+        }
+
+        public static CustomApiRequest Parse(string jsonRequest)
+        {
+            var kendoJsonRequest = JsonConvert.DeserializeObject<CustomGridRequest>(jsonRequest);
+
+            return new CustomApiRequest
+            {
+                Custom = kendoJsonRequest.Custom,
+                Take = kendoJsonRequest.Take,
+                Page = kendoJsonRequest.Page,
+                PageSize = kendoJsonRequest.PageSize,
+                Skip = kendoJsonRequest.Skip,
+                Logic = kendoJsonRequest.Logic,
+                GroupObjects = GroupHelper.Map(kendoJsonRequest.Groups),
+                FilterObjectWrapper = FilterHelper.MapRootFilter(kendoJsonRequest.Filter),
+                SortObjects = SortHelper.Map(kendoJsonRequest.Sort)
+            };
         }
     }
 }

@@ -120,6 +120,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.1.0\lib\net45\System.Web.Cors.dll</HintPath>
@@ -211,6 +212,9 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="CustomModelBinders.cs" />
+    <Compile Include="Custom\CustomApiModelBinder.cs" />
+    <Compile Include="Custom\CustomApiRequest.cs" />
+    <Compile Include="Custom\CustomGridRequest.cs" />
     <Compile Include="Extensions\KendoGridExtensions.cs" />
     <Compile Include="Models\RoleVM.cs" />
     <Compile Include="Models\LoginUserVM.cs" />
@@ -1415,6 +1419,7 @@
     <Content Include="Views\Employee\IndexPaulJame.cshtml" />
     <Content Include="Views\Employee\IndexApiGrouped.cshtml" />
     <Content Include="Views\Employee\IndexApiJsonGrouped.cshtml" />
+    <Content Include="Views\Employee\IndexApiJsonCustom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
