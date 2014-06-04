@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
+using KendoGridBinderEx.Extensions;
 using KendoGridBinderEx.ModelBinder;
 using Newtonsoft.Json;
 
@@ -34,7 +35,7 @@ namespace KendoGridBinderEx.Examples.MVC.Custom
             {
                 // Parse the QueryString
                 _queryString = GetQueryString(content);
-                bindingContext.Model = GridHelper.Parse<CustomApiRequest>(_queryString);
+                bindingContext.Model = Parse(_queryString);
             }
 
             return true;
@@ -45,7 +46,7 @@ namespace KendoGridBinderEx.Examples.MVC.Custom
             return HttpUtility.ParseQueryString(content);
         }
 
-        public static CustomApiRequest Parse(string jsonRequest)
+        private CustomApiRequest Parse(string jsonRequest)
         {
             var kendoJsonRequest = JsonConvert.DeserializeObject<CustomGridRequest>(jsonRequest);
 
@@ -61,6 +62,14 @@ namespace KendoGridBinderEx.Examples.MVC.Custom
                 FilterObjectWrapper = FilterHelper.MapRootFilter(kendoJsonRequest.Filter),
                 SortObjects = SortHelper.Map(kendoJsonRequest.Sort)
             };
+        }
+
+        private CustomApiRequest Parse(NameValueCollection queryString)
+        {
+            var request = GridHelper.Parse<CustomApiRequest>(queryString);
+            request.Custom = queryString.GetQueryValue("custom", (string)null);
+
+            return request;
         }
     }
 }

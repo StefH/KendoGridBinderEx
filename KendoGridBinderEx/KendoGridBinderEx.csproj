@@ -93,6 +93,7 @@
     <Compile Include="Containers\Json\Filter.cs" />
     <Compile Include="Containers\Json\GridRequest.cs" />
     <Compile Include="Containers\Json\Sort.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
     <Compile Include="KendoGridFilter.cs" />
     <Compile Include="Containers\FilterObject.cs" />
     <Compile Include="Containers\FilterObjectWrapper.cs" />
