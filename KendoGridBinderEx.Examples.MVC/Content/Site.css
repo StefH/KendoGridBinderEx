@@ -326,6 +326,11 @@ input[type="checkbox"].input-validation-error
     background-image: url('/Content/Images/search.gif');
 }
 
+.buttonAccept > span.ui-icon-add
+{
+    background-image: url('/Content/Images/accept.png');
+}
+
 .buttonRefresh > span.ui-icon-add
 {
     background-image: url('/Content/Images/arrow_refresh.png');

@@ -3,8 +3,11 @@
 }
 
 <h3>All Employees</h3>
-Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /><br/>
-LastName contains : <input id="txtLastName" type="text" /><button id="buttonSearch" class="text-button buttonSearch">Search</button>
+<ul>
+    <li>Multi Column Sorting : <input id="multi" type="checkbox" checked="checked" /></li>
+    <li>LastName contains : <input id="txtLastName" type="text" /><button id="buttonSearch" class="text-button buttonSearch">Search</button></li>
+    <li>Firstname contains : <input id="txtFirstName" type="text" /><button id="buttonAccept" class="text-button buttonAccept">Set Filter</button></li>
+</ul>
 <br /><button id="buttonRefresh" class="text-button buttonRefresh">Refresh</button>
 <div id="grid"></div>
 <br/>
@@ -67,8 +70,24 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
             if (lastname) {
                 filters.push({ field: "LastName", operator: "contains", value: lastname });
             }
-            
-            $("#grid").data("kendoGrid").dataSource.filter(filters);
+
+            if (filters.length > 0) {
+                $("#grid").data("kendoGrid").dataSource.filter(filters);
+            }
+        });
+
+        $("#buttonAccept").click(function () {
+            var filters = new Array();
+
+            var firstname = $("#txtFirstName").val();
+            if (firstname) {
+                filters.push({ field: "First", operator: "contains", value: firstname });
+            }
+
+            if (filters.length > 0) {
+                $("#grid").data("kendoGrid").dataSource._filter = { logic: "and", filters: filters };
+                $("#grid").data("kendoGrid").refresh();
+            }
         });
 
         $("#buttonRefresh").click(function () {
@@ -82,6 +101,7 @@ LastName contains : <input id="txtLastName" type="text" /><button id="buttonSear
             serverSorting: true,
             serverFiltering: true,
             pageSize: 5,
+            // filter: { logic: "and", filters: [{ field: "LastName", operator: "contains", value: $("#txtLastName").val() }] },
             transport: {
                 read: {
                     type: 'post',

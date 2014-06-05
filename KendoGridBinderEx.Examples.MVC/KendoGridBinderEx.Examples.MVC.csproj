@@ -940,6 +940,7 @@
     <Content Include="Scripts\kendo\2013.3.1119\kendo.view.min.js" />
     <Content Include="Scripts\kendo\2013.3.1119\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2013.3.1119\kendo.window.min.js" />
+    <Content Include="Scripts\kendo\2014.1.528\kendo.all.min.js" />
     <Content Include="Scripts\kendo\2014.1.528\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
