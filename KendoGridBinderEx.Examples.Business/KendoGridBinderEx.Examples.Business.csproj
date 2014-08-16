@@ -59,9 +59,9 @@
     <Reference Include="PropertyTranslator">
       <HintPath>..\packages\Linq.PropertyTranslator.1.0.0.0\lib\net40\PropertyTranslator.dll</HintPath>
     </Reference>
-    <Reference Include="QueryInterceptorAsync, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="QueryInterceptorAsync, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\QueryInterceptorAsync.dll</HintPath>
+      <HintPath>..\packages\QueryInterceptorAsync.1.0\lib\net45\QueryInterceptorAsync.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -141,7 +141,6 @@
     <Compile Include="Validation\ProductValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="QueryInterceptorAsync.dll" />
     <None Include="App.config" />
     <Content Include="Database\Scripts\Add indexes.sql" />
     <Content Include="GlobalResourcesLiterals_Business.tt">
