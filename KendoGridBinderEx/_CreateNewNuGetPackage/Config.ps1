@@ -20,7 +20,7 @@ $versionNumber = ""
 
 # Specify any Release Notes for this package. 
 # These will only be included in the package if you have a .nuspec file for the project in the same directory as the project file.
-$releaseNotes = "Added KendoGridFilter (JSON)"
+$releaseNotes = ""
 
 # Specify a specific Configuration and/or Platform to only create a NuGet package when building the project with this Configuration and/or Platform.
 #	e.g. $configuration = "Release"
