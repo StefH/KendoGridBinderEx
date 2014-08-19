@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("KendoGridBinderEx")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel <>Entity")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Stef Heyenrath")]
 [assembly: AssemblyProduct("KendoGridBinderEx")]
-[assembly: AssemblyCopyright("Copyright © Stef Heyenrath 2013,2014")]
+[assembly: AssemblyCopyright("Copyright © Stef Heyenrath 2013 & 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
