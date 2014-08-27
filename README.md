@@ -9,7 +9,7 @@ http://kendogridbinderex.apphb.com
 ## Action Method
 ```csharp
 [HttpPost]
-public JsonResult Grid(KendoGridRequest request)
+public JsonResult Grid(KendoGridMvcRequest request)
 {
     var employees = new List<Employee>
     {
@@ -47,8 +47,8 @@ public JsonResult Grid(KendoGridRequest request)
             }
         },
         schema: {
-            data: 'data',
-            total: 'total',
+            data: 'Data',
+            total: 'Total',
             model: {
                 id: 'Id',
                 fields: {
