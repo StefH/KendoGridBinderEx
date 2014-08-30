@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
-    [Table("KendoGrid_Country")]
     public class Country : Entity
     {
         public string Code { get; set; }
 
         public string Name { get; set; }
+
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

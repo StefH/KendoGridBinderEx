@@ -4,11 +4,11 @@ using System.Data.Entity.Infrastructure;
 
 namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWorkImpl : IUnitOfWork, IDisposable
     {
         private readonly DbContext _dbContext;
 
-        public UnitOfWork(DbContext dbContext)
+        public UnitOfWorkImpl(DbContext dbContext)
         {
             _dbContext = dbContext;
         }

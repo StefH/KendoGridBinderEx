@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
@@ -6,5 +7,7 @@ namespace KendoGridBinderEx.Examples.Business.Entities
     public class MainCompany : Entity
     {
         public string Name { get; set; }
+
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

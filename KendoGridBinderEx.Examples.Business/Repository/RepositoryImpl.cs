@@ -1,4 +1,5 @@
-﻿using KendoGridBinderEx.Examples.Business.QueryContext;
+﻿using System.Reflection;
+using KendoGridBinderEx.Examples.Business.QueryContext;
 using PropertyTranslator;
 using QueryInterceptor;
 using System;
@@ -12,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace KendoGridBinderEx.Examples.Business.Repository
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class RepositoryImpl<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly IRepositoryConfig _config;
         private readonly IObjectSet<TEntity> _objectSet;
         private readonly ObjectContext _objectContext;
 
-        public Repository(DbContext dbContext, IRepositoryConfig config)
+        public RepositoryImpl(DbContext dbContext, IRepositoryConfig config)
         {
             _objectContext = (dbContext as IObjectContextAdapter).ObjectContext;
             _config = config;

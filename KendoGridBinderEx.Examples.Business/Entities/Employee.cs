@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
-    [Table("KendoGrid_Employee")]
     public class Employee : Entity
     {
         private static readonly CompiledExpressionMap<Employee, bool> IsManagerExpr =
@@ -26,13 +25,21 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public DateTime HireDate { get; set; }
 
-        public Company Company { get; set; }
+        public long? CompanyId { get; set; }
 
-        public Country Country { get; set; }
+        public long? CountryId { get; set; }
+        
+        public long? FunctionId { get; set; }
+        
+        public long? SubFunctionId { get; set; }
 
-        public Function Function { get; set; }
+        public virtual Company Company { get; set; }
 
-        public SubFunction SubFunction { get; set; }
+        public virtual Country Country { get; set; }
+
+        public virtual Function Function { get; set; }
+
+        public virtual SubFunction SubFunction { get; set; }
 
         public int? Assigned { get; set; }
 

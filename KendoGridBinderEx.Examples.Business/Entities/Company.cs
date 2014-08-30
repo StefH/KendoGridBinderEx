@@ -1,12 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
-    [Table("KendoGrid_Company")]
     public class Company : Entity
     {
         public string Name { get; set; }
 
-        public MainCompany MainCompany { get; set; }
+        public long? MainCompanyId { get; set; }
+
+        public virtual MainCompany MainCompany { get; set; }
+
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

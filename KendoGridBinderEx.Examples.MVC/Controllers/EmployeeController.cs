@@ -161,7 +161,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 {
                     excel.Workbook.Worksheets.Add("Employees");
                     var ws = excel.Workbook.Worksheets[1];
-                    ws.Cells.LoadFromCollection(results,true);
+                    ws.Cells.LoadFromCollection(results, true);
                     ws.Cells.AutoFitColumns();
 
                     excel.Save();
@@ -185,7 +185,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             string filename = string.Format("{0}.xlsx", title);
 
             // Remove the spreadsheet from session.
-            Session.Remove(title);
+            Session.Remove(guid);
 
             // Return the spreadsheet.
             Response.Buffer = true;

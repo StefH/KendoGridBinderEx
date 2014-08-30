@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -7,31 +8,34 @@ using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using KendoGridBinderEx.Examples.Business.Entities;
-using KendoGridBinderEx.Examples.Business.Entities.Mapping;
 using NLipsum.Core;
 
 namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
     public class MyDataContext : DbContext
     {
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Function> Functions { get; set; }
-        public DbSet<MainCompany> MainCompanies { get; set; }
-        public DbSet<OU> OUs { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<SubFunction> SubFunctions { get; set; }
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<Company> Companies { get; set; }
+
+        public DbSet<MainCompany> MainCompanies { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Function> Functions { get; set; }
+
+        public DbSet<SubFunction> SubFunctions { get; set; }
+
+        public DbSet<OU> OUs { get; set; }
 
         public MyDataContext(MyDataContextConfiguration config)
             : base(config.NameOrConnectionString)
-        {
-            Init(config);
-        }
-
-        private void Init(MyDataContextConfiguration config)
         {
             if (config.InitDatabase)
             {
@@ -70,16 +74,15 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new CompanyMap());
-            modelBuilder.Configurations.Add(new CountryMap());
-            modelBuilder.Configurations.Add(new EmployeeMap());
-            modelBuilder.Configurations.Add(new FunctionMap());
-            modelBuilder.Configurations.Add(new MainCompanyMap());
-            modelBuilder.Configurations.Add(new OUMap());
-            modelBuilder.Configurations.Add(new ProductMap());
-            modelBuilder.Configurations.Add(new RoleMap());
-            modelBuilder.Configurations.Add(new SubFunctionMap());
-            modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Entity<User>()
+              .HasMany<Role>(r => r.Roles)
+              .WithMany(u => u.Users)
+              .Map(m =>
+              {
+                  m.ToTable("KendoGrid_UserRoles");
+                  m.MapLeftKey("UserId");
+                  m.MapRightKey("RoleId");
+              });
         }
     }
 

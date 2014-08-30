@@ -6,7 +6,6 @@ using PropertyTranslator;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {
-    [Table("KendoGrid_User")]
     public class User : Entity
     {
         #region CompiledExpressionMaps
@@ -26,8 +25,7 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public string EmailAddress { get; set; }
 
-        [InverseProperty("Users")]
-        public virtual List<Role> Roles { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
 
         [NotMapped]
         public bool IsAdministrator

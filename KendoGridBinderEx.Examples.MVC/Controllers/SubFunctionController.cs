@@ -27,6 +27,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
             Mapper.CreateMap<SubFunctionVM, SubFunction>()
                 .ForMember(e => e.Function, opt => opt.Ignore())
+                .ForMember(e => e.Employees, opt => opt.Ignore())
                 ;
         }
 
