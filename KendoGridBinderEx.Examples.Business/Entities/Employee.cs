@@ -33,13 +33,13 @@ namespace KendoGridBinderEx.Examples.Business.Entities
         
         public long? SubFunctionId { get; set; }
 
-        public virtual Company Company { get; set; }
+        public Company Company { get; set; }
 
-        public virtual Country Country { get; set; }
+        public Country Country { get; set; }
 
-        public virtual Function Function { get; set; }
+        public Function Function { get; set; }
 
-        public virtual SubFunction SubFunction { get; set; }
+        public SubFunction SubFunction { get; set; }
 
         public int? Assigned { get; set; }
 

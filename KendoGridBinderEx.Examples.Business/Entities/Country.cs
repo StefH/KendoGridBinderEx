@@ -8,6 +8,6 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public string Name { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }

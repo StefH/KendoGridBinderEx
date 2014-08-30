@@ -8,8 +8,8 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public string Name { get; set; }
 
-        public virtual List<SubFunction> SubFunctions { get; set; }
+        public ICollection<SubFunction> SubFunctions { get; set; }
 
-        public virtual List<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }

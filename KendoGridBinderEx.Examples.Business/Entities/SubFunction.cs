@@ -10,8 +10,8 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public long? FunctionId { get; set; }
 
-        public virtual Function Function { get; set; }
+        public Function Function { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }

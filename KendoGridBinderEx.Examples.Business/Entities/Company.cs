@@ -8,8 +8,8 @@ namespace KendoGridBinderEx.Examples.Business.Entities
 
         public long? MainCompanyId { get; set; }
 
-        public virtual MainCompany MainCompany { get; set; }
+        public MainCompany MainCompany { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }
