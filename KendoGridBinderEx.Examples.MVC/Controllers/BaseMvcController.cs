@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Text;
 using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -312,6 +313,39 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             var results = GetAutoComplete(request);
             return Json(results, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region JsonResult
+        protected new JsonResult Json(object data, JsonRequestBehavior behavior)
+        {
+            return new JsonNetResult
+            {
+                //ContentType = "application/json",
+                Data = data,
+                JsonRequestBehavior = behavior
+            };
+        }
+
+        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding)
+        {
+            return new JsonNetResult
+            {
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                Data = data,
+            };
+        }
+
+        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
+        {
+            return new JsonNetResult
+            {
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                Data = data,
+                JsonRequestBehavior = behavior
+            };
         }
         #endregion
     }

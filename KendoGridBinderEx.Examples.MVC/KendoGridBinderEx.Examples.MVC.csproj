@@ -210,6 +210,7 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmployeeApiController.cs" />
+    <Compile Include="Controllers\JsonNetResult.cs" />
     <Compile Include="Controllers\MainCompanyController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
