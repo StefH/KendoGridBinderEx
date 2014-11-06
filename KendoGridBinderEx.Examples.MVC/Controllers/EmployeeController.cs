@@ -132,6 +132,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexGrouped2()
+        {
+            return View();
+        }
+
         public ActionResult IndexGroupedFixed()
         {
             return View();
