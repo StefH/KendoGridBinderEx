@@ -318,27 +318,27 @@ input[type="checkbox"].input-validation-error
 
 .buttonAdd > span.ui-icon-add
 {
-    background-image: url('/Content/Images/add.png');
+    background-image: url('Images/add.png');
 }
 
 .buttonSearch > span.ui-icon-add
 {
-    background-image: url('/Content/Images/search.gif');
+    background-image: url('Images/search.gif');
 }
 
 .buttonAccept > span.ui-icon-add
 {
-    background-image: url('/Content/Images/accept.png');
+    background-image: url('Images/accept.png');
 }
 
 .buttonRefresh > span.ui-icon-add
 {
-    background-image: url('/Content/Images/arrow_refresh.png');
+    background-image: url('Images/arrow_refresh.png');
 }
 
 .buttonExcel > span.ui-icon-add
 {
-    background-image: url('/Content/Images/excel_16x16.png');
+    background-image: url('Images/excel_16x16.png');
 }
 
 table, td
