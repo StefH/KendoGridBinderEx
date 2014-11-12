@@ -658,7 +658,7 @@ namespace KendoGridBinderEx.UnitTests
             };
 
             var gridRequest = SetupBinder(form, null);
-            Assert.AreEqual(2, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.Count());
             Assert.AreEqual(1, gridRequest.GroupObjects.First().AggregateObjects.Count());
             Assert.AreEqual(1, gridRequest.GroupObjects.Last().AggregateObjects.Count());
 
