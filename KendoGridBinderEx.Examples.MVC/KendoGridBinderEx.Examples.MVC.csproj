@@ -104,9 +104,12 @@
       <HintPath>..\packages\MiniProfiler.EF6.3.0.11\lib\net40\MiniProfiler.EntityFramework6.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MvcSiteMapProvider">
-      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.11\lib\net45\MvcSiteMapProvider.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MvcSiteMapProvider, Version=4.6.17.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.17\lib\net45\MvcSiteMapProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.17\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -521,7 +524,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalResourcesLiterals_MVC.cs</LastGenOutput>
     </Content>
-    <Content Include="MvcSiteMapProvider_Temp_ReadMe.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
@@ -989,14 +991,6 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Unity\Unity.Mvc4.README.txt" />
-    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1047,14 +1041,6 @@
     <Content Include="Views\Employee\IndexApiGrouped.cshtml" />
     <Content Include="Views\Employee\IndexApiJsonGrouped.cshtml" />
     <Content Include="Views\Employee\IndexApiJsonCustom.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.view.min.js.map" />
@@ -1122,6 +1108,14 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.autocomplete.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
     <Content Include="Views\Employee\IndexGrouped2.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
