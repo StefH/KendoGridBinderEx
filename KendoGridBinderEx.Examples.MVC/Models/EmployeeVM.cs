@@ -1,8 +1,8 @@
-﻿using KendoGridBinderEx.Examples.Business;
-using KendoGridBinderEx.Examples.Business.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using KendoGridBinderEx.Examples.Business;
+using KendoGridBinderEx.Examples.Business.Entities;
 
 namespace KendoGridBinderEx.Examples.MVC.Models
 {
@@ -16,11 +16,11 @@ namespace KendoGridBinderEx.Examples.MVC.Models
 
         public string Full { get; set; }
 
-        public long FunctionId { get; set; }
+        public long? FunctionId { get; set; }
 
         public string FunctionCode { get; set; }
 
-        public long SubFunctionId { get; set; }
+        public long? SubFunctionId { get; set; }
 
         public string SubFunctionCode { get; set; }
 
