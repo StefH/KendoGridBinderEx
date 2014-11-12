@@ -1,19 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation.Mvc;
 using KendoGridBinderEx.Examples.Business.Unity;
 using KendoGridBinderEx.Examples.MVC.Unity;
 using StackExchange.Profiling;
 using StackExchange.Profiling.EntityFramework6;
 using StackExchange.Profiling.SqlFormatters;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Web;
+using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
 
 namespace KendoGridBinderEx.Examples.MVC
 {
@@ -25,7 +24,7 @@ namespace KendoGridBinderEx.Examples.MVC
         {
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configuration.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+            //GlobalConfiguration.Configuration.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
