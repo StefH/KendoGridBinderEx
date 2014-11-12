@@ -154,7 +154,7 @@
 
 	.NOTES
 	Author: Daniel Schroeder
-	Version: 1.5.2
+	Version: 1.5.4
 	
 	This script is designed to be called from PowerShell or ran directly from Windows Explorer.
 	If this script is ran without the $NuSpecFilePath, $ProjectFilePath, and $PackageFilePath parameters, it will automatically search for a .nuspec, project, or package file in the 
@@ -297,7 +297,7 @@ $TF_EXE_KEYWORD_IN_PENDING_CHANGES_MESSAGE = 'change\(s\)'	# Escape regular expr
 $NUGET_EXE_SUCCESSFULLY_CREATED_PACKAGE_MESSAGE_REGEX = [regex] "(?i)(Successfully created package '(?<FilePath>.*?)'.)"
 $NUGET_EXE_SUCCESSFULLY_PUSHED_PACKAGE_MESSAGE = 'Your package was pushed.'
 $NUGET_EXE_SUCCESSFULLY_SAVED_API_KEY_MESSAGE = "The API Key '{0}' was saved for '{1}'."
-$NUGET_EXE_SUCCESSFULLY_UPDATED_TO_NEW_VERSION = "Update successful."
+$NUGET_EXE_SUCCESSFULLY_UPDATED_TO_NEW_VERSION = 'Update successful.'
 
 #==========================================================
 # Define functions used by the script.
@@ -359,8 +359,9 @@ function Update-NuSpecFile
 		throw ("An error occurred loading the nuspec xml file '{0}': {1}" -f $NuSpecFilePath, $_.Exception.Message)
 	}
 
-    # Get the NuSpec file contents before we make any changes to it, so we can determine if we did in fact make changes to it later (and undo the checkout from TFS if we didn't).
+    # Get the NuSpec file contents and Last Write Time before we make any changes to it, so we can determine if we did in fact make changes to it later (and undo the checkout from TFS if we didn't).
     $script:nuSpecFileContentsBeforeCheckout = [System.IO.File]::ReadAllText($NuSpecFilePath)
+	$script:nuSpecLastWriteTimeBeforeCheckout = [System.IO.File]::GetLastWriteTime($NuSpecFilePath)
 
 	# Try and check the file out of TFS.
     $script:nuSpecFileWasAlreadyCheckedOut = Tfs-IsItemCheckedOut -Path $NuSpecFilePath
@@ -605,113 +606,113 @@ function Read-InputBoxDialog([string]$Message, [string]$WindowTitle, [string]$De
 function Read-MultiLineInputBoxDialog([string]$Message, [string]$WindowTitle, [string]$DefaultText)
 {
 <#
-	.SYNOPSIS
-	Prompts the user with a multi-line input box and returns the text they enter, or null if they cancelled the prompt.
-	
-	.DESCRIPTION
-	Prompts the user with a multi-line input box and returns the text they enter, or null if they cancelled the prompt.
-	
-	.PARAMETER Message
-	The message to display to the user explaining what text we are asking them to enter.
-	
-	.PARAMETER WindowTitle
-	The text to display on the prompt window's title.
-	
-	.PARAMETER DefaultText
-	The default text to show in the input box.
-	
-	.EXAMPLE
-	$userText = Read-MultiLineInputDialog "Input some text please:" "Get User's Input"
-	
-	Shows how to create a simple prompt to get mutli-line input from a user.
-	
-	.EXAMPLE
-	# Setup the default multi-line address to fill the input box with.
-	$defaultAddress = @'
-	John Doe
-	123 St.
-	Some Town, SK, Canada
-	A1B 2C3
-	'@
-	
-	$address = Read-MultiLineInputDialog "Please enter your full address, including name, street, city, and postal code:" "Get User's Address" $defaultAddress
-	if ($address -eq $null)
-	{
-		Write-Error "You pressed the Cancel button on the multi-line input box."
-	}
-	
-	Prompts the user for their address and stores it in a variable, pre-filling the input box with a default multi-line address.
-	If the user pressed the Cancel button an error is written to the console.
-	
-	.EXAMPLE
-	$inputText = Read-MultiLineInputDialog -Message "If you have a really long message you can break it apart`nover two lines with the powershell newline character:" -WindowTitle "Window Title" -DefaultText "Default text for the input box."
-	
-	Shows how to break the second parameter (Message) up onto two lines using the powershell newline character (`n).
-	If you break the message up into more than two lines the extra lines will be hidden behind or show ontop of the TextBox.
-	
-	.NOTES
-	Name: Show-MultiLineInputDialog
-	Author: Daniel Schroeder (originally based on the code shown at http://technet.microsoft.com/en-us/library/ff730941.aspx)
-	Version: 1.0
+    .SYNOPSIS
+    Prompts the user with a multi-line input box and returns the text they enter, or null if they cancelled the prompt.
+     
+    .DESCRIPTION
+    Prompts the user with a multi-line input box and returns the text they enter, or null if they cancelled the prompt.
+     
+    .PARAMETER Message
+    The message to display to the user explaining what text we are asking them to enter.
+     
+    .PARAMETER WindowTitle
+    The text to display on the prompt window's title.
+     
+    .PARAMETER DefaultText
+    The default text to show in the input box.
+     
+    .EXAMPLE
+    $userText = Read-MultiLineInputDialog "Input some text please:" "Get User's Input"
+     
+    Shows how to create a simple prompt to get mutli-line input from a user.
+     
+    .EXAMPLE
+    # Setup the default multi-line address to fill the input box with.
+    $defaultAddress = @'
+    John Doe
+    123 St.
+    Some Town, SK, Canada
+    A1B 2C3
+    '@
+     
+    $address = Read-MultiLineInputDialog "Please enter your full address, including name, street, city, and postal code:" "Get User's Address" $defaultAddress
+    if ($address -eq $null)
+    {
+        Write-Error "You pressed the Cancel button on the multi-line input box."
+    }
+     
+    Prompts the user for their address and stores it in a variable, pre-filling the input box with a default multi-line address.
+    If the user pressed the Cancel button an error is written to the console.
+     
+    .EXAMPLE
+    $inputText = Read-MultiLineInputDialog -Message "If you have a really long message you can break it apart`nover two lines with the powershell newline character:" -WindowTitle "Window Title" -DefaultText "Default text for the input box."
+     
+    Shows how to break the second parameter (Message) up onto two lines using the powershell newline character (`n).
+    If you break the message up into more than two lines the extra lines will be hidden behind or show ontop of the TextBox.
+     
+    .NOTES
+    Name: Show-MultiLineInputDialog
+    Author: Daniel Schroeder (originally based on the code shown at http://technet.microsoft.com/en-us/library/ff730941.aspx)
+    Version: 1.0
 #>
-	Add-Type -AssemblyName System.Drawing
-	Add-Type -AssemblyName System.Windows.Forms
-	
-	# Create the Label.
-	$label = New-Object System.Windows.Forms.Label
-	$label.Location = New-Object System.Drawing.Size(10,10) 
-	$label.Size = New-Object System.Drawing.Size(280,20)
-	$label.AutoSize = $true
-	$label.Text = $Message
-	
-	# Create the TextBox used to capture the user's text.
-	$textBox = New-Object System.Windows.Forms.TextBox 
-	$textBox.Location = New-Object System.Drawing.Size(10,40) 
-	$textBox.Size = New-Object System.Drawing.Size(575,200)
-	$textBox.AcceptsReturn = $true
-	$textBox.AcceptsTab = $false
-	$textBox.Multiline = $true
-	$textBox.ScrollBars = 'Both'
-	$textBox.Text = $DefaultText
-	
-	# Create the OK button.
-	$okButton = New-Object System.Windows.Forms.Button
-	$okButton.Location = New-Object System.Drawing.Size(510,250)
-	$okButton.Size = New-Object System.Drawing.Size(75,25)
-	$okButton.Text = "OK"
-	$okButton.Add_Click({ $form.Tag = $textBox.Text; $form.Close() })
-	
-	# Create the Cancel button.
-	$cancelButton = New-Object System.Windows.Forms.Button
-	$cancelButton.Location = New-Object System.Drawing.Size(415,250)
-	$cancelButton.Size = New-Object System.Drawing.Size(75,25)
-	$cancelButton.Text = "Cancel"
-	$cancelButton.Add_Click({ $form.Tag = $null; $form.Close() })
-	
-	# Create the form.
-	$form = New-Object System.Windows.Forms.Form 
-	$form.Text = $WindowTitle
-	$form.Size = New-Object System.Drawing.Size(610,320)
-	$form.FormBorderStyle = 'FixedSingle'
-	$form.StartPosition = "CenterScreen"
-	$form.AutoSizeMode = 'GrowAndShrink'
-	$form.Topmost = $True
-	$form.AcceptButton = $okButton
-	$form.CancelButton = $cancelButton
-	$form.ShowInTaskbar = $true
-	
-	# Add all of the controls to the form.
-	$form.Controls.Add($label)
-	$form.Controls.Add($textBox)
-	$form.Controls.Add($okButton)
-	$form.Controls.Add($cancelButton)
-	
-	# Initialize and show the form.
-	$form.Add_Shown({$form.Activate()})
-	$form.ShowDialog() > $null	# Trash the text of the button that was clicked.
-	
-	# Return the text that the user entered.
-	return $form.Tag
+    Add-Type -AssemblyName System.Drawing
+    Add-Type -AssemblyName System.Windows.Forms
+     
+    # Create the Label.
+    $label = New-Object System.Windows.Forms.Label
+    $label.Location = New-Object System.Drawing.Size(10,10)
+    $label.Size = New-Object System.Drawing.Size(280,20)
+    $label.AutoSize = $true
+    $label.Text = $Message
+     
+    # Create the TextBox used to capture the user's text.
+    $textBox = New-Object System.Windows.Forms.TextBox
+    $textBox.Location = New-Object System.Drawing.Size(10,40)
+    $textBox.Size = New-Object System.Drawing.Size(575,200)
+    $textBox.AcceptsReturn = $true
+    $textBox.AcceptsTab = $false
+    $textBox.Multiline = $true
+    $textBox.ScrollBars = 'Both'
+    $textBox.Text = $DefaultText
+     
+    # Create the OK button.
+    $okButton = New-Object System.Windows.Forms.Button
+    $okButton.Location = New-Object System.Drawing.Size(415,250)
+    $okButton.Size = New-Object System.Drawing.Size(75,25)
+    $okButton.Text = "OK"
+    $okButton.Add_Click({ $form.Tag = $textBox.Text; $form.Close() })
+     
+    # Create the Cancel button.
+    $cancelButton = New-Object System.Windows.Forms.Button
+    $cancelButton.Location = New-Object System.Drawing.Size(510,250)
+    $cancelButton.Size = New-Object System.Drawing.Size(75,25)
+    $cancelButton.Text = "Cancel"
+    $cancelButton.Add_Click({ $form.Tag = $null; $form.Close() })
+     
+    # Create the form.
+    $form = New-Object System.Windows.Forms.Form
+    $form.Text = $WindowTitle
+    $form.Size = New-Object System.Drawing.Size(610,320)
+    $form.FormBorderStyle = 'FixedSingle'
+    $form.StartPosition = "CenterScreen"
+    $form.AutoSizeMode = 'GrowAndShrink'
+    $form.Topmost = $True
+    $form.AcceptButton = $okButton
+    $form.CancelButton = $cancelButton
+    $form.ShowInTaskbar = $true
+     
+    # Add all of the controls to the form.
+    $form.Controls.Add($label)
+    $form.Controls.Add($textBox)
+    $form.Controls.Add($okButton)
+    $form.Controls.Add($cancelButton)
+     
+    # Initialize and show the form.
+    $form.Add_Shown({$form.Activate()})
+    $form.ShowDialog() > $null   # Trash the text of the button that was clicked.
+     
+    # Return the text that the user entered.
+    return $form.Tag
 }
 
 function Get-TfExecutablePath
@@ -879,6 +880,7 @@ function Get-NuSpecsAssociatedProjectFilePath([parameter(Position=1,Mandatory=$t
 # Define some variables that we need to access within both the Try and Finally blocks of the script.
 $script:nuSpecFileWasAlreadyCheckedOut = $false
 $script:nuSpecFileContentsBeforeCheckout = $null
+$script:nuSpecLastWriteTimeBeforeCheckout = $null
 
 # Display the time that this script started running.
 $scriptStartTime = Get-Date
@@ -1095,13 +1097,13 @@ try
 
 		# Have the NuGet executable try and auto-update itself.
 	    Write-Verbose "About to run Update command '$updateCommand'."
-	    $updateOutput = (Invoke-Expression -Command $updateCommand | Out-String)
+	    $updateOutput = (Invoke-Expression -Command $updateCommand | Out-String).Trim()
 		
 		# Write the output of the above command to the Verbose stream.
 		Write-Verbose $updateOutput
 		
 		# If we have the path to the NuGet executable, we checked it out of TFS, and it did not auto-update itself, then undo the changes from TFS.
-		if ((Test-Path $NuGetExecutableFilePath) -and ($nuGetExecutableWasAlreadyCheckedOut -eq $false) -and !$updateOutput.EndsWith($NUGET_EXE_SUCCESSFULLY_UPDATED_TO_NEW_VERSION))
+		if ((Test-Path $NuGetExecutableFilePath) -and ($nuGetExecutableWasAlreadyCheckedOut -eq $false) -and !$updateOutput.EndsWith($NUGET_EXE_SUCCESSFULLY_UPDATED_TO_NEW_VERSION.Trim()))
 		{
 			Tfs-Undo -Path $NuGetExecutableFilePath
 		}
@@ -1184,7 +1186,7 @@ try
 
 		# Create the package.
 	    Write-Verbose "About to run Pack command '$packCommand'."
-	    $packOutput = (Invoke-Expression -Command $packCommand | Out-String)
+	    $packOutput = (Invoke-Expression -Command $packCommand | Out-String).Trim()
 	
 		# Write the output of the above command to the Verbose stream.
 		Write-Verbose $packOutput
@@ -1298,13 +1300,13 @@ try
 
         # Push the package to the gallery.
 		Write-Verbose "About to run Push command '$pushCommand'."
-		$pushOutput = (Invoke-Expression -Command $pushCommand | Out-String)
+		$pushOutput = (Invoke-Expression -Command $pushCommand | Out-String).Trim()
 		
 		# Write the output of the above command to the Verbose stream.
 		Write-Verbose $pushOutput
 
 		# If an error occurred while pushing the package, throw and error. Else it was pushed successfully.
-		if (!$pushOutput.EndsWith($NUGET_EXE_SUCCESSFULLY_PUSHED_PACKAGE_MESSAGE))
+		if (!$pushOutput.EndsWith($NUGET_EXE_SUCCESSFULLY_PUSHED_PACKAGE_MESSAGE.Trim()))
         {
             throw "Could not determine if package was pushed to gallery successfully. Perhaps an error occurred while pushing it. Look for errors from NuGet.exe above (in the console window), or in the following NuGet.exe output. You can also try running this command with the -Verbose switch for more information:{0}{1}" -f [Environment]::NewLine, $pushOutput
         }
@@ -1363,14 +1365,14 @@ try
 
 				# Save the Api key on this PC.
 	            Write-Verbose "About to run command '$setApiKeyCommand'."
-	            $setApiKeyOutput = (Invoke-Expression -Command $setApiKeyCommand | Out-String)
+	            $setApiKeyOutput = (Invoke-Expression -Command $setApiKeyCommand | Out-String).Trim()
 				
 				# Write the output of the above command to the Verbose stream.
 				Write-Verbose $setApiKeyOutput
 				
 				# Determine if the API Key was saved successfully, and throw an error if it wasn't.
                 $expectedSuccessfulNuGetSetApiKeyOutput = ($NUGET_EXE_SUCCESSFULLY_SAVED_API_KEY_MESSAGE -f $apiKey, $sourceToPushPackageTo)	# "The API Key '$apiKey' was saved for '$sourceToPushPackageTo'."
-                if ($setApiKeyOutput -ne $expectedSuccessfulNuGetSetApiKeyOutput)
+                if ($setApiKeyOutput -ne $expectedSuccessfulNuGetSetApiKeyOutput.Trim())
                 {
                     throw "Could not determine if the API key was saved successfully. Perhaps an error occurred while saving it. Look for errors from NuGet.exe above (in the console window), or in the following NuGet.exe output. You can also try running this command with the -Verbose switch for more information:{0}{1}" -f [Environment]::NewLine, $packOutput
                 }
@@ -1400,9 +1402,21 @@ finally
 		# If we checked the NuSpec file out from TFS.
 		if ((Test-Path $NuSpecFilePath) -and ($script:nuSpecFileWasAlreadyCheckedOut -eq $false))
 		{
-			# If the NuSpec file should not be updated, or the contents have not been changed, try and undo our checkout from TFS.
+			# If the NuSpec file should not be updated, or the contents have not been changed.
 			$newNuSpecFileContents = [System.IO.File]::ReadAllText($NuSpecFilePath)
-			if ($DoNotUpdateNuSpecFile -or ($script:nuSpecFileContentsBeforeCheckout -eq $newNuSpecFileContents)) { Tfs-Undo -Path $NuSpecFilePath }
+			if ($DoNotUpdateNuSpecFile -or ($script:nuSpecFileContentsBeforeCheckout -eq $newNuSpecFileContents))
+			{
+				# Try and undo our checkout from TFS.
+				Tfs-Undo -Path $NuSpecFilePath
+				
+				# Also reset the file's LastWriteTime so that MSBuild does not always rebuild the project because it thinks the .nuspec file was modified after the project's .pdb file.
+				# We first have to make sure the file is writable before trying to set the LastWriteTime, and then restore the Read-Only attribute if it was set before.
+				$nuspecFileInfo = New-Object System.IO.FileInfo($NuSpecFilePath)
+				$nuspecFileIsReadOnly = $nuspecFileInfo.IsReadOnly
+				$nuspecFileInfo.IsReadOnly = $false
+				[System.IO.File]::SetLastWriteTime($NuSpecFilePath, $script:nuSpecLastWriteTimeBeforeCheckout)
+				if ($nuspecFileIsReadOnly) { $nuspecFileInfo.IsReadOnly = $true }
+			}
 		}
 	}
 }

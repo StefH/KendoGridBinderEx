@@ -633,6 +633,57 @@ namespace KendoGridBinderEx.UnitTests
             */
         }
 
+        //take=10&
+        //skip=0&
+        //page=1&
+        //pageSize=10&
+        //group[0][field]=Id&
+        //group[0][dir]=asc&
+        //group[0][aggregates][0][field]=Id&
+        //group[0][aggregates][0][aggregate]=count
+        [Test]
+        public void Test_KendoGridModelBinder_A()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "10"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "10"},
+
+                {"group[0][field]", "Id"},
+                {"group[0][dir]", "asc"},
+                {"group[0][aggregates][0][field]", "Id"},
+                {"group[0][aggregates][0][aggregate]", "count"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.AreEqual(2, gridRequest.GroupObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.First().AggregateObjects.Count());
+            Assert.AreEqual(1, gridRequest.GroupObjects.Last().AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployeesWithData().AsQueryable();
+            var mappings = new Dictionary<string, string>
+            {
+                {"CompanyId", "Company.Id"},
+                {"CountryName", "Country.Name"},
+                {"CompanyName", "Company.Name"}
+            };
+            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            Assert.AreEqual(10, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+        }
+
         [Test]
         //{"take":5,"skip":0,"page":1,"pageSize":5,"group":[]}
         public void Test_KendoGridModelBinder_Json_WithoutIncludes()
