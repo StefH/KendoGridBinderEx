@@ -12,6 +12,7 @@
             serverPaging: true,
             serverSorting: true,
             serverFiltering: true,
+            serverGrouping: true,
             pageSize: 100,
             transport: {
                 read: {
@@ -30,7 +31,10 @@
                         Name: { type: 'string' }
                     }
                 }
-            }
+            },
+            aggregate: [{
+                field: "Id", aggregate: "count"
+            }]
         });
 
         $('#grid').kendoGrid({
@@ -42,7 +46,8 @@
                     template:
                         '<a href="/OU/Details/#=Id#"><img class=iconLink src=/Content/Images/view.png></a>' + '&nbsp;' +
                         '<a href="/OU/Edit/#=Id#"><img class=iconLink src=/Content/Images/edit.png></a>' +
-                        '<a href="/OU/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>'
+                        '<a href="/OU/Delete/#=Id#"><img class=iconLink style=padding-right:0px src=/Content/Images/delete.png></a>',
+                    footerTemplate: "Total Count: #= count#"
                 },
                 { field: 'Code' },
                 { field: 'Name' }
