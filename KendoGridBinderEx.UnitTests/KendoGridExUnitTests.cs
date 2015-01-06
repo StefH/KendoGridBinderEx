@@ -307,6 +307,41 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         [Test]
+        public void Test_KendoGridModelBinder_Grid_Sort_Filter_EntitiesWithNullValues()
+        {
+            var form = new NameValueCollection
+            {
+                {"sort[0][field]", "Id"},
+                {"sort[0][dir]", "asc"},
+
+                {"filter[filters][0][field]", "LastName"},
+                {"filter[filters][0][operator]", "contains"},
+                {"filter[filters][0][value]", "s"},
+                {"filter[filters][1][field]", "Email"},
+                {"filter[filters][1][operator]", "contains"},
+                {"filter[filters][1][value]", "r"},
+                {"filter[logic]", "or"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+
+            var employeeList = InitEmployeesWithData().ToList();
+            foreach (var employee in employeeList.Where(e => e.LastName.Contains("e")))
+            {
+                employee.LastName = null;
+                employee.FirstName = null;
+            }
+
+            var employees = employeeList.AsQueryable();
+
+            var kendoGrid = employees.ToKendoGridEx<Employee, Employee>(gridRequest, null, null, null, false);
+            Assert.IsNotNull(kendoGrid);
+
+            Assert.AreEqual(3, kendoGrid.Total);
+            Assert.IsNotNull(kendoGrid.Data);
+        }
+
+        [Test]
         public void Test_KendoGridModelBinder_Grid_Page_Filter_Sort()
         {
             var form = new NameValueCollection

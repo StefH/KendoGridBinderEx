@@ -6,7 +6,7 @@ namespace KendoGridBinderEx.UnitTests.Entities
     public class Employee : Entity
     {
         private static readonly CompiledExpressionMap<Employee, bool> IsManagerExpr =
-            DefaultTranslationOf<Employee>.Property(e => e.IsManager).Is(e => e.Email.Contains(("smith")));
+            DefaultTranslationOf<Employee>.Property(e => e.IsManager).Is(e => e.Email != null && e.Email.Contains(("smith")));
 
         private static readonly CompiledExpressionMap<Employee, string> FullNameExpr =
             DefaultTranslationOf<Employee>.Property(e => e.FullName).Is(e => e.FirstName + " " + e.LastName);

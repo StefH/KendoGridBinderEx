@@ -74,12 +74,14 @@ namespace KendoGridBinderEx.Containers
         private string GetExpression<TEntity>(string field, string op, string param, string ignoreCase)
         {
             var dataType = GetPropertyType(typeof(TEntity), field);
-            var caseMod = string.Empty;
+            string caseMod = string.Empty;
+            string nullCheck = string.Empty;
 
             if (dataType == "string")
             {
                 param = @"""" + param.ToLower() + @"""";
                 caseMod = ".ToLower()"; // always ignore case
+                nullCheck = string.Format("{0} != null && ", field);
             }
 
             if (dataType == "datetime")
@@ -100,43 +102,43 @@ namespace KendoGridBinderEx.Containers
             switch (op)
             {
                 case "eq":
-                    exStr = string.Format("{0}{2} == {1}", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2} == {1})", field, param, caseMod, nullCheck);
                     break;
 
                 case "neq":
-                    exStr = string.Format("{0}{2} != {1}", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2} != {1})", field, param, caseMod, nullCheck);
                     break;
 
                 case "contains":
-                    exStr = string.Format("{0}{2}.Contains({1})", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2}.Contains({1}))", field, param, caseMod, nullCheck);
                     break;
 
                 case "doesnotcontain":
-                    exStr = string.Format("!{0}{2}.Contains({1})", field, param, caseMod);
+                    exStr = string.Format("({3}!{0}{2}.Contains({1}))", field, param, caseMod, nullCheck);
                     break;
 
                 case "startswith":
-                    exStr = string.Format("{0}{2}.StartsWith({1})", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2}.StartsWith({1}))", field, param, caseMod, nullCheck);
                     break;
 
                 case "endswith":
-                    exStr = string.Format("{0}{2}.EndsWith({1})", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2}.EndsWith({1}))", field, param, caseMod, nullCheck);
                     break;
 
                 case "gte":
-                    exStr = string.Format("{0}{2} >= {1}", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2} >= {1})", field, param, caseMod, nullCheck);
                     break;
 
                 case "gt":
-                    exStr = string.Format("{0}{2} > {1}", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2} > {1})", field, param, caseMod, nullCheck);
                     break;
 
                 case "lte":
-                    exStr = string.Format("{0}{2} <= {1}", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2} <= {1})", field, param, caseMod, nullCheck);
                     break;
 
                 case "lt":
-                    exStr = string.Format("{0}{2} < {1}", field, param, caseMod);
+                    exStr = string.Format("({3}{0}{2} < {1})", field, param, caseMod, nullCheck);
                     break;
 
                 default:

@@ -11,8 +11,7 @@
         <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
         <summary />
         <releaseNotes>
-* Added KendoGridFilter (JSON Support)
-* Upgraded dependencies (nuget packages) to latest versions
+* Fixed issue Filter breaks if the result set contains a null value
         </releaseNotes>
         <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
     </metadata>
