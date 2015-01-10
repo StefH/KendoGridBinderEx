@@ -14,6 +14,7 @@ namespace KendoGridBinderEx
 
         public FilterObjectWrapper FilterObjectWrapper { get; set; }
         public IEnumerable<SortObject> SortObjects { get; set; }
-        public IEnumerable<Group> GroupObjects { get; set; }
+        public IEnumerable<GroupObject> GroupObjects { get; set; }
+        public IEnumerable<AggregateObject> AggregateObjects { get; set; }
     }
 }

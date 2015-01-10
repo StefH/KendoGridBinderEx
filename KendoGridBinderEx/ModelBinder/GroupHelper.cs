@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using KendoGridBinderEx.Containers.Json;
 using Newtonsoft.Json;
-using Group = KendoGridBinderEx.Containers.Json.Group;
 
 namespace KendoGridBinderEx.ModelBinder
 {
@@ -13,7 +12,7 @@ namespace KendoGridBinderEx.ModelBinder
         private static readonly Regex GroupRegex = new Regex(@"^group\[(\d*)\]\[(field|dir)\]$", RegexOptions.IgnoreCase);
         private static readonly Regex GroupAggregateRegex = new Regex(@"^group\[(\d*)\]\[aggregates\]\[(\d*)\]\[(field|aggregate)\]$", RegexOptions.IgnoreCase);
 
-        public static IEnumerable<Group> Parse(NameValueCollection queryString)
+        public static IEnumerable<GroupObject> Parse(NameValueCollection queryString)
         {
             // If there is a group query parameter, try to parse the value as json
             if (queryString.AllKeys.Contains("group"))
@@ -33,21 +32,22 @@ namespace KendoGridBinderEx.ModelBinder
             return null;
         }
 
-        public static IEnumerable<Group> Map(IEnumerable<Group> groups)
+        public static IEnumerable<GroupObject> Map(IEnumerable<GroupObject> groups)
         {
-            return groups.Any() ? groups : null;
+            var enumerable = groups as IList<GroupObject> ?? groups.ToList();
+            return enumerable.Any() ? enumerable : null;
         }
 
-        private static IEnumerable<Group> GetGroupObjects(string groupAsJson)
+        private static IEnumerable<GroupObject> GetGroupObjects(string groupAsJson)
         {
-            var result = JsonConvert.DeserializeObject<List<Group>>(groupAsJson);
+            var result = JsonConvert.DeserializeObject<List<GroupObject>>(groupAsJson);
 
             return Map(result);
         }
 
-        private static IEnumerable<Group> GetGroupObjects(NameValueCollection queryString, IEnumerable<string> requestKeys)
+        private static IEnumerable<GroupObject> GetGroupObjects(NameValueCollection queryString, IEnumerable<string> requestKeys)
         {
-            var result = new Dictionary<int, Group>();
+            var result = new Dictionary<int, GroupObject>();
 
             var enumerable = requestKeys as IList<string> ?? requestKeys.ToList();
             foreach (var x in enumerable
@@ -58,7 +58,7 @@ namespace KendoGridBinderEx.ModelBinder
                 int groupId = int.Parse(x.Match.Groups[1].Value);
                 if (!result.ContainsKey(groupId))
                 {
-                    result.Add(groupId, new Group());
+                    result.Add(groupId, new GroupObject());
                 }
 
                 string value = queryString[x.Key];

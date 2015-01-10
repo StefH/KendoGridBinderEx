@@ -19,6 +19,7 @@ namespace KendoGridBinderEx.ModelBinder
 
                 FilterObjectWrapper = FilterHelper.Parse(queryString),
                 GroupObjects = GroupHelper.Parse(queryString),
+                AggregateObjects = AggregateHelper.Parse(queryString),
                 SortObjects = SortHelper.Parse(queryString)
             };
         }
@@ -35,6 +36,7 @@ namespace KendoGridBinderEx.ModelBinder
                 Skip = kendoJsonRequest.Skip,
                 Logic = kendoJsonRequest.Logic,
                 GroupObjects = GroupHelper.Map(kendoJsonRequest.Groups),
+                AggregateObjects = AggregateHelper.Map(kendoJsonRequest.AggregateObjects),
                 FilterObjectWrapper = FilterHelper.MapRootFilter(kendoJsonRequest.Filter),
                 SortObjects = SortHelper.Map(kendoJsonRequest.Sort)
             };

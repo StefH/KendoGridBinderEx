@@ -28,6 +28,9 @@ namespace KendoGridBinderEx.Containers.Json
         public IEnumerable<Sort> Sort { get; set; }
 
         [DataMember(Name = "group")]
-        public IEnumerable<Group> Groups { get; set; }
+        public IEnumerable<GroupObject> Groups { get; set; }
+
+        [DataMember(Name = "aggregate")]
+        public IEnumerable<AggregateObject> AggregateObjects { get; set; }
     }
 }

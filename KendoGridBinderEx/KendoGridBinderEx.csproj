@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperExtensions\AutoMapperUtils.cs" />
+    <Compile Include="Containers\Json\AggregateObject.cs" />
     <Compile Include="Containers\Json\Filter.cs" />
     <Compile Include="Containers\Json\GridRequest.cs" />
     <Compile Include="Containers\Json\Sort.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="KendoGridFilter.cs" />
     <Compile Include="Containers\FilterObject.cs" />
     <Compile Include="Containers\FilterObjectWrapper.cs" />
-    <Compile Include="Containers\Json\Group.cs" />
+    <Compile Include="Containers\Json\GroupObject.cs" />
     <Compile Include="Containers\SortObject.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\ReflectionHelper.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="KendoGridBaseRequest.cs" />
     <Compile Include="ModelBinder\FilterHelper.cs" />
     <Compile Include="ModelBinder\GridHelper.cs" />
+    <Compile Include="ModelBinder\AggregateHelper.cs" />
     <Compile Include="ModelBinder\GroupHelper.cs" />
     <Compile Include="ModelBinder\Mvc\KendoGridMvcRequest.cs" />
     <Compile Include="ModelBinder\SortHelper.cs" />

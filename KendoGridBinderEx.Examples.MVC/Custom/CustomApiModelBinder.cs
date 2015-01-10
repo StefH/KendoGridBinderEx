@@ -59,6 +59,7 @@ namespace KendoGridBinderEx.Examples.MVC.Custom
                 Skip = kendoJsonRequest.Skip,
                 Logic = kendoJsonRequest.Logic,
                 GroupObjects = GroupHelper.Map(kendoJsonRequest.Groups),
+                AggregateObjects = AggregateHelper.Map(kendoJsonRequest.AggregateObjects),
                 FilterObjectWrapper = FilterHelper.MapRootFilter(kendoJsonRequest.Filter),
                 SortObjects = SortHelper.Map(kendoJsonRequest.Sort)
             };

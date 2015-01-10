@@ -29,7 +29,8 @@ namespace KendoGridBinderEx.ModelBinder.Mvc
 
                 FilterObjectWrapper = FilterHelper.Parse(queryString),
                 GroupObjects = GroupHelper.Parse(queryString),
-                SortObjects = SortHelper.Parse(queryString)
+                AggregateObjects = AggregateHelper.Parse(queryString),
+                SortObjects = SortHelper.Parse(queryString),
             };
 
             return kendoGridRequest;
