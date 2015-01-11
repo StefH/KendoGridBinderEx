@@ -11,7 +11,7 @@
         <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
         <summary />
         <releaseNotes>
-* Fixed issue Filter breaks if the result set contains a null value
+* Added support for serverAggregates
         </releaseNotes>
         <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
     </metadata>

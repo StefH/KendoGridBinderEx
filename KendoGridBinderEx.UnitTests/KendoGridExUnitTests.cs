@@ -178,26 +178,48 @@ namespace KendoGridBinderEx.UnitTests
                 {"page", "1"},
                 {"pagesize", "5"},
 
-                {"aggregate[0][field]", "id"},
-                {"aggregate[0][aggregate]", "count"},
-                {"aggregate[1][field]", "id"},
-                {"aggregate[1][aggregate]", "sum"}
+                {"aggregate[0][field]", "Id"},
+                {"aggregate[0][aggregate]", "sum"},
+                {"aggregate[1][field]", "Id"},
+                {"aggregate[1][aggregate]", "min"},
+                {"aggregate[2][field]", "Id"},
+                {"aggregate[2][aggregate]", "max"},
+                {"aggregate[3][field]", "Id"},
+                {"aggregate[3][aggregate]", "count"},
+                {"aggregate[4][field]", "Id"},
+                {"aggregate[4][aggregate]", "average"}
             };
 
             var gridRequest = SetupBinder(form, null);
             Assert.IsNull(gridRequest.GroupObjects);
-            Assert.AreEqual(2, gridRequest.AggregateObjects.Count());
-            
+            Assert.AreEqual(5, gridRequest.AggregateObjects.Count());
+
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
             var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" } };
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
 
-            Assert.IsNull(kendoGrid.Data);
-            Assert.IsNotNull(kendoGrid.Groups);
-            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNull(kendoGrid.Groups);
+            Assert.IsNotNull(kendoGrid.Data);
+            Assert.AreEqual(5, kendoGrid.Data.Count());
+
+            Assert.IsNotNull(kendoGrid.Aggregates);
+            var json = JsonConvert.SerializeObject(kendoGrid.Aggregates, Formatting.Indented);
             Assert.IsNotNull(json);
+
+            var aggregatesAsDictionary = kendoGrid.Aggregates as Dictionary<string, Dictionary<string, object>>;
+            Assert.IsNotNull(aggregatesAsDictionary);
+            Assert.AreEqual(1, aggregatesAsDictionary.Keys.Count);
+            Assert.AreEqual("Id", aggregatesAsDictionary.Keys.First());
+
+            var aggregatesForId = aggregatesAsDictionary["Id"];
+            Assert.AreEqual(5, aggregatesForId.Keys.Count);
+            Assert.AreEqual(78, aggregatesForId["sum"]);
+            Assert.AreEqual(1, aggregatesForId["min"]);
+            Assert.AreEqual(12, aggregatesForId["max"]);
+            Assert.AreEqual(12, aggregatesForId["count"]);
+            Assert.AreEqual(6.5d, aggregatesForId["average"]);
         }
 
         [Test]
