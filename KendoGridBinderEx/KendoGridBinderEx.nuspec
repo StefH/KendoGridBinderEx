@@ -11,7 +11,7 @@
         <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
         <summary />
         <releaseNotes>
-* Added support for serverAggregates
+* Fixed issue problem in ApplyAggregates when filtering produces zero entities (#15)
         </releaseNotes>
         <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
     </metadata>

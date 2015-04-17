@@ -153,8 +153,8 @@ namespace KendoGridBinderEx
             // Example : new (new (Sum(TEntity__.Id) as sum__Id, Min(TEntity__.Id) as min__Id, Max(TEntity__.Id) as max__Id, Count() as count__Id, Average(TEntity__.Id) as average__Id) as Aggregates)
             var aggregatesQuery = groupByQuery.Select(aggregatesExpression);
 
-            // Get first result, cast to DynamicClass as use helper method to convert this to correct response
-            var aggregates = (aggregatesQuery.First() as DynamicClass).GetAggregatesAsDictionary();
+            // Try to get first result, cast to DynamicClass as use helper method to convert this to correct response
+            var aggregates = (aggregatesQuery.FirstOrDefault() as DynamicClass).GetAggregatesAsDictionary();
 
             return aggregates;
         }

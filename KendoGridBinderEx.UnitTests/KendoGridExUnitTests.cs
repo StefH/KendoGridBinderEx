@@ -193,8 +193,7 @@ namespace KendoGridBinderEx.UnitTests
             var gridRequest = SetupBinder(form, null);
             Assert.IsNull(gridRequest.GroupObjects);
             Assert.AreEqual(5, gridRequest.AggregateObjects.Count());
-
-
+            
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
             var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" } };
@@ -220,6 +219,58 @@ namespace KendoGridBinderEx.UnitTests
             Assert.AreEqual(12, aggregatesForId["max"]);
             Assert.AreEqual(12, aggregatesForId["count"]);
             Assert.AreEqual(6.5d, aggregatesForId["average"]);
+        }
+
+        [Test]
+        public void Test_KendoGridModelBinder_Aggregates_WithIncludes_NoResults()
+        {
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"filter[filters][0][field]", "LastName"},
+                {"filter[filters][0][operator]", "equals"},
+                {"filter[filters][0][value]", "xxx"},
+                {"filter[filters][1][field]", "Email"},
+                {"filter[filters][1][operator]", "contains"},
+                {"filter[filters][1][value]", "r"},
+                {"filter[logic]", "or"},
+
+                {"aggregate[0][field]", "Id"},
+                {"aggregate[0][aggregate]", "sum"},
+                {"aggregate[1][field]", "Id"},
+                {"aggregate[1][aggregate]", "min"},
+                {"aggregate[2][field]", "Id"},
+                {"aggregate[2][aggregate]", "max"},
+                {"aggregate[3][field]", "Id"},
+                {"aggregate[3][aggregate]", "count"},
+                {"aggregate[4][field]", "Id"},
+                {"aggregate[4][aggregate]", "average"}
+            };
+
+            var gridRequest = SetupBinder(form, null);
+            Assert.IsNull(gridRequest.GroupObjects);
+            Assert.AreEqual(5, gridRequest.AggregateObjects.Count());
+
+            InitAutoMapper();
+            var employees = InitEmployeesWithData().AsQueryable();
+            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" } };
+            var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
+
+            Assert.IsNull(kendoGrid.Groups);
+            Assert.IsNotNull(kendoGrid.Data);
+            Assert.AreEqual(0, kendoGrid.Data.Count());
+
+            Assert.IsNotNull(kendoGrid.Aggregates);
+            var json = JsonConvert.SerializeObject(kendoGrid.Aggregates, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var aggregatesAsDictionary = kendoGrid.Aggregates as Dictionary<string, Dictionary<string, object>>;
+            Assert.IsNotNull(aggregatesAsDictionary);
+            Assert.AreEqual(0, aggregatesAsDictionary.Keys.Count);
         }
 
         [Test]

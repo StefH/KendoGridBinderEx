@@ -46,8 +46,7 @@ namespace KendoGridBinderEx.Extensions
         /// <returns></returns>
         public static IEnumerable<DataItem> GetDataItems(this DynamicClass self, string propertyName)
         {
-            var propertyType = self.GetType();
-            var propertyInfo = propertyType.GetProperty(propertyName);
+            var propertyInfo = self != null ? self.GetType().GetProperty(propertyName) : null;
 
             if (propertyInfo == null)
             {

@@ -238,4 +238,26 @@ Ensure-AssemblyFileExistsWhereNuGetExpectsItToBe -ProjectFilePath $ProjectFilePa
 #-----
 
 # Create the new NuGet package.
-& "$THIS_SCRIPTS_DIRECTORY_PATH\New-NuGetPackage.ps1" -ProjectFilePath "$ProjectFilePath" -VersionNumber $versionNumber -ReleaseNotes $releaseNotes -PackOptions "-OutputDirectory ""$OutputDirectory"" -Properties $packProperties -NonInteractive $packOptions" -DoNotUpdateNuSpecFile -NoPrompt -Verbose
+$nuGetPackageFilePath = & "$THIS_SCRIPTS_DIRECTORY_PATH\New-NuGetPackage.ps1" -ProjectFilePath "$ProjectFilePath" -VersionNumber $versionNumber -ReleaseNotes $releaseNotes -PackOptions "-OutputDirectory ""$OutputDirectory"" -Properties $packProperties -NonInteractive $packOptions" -DoNotUpdateNuSpecFile -NoPrompt -Verbose
+
+# If the NuGet package file should be renamed to include the Configuration and Platform.
+if ($appendConfigurationAndPlatformToNuGetPackageFileName)
+{
+	# Build the new desired NuGet package file path.
+	$nuGetPackageFileNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($nuGetPackageFilePath)
+	$nuGetPackageFileExtension = [System.IO.Path]::GetExtension($nuGetPackageFilePath)
+	$desiredNuGetPackageFileName = "$nuGetPackageFileNameWithoutExtension.$BuildConfiguration.$BuildPlatform$nuGetPackageFileExtension"
+	$desiredNuGetPackageFilePath = Join-Path -Path (Split-Path $nuGetPackageFilePath -Parent) -ChildPath $desiredNuGetPackageFileName
+
+	# Rename the NuGet package file name to the desired file name.
+	Rename-Item -Path $nugetPackageFilePath -NewName $desiredNuGetPackageFilePath -Force
+
+	# Display that the NuGet package file was renamed.
+	Write-Output "'$nuGetPackageFilePath' was renamed to '$desiredNuGetPackageFilePath'."
+	
+	# Save the new NuGet package file path.
+	$nuGetPackageFilePath = $desiredNuGetPackageFilePath
+}
+
+# Display the path to the NuGet package file.
+Write-Output $nuGetPackageFilePath
