@@ -10,6 +10,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Examples.Business.Repository
 {
@@ -19,7 +20,7 @@ namespace KendoGridBinderEx.Examples.Business.Repository
         private readonly IObjectSet<TEntity> _objectSet;
         private readonly ObjectContext _objectContext;
 
-        public RepositoryImpl(DbContext dbContext, IRepositoryConfig config)
+        public RepositoryImpl([NotNull] DbContext dbContext, [NotNull] IRepositoryConfig config)
         {
             _objectContext = (dbContext as IObjectContextAdapter).ObjectContext;
             _config = config;

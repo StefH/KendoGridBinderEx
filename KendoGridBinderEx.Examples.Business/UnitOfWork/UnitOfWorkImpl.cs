@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration.Configuration;
+using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 {
@@ -8,7 +10,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
     {
         private readonly DbContext _dbContext;
 
-        public UnitOfWorkImpl(DbContext dbContext)
+        public UnitOfWorkImpl([NotNull] DbContext dbContext)
         {
             _dbContext = dbContext;
         }
