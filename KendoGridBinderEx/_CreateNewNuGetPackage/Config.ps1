@@ -24,7 +24,7 @@ $releaseNotes = ""
 
 # Specify a specific Configuration and/or Platform to only create a NuGet package when building the project with this Configuration and/or Platform.
 #	e.g. $configuration = "Release"
-#		 $platform = "Any CPU"
+#		 $platform = "AnyCPU"
 $configuration = ""
 $platform = ""
 

@@ -166,7 +166,7 @@ function Ensure-AssemblyFileExistsWhereNuGetExpectsItToBe([string]$ProjectFilePa
 	$nuGetExpectedOutputDirectoryPath = $nuGetExpectedOutputDirectoryPath.TrimEnd('\')	# We trimmed the OutputDirectory, so trim this one too so we can compare them to see if they match.
 
 	# If the actual Output Directory is different than the one specified in the Project File.
-	if (!$OutputDirectory.Equals($nuGetExpectedOutputDirectoryPath, [System.StringComparison]::InvariantCultureIgnoreCase))
+	if (!$OutputDirectory.Equals($nuGetExpectedOutputDirectoryPath, [System.StringComparison]::OrdinalIgnoreCase))
 	{
 		# Get the name of the assembly.
 		$assemblyName = Get-XmlElementsTextValue -XmlDocument $projectFileXml -ElementPath "Project.PropertyGroup.AssemblyName"
@@ -177,14 +177,14 @@ function Ensure-AssemblyFileExistsWhereNuGetExpectsItToBe([string]$ProjectFilePa
 		if (!$assemblyType) { $assemblyType = [string]::Empty }
 		
 		# Attach the file extension to the assembly name based on the type of project this is. Either a Library or Executable.
-		if ($assemblyType.Equals("Library", [System.StringComparison]::InvariantCultureIgnoreCase)) { $assemblyName = "$assemblyName.dll" }
+		if ($assemblyType.Equals("Library", [System.StringComparison]::OrdinalIgnoreCase)) { $assemblyName = "$assemblyName.dll" }
 		else { $assemblyName = "$assemblyName.exe" }
 
-		# Get the full paths of the assembly.
+		# Get the full path of the assembly.
 		$assemblyPath = Join-Path $OutputDirectory $assemblyName
 		$nuGetExpectedAssemblyPath = Join-Path $nuGetExpectedOutputDirectoryPath $assemblyName
 
-		# If the assembly is not in the Output Directory (which is should be), display an error message and return.
+		# If the assembly is not in the Output Directory (which it should be), display an error message and return.
 		if (!(Test-Path $assemblyPath -PathType Leaf)) { Write-Output "Could not find the assembly at the expected path '$assemblyPath', so cannot continue pre-processing."; return }
 		
 		# Make sure the assembly exists in the Project File's Output Path, since that is where NuGet.exe expects to find it.
@@ -249,14 +249,42 @@ if ($appendConfigurationAndPlatformToNuGetPackageFileName)
 	$desiredNuGetPackageFileName = "$nuGetPackageFileNameWithoutExtension.$BuildConfiguration.$BuildPlatform$nuGetPackageFileExtension"
 	$desiredNuGetPackageFilePath = Join-Path -Path (Split-Path $nuGetPackageFilePath -Parent) -ChildPath $desiredNuGetPackageFileName
 
-	# Rename the NuGet package file name to the desired file name.
-	Rename-Item -Path $nugetPackageFilePath -NewName $desiredNuGetPackageFilePath -Force
-
-	# Display that the NuGet package file was renamed.
-	Write-Output "'$nuGetPackageFilePath' was renamed to '$desiredNuGetPackageFilePath'."
+	# If the NuGet package file exists, rename it.
+	if (Test-Path -Path $nugetPackageFilePath -PathType Leaf)
+	{
+		# Rename the NuGet package file name to the desired file name.
+		Rename-Item -Path $nugetPackageFilePath -NewName $desiredNuGetPackageFilePath -Force
+		
+		# Display that the NuGet package file was renamed.
+		Write-Output "'$nuGetPackageFilePath' was renamed to '$desiredNuGetPackageFilePath'."
+	}
+	else
+	{ Write-Warning "Could not find NuGet package at '$nugetPackageFilePath', so it was not renamed to '$desiredNuGetPackageFilePath'." }
 	
 	# Save the new NuGet package file path.
 	$nuGetPackageFilePath = $desiredNuGetPackageFilePath
+	
+	# If a Symbols NuGet package was specified to be created too, rename it as well.
+	if ($packOptions -like '*-Symbols*')
+	{
+		# Build the new desired Symbols NuGet package file path.
+		$desiredSymbolsNuGetPackageFileName = "$nuGetPackageFileNameWithoutExtension.$BuildConfiguration.$BuildPlatform.symbols$nuGetPackageFileExtension"
+		$desiredSymbolsNuGetPackageFilePath = Join-Path -Path (Split-Path $nuGetPackageFilePath -Parent) -ChildPath $desiredSymbolsNuGetPackageFileName
+
+		# Construct the path of what the original Symbols NuGet package should be, and if it exists, rename it to the desired file name.
+		$originalSymbolsNuGetPackageFileName = "$nuGetPackageFileNameWithoutExtension.symbols$nuGetPackageFileExtension"
+		$originalSymbolsNuGetPackageFilePath = Join-Path -Path (Split-Path $nuGetPackageFilePath -Parent) -ChildPath $originalSymbolsNuGetPackageFileName
+		if (Test-Path -Path $originalSymbolsNuGetPackageFilePath -PathType Leaf) 
+		{ 
+			# Rename the Symbols NuGet package to the desired name.
+			Rename-Item -Path $originalSymbolsNuGetPackageFilePath -NewName $desiredSymbolsNuGetPackageFilePath -Force
+			
+			# Display that the NuGet package file was renamed.
+			Write-Output "'$originalSymbolsNuGetPackageFilePath' was renamed to '$desiredSymbolsNuGetPackageFilePath'."
+		}
+		else
+		{ Write-Warning "Could not find Symbols NuGet package at '$originalSymbolsNuGetPackageFilePath', so it was not renamed to '$desiredSymbolsNuGetPackageFilePath'." }
+	}
 }
 
 # Display the path to the NuGet package file.

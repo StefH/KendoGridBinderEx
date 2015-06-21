@@ -177,7 +177,7 @@ param
 
 	[parameter(Position=2,Mandatory=$false,HelpMessage="The new version number to use for the NuGet Package.",ParameterSetName="PackUsingNuSpec")]
     [parameter(Position=2,Mandatory=$false,HelpMessage="The new version number to use for the NuGet Package.",ParameterSetName="PackUsingProject")]
-	[ValidatePattern('(?i)(^(\d{1,5}(\.\d{1,5}){1,3})$)|(^(\d{1,5}\.\d{1,5}\.\d{1,5}-[a-zA-Z0-9\-\.\+]+)$)|(^(\$version\$)$)|(^$)')]	# This validation is duplicated in the Update-NuSpecFile function, so update it in both places. This regex does not represent Sematic Versioning, but the versioning that NuGet.exe allows.
+	[ValidatePattern('(?i)(^(\d+(\.\d+){1,3})$)|(^(\d+\.\d+\.\d+-[a-zA-Z0-9\-\.\+]+)$)|(^(\$version\$)$)|(^$)')]	# This validation is duplicated in the Update-NuSpecFile function, so update it in both places. This regex does not represent Sematic Versioning, but the versioning that NuGet.exe allows.
 	[Alias("Version")]
 	[Alias("V")]
 	[string] $VersionNumber,
@@ -234,10 +234,7 @@ param
 	[string] $NuGetExecutableFilePath,
 	
 	[Alias("UNE")]
-	[switch] $UpdateNuGetExecutable,
-	
-	[Alias("FSV")]
-	[switch] $ForceSemanticVersioning
+	[switch] $UpdateNuGetExecutable
 )
 
 # Turn on Strict Mode to help catch syntax-related errors.
@@ -405,8 +402,8 @@ function Update-NuSpecFile
 		}
 		
 		# The script's parameter validation does not seem to be enforced (probably because this is inside a function), so re-enforce it here.
-		$rxVersionNumberValidation = [regex] '(?i)(^(\d{1,5}(\.\d{1,5}){1,3})$)|(^(\d{1,5}\.\d{1,5}\.\d{1,5}-[a-zA-Z0-9\-\.\+]+)$)|(^(\$version\$)$)|(^$)'	# This validation is duplicated in the Update-NuSpecFile function, so update it in both places. This regex does not represent Sematic Versioning, but the versioning that NuGet.exe allows.
-		
+		$rxVersionNumberValidation = [regex] '(?i)(^(\d+(\.\d+){1,3})$)|(^(\d+\.\d+\.\d+-[a-zA-Z0-9\-\.\+]+)$)|(^(\$version\$)$)|(^$)'	# This validation is duplicated in the Update-NuSpecFile function, so update it in both places. This regex does not represent Sematic Versioning, but the versioning that NuGet.exe allows.
+
 		# If the user cancelled the prompt or did not provide a valid version number, exit the script.
 		if ((Test-StringIsNullOrWhitespace $VersionNumber) -or !$rxVersionNumberValidation.IsMatch($VersionNumber))
 		{
