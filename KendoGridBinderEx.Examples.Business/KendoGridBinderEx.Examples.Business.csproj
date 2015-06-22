@@ -77,6 +77,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\JetBrains.Annotations.cs">
+      <Link>JetBrains.Annotations.cs</Link>
+    </Compile>
     <Compile Include="Entities\Company.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -196,10 +199,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KendoGridBinderEx.Common\KendoGridBinderEx.Common.csproj">
-      <Project>{e105f6e5-687e-454a-9597-50efc04a89ed}</Project>
-      <Name>KendoGridBinderEx.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.csproj">
       <Project>{b99bde11-9306-4736-97ac-b6640c342f4e}</Project>
       <Name>KendoGridBinderEx</Name>

@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using KendoGridBinderEx.Examples.Business.QueryContext;
-using PropertyTranslator;
-using QueryInterceptor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
@@ -11,6 +7,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using KendoGridBinderEx.Examples.Business.QueryContext;
+using PropertyTranslator;
+using QueryInterceptor;
 
 namespace KendoGridBinderEx.Examples.Business.Repository
 {

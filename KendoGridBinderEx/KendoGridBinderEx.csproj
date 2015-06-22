@@ -115,12 +115,6 @@
     <None Include="_CreateNewNuGetPackage\RunMeToUploadNuGetPackage.cmd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KendoGridBinderEx.Common\KendoGridBinderEx.Common.csproj">
-      <Project>{e105f6e5-687e-454a-9597-50efc04a89ed}</Project>
-      <Name>KendoGridBinderEx.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
