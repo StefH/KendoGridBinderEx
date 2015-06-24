@@ -15,6 +15,7 @@
       <mvcSiteMapNode title="List Grouping (Dynamic) WebApi + CustomJson" action="IndexApiJsonCustom"/>
       <mvcSiteMapNode title="List Grouping (Fixed)" action="IndexGroupedFixed"/>
       <mvcSiteMapNode title="List Managers" action="IndexManagers"/>
+      <mvcSiteMapNode title="List Managers (with Angular)" action="IndexManagersAngular"/>
       <mvcSiteMapNode title="Create Employee" action="Create"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Products" controller="Product" clickable="false">

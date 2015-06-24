@@ -107,6 +107,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return View();
         }
 
+        public ActionResult IndexManagersAngular()
+        {
+            return View();
+        }
+
         public ActionResult IndexPaulJame()
         {
             return View();

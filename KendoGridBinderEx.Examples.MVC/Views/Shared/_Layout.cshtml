@@ -1,5 +1,5 @@
 ﻿@using StackExchange.Profiling
-<html>
+<html ng-app="mainModule">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,8 +15,18 @@
     @Scripts.Render("~/bundles/common")
     @Scripts.Render("~/bundles/kendo")
     @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/angular")
 </head>
+
 <body>
+    <script type="text/javascript">
+        angular.module('mainModule', ['kendo.directives']).config(['$controllerProvider', function ($controllerProvider) {
+            //$controllerProvider.allowGlobals();
+        }]);
+    </script>
+    
+    @Scripts.Render("~/bundles/angularControllers")
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">

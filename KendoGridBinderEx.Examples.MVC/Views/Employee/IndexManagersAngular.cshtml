@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Managers Grid Example : Angular";
+}
+
+<h3>All Managers : Angular</h3>
+<br />
+
+<div ng-controller="GridManagersController">
+    <div kendo-grid k-data-source="managerGridDatasource" k-options="managerGridOptions"></div>
+</div>
+
+<script type="text/javascript">
+    var module = angular.module("mainModule");
+
+    module.controller("GridManagersController", function ($scope, $http) {
+
+        $scope.refresh = function () {
+            // scope.grid is the widget reference
+            $scope.grid.refresh();
+        }
+
+        $scope.managerGridDatasource = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: '@Url.Action("GridManagers")'
+                },
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'Id',
+                    fields: {
+                        Number: { type: 'number' },
+                        First: { type: 'string' },
+                        Last: { type: 'string' },
+                        Full: { type: 'string' },
+                        Email: { type: 'string' }
+                    }
+                }
+            }
+        };
+
+        $scope.managerGridOptions = {
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: 'Number', title: 'Employee #' },
+                { field: 'First', title: 'FirstName' },
+                { field: 'LastName', title: 'Last' },
+                { field: 'Full', title: 'FullName' },
+                { field: 'Email' }
+            ]
+        };
+
+    });
+</script>
