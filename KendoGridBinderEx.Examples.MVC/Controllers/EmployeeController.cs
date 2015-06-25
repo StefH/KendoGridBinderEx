@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
@@ -234,6 +235,13 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             var entities = _employeeService.GetManagers();
             return GetKendoGridAsJson(request, entities);
+        }
+
+        [HttpPost]
+        public JsonResult GridManagersAngular(KendoGridMvcRequest request)
+        {
+            Thread.Sleep(2000); // Sleep 2 seconds to show loading gif
+            return GridManagers(request);
         }
 
         [HttpPost]

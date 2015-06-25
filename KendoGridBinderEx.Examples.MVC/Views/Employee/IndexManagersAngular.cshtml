@@ -6,17 +6,18 @@
 <br />
 
 <div ng-controller="GridManagersController">
-    <div kendo-grid k-data-source="managerGridDatasource" k-options="managerGridOptions"></div>
+    <div ng-show="loading" class="loading"></div>
+    <div ng-hide="loading" kendo-grid k-data-source="managerGridDatasource" k-options="managerGridOptions"></div>
 </div>
 
 <script type="text/javascript">
     var module = angular.module("mainModule");
 
-    module.controller("GridManagersController", function ($scope, $http) {
+    module.controller("GridManagersController", function ($scope) {
+        $scope.loading = true;
 
-        $scope.refresh = function () {
-            // scope.grid is the widget reference
-            $scope.grid.refresh();
+        $scope.onDataBound = function (e) {
+            $scope.loading = false;
         }
 
         $scope.managerGridDatasource = {
@@ -28,7 +29,7 @@
                 read: {
                     type: 'post',
                     dataType: 'json',
-                    url: '@Url.Action("GridManagers")'
+                    url: '@Url.Action("GridManagersAngular")'
                 },
             },
             schema: {
@@ -50,6 +51,7 @@
         $scope.managerGridOptions = {
             sortable: true,
             pageable: true,
+            dataBound: $scope.onDataBound,
             columns: [
                 { field: 'Number', title: 'Employee #' },
                 { field: 'First', title: 'FirstName' },

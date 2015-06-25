@@ -282,6 +282,7 @@
     <Content Include="Content\Images\excel.gif" />
     <Content Include="Content\Images\excel_disabled.gif" />
     <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\loading_100x100.gif" />
     <Content Include="Content\Images\save.gif" />
     <Content Include="Content\Images\save.png" />
     <Content Include="Content\Images\save_disabled.gif" />

@@ -350,3 +350,9 @@ table, td
 {
     background-color: #5c87b2;
 }
+
+.loading
+{
+    height: 120px;
+    background: url('Images/loading_100x100.gif') no-repeat #fff;
+}
