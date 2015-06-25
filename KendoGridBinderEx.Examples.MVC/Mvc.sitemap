@@ -28,6 +28,7 @@
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Functions" controller="Function" action="Index"/>
     <mvcSiteMapNode title="Countries" controller="Country" action="Index"/>
+    <mvcSiteMapNode title="Charts" controller="Chart" action="Index"/>
     <mvcSiteMapNode title="Users" controller="User" action="Index" roles="Administrator, SuperUser, ApplicationUser"/>
   </mvcSiteMapNode>
 </mvcSiteMap>

@@ -211,6 +211,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\BaseMvcController.cs" />
     <Compile Include="Controllers\BaseMvcGridController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmployeeApiController.cs" />
@@ -457,6 +458,9 @@
     <Content Include="Content\kendo\2014.1.318\Uniform\slider-v.gif" />
     <Content Include="Content\kendo\2014.1.318\Uniform\sprite.png" />
     <Content Include="Content\kendo\2014.1.318\Uniform\sprite_2x.png" />
+    <Content Include="Content\kendo\2015.2.624\kendo.common.min.css" />
+    <Content Include="Content\kendo\2015.2.624\kendo.silver.min.css" />
+    <Content Include="Content\kendo\2015.2.624\kendo.uniform.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -964,6 +968,7 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js" />
     <Content Include="Scripts\kendo\2014.1.528\kendo.all.min.js" />
     <Content Include="Scripts\kendo\2014.1.528\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\2015.2.624\kendo.all.min.js" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\knockout-kendo.js" />
@@ -1104,6 +1109,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\Employee\IndexGrouped3.cshtml" />
     <Content Include="Views\Employee\IndexManagersAngular.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
