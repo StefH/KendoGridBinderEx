@@ -33,6 +33,11 @@ namespace KendoGridBinderEx.ModelBinder
 
         public static IEnumerable<AggregateObject> Map(IEnumerable<AggregateObject> aggregates)
         {
+            if (aggregates == null)
+            {
+                return null;
+            }
+
             var enumerable = aggregates as IList<AggregateObject> ?? aggregates.ToList();
             return enumerable.Any() ? enumerable : null;
         }

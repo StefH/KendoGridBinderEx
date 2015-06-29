@@ -1,12 +1,12 @@
-﻿using KendoGridBinderEx.Examples.Business.Repository;
+﻿using System.Data.Entity;
+using System.Web.Mvc;
+using KendoGridBinderEx.Examples.Business.Repository;
 using KendoGridBinderEx.Examples.Business.Service.Implementation;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.UnitOfWork;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using System.Data.Entity;
-using System.Web.Mvc;
-using Unity.Mvc4;
+using Microsoft.Practices.Unity.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Unity
 {

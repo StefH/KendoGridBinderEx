@@ -93,6 +93,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc">
+      <HintPath>..\packages\Unity.Mvc.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
@@ -188,10 +191,6 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Unity.Mvc4">
-      <HintPath>..\packages\Unity.Mvc4.1.4.0.0\lib\net45\Unity.Mvc4.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
@@ -206,9 +205,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapper\EntityResolver.cs" />
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\BaseMvcController.cs" />
     <Compile Include="Controllers\BaseMvcGridController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -980,7 +980,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Unity\Unity.Mvc4.README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

@@ -81,12 +81,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregateHelperUnitTests.cs" />
     <Compile Include="Entities\Company.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\EmployeeVM.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\MainCompany.cs" />
+    <Compile Include="GridHelperUnitTests.cs" />
     <Compile Include="Helpers\FakeController.cs" />
     <Compile Include="Helpers\FakeHttp.cs" />
     <Compile Include="Entities\IEntity.cs" />

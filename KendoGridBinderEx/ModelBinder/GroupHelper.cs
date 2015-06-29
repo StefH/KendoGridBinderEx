@@ -34,6 +34,11 @@ namespace KendoGridBinderEx.ModelBinder
 
         public static IEnumerable<GroupObject> Map(IEnumerable<GroupObject> groups)
         {
+            if (groups == null)
+            {
+                return null;
+            }
+
             var enumerable = groups as IList<GroupObject> ?? groups.ToList();
             return enumerable.Any() ? enumerable : null;
         }

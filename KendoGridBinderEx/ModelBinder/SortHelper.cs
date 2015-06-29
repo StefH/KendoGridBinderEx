@@ -32,13 +32,13 @@ namespace KendoGridBinderEx.ModelBinder
         private static IEnumerable<SortObject> GetSortObjects(string sortAsJson)
         {
             var result = JsonConvert.DeserializeObject<IEnumerable<Sort>>(sortAsJson);
-            
+
             return result != null ? Map(result) : null;
         }
 
         public static IEnumerable<SortObject> Map(IEnumerable<Sort> sort)
         {
-            return sort != null ? sort.Select(s => new SortObject(s.Field, s.Dir)): null;
+            return sort != null ? sort.Select(s => new SortObject(s.Field, s.Dir)) : null;
         }
 
         public static IEnumerable<SortObject> GetSortObjects(NameValueCollection queryValues, IEnumerable<string> sortKeys)
