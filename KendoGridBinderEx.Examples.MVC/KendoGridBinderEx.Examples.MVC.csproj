@@ -461,6 +461,8 @@
     <Content Include="Content\kendo\2015.2.624\kendo.common.min.css" />
     <Content Include="Content\kendo\2015.2.624\kendo.silver.min.css" />
     <Content Include="Content\kendo\2015.2.624\kendo.uniform.min.css" />
+    <Content Include="Content\kendo\2015.2.624\Silver\loading-image.gif" />
+    <Content Include="Content\kendo\2015.2.624\Silver\sprite.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
