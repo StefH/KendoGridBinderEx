@@ -31,5 +31,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("5.0.0.9")]
-[assembly: AssemblyFileVersion("5.0.0.9")]
+[assembly: AssemblyVersion("5.0.0.9")] // I'll keep this to 5.0.0.9 for now
+[assembly: AssemblyFileVersion("5.0.0.9")] // I'll keep this to 5.0.0.9 for now
+[assembly: AssemblyInformationalVersion("5.0.0.10")] // Change this to get the correct $version$ in the NuGet package
