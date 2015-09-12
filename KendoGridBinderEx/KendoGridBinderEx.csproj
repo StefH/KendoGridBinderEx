@@ -93,6 +93,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\JetBrains.Annotations.cs">
+      <Link>JetBrains.Annotations.cs</Link>
+    </Compile>
     <Compile Include="AutoMapperExtensions\AutoMapperUtils.cs" />
     <Compile Include="AutoMapperExtensions\MapExpression.cs" />
     <Compile Include="Containers\Json\AggregateObject.cs" />

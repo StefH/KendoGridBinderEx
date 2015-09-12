@@ -18,8 +18,26 @@ namespace KendoGridBinderEx
         {
         }
 
-        public KendoGridEx(KendoGridBaseRequest request, IEnumerable<TModel> list)
-            : this(request, list.AsQueryable())
+        public KendoGridEx(KendoGridBaseRequest request, IQueryable<TModel> query,
+            IEnumerable<string> includes = null,
+            Dictionary<string, MapExpression<TModel>> mappings = null,
+            Func<IQueryable<TModel>, IEnumerable<TModel>> conversion = null,
+            bool canUseAutoMapperProjection = true)
+            : base(request, query, includes, mappings, conversion, canUseAutoMapperProjection)
+        {
+        }
+
+        public KendoGridEx(KendoGridBaseRequest request, IEnumerable<TModel> source)
+            : this(request, source.AsQueryable())
+        {
+        }
+
+        public KendoGridEx(KendoGridBaseRequest request, IEnumerable<TModel> source,
+            IEnumerable<string> includes = null,
+            Dictionary<string, MapExpression<TModel>> mappings = null,
+            Func<IQueryable<TModel>, IEnumerable<TModel>> conversion = null,
+            bool canUseAutoMapperProjection = true)
+            : base(request, source.AsQueryable(), includes, mappings, conversion, canUseAutoMapperProjection)
         {
         }
 
