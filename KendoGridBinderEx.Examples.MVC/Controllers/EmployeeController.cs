@@ -58,6 +58,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(vm => vm.SubFunctionId, opt => opt.MapFrom(m => m.SubFunction.Id))
                 .ForMember(vm => vm.SubFunctionCode, opt => opt.MapFrom(m => m.SubFunction.Code))
                 .ForMember(vm => vm.SubFunctionName, opt => opt.MapFrom(m => m.SubFunction.Name))
+                .ForMember(vm => vm.ResourceType, opt => opt.UseValue("Employee"))
                 ;
 
             Mapper.CreateMap<EmployeeVM, Employee>()
@@ -76,6 +77,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
                 .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
                 .ForMember(vm => vm.FunctionCode, opt => opt.MapFrom(m => m.Function.Code))
                 .ForMember(vm => vm.SubFunctionCode, opt => opt.MapFrom(m => m.SubFunction.Code))
+                .ForMember(vm => vm.ResourceType, opt => opt.UseValue("Employee"))
                 ;
 
             Mapper.CreateMap<EmployeeDetailVM, Employee>()

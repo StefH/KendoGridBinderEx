@@ -32,7 +32,7 @@ namespace KendoGridBinderEx
     public class KendoGridEx<TEntity, TViewModel>
     {
         private readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> _conversion;
-        private readonly Dictionary<string, string> _mappings;
+        private readonly Dictionary<string, MapExpression<TEntity>> _mappings;
         private readonly IQueryable<TEntity> _query;
 
         public object Groups { get; set; }
@@ -43,7 +43,7 @@ namespace KendoGridBinderEx
         public KendoGridEx(KendoGridBaseRequest request,
             IQueryable<TEntity> query,
             IEnumerable<string> includes = null,
-            Dictionary<string, string> mappings = null,
+            Dictionary<string, MapExpression<TEntity>> mappings = null,
             Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion = null,
             bool canUseAutoMapperProjection = true)
         {
@@ -92,10 +92,7 @@ namespace KendoGridBinderEx
             }
         }
 
-        protected KendoGridEx(KendoGridBaseRequest request, IEnumerable<TEntity> entities,
-            Dictionary<string, string> mappings,
-            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion
-            )
+        protected KendoGridEx(KendoGridBaseRequest request, IEnumerable<TEntity> entities, Dictionary<string, MapExpression<TEntity>> mappings, Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion)
             : this(request, entities.AsQueryable(), null, mappings, conversion)
         {
         }
@@ -113,13 +110,13 @@ namespace KendoGridBinderEx
 
         private IQueryable<TEntity> ApplyFiltering(IQueryable<TEntity> query, FilterObjectWrapper filter)
         {
-            var filtering = GetFiltering(filter);
+            string filtering = GetFiltering(filter);
             return filtering != null ? query.Where(filtering) : query;
         }
 
         private IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, IEnumerable<SortObject> sortObjects)
         {
-            var sorting = GetSorting(sortObjects) ?? query.ElementType.FirstSortableProperty();
+            string sorting = GetSorting(sortObjects) ?? query.ElementType.FirstSortableProperty();
             return query.OrderBy(sorting);
         }
 
@@ -322,12 +319,12 @@ namespace KendoGridBinderEx
 
         protected string MapFieldfromViewModeltoEntity(string field)
         {
-            return (_mappings != null && field != null && _mappings.ContainsKey(field)) ? _mappings[field] : field;
+            return (_mappings != null && field != null && _mappings.ContainsKey(field)) ? _mappings[field].Path : field;
         }
 
         protected string MapFieldfromEntitytoViewModel(string field)
         {
-            return (_mappings != null && field != null && _mappings.ContainsValue(field)) ? _mappings.First(kvp => kvp.Value == field).Key : field;
+            return (_mappings != null && field != null && _mappings.Any(m => m.Value.Path == field)) ? _mappings.First(kvp => kvp.Value.Path == field).Key : field;
         }
 
         public static Func<IQueryable<TEntity>, IEnumerable<TViewModel>> GetAutoMapperConversion(bool canUseAutoMapperProjection = true)

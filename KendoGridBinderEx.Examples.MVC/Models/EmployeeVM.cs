@@ -25,6 +25,8 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public string SubFunctionCode { get; set; }
 
         public bool IsAssigned { get; set; }
+
+        public string ResourceType { get; set; }
     }
 
     public class EmployeeVM : IEntity
@@ -87,5 +89,7 @@ namespace KendoGridBinderEx.Examples.MVC.Models
         public int? Assigned { get; set; }
 
         public bool IsAssigned { get; set; }
+
+        public string ResourceType { get; set; }
     }
 }

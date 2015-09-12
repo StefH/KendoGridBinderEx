@@ -42,8 +42,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TViewModel : class, IEntity, new()
     {
         protected readonly IBaseService<TEntity> Service;
-        protected readonly Dictionary<string, string> KendoGridExMappings;
-        protected readonly Dictionary<string, List<string>> Mappings = new Dictionary<string, List<string>>();
+        protected readonly Dictionary<string, MapExpression<TEntity>> KendoGridExMappings;
+        protected readonly Dictionary<string, List<MapExpression<TEntity>>> Mappings = new Dictionary<string, List<MapExpression<TEntity>>>();
 
         protected BaseMvcController(IBaseService<TEntity> service)
         {
@@ -55,12 +55,13 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             {
                 foreach (var mapping in KendoGridExMappings)
                 {
-                    Mappings.Add(mapping.Key, new List<string> { mapping.Value });
+                    Mappings.Add(mapping.Key, new List<MapExpression<TEntity>> { mapping.Value });
                 }
 
-                foreach (var mapping in KendoGridExMappings.Where(m => m.Value.Contains('.')))
+                foreach (var mapping in KendoGridExMappings.Where(m => m.Value.Path.Contains('.')))
                 {
-                    Mappings[mapping.Key].Add(mapping.Value.Split('.').First());
+                    mapping.Value.Path = mapping.Value.Path.Split('.').First();
+                    Mappings[mapping.Key].Add(mapping.Value);
                 }
             }
         }
@@ -88,12 +89,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         #region AutoMapper
         protected string MapFieldfromViewModeltoEntity(string field)
         {
-            return (KendoGridExMappings != null && field != null && KendoGridExMappings.ContainsKey(field)) ? KendoGridExMappings[field] : field;
+            return (KendoGridExMappings != null && field != null && KendoGridExMappings.ContainsKey(field)) ? KendoGridExMappings[field].Path : field;
         }
 
         protected string MapFieldfromEntitytoViewModel(string field)
         {
-            return (KendoGridExMappings != null && field != null && KendoGridExMappings.ContainsValue(field)) ? KendoGridExMappings.First(kvp => kvp.Value == field).Key : field;
+            return (KendoGridExMappings != null && field != null && KendoGridExMappings.Any(m => m.Value.Path == field)) ? KendoGridExMappings.First(kvp => kvp.Value.Path == field).Key : field;
         }
 
         protected virtual TViewModel Map(TEntity entity)
@@ -260,7 +261,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             foreach (var error in validationResult.Errors)
             {
-                var found = Mappings.FirstOrDefault(mappings => mappings.Value.Any(s => s == error.PropertyName));
+                var found = Mappings.FirstOrDefault(mappings => mappings.Value.Any(s => s.Path == error.PropertyName));
                 var key = found.Key ?? error.PropertyName;
                 modelState.AddModelError(key, error.ErrorMessage);
             }

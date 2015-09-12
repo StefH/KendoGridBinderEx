@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
+using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Extensions;
 using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.UnitTests.Entities;
@@ -16,6 +17,21 @@ namespace KendoGridBinderEx.UnitTests
     [TestFixture]
     public class KendoGridExUnitTests : TestHelper
     {
+        [Test]
+        public void AutomapperUtilsTest()
+        {
+            var employees = InitEmployeesWithData().AsQueryable();
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
+            };
+
+            var companyIds = employees.Select(mappings.First().Value.Expression).ToList();
+            Assert.AreEqual(12, companyIds.Count);
+            Assert.AreEqual(1, companyIds.First());
+        }
+
         [Test]
         public void Test_KendoGridModelBinder_Grid_Page()
         {
@@ -107,7 +123,11 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CompanyName", "Company.Name" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
+            };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
             Assert.IsNotNull(kendoGrid);
 
@@ -143,7 +163,12 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } },
+                { "CountryName", new MapExpression<Employee> { Path = "Country.Name", Expression = m => m.Country.Name } }
+            };
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
 
             Assert.IsNull(kendoGrid.Data);
@@ -196,7 +221,11 @@ namespace KendoGridBinderEx.UnitTests
             
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
+            };
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
 
             Assert.IsNull(kendoGrid.Groups);
@@ -257,7 +286,11 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
+            };
             var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
 
             Assert.IsNull(kendoGrid.Groups);
@@ -296,7 +329,10 @@ namespace KendoGridBinderEx.UnitTests
             var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
+            };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
 
             Assert.IsNull(kendoGrid.Data);
@@ -468,7 +504,12 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" }, { "CountryName", "Country.Name" }, { "CompanyName", "Company.Name" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } },
+                { "CountryName", new MapExpression<Employee> { Path = "Country.Name", Expression = m => m.Country.Name } }
+            };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
 
             Assert.IsNull(kendoGrid.Data);
@@ -537,11 +578,11 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var mappings = new Dictionary<string, string>
+            var mappings = new Dictionary<string, MapExpression<Employee>>
             {
-                {"CompanyId", "Company.Id"},
-                {"CountryName", "Country.Name"},
-                {"CompanyName", "Company.Name"}
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } },
+                { "CountryName", new MapExpression<Employee> { Path = "Country.Name", Expression = m => m.Country.Name } }
             };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
 
@@ -579,7 +620,10 @@ namespace KendoGridBinderEx.UnitTests
             var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
+            };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
 
             Assert.IsNotNull(kendoGrid);
@@ -615,7 +659,10 @@ namespace KendoGridBinderEx.UnitTests
             var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
+            };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
 
             Assert.IsNotNull(kendoGrid);
@@ -650,7 +697,10 @@ namespace KendoGridBinderEx.UnitTests
             var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
-            var mappings = new Dictionary<string, string> { { "CompanyId", "Company.Id" } };
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
+            };
             var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
 
             Assert.IsNull(kendoGrid.Data);

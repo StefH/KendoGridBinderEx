@@ -30,7 +30,7 @@ namespace KendoGridBinderEx.Examples.Business.Repository
         #region IRepositoryEx<T> Members
         public IQueryable<TEntity> AsQueryable(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return PerformInclusions(includeProperties, _objectSet.AsQueryable()).InterceptWith(new PropertyVisitor());
+            return PerformInclusions(_objectSet.AsQueryable(), includeProperties).InterceptWith(new PropertyVisitor());
         }
 
         public IQueryContext<TEntity> GetQueryContext(params Expression<Func<TEntity, object>>[] includeProperties)
@@ -136,8 +136,13 @@ namespace KendoGridBinderEx.Examples.Business.Repository
         }
         #endregion
 
-        private static IQueryable<TEntity> PerformInclusions(IEnumerable<Expression<Func<TEntity, object>>> includeProperties, IQueryable<TEntity> query)
+        private static IQueryable<TEntity> PerformInclusions([NotNull] IQueryable<TEntity> query, IEnumerable<Expression<Func<TEntity, object>>> includeProperties = null)
         {
+            if (includeProperties == null)
+            {
+                return query;
+            }
+
             return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }

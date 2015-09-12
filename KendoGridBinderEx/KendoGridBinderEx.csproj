@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperExtensions\AutoMapperUtils.cs" />
+    <Compile Include="AutoMapperExtensions\MapExpression.cs" />
     <Compile Include="Containers\Json\AggregateObject.cs" />
     <Compile Include="Containers\Json\Filter.cs" />
     <Compile Include="Containers\Json\GridRequest.cs" />

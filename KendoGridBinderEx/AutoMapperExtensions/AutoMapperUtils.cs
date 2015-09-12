@@ -1,13 +1,57 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using KendoGridBinderEx.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace KendoGridBinderEx.AutoMapperExtensions
 {
     public static class AutoMapperUtils
     {
-        public static Dictionary<string, string> GetModelMappings<TEntity, TViewModel>(Dictionary<string, string> mappings = null)
+        private static string GetPath<T>(Expression<Func<T, object>> expr)
+        {
+            var stack = new Stack<string>();
+
+            MemberExpression me;
+            switch (expr.Body.NodeType)
+            {
+                case ExpressionType.Convert:
+                case ExpressionType.ConvertChecked:
+                    var ue = expr.Body as UnaryExpression;
+                    me = ((ue != null) ? ue.Operand : null) as MemberExpression;
+                    break;
+                default:
+                    me = expr.Body as MemberExpression;
+                    break;
+            }
+
+            while (me != null)
+            {
+                stack.Push(me.Member.Name);
+                me = me.Expression as MemberExpression;
+            }
+
+            return string.Join(".", stack.ToArray());
+        }
+
+        /// <summary>
+        /// http://blog.cincura.net/232247-casting-expression-func-tentity-tproperty-to-expression-func-tentity-object/
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
+        private static Expression<Func<TEntity, object>> Convert<TEntity>(LambdaExpression expression)
+        {
+            Type propertyType = expression.Body.Type;
+
+            if (!propertyType.IsValueType)
+                return Expression.Lambda<Func<TEntity, object>>(expression.Body, expression.Parameters);
+
+            return Expression.Lambda<Func<TEntity, object>>(Expression.Convert(expression.Body, typeof(object)), expression.Parameters);
+        }
+
+        public static Dictionary<string, MapExpression<TEntity>> GetModelMappings<TEntity, TViewModel>(Dictionary<string, MapExpression<TEntity>> mappings = null)
         {
             if (SameTypes<TEntity, TViewModel>())
             {
@@ -20,7 +64,7 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                 return null;
             }
 
-            mappings = mappings ?? new Dictionary<string, string>();
+            mappings = mappings ?? new Dictionary<string, MapExpression<TEntity>>();
 
             // Custom expressions because they do not map field to field
             foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression != null))
@@ -34,9 +78,15 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                 string destination = body.Replace(string.Format("{0}.", tag), string.Empty);
                 string source = propertyMap.DestinationProperty.Name;
 
+                var customExpression = new MapExpression<TEntity>
+                {
+                    Path = destination,
+                    Expression = Convert<TEntity>(propertyMap.CustomExpression)
+                };
+
                 if (!mappings.ContainsKey(source))
                 {
-                    mappings.Add(source, destination);
+                    mappings.Add(source, customExpression);
                 }
             }
 
@@ -50,9 +100,15 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                     var kendoResolver = customResolver as IKendoGridExValueResolver;
                     string destination = kendoResolver.GetDestinationProperty();
 
+                    var customExpression = new MapExpression<TEntity>
+                    {
+                        Path = destination,
+                        Expression = Convert<TEntity>(propertyMap.CustomExpression)
+                    };
+
                     if (!mappings.ContainsKey(source))
                     {
-                        mappings.Add(source, destination);
+                        mappings.Add(source, customExpression);
                     }
                 }
             }
