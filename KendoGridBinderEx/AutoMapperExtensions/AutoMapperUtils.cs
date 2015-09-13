@@ -35,22 +35,6 @@ namespace KendoGridBinderEx.AutoMapperExtensions
             return string.Join(".", stack.ToArray());
         }
 
-        /// <summary>
-        /// http://blog.cincura.net/232247-casting-expression-func-tentity-tproperty-to-expression-func-tentity-object/
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="expression">The expression.</param>
-        /// <returns></returns>
-        private static Expression<Func<TEntity, object>> Convert<TEntity>(LambdaExpression expression)
-        {
-            Type propertyType = expression.Body.Type;
-
-            if (!propertyType.IsValueType)
-                return Expression.Lambda<Func<TEntity, object>>(expression.Body, expression.Parameters);
-
-            return Expression.Lambda<Func<TEntity, object>>(Expression.Convert(expression.Body, typeof(object)), expression.Parameters);
-        }
-
         public static Dictionary<string, MapExpression<TEntity>> GetModelMappings<TEntity, TViewModel>(Dictionary<string, MapExpression<TEntity>> mappings = null)
         {
             if (SameTypes<TEntity, TViewModel>())
@@ -81,7 +65,7 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                 var customExpression = new MapExpression<TEntity>
                 {
                     Path = destination,
-                    Expression = Convert<TEntity>(propertyMap.CustomExpression)
+                    Expression = propertyMap.CustomExpression.ToTypedExpression<TEntity>()
                 };
 
                 if (!mappings.ContainsKey(source))
@@ -103,7 +87,7 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                     var customExpression = new MapExpression<TEntity>
                     {
                         Path = destination,
-                        Expression = Convert<TEntity>(propertyMap.CustomExpression)
+                        Expression = propertyMap.CustomExpression.ToTypedExpression<TEntity>(),
                     };
 
                     if (!mappings.ContainsKey(source))
