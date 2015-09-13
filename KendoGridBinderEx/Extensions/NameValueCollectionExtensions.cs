@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Extensions
 {
@@ -9,11 +10,11 @@ namespace KendoGridBinderEx.Extensions
         public static Dictionary<string, string> ToDictionary(this NameValueCollection source)
         {
             return source != null ?
-                source.Cast<string>().Select(s => new { Key = s, Value = source.GetValues(s)[0] }).ToDictionary(p => p.Key, p => p.Value) :
+                source.Cast<string>().Select(s => new { Key = s, Value = source.Get(s) }).ToDictionary(p => p.Key, p => p.Value) :
                 null;
         }
 
-        public static T GetQueryValue<T>(this NameValueCollection queryString, string key, T defaultValue)
+        public static T GetQueryValue<T>([NotNull] this NameValueCollection queryString, string key, T defaultValue = default(T))
         {
             string stringValue = queryString[key];
 
