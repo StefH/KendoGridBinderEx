@@ -33,8 +33,6 @@ namespace KendoGridBinderEx.Examples.MVC
 
             ModelBinders.Binders.Add(typeof(DateTime), new MyDateTimeBinder());
 
-            InitAutoMapper();
-
             if (_miniProfilerEnabled)
             {
                 MiniProfiler.Settings.PopupRenderPosition = RenderPosition.Right;
@@ -44,6 +42,8 @@ namespace KendoGridBinderEx.Examples.MVC
             }
 
             UnityMVCBootstrapper.Initialise(UnityBootstrapper.Container);
+
+            InitAutoMapper(type => UnityBootstrapper.Container.Resolve(type, null));
 
             FluentValidationModelValidatorProvider.Configure();
         }
@@ -64,8 +64,13 @@ namespace KendoGridBinderEx.Examples.MVC
             }
         }
 
-        private static void InitAutoMapper()
+        private static void InitAutoMapper(Func<Type, object> resolver)
         {
+            Mapper.Initialize(map =>
+            {
+                map.ConstructServicesUsing(resolver);
+            });
+
             // Call static method 'InitAutoMapper' on all controllers.
             var assemblies = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.FullName.Contains("KendoGridBinderEx.Examples.MVC.Controllers") && t.Name.EndsWith("Controller")).ToList();
             foreach (var controller in assemblies)

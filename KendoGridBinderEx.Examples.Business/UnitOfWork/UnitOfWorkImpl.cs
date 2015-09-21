@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Examples.Business.UnitOfWork

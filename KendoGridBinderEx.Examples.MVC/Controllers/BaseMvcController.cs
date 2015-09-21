@@ -76,16 +76,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             return Service.AsQueryableNoTracking();
         }
 
-        /// <summary>
-        /// Get all services needed for this controller
-        /// </summary>
-        /// <returns></returns>
-        protected virtual List<object> GetServices()
-        {
-            var baseServices = new List<IBaseService<TEntity>> { Service };
-            return baseServices.Cast<object>().ToList();
-        }
-
         #region AutoMapper
         protected string MapFieldfromViewModeltoEntity(string field)
         {
@@ -131,8 +121,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected virtual TEntity Map(TViewModel viewModel, TEntity entity)
         {
             return entity == null ?
-                Mapper.Map<TEntity>(viewModel, opt => opt.Items["Services"] = GetServices()) :
-                Mapper.Map(viewModel, entity, opt => opt.Items["Services"] = GetServices());
+                Mapper.Map<TEntity>(viewModel) :
+                Mapper.Map(viewModel, entity);
         }
         #endregion
 

@@ -7,10 +7,10 @@ using System.Threading;
 using System.Web.Mvc;
 using AutoMapper;
 using FluentValidation.Results;
+using KendoGridBinderEx.Examples.Business.AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
-using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.Examples.MVC.Models;
 using KendoGridBinderEx.ModelBinder.Mvc;
 using KendoGridBinderEx.QueryableExtensions;
@@ -82,17 +82,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
             Mapper.CreateMap<EmployeeDetailVM, Employee>()
                 .ForAllMembers(opt => opt.Ignore());
-        }
-
-        protected override List<object> GetServices()
-        {
-            var services = base.GetServices();
-            services.Add(_companyService);
-            services.Add(_functionService);
-            services.Add(_subfunctionService);
-            services.Add(_countryService);
-
-            return services;
         }
 
         protected override IQueryable<Employee> GetQueryable()
