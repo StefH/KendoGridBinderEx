@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("5.0.0.9")] // I'll keep this to 5.0.0.9 for now
 [assembly: AssemblyFileVersion("5.0.0.9")] // I'll keep this to 5.0.0.9 for now
-[assembly: AssemblyInformationalVersion("5.0.0.10")] // Change this to get the correct $version$ in the NuGet package
+[assembly: AssemblyInformationalVersion("5.0.0.11")] // Change this to get the correct $version$ in the NuGet package
