@@ -11,7 +11,7 @@
         <description>This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel &lt;&gt; Entity.</description>
         <summary />
         <releaseNotes>
-* Fixed bug in AggregateHelper and GroupHelper
+* Upgraded to .NET 4.5.2
         </releaseNotes>
         <tags>Kendo Grid Model Binder ModelBinder MVC AutoMapper</tags>
     </metadata>
