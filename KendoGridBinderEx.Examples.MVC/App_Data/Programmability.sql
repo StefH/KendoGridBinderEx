@@ -7,7 +7,7 @@ AS
 SELECT
 	e.*,
 	cast(case when e.LastName like '%smith' then 1 else 0 end as bit) as IsManager,
-	CONCAT(e.FirstName, ' ', e.LastName) as FullName,
+	e.FirstName + ' ' + e.LastName as FullName,
 	cast(case when e.Assigned > 1 then 1 else 0 end as bit) as IsAssigned,
 	c.Code as CountryCode,
 	c.Name as CountryName
