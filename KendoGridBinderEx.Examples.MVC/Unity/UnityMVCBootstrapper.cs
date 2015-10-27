@@ -26,6 +26,7 @@ namespace KendoGridBinderEx.Examples.MVC.Unity
             unityContainer.RegisterInstance(unityContainer.Resolve<DbContext>(), new PerThreadLifetimeManager());
 
             unityContainer.RegisterType<IEmployeeService, EmployeeService>();
+            unityContainer.RegisterType<IEmployeeViewService, EmployeeViewService>();
             unityContainer.RegisterType<IProductService, ProductService>();
             unityContainer.RegisterType<ICompanyService, CompanyService>();
             unityContainer.RegisterType<ICountryService, CountryService>();

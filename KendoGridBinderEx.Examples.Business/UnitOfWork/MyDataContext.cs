@@ -80,6 +80,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             modelBuilder.Configurations.Add(new RoleMap());
             modelBuilder.Configurations.Add(new SubFunctionMap());
             modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new EmployeeViewMap());
         }
     }
 

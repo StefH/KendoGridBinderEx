@@ -57,8 +57,8 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.5.5.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
@@ -94,6 +94,7 @@
     <Compile Include="Entities\Employee.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entities\EmployeeView.cs" />
     <Compile Include="Entities\Entity.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +107,7 @@
     <Compile Include="Entities\MainCompany.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entities\Mapping\EmployeeViewMap.cs" />
     <Compile Include="Entities\OU.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -134,6 +136,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Service\Implementation\EmployeeViewService.cs" />
+    <Compile Include="Service\Interface\IEmployeeViewService.cs" />
     <Compile Include="UnitOfWork\MyDataContext.cs" />
     <Compile Include="Entities\Mapping\CompanyMap.cs" />
     <Compile Include="Entities\Mapping\CountryMap.cs" />
@@ -192,7 +196,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalResourcesLiterals_Business.cs</LastGenOutput>
     </Content>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GlobalResources_Business.resx">

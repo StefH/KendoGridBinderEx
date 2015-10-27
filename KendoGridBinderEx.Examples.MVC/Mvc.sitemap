@@ -18,6 +18,9 @@
       <mvcSiteMapNode title="List Managers (with Angular)" action="IndexManagersAngular"/>
       <mvcSiteMapNode title="Create Employee" action="Create"/>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="EmployeeView" controller="EmployeeView" clickable="false">
+      <mvcSiteMapNode title="List" action="Index"/>
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Products" controller="Product" clickable="false">
       <mvcSiteMapNode title="List Products" action="Index"/>
       <mvcSiteMapNode title="Create Product" action="Create"/>
