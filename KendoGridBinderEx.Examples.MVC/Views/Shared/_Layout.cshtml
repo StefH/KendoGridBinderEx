@@ -30,13 +30,34 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
-                @Html.MvcSiteMap().Menu()
+                 <div id="div-menu" display="none">@Html.MvcSiteMap().Menu()</div>
                 <script>
-                    //$(document).ready(function () {
-                    $("#menu").kendoMenu();
-                    //});
-                </script>
+                    $("#menu").kendoMenu({
+                        select: function (e) {
+                            $("#menu").find(".k-state-selected").removeClass("k-state-selected");
+                            $(e.item).addClass("k-state-selected");
+                        }
+                    });
 
+                    $(document).ready(function () {
+                        $.each(
+                            $("#menu").find(".k-link"),
+                            function (i, data) {
+                                if (data.href === location.href) {
+                                    $(data).addClass("k-state-selected");
+
+                                    var parentNode = $(data.parentNode.parentNode.parentNode);
+                                    if ($(parentNode).hasClass("k-item")) {
+                                        parentNode.addClass("k-state-selected");
+                                    }
+                                }
+                            }
+                        );
+
+                        $("div-menu").show();
+                    });
+				</script>
+				<br/>
                 Hello, '<span class="username">@User.Identity.Name</span>' : Roles '@string.Join(",", Roles.GetRolesForUser(User.Identity.Name))' (All Roles: @string.Join(",", Roles.GetAllRoles()) )
             </div>
         </div>
