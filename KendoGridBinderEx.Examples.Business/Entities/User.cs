@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using KendoGridBinderEx.Examples.Business.Enums;
-using PropertyTranslator;
+using Linq.PropertyTranslator.Core;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {

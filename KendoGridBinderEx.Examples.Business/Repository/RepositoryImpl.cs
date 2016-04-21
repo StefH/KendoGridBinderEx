@@ -8,8 +8,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using KendoGridBinderEx.Examples.Business.QueryContext;
-using PropertyTranslator;
-using QueryInterceptor;
+using Linq.PropertyTranslator.Core;
+using QueryInterceptor.Core;
 
 namespace KendoGridBinderEx.Examples.Business.Repository
 {

@@ -6,22 +6,15 @@ namespace KendoGridBinderEx.Examples.Security
 {
     public class ApplicationUser : IPrincipal
     {
-        private readonly IIdentity _identity;
         private readonly User _user;
 
         public ApplicationUser(User user)
         {
             _user = user;
-            _identity = new ApplicationIdentity(user.IdentityName, true);
+            Identity = new ApplicationIdentity(user.IdentityName, true);
         }
 
-        public IIdentity Identity
-        {
-            get
-            {
-                return _identity;
-            }
-        }
+        public IIdentity Identity { get; }
 
         public bool IsInRole(string role)
         {
@@ -31,13 +24,10 @@ namespace KendoGridBinderEx.Examples.Security
 
     public class ApplicationIdentity : IIdentity
     {
-        private readonly string _name;
-        private readonly bool _authenticated;
-
         public ApplicationIdentity(string name, bool authenticated)
         {
-            _name = name;
-            _authenticated = authenticated;
+            Name = name;
+            IsAuthenticated = authenticated;
         }
 
         public string AuthenticationType
@@ -45,20 +35,8 @@ namespace KendoGridBinderEx.Examples.Security
             get { throw new NotImplementedException(); }
         }
 
-        public bool IsAuthenticated
-        {
-            get
-            {
-                return _authenticated;
-            }
-        }
+        public bool IsAuthenticated { get; }
 
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
+        public string Name { get; }
     }
 }

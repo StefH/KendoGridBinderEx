@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 
 namespace KendoGridBinderEx.Extensions
 {
@@ -17,25 +17,25 @@ namespace KendoGridBinderEx.Extensions
             public object Value { get; set; }
         }
 
-        public static object GetPropertyValue(this object self, string propertyName)
-        {
-            return self.GetPropertyValue<object>(propertyName);
-        }
+        //public static object GetPropertyValue(this object self, string propertyName)
+        //{
+        //    return self.GetPropertyValue<object>(propertyName);
+        //}
 
-        public static T GetPropertyValue<T>(this object self, string propertyName)
-        {
-            var type = self.GetType();
+        //public static T GetPropertyValue<T>(this object self, string propertyName)
+        //{
+        //    var type = self.GetType();
 
-            var propInfo = type.GetProperty(propertyName.Split('.').Last()); // In case the propertyName contains a . like Company.Name, take last part.
-            try
-            {
-                return (T)propInfo.GetValue(self, null);
-            }
-            catch
-            {
-                return default(T);
-            }
-        }
+        //    var propInfo = type.GetProperty(propertyName.Split('.').Last()); // In case the propertyName contains a . like Company.Name, take last part.
+        //    try
+        //    {
+        //        return (T)propInfo.GetValue(self, null);
+        //    }
+        //    catch
+        //    {
+        //        return default(T);
+        //    }
+        //}
 
         /// <summary>
         /// Combines the property into a list

@@ -8,20 +8,8 @@ namespace KendoGridBinderEx.Examples.Security
 {
     public class MyRoleProvider : RoleProvider
     {
-        private string _applicationName;
-
         /// <inheritdoc />
-        public override string ApplicationName
-        {
-            get
-            {
-                return _applicationName;
-            }
-            set
-            {
-                _applicationName = value;
-            }
-        }
+        public override string ApplicationName { get; set; }
 
         /// <inheritdoc />
         public override void AddUsersToRoles(string[] userNames, string[] roleNames)
@@ -66,7 +54,7 @@ namespace KendoGridBinderEx.Examples.Security
         {
             if (string.IsNullOrEmpty(userName))
             {
-                throw new ArgumentNullException("userName is null or empty");
+                throw new ArgumentNullException(nameof(userName), "userName is null or empty");
             }
 
             return RoleService.AsQueryableNoTracking().Where(r => r.Users.Any(u => u.IdentityName == userName)).Select(r => r.Name).ToArray();
@@ -90,20 +78,8 @@ namespace KendoGridBinderEx.Examples.Security
             return RoleService.AsQueryableNoTracking().Any(r => r.Name == roleName);
         }
 
-        private static IRoleService RoleService
-        {
-            get
-            {
-                return UnityResolver.Resolve<IRoleService>();
-            }
-        }
+        private static IRoleService RoleService => UnityResolver.Resolve<IRoleService>();
 
-        private static IUserRoleService UserRoleService
-        {
-            get
-            {
-                return UnityResolver.Resolve<IUserRoleService>();
-            }
-        }
+        private static IUserRoleService UserRoleService => UnityResolver.Resolve<IUserRoleService>();
     }
 }

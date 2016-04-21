@@ -1,6 +1,6 @@
-﻿using PropertyTranslator;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Linq.PropertyTranslator.Core;
 
 namespace KendoGridBinderEx.Examples.Business.Entities
 {

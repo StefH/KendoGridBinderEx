@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using KendoGridBinderEx.AutoMapperExtensions;
@@ -147,11 +147,7 @@ namespace KendoGridBinderEx
                 .Distinct()
                 .ToList();
 
-            // new (new (sum(TEntity__.EmployeeNumber) as sum__Number) as Aggregates)
-            string aggregatesExpression = string.Format("new (new ({0}) as Aggregates)", string.Join(", ", convertedAggregateObjects));
-
             string includesX = string.Empty;
-
             if (includes != null && includes.Any())
             {
                 includesX = ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_")));
@@ -159,13 +155,14 @@ namespace KendoGridBinderEx
 
             // Execute the Dynamic Linq "Select" to get TEntity__ (and includes if needed). Also add a fake __Key__ property to allow grouping
             // Example : new ("__Key__" as __Key__, it AS TEntity__, it.Company as TEntity__Company, it.Company.MainCompany as TEntity__Company_MainCompany, it.Country as TEntity__Country)
-            var selectTEntityQuery = query.Select(string.Format("new (\"__Key__\" as __Key__, it AS TEntity__{0})", includesX));
+            var selectTEntityQuery = query.Select($"new (\"__Key__\" as __Key__, it AS TEntity__{includesX})");
 
             // Group by the __Key__ to allow aggregates to be calculated
             var groupByQuery = selectTEntityQuery.GroupBy("__Key__");
 
             // Execute the Dynamic Linq "Select" to add the aggregates
             // Example : new (new (Sum(TEntity__.Id) as sum__Id, Min(TEntity__.Id) as min__Id, Max(TEntity__.Id) as max__Id, Count() as count__Id, Average(TEntity__.Id) as average__Id) as Aggregates)
+            string aggregatesExpression = $"new (new ({string.Join(", ", convertedAggregateObjects)}) as Aggregates)";
             var aggregatesQuery = groupByQuery.Select(aggregatesExpression);
 
             // Try to get first result, cast to DynamicClass as use helper method to convert this to correct response
@@ -190,68 +187,67 @@ namespace KendoGridBinderEx
                     .ToList();
 
                 // , new (sum(TEntity__.EmployeeNumber) as sum__Number) as Aggregates
-                aggregatesExpression = string.Format(", new ({0}) as Aggregates", string.Join(", ", convertedAggregateObjects));
+                aggregatesExpression = $", new ({string.Join(", ", convertedAggregateObjects)}) as Aggregates";
             }
 
-            var sort = request.SortObjects != null ? request.SortObjects.ToList() : new List<SortObject>();
+            var sort = request.SortObjects?.ToList() ?? new List<SortObject>();
             bool hasSortObjects = sort.Any();
 
             // List[0] = LastName as Last
-            var groupByFields = request.GroupObjects.Select(s => string.Format("{0} as {1}", MapFieldfromViewModeltoEntity(s.Field), s.Field)).ToList();
+            var groupByFields = request.GroupObjects.Select(s => $"{MapFieldfromViewModeltoEntity(s.Field)} as {s.Field}").ToList();
 
             // new (new (LastName as Last) as GroupByFields)
-            var groupByExpressionX = string.Format("new (new ({0}) as GroupByFields)", string.Join(",", groupByFields));
+            var groupByExpressionX = $"new (new ({string.Join(",", groupByFields)}) as GroupByFields)";
 
             // new (Key.GroupByFields, it as Grouping, new (sum(TEntity__.EmployeeNumber) as sum__TEntity___EmployeeNumber) as Aggregates)
-            var selectExpressionBeforeOrderByX = string.Format("new (Key.GroupByFields, it as Grouping {0})", aggregatesExpression);
-            var groupSort = string.Join(",", request.GroupObjects.ToList().Select(s => string.Format("{0} {1}", MapFieldfromViewModeltoEntity(s.Field), s.Direction)));
+            var selectExpressionBeforeOrderByX = $"new (Key.GroupByFields, it as Grouping {aggregatesExpression})";
+            var groupSort = string.Join(",", request.GroupObjects.ToList().Select(s => $"{MapFieldfromViewModeltoEntity(s.Field)} {s.Direction}"));
 
             // Adam Downs moved sort to items vs group
             var orderByFieldsExpression = hasSortObjects ?
-                string.Join(",", sort.Select(s => string.Format("{0} {1}", MapFieldfromViewModeltoEntity(s.Field), s.Direction))) :
+                string.Join(",", sort.Select(s => $"{MapFieldfromViewModeltoEntity(s.Field)} {s.Direction}")) :
                 MapFieldfromViewModeltoEntity(request.GroupObjects.First().Field);
 
             // new (GroupByFields, Grouping, Aggregates)
-            var selectExpressionAfterOrderByX = string.Format("new (GroupByFields, Grouping{0})", hasAggregates ? ", Aggregates" : string.Empty);
+            var selectExpressionAfterOrderByX = $"new (GroupByFields, Grouping{(hasAggregates ? ", Aggregates" : string.Empty)})";
 
-            // 
             string includesX = string.Empty;
             if (includes != null && includes.Any())
             {
                 includesX = ", " + string.Join(", ", includes.Select(i => "it." + i + " as TEntity__" + i.Replace(".", "_")));
             }
 
-            var limitedQuery = query.OrderBy(string.Join(",", new[] { groupSort, orderByFieldsExpression }));
+            IOrderedQueryable<TEntity> limitedQueryOrdered = query.OrderBy(string.Join(",", groupSort, orderByFieldsExpression));
+            IQueryable<TEntity> limitedQuery = limitedQueryOrdered;
 
             // Execute the Dynamic Linq for Paging
             if (request.Skip.HasValue && request.Skip > 0)
             {
-                limitedQuery = limitedQuery.Skip(request.Skip.Value);
+                limitedQuery = limitedQueryOrdered.Skip(request.Skip.Value);
             }
             if (request.Take.HasValue && request.Take > 0)
             {
-                limitedQuery = limitedQuery.Take(request.Take.Value);
+                limitedQuery = limitedQueryOrdered.Take(request.Take.Value);
             }
 
             // Execute the Dynamic Linq "GroupBy"
-            var groupByQuery = limitedQuery.GroupBy(groupByExpressionX, string.Format("new (it AS TEntity__{0})", includesX));
+            var groupByQuery = limitedQuery.GroupBy(groupByExpressionX, $"new (it AS TEntity__{includesX})");
 
             // Execute the Dynamic Linq "Select"
             var selectQuery = groupByQuery.Select(selectExpressionBeforeOrderByX);
 
             // Execute the Dynamic Linq "OrderBy"
-            var orderByQuery = selectQuery.OrderBy(string.Join(",", request.GroupObjects
-                .Select(s => string.Format("GroupByFields.{0} {1}", s.Field, s.Direction)).ToList()));
+            var orderByQuery = selectQuery.OrderBy(string.Join(",", request.GroupObjects.Select(s => $"GroupByFields.{s.Field} {s.Direction}").ToList()));
 
             // Execute the Dynamic Linq "Select" to get back the TEntity objects
             var tempQuery = orderByQuery.Select(selectExpressionAfterOrderByX, typeof(TEntity));
 
             // Create a valid List<KendoGroup> object
             var list = new List<KendoGroup>();
-            foreach (DynamicClass item in tempQuery)
+            foreach (DynamicClass item in tempQuery.ToDynamicList<DynamicClass>())
             {
-                var grouping = item.GetPropertyValue<IGrouping<object, object>>("Grouping");
-                var groupByDictionary = item.GetPropertyValue("GroupByFields").ToDictionary();
+                var grouping = item.GetDynamicProperty<IGrouping<object, object>>("Grouping");
+                var groupByDictionary = item.GetDynamicProperty<object>("GroupByFields").ToDictionary();
                 var aggregates = item.GetAggregatesAsDictionary();
 
                 Process(request.GroupObjects, groupByDictionary, grouping, aggregates, list);
@@ -322,7 +318,7 @@ namespace KendoGridBinderEx
                 {
                     var expression1 = filterObject.GetExpression1<TEntity>();
                     var expression2 = filterObject.GetExpression2<TEntity>();
-                    var combined = string.Format("({0} {1} {2})", expression1, filterObject.LogicToken, expression2);
+                    var combined = $"({expression1} {filterObject.LogicToken} {expression2})";
                     finalExpression += combined;
                 }
                 else
