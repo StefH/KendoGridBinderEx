@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A6398D29-1651-48BB-BB61-29884052E210}"
 	ProjectSection(SolutionItems) = preProject
@@ -27,11 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Infrastructure", "KendoGridBinderEx.Examples.Infrastructure\KendoGridBinderEx.Examples.Infrastructure.csproj", "{B69F4BED-660D-47B7-891B-EB1CC1421279}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{81D5D8D2-6314-4CB3-8E57-A6D30E16DB7E}"
-	ProjectSection(SolutionItems) = preProject
-		libs\System.Linq.Dynamic.Core.dll = libs\System.Linq.Dynamic.Core.dll
-		libs\System.Linq.Dynamic.Core.pdb = libs\System.Linq.Dynamic.Core.pdb
-		libs\System.Linq.Dynamic.Core.xml = libs\System.Linq.Dynamic.Core.xml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
