@@ -358,7 +358,7 @@ namespace KendoGridBinderEx
                 // To put it another way - don't use Project.To unless you're passing that to EF or NH or another DB query provider that knows what to do with the expression tree.
                 if (canUseAutoMapperProjection)
                 {
-                    conversion = q => Enumerable.AsEnumerable(q.Project().To<TViewModel>());
+                    conversion = q => Enumerable.AsEnumerable(q.ProjectTo<TViewModel>());
                 }
                 else
                 {

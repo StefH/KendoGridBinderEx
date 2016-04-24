@@ -94,12 +94,12 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         protected virtual ICollection<TViewModel> ProjectToList(IQueryable<TEntity> queryableEntities)
         {
-            return queryableEntities.Project().To<TViewModel>().ToList();
+            return queryableEntities.ProjectTo<TViewModel>().ToList();
         }
 
         protected virtual IQueryable<TViewModel> ProjectToQueryable(IQueryable<TEntity> queryableEntities)
         {
-            return queryableEntities.Project().To<TViewModel>();
+            return queryableEntities.ProjectTo<TViewModel>();
         }
 
         /// <summary>
