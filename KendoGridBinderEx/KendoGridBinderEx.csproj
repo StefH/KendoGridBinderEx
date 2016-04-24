@@ -146,9 +146,6 @@
     <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libs\QueryInterceptor.Core.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="libs\System.Linq.Dynamic.Core.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

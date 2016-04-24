@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Infrastructure", "KendoGridBinderEx.Examples.Infrastructure\KendoGridBinderEx.Examples.Infrastructure.csproj", "{B69F4BED-660D-47B7-891B-EB1CC1421279}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{81D5D8D2-6314-4CB3-8E57-A6D30E16DB7E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
