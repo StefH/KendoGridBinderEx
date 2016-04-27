@@ -1,3 +1,7 @@
+#KendoGridBinderEx
+
+[![Build status](https://ci.appveyor.com/api/projects/status/6ynbga07r315xhb8?svg=true)](https://ci.appveyor.com/project/StefH/kendogridbinderex)
+
 ## Install
 ```html
 PM> Install-Package KendoGridBinderEx
