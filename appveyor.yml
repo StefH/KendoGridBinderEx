@@ -20,7 +20,12 @@ environment:
 
 build_script:
 - appveyor-retry dotnet restore KendoGridBinderEx -v Minimal
+- appveyor-retry dotnet restore KendoGridBinderEx.Examples.Business -v Minimal
+- appveyor-retry dotnet restore KendoGridBinderEx.Examples.Infrastructure -v Minimal
+
 - dotnet build KendoGridBinderEx\project.json -c %CONFIGURATION%
+- cmd: msbuild KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj -c %CONFIGURATION%
+
 - dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts KendoGridBinderEx\project.json
 
 artifacts:

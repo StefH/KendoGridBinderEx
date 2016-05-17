@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.MVC", "KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj", "{568C9351-94C2-412A-86BC-F1A10FD4DF01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Business", "KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj", "{28B83391-37D5-4DFF-8A32-6D508FB191B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0} = {39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Security", "KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj", "{B67D5A1D-8963-43DF-8167-5887CBB73E7F}"
 EndProject

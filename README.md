@@ -7,6 +7,10 @@
 PM> Install-Package KendoGridBinderEx
 ```
 
+## Supported dotnet versions
+- .net 4.5
+- .net 4.5.x
+
 ## Demo
 http://kendogridbinderex.apphb.com
 
