@@ -1,0 +1,48 @@
+{
+    "version": "5.0.1",
+    "title": "KendoGridBinderEx",
+    "description": "This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel <> Entity.",
+    "authors": [ "Stef Heyenrath" ],
+
+    "packOptions": {
+        "summary": "This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel <> Entity.",
+        "tags": [ "Kendo", "Grid", "Model", "AutoMapper", "MVC", "ModelBinder", "Binder" ],
+        "owners": [ "Stef Heyenrath" ],
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/StefH/KendoGridBinderEx"
+        },
+        "projectUrl": "https://github.com/StefH/KendoGridBinderEx",
+        "licenseUrl": "https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE",
+        "releaseNotes": "new dotnet RC2 project"
+    },
+
+    "buildOptions": {
+    },
+
+    "dependencies": {
+        "JetBrains.Annotations": {
+            "version": "10.1.4",
+            "type": "build"
+        },
+
+        "System.Linq.Dynamic.Core": "1.0.2"
+    },
+
+    "frameworks": {
+        "net452": {
+            "frameworkAssemblies": {
+                "System.Web": "",
+                "System.Runtime.Serialization": ""
+            },
+            "dependencies": {
+                "AutoMapper": "4.2.1",
+                "Newtonsoft.Json": "6.0.8",
+
+                "Microsoft.AspNet.Mvc": "5.2.3",
+                "Microsoft.AspNet.WebApi.Client": "5.2.3",
+                "Microsoft.AspNet.WebApi.Core": "5.2.3"
+            }
+        }
+    }
+}

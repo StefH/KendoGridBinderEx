@@ -1126,10 +1126,6 @@
       <Project>{b67d5a1d-8963-43df-8167-5887cbb73e7f}</Project>
       <Name>KendoGridBinderEx.Examples.Security</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.csproj">
-      <Project>{b99bde11-9306-4736-97ac-b6640c342f4e}</Project>
-      <Name>KendoGridBinderEx</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1168,7 +1164,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
