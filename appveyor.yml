@@ -22,7 +22,7 @@ build_script:
 - appveyor-retry dotnet restore KendoGridBinderEx -v Minimal
 - appveyor-retry nuget restore KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj -PackagesDirectory packages
 - appveyor-retry nuget restore KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj -PackagesDirectory packages
-- appveyor-retry nuget restore KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
+- appveyor-retry nuget restore KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
 
 - dotnet build KendoGridBinderEx\project.json -c %CONFIGURATION%
 - cmd: msbuild KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
@@ -35,4 +35,4 @@ artifacts:
 - path: artifacts\**\*.*
 
 cache:
-- '%USERPROFILE%\.nuget\packages'
+- packages
