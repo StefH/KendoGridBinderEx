@@ -20,6 +20,9 @@ environment:
 
 build_script:
 - appveyor-retry dotnet restore KendoGridBinderEx -v Minimal
+- appveyor-retry nuget restore KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj
+- appveyor-retry nuget restore KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj
+- appveyor-retry nuget restore KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj
 
 - dotnet build KendoGridBinderEx\project.json -c %CONFIGURATION%
 - cmd: msbuild KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
