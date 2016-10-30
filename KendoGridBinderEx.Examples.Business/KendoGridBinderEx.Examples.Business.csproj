@@ -73,8 +73,8 @@
     <Reference Include="KendoGridBinderEx">
       <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net452\KendoGridBinderEx.dll</HintPath>
     </Reference>
-    <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Linq.PropertyTranslator.Core.1.0.1\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>
+    <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Linq.PropertyTranslator.Core.1.0.3.0\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
@@ -91,8 +91,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Linq.Dynamic.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Dynamic.Core.1.0.2\lib\net452\System.Linq.Dynamic.Core.dll</HintPath>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.0.6.6\lib\net452\System.Linq.Dynamic.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Transactions" />
