@@ -58,12 +58,12 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
         public void TableTruncate(string table)
         {
-            Database.ExecuteSqlCommand($"TRUNCATE TABLE [{table}]");
+            Database.ExecuteSqlCommand($"TRUNCATE TABLE [dbo].[{table}]");
         }
 
         public void TableDelete(string table)
         {
-            Database.ExecuteSqlCommand($"DROP TABLE [{table}]");
+            Database.ExecuteSqlCommand($"DROP TABLE [dbo].[{table}]");
         }
 
         public bool ViewExists(string view)
