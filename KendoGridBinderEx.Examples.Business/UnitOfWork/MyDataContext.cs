@@ -53,17 +53,35 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
 
         public bool TableExists(string table)
         {
-            return ObjectContext.ExecuteStoreQuery<string>(string.Format("SELECT name FROM dbo.sysobjects WHERE xtype = 'U' AND name = '{0}'", table)).Any();
+            return ObjectContext.ExecuteStoreQuery<string>($"SELECT name FROM dbo.sysobjects WHERE xtype = 'U' AND name = '{table}'").Any();
+        }
+
+        public void TableTruncate(string table)
+        {
+            Database.ExecuteSqlCommand($"TRUNCATE TABLE [{table}]");
+        }
+
+        public void TableDelete(string table)
+        {
+            Database.ExecuteSqlCommand($"DROP TABLE [{table}]");
+        }
+
+        public bool ViewExists(string view)
+        {
+            return ObjectContext.ExecuteStoreQuery<string>($"SELECT name FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[{view}]')").Any();
+        }
+
+        public void ViewDelete(string view)
+        {
+            Database.ExecuteSqlCommand($"DROP VIEW [dbo].[{view}]");
         }
 
         public void DeleteForeignKeys(string table)
         {
-            string foreignKeys = string.Format("SELECT parent_object_id FROM sys.foreign_keys WHERE referenced_object_id = object_id('{0}')", table);
+            string foreignKeys = $"SELECT parent_object_id FROM sys.foreign_keys WHERE referenced_object_id = object_id('{table}')";
             if (ObjectContext.ExecuteStoreQuery<int>(foreignKeys).Any())
             {
-                string dropForeignKeys = string.Format(
-                    "SELECT 'ALTER TABLE ' + OBJECT_NAME(parent_object_id) + ' DROP CONSTRAINT ' + name FROM sys.foreign_keys WHERE referenced_object_id = object_id('{0}')",
-                    table);
+                string dropForeignKeys = $"SELECT 'ALTER TABLE ' + OBJECT_NAME(parent_object_id) + ' DROP CONSTRAINT ' + name FROM sys.foreign_keys WHERE referenced_object_id = object_id('{table}')";
                 Database.ExecuteSqlCommand(dropForeignKeys);
             }
         }
@@ -107,20 +125,43 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             }
 
             // remove all tables if present
-            var dropTables = new[] { "KendoGrid_UserRoles", "KendoGrid_User", "KendoGrid_Role", "KendoGrid_OU", "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
-            foreach (var table in dropTables)
+            string[] dropTables = { "VW_EmployeeDetails", "KendoGrid_UserRoles", "KendoGrid_User", "KendoGrid_Role", "KendoGrid_OU", "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
+            foreach (string table in dropTables)
             {
                 if (context.TableExists(table))
                 {
-                    context.Database.ExecuteSqlCommand(string.Format("TRUNCATE TABLE [{0}]", table));
+                    context.TableTruncate(table);
                     context.DeleteForeignKeys(table);
-                    context.Database.ExecuteSqlCommand(string.Format("DROP TABLE [{0}]", table));
+                    context.TableDelete(table);
                 }
             }
 
+            // remove view if present
+            if (context.ViewExists("VW_EmployeeDetails"))
+            {
+                context.ViewDelete("VW_EmployeeDetails");
+            }
+
             // recreate all tables
-            var dbCreationScript = context.ObjectContext.CreateDatabaseScript();
+            string dbCreationScript = context.ObjectContext.CreateDatabaseScript();
             context.Database.ExecuteSqlCommand(dbCreationScript);
+
+            // delete wrong table VW_EmployeeDetails
+            context.TableDelete("VW_EmployeeDetails");
+
+            string createView = @"
+                CREATE VIEW [dbo].[VW_EmployeeDetails]
+                AS
+                SELECT
+	                e.*,
+	                cast(case when e.LastName like '%smith' then 1 else 0 end as bit) as IsManager,
+	                e.FirstName + ' ' + e.LastName as FullName,
+	                cast(case when e.Assigned > 1 then 1 else 0 end as bit) as IsAssigned,
+	                c.Code as CountryCode,
+	                c.Name as CountryName
+                FROM dbo.KendoGrid_Employee as e
+                INNER JOIN dbo.KendoGrid_Country as c ON e.Country_Id = c.Id";
+            context.Database.ExecuteSqlCommand(createView);
 
             Seed(context);
             context.SaveChanges();
@@ -262,10 +303,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
                 }
                 finally
                 {
-                    if (context != null)
-                    {
-                        context.Dispose();
-                    }
+                    context?.Dispose();
                 }
 
                 scope.Complete();
