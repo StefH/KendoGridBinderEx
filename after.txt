@@ -1,0 +1,182 @@
+CastToList ToDynamicList ApplyGroupingAndSorting ToKendoGridEx GetKendoGridAsJson GridWithGroup
+
+SELECT 
+    [Project7].[C1] AS [C1], 
+    [Project7].[Name] AS [Name], 
+    [Project7].[C3] AS [C2], 
+    [Project7].[C4] AS [C3], 
+    [Project7].[C5] AS [C4], 
+    [Project7].[C6] AS [C5], 
+    [Project7].[C7] AS [C6], 
+    [Project7].[C2] AS [C7], 
+    [Project7].[EmployeeNumber] AS [EmployeeNumber], 
+    [Project7].[Id] AS [Id], 
+    [Project7].[FirstName] AS [FirstName], 
+    [Project7].[LastName] AS [LastName], 
+    [Project7].[Email] AS [Email], 
+    [Project7].[HireDate] AS [HireDate], 
+    [Project7].[Company_Id] AS [Company_Id], 
+    [Project7].[Country_Id] AS [Country_Id], 
+    [Project7].[Function_Id] AS [Function_Id], 
+    [Project7].[SubFunction_Id] AS [SubFunction_Id], 
+    [Project7].[Assigned] AS [Assigned], 
+    [Project7].[Id1] AS [Id1], 
+    [Project7].[Name1] AS [Name1], 
+    [Project7].[MainCompany_Id] AS [MainCompany_Id], 
+    [Project7].[Id2] AS [Id2], 
+    [Project7].[Name2] AS [Name2], 
+    [Project7].[Id3] AS [Id3], 
+    [Project7].[Code] AS [Code], 
+    [Project7].[Name3] AS [Name3], 
+    [Project7].[Id4] AS [Id4], 
+    [Project7].[Code1] AS [Code1], 
+    [Project7].[Name4] AS [Name4], 
+    [Project7].[Id5] AS [Id5], 
+    [Project7].[Code2] AS [Code2], 
+    [Project7].[Name5] AS [Name5], 
+    [Project7].[Function_Id1] AS [Function_Id1]
+    FROM ( SELECT 
+        [Project6].[Name] AS [Name], 
+        [Project6].[C1] AS [C1], 
+        [Join38].[Id1] AS [Id], 
+        [Join38].[EmployeeNumber] AS [EmployeeNumber], 
+        [Join38].[FirstName] AS [FirstName], 
+        [Join38].[LastName] AS [LastName], 
+        [Join38].[Email] AS [Email], 
+        [Join38].[HireDate] AS [HireDate], 
+        [Join38].[Company_Id] AS [Company_Id], 
+        [Join38].[Country_Id] AS [Country_Id], 
+        [Join38].[Function_Id1] AS [Function_Id], 
+        [Join38].[SubFunction_Id] AS [SubFunction_Id], 
+        [Join38].[Assigned] AS [Assigned], 
+        [Join38].[Id2] AS [Id1], 
+        [Join38].[Name1] AS [Name1], 
+        [Join38].[MainCompany_Id1] AS [MainCompany_Id], 
+        [Join38].[Id3] AS [Id2], 
+        [Join38].[Name2] AS [Name2], 
+        [Join38].[Id4] AS [Id3], 
+        [Join38].[Code1] AS [Code], 
+        [Join38].[Name3] AS [Name3], 
+        [Join38].[Id5] AS [Id4], 
+        [Join38].[Code2] AS [Code1], 
+        [Join38].[Name4] AS [Name4], 
+        [Join38].[Id6] AS [Id5], 
+        [Join38].[Code3] AS [Code2], 
+        [Join38].[Name5] AS [Name5], 
+        [Join38].[Function_Id2] AS [Function_Id1], 
+        CASE WHEN ([Join38].[EmployeeNumber] IS NULL) THEN CAST(NULL AS int) ELSE 1 END AS [C2], 
+        [Project6].[C2] AS [C3], 
+        [Project6].[C3] AS [C4], 
+        [Project6].[C4] AS [C5], 
+        [Project6].[C5] AS [C6], 
+        [Project6].[C6] AS [C7]
+        FROM   (SELECT 
+            [Project5].[Name] AS [Name], 
+            [Project5].[C1] AS [C1], 
+            [Project5].[C2] AS [C2], 
+            [Project5].[C3] AS [C3], 
+            [Project5].[C4] AS [C4], 
+            [Project5].[C5] AS [C5], 
+            (SELECT 
+                SUM([Limit6].[EmployeeNumber]) AS [A1]
+                FROM       (SELECT TOP (10) [Extent32].[EmployeeNumber] AS [EmployeeNumber], [Extent32].[Company_Id] AS [Company_Id], [Extent32].[Country_Id] AS [Country_Id], [Extent32].[Function_Id] AS [Function_Id], [Extent32].[SubFunction_Id] AS [SubFunction_Id], [Extent33].[Name] AS [Name]
+                    FROM  [dbo].[KendoGrid_Employee] AS [Extent32]
+                    LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent33] ON [Extent32].[Company_Id] = [Extent33].[Id]
+                    ORDER BY [Extent33].[Name] ASC ) AS [Limit6]
+                LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent34] ON [Limit6].[Company_Id] = [Extent34].[Id]
+                LEFT OUTER JOIN [dbo].[KendoGrid_MainCompany] AS [Extent35] ON [Extent34].[MainCompany_Id] = [Extent35].[Id]
+                LEFT OUTER JOIN [dbo].[KendoGrid_Country] AS [Extent36] ON [Limit6].[Country_Id] = [Extent36].[Id]
+                LEFT OUTER JOIN [dbo].[KendoGrid_Function] AS [Extent37] ON [Limit6].[Function_Id] = [Extent37].[Id]
+                LEFT OUTER JOIN [dbo].[KendoGrid_SubFunction] AS [Extent38] ON [Limit6].[SubFunction_Id] = [Extent38].[Id]
+                WHERE ([Project5].[Name] = [Limit6].[Name]) OR (([Project5].[Name] IS NULL) AND ([Limit6].[Name] IS NULL))) AS [C6]
+            FROM ( SELECT 
+                [Project4].[Name] AS [Name], 
+                [Project4].[C1] AS [C1], 
+                [Project4].[C2] AS [C2], 
+                [Project4].[C3] AS [C3], 
+                [Project4].[C4] AS [C4], 
+                (SELECT 
+                    AVG( CAST( [Limit5].[EmployeeNumber] AS float)) AS [A1]
+                    FROM       (SELECT TOP (10) [Extent25].[EmployeeNumber] AS [EmployeeNumber], [Extent25].[Company_Id] AS [Company_Id], [Extent25].[Country_Id] AS [Country_Id], [Extent25].[Function_Id] AS [Function_Id], [Extent25].[SubFunction_Id] AS [SubFunction_Id], [Extent26].[Name] AS [Name]
+                        FROM  [dbo].[KendoGrid_Employee] AS [Extent25]
+                        LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent26] ON [Extent25].[Company_Id] = [Extent26].[Id]
+                        ORDER BY [Extent26].[Name] ASC ) AS [Limit5]
+                    LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent27] ON [Limit5].[Company_Id] = [Extent27].[Id]
+                    LEFT OUTER JOIN [dbo].[KendoGrid_MainCompany] AS [Extent28] ON [Extent27].[MainCompany_Id] = [Extent28].[Id]
+                    LEFT OUTER JOIN [dbo].[KendoGrid_Country] AS [Extent29] ON [Limit5].[Country_Id] = [Extent29].[Id]
+                    LEFT OUTER JOIN [dbo].[KendoGrid_Function] AS [Extent30] ON [Limit5].[Function_Id] = [Extent30].[Id]
+                    LEFT OUTER JOIN [dbo].[KendoGrid_SubFunction] AS [Extent31] ON [Limit5].[SubFunction_Id] = [Extent31].[Id]
+                    WHERE ([Project4].[Name] = [Limit5].[Name]) OR (([Project4].[Name] IS NULL) AND ([Limit5].[Name] IS NULL))) AS [C5]
+                FROM ( SELECT 
+                    [Project3].[Name] AS [Name], 
+                    [Project3].[C1] AS [C1], 
+                    [Project3].[C2] AS [C2], 
+                    [Project3].[C3] AS [C3], 
+                    (SELECT 
+                        MAX([Limit4].[EmployeeNumber]) AS [A1]
+                        FROM       (SELECT TOP (10) [Extent18].[EmployeeNumber] AS [EmployeeNumber], [Extent18].[Company_Id] AS [Company_Id], [Extent18].[Country_Id] AS [Country_Id], [Extent18].[Function_Id] AS [Function_Id], [Extent18].[SubFunction_Id] AS [SubFunction_Id], [Extent19].[Name] AS [Name]
+                            FROM  [dbo].[KendoGrid_Employee] AS [Extent18]
+                            LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent19] ON [Extent18].[Company_Id] = [Extent19].[Id]
+                            ORDER BY [Extent19].[Name] ASC ) AS [Limit4]
+                        LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent20] ON [Limit4].[Company_Id] = [Extent20].[Id]
+                        LEFT OUTER JOIN [dbo].[KendoGrid_MainCompany] AS [Extent21] ON [Extent20].[MainCompany_Id] = [Extent21].[Id]
+                        LEFT OUTER JOIN [dbo].[KendoGrid_Country] AS [Extent22] ON [Limit4].[Country_Id] = [Extent22].[Id]
+                        LEFT OUTER JOIN [dbo].[KendoGrid_Function] AS [Extent23] ON [Limit4].[Function_Id] = [Extent23].[Id]
+                        LEFT OUTER JOIN [dbo].[KendoGrid_SubFunction] AS [Extent24] ON [Limit4].[SubFunction_Id] = [Extent24].[Id]
+                        WHERE ([Project3].[Name] = [Limit4].[Name]) OR (([Project3].[Name] IS NULL) AND ([Limit4].[Name] IS NULL))) AS [C4]
+                    FROM ( SELECT 
+                        [Project2].[Name] AS [Name], 
+                        [Project2].[C1] AS [C1], 
+                        [Project2].[C2] AS [C2], 
+                        (SELECT 
+                            MIN([Limit3].[EmployeeNumber]) AS [A1]
+                            FROM       (SELECT TOP (10) [Extent11].[EmployeeNumber] AS [EmployeeNumber], [Extent11].[Company_Id] AS [Company_Id], [Extent11].[Country_Id] AS [Country_Id], [Extent11].[Function_Id] AS [Function_Id], [Extent11].[SubFunction_Id] AS [SubFunction_Id], [Extent12].[Name] AS [Name]
+                                FROM  [dbo].[KendoGrid_Employee] AS [Extent11]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent12] ON [Extent11].[Company_Id] = [Extent12].[Id]
+                                ORDER BY [Extent12].[Name] ASC ) AS [Limit3]
+                            LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent13] ON [Limit3].[Company_Id] = [Extent13].[Id]
+                            LEFT OUTER JOIN [dbo].[KendoGrid_MainCompany] AS [Extent14] ON [Extent13].[MainCompany_Id] = [Extent14].[Id]
+                            LEFT OUTER JOIN [dbo].[KendoGrid_Country] AS [Extent15] ON [Limit3].[Country_Id] = [Extent15].[Id]
+                            LEFT OUTER JOIN [dbo].[KendoGrid_Function] AS [Extent16] ON [Limit3].[Function_Id] = [Extent16].[Id]
+                            LEFT OUTER JOIN [dbo].[KendoGrid_SubFunction] AS [Extent17] ON [Limit3].[SubFunction_Id] = [Extent17].[Id]
+                            WHERE ([Project2].[Name] = [Limit3].[Name]) OR (([Project2].[Name] IS NULL) AND ([Limit3].[Name] IS NULL))) AS [C3]
+                        FROM ( SELECT 
+                            [Distinct1].[Name] AS [Name], 
+                            [Distinct1].[C1] AS [C1], 
+                            (SELECT 
+                                COUNT(1) AS [A1]
+                                FROM       (SELECT TOP (10) [Extent4].[Company_Id] AS [Company_Id], [Extent4].[Country_Id] AS [Country_Id], [Extent4].[Function_Id] AS [Function_Id], [Extent4].[SubFunction_Id] AS [SubFunction_Id], [Extent5].[Name] AS [Name]
+                                    FROM  [dbo].[KendoGrid_Employee] AS [Extent4]
+                                    LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent5] ON [Extent4].[Company_Id] = [Extent5].[Id]
+                                    ORDER BY [Extent5].[Name] ASC ) AS [Limit2]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent6] ON [Limit2].[Company_Id] = [Extent6].[Id]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_MainCompany] AS [Extent7] ON [Extent6].[MainCompany_Id] = [Extent7].[Id]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_Country] AS [Extent8] ON [Limit2].[Country_Id] = [Extent8].[Id]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_Function] AS [Extent9] ON [Limit2].[Function_Id] = [Extent9].[Id]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_SubFunction] AS [Extent10] ON [Limit2].[SubFunction_Id] = [Extent10].[Id]
+                                WHERE ([Distinct1].[Name] = [Limit2].[Name]) OR (([Distinct1].[Name] IS NULL) AND ([Limit2].[Name] IS NULL))) AS [C2]
+                            FROM ( SELECT DISTINCT 
+                                [Extent3].[Name] AS [Name], 
+                                1 AS [C1]
+                                FROM   (SELECT TOP (10) [Extent1].[Company_Id] AS [Company_Id]
+                                    FROM  [dbo].[KendoGrid_Employee] AS [Extent1]
+                                    LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent2] ON [Extent1].[Company_Id] = [Extent2].[Id]
+                                    ORDER BY [Extent2].[Name] ASC ) AS [Limit1]
+                                LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent3] ON [Limit1].[Company_Id] = [Extent3].[Id]
+                            )  AS [Distinct1]
+                        )  AS [Project2]
+                    )  AS [Project3]
+                )  AS [Project4]
+            )  AS [Project5] ) AS [Project6]
+        LEFT OUTER JOIN  (SELECT [Limit7].[Id1], [Limit7].[EmployeeNumber], [Limit7].[FirstName], [Limit7].[LastName], [Limit7].[Email], [Limit7].[HireDate], [Limit7].[Company_Id], [Limit7].[Country_Id], [Limit7].[Function_Id1], [Limit7].[SubFunction_Id], [Limit7].[Assigned], [Limit7].[Name6], [Extent41].[Id] AS [Id2], [Extent41].[Name] AS [Name1], [Extent41].[MainCompany_Id] AS [MainCompany_Id1], [Extent42].[Id] AS [Id3], [Extent42].[Name] AS [Name2], [Extent43].[Id] AS [Id4], [Extent43].[Code] AS [Code1], [Extent43].[Name] AS [Name3], [Extent44].[Id] AS [Id5], [Extent44].[Code] AS [Code2], [Extent44].[Name] AS [Name4], [Extent45].[Id] AS [Id6], [Extent45].[Code] AS [Code3], [Extent45].[Name] AS [Name5], [Extent45].[Function_Id] AS [Function_Id2]
+            FROM       (SELECT TOP (10) [Extent39].[Id] AS [Id1], [Extent39].[EmployeeNumber] AS [EmployeeNumber], [Extent39].[FirstName] AS [FirstName], [Extent39].[LastName] AS [LastName], [Extent39].[Email] AS [Email], [Extent39].[HireDate] AS [HireDate], [Extent39].[Company_Id] AS [Company_Id], [Extent39].[Country_Id] AS [Country_Id], [Extent39].[Function_Id] AS [Function_Id1], [Extent39].[SubFunction_Id] AS [SubFunction_Id], [Extent39].[Assigned] AS [Assigned], [Extent40].[Name] AS [Name6]
+                FROM  [dbo].[KendoGrid_Employee] AS [Extent39]
+                LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent40] ON [Extent39].[Company_Id] = [Extent40].[Id]
+                ORDER BY [Extent40].[Name] ASC ) AS [Limit7]
+            LEFT OUTER JOIN [dbo].[KendoGrid_Company] AS [Extent41] ON [Limit7].[Company_Id] = [Extent41].[Id]
+            LEFT OUTER JOIN [dbo].[KendoGrid_MainCompany] AS [Extent42] ON [Extent41].[MainCompany_Id] = [Extent42].[Id]
+            LEFT OUTER JOIN [dbo].[KendoGrid_Country] AS [Extent43] ON [Limit7].[Country_Id] = [Extent43].[Id]
+            LEFT OUTER JOIN [dbo].[KendoGrid_Function] AS [Extent44] ON [Limit7].[Function_Id1] = [Extent44].[Id]
+            LEFT OUTER JOIN [dbo].[KendoGrid_SubFunction] AS [Extent45] ON [Limit7].[SubFunction_Id] = [Extent45].[Id] ) AS [Join38] ON ([Project6].[Name] = [Join38].[Name6]) OR (([Project6].[Name] IS NULL) AND ([Join38].[Name6] IS NULL))
+    )  AS [Project7]
+    ORDER BY [Project7].[Name] ASC, [Project7].[C1] ASC, [Project7].[C2] ASC;

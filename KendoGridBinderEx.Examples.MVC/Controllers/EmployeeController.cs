@@ -210,7 +210,9 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public JsonResult GridWithGroup(KendoGridMvcRequest request)
         {
             var queryContext = _employeeService.GetQueryContext(e => e.Company, e => e.Company.MainCompany, e => e.Country, e => e.Function, e => e.SubFunction);
-            return GetKendoGridAsJson(request, queryContext.Query, queryContext.Includes);
+
+            int seven = 7;
+            return GetKendoGridAsJson(request, queryContext.Query.Where(x => 7 == seven), queryContext.Includes);
         }
 
         [HttpPost]

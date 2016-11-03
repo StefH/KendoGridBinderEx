@@ -22,6 +22,9 @@ namespace KendoGridBinderEx.Examples.MVC
 
         protected void Application_Start()
         {
+            System.Linq.Dynamic.Core.ExtensibilityPoint.QueryOptimizer = ExpressionOptimizer.visit;
+            QueryInterceptor.Core.ExtensibilityPoint.QueryOptimizer = ExpressionOptimizer.visit;
+
             AreaRegistration.RegisterAllAreas();
 
             //GlobalConfiguration.Configuration.EnableCors(new EnableCorsAttribute("*", "*", "*"));

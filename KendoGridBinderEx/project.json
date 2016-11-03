@@ -1,5 +1,5 @@
 {
-    "version": "5.0.2",
+    "version": "5.0.1.0",
     "title": "KendoGridBinderEx",
     "description": "This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel <> Entity.",
     "authors": [ "Stef Heyenrath" ],
@@ -14,7 +14,7 @@
         },
         "projectUrl": "https://github.com/StefH/KendoGridBinderEx",
         "licenseUrl": "https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE",
-        "releaseNotes": "Upgrade to System.Linq.Dynamic.Core version 1.0.6.6"
+        "releaseNotes": "Upgrade to System.Linq.Dynamic.Core version 1.0.6.8"
     },
 
     "buildOptions": {
@@ -25,7 +25,7 @@
             "version": "10.1.4",
             "type": "build"
         },
-        "System.Linq.Dynamic.Core": "1.0.6.6"
+        "System.Linq.Dynamic.Core": "1.0.6.8"
     },
 
     "frameworks": {

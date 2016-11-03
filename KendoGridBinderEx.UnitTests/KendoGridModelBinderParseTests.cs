@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
 using KendoGridBinderEx.UnitTests.Helpers;
+using KendoGridBinderEx;
 using NUnit.Framework;
 
 namespace KendoGridBinderEx.UnitTests
