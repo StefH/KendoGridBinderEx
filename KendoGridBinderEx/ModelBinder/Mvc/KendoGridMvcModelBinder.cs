@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.Mvc;
+using JetBrains.Annotations;
 using KendoGridBinderEx.Extensions;
 
 namespace KendoGridBinderEx.ModelBinder.Mvc
@@ -10,11 +11,16 @@ namespace KendoGridBinderEx.ModelBinder.Mvc
     {
         private HttpRequestBase _request;
 
-        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        public object BindModel([NotNull] ControllerContext controllerContext, [NotNull] ModelBindingContext bindingContext)
         {
+            if (controllerContext == null)
+            {
+                throw new ArgumentNullException(nameof(controllerContext));
+            }
+
             if (bindingContext == null)
             {
-                throw new ArgumentNullException("bindingContext");
+                throw new ArgumentNullException(nameof(bindingContext));
             }
 
             _request = controllerContext.HttpContext.Request;

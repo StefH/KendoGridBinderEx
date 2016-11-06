@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Extensions
 {
@@ -21,29 +22,29 @@ namespace KendoGridBinderEx.Extensions
             return fieldInfo;
         }
 
-        public static object GetFieldValue(this object obj, string fieldName)
+        public static object GetFieldValue([NotNull] this object obj, string fieldName)
         {
             if (obj == null)
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
 
             var objType = obj.GetType();
             var fieldInfo = GetFieldInfo(objType, fieldName);
             if (fieldInfo == null)
-                throw new ArgumentOutOfRangeException("fieldName", string.Format("Couldn't find field {0} in type {1}", fieldName, objType.FullName));
+                throw new ArgumentOutOfRangeException(nameof(fieldName), $"Couldn't find field {fieldName} in type {objType.FullName}");
 
             return fieldInfo.GetValue(obj);
         }
 
-        public static void SetFieldValue(this object obj, string fieldName, object val)
+        public static void SetFieldValue([NotNull] this object obj, string fieldName, object val)
         {
             if (obj == null)
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
 
             var objType = obj.GetType();
             var fieldInfo = GetFieldInfo(objType, fieldName);
 
             if (fieldInfo == null)
-                throw new ArgumentOutOfRangeException("fieldName", string.Format("Couldn't find field {0} in type {1}", fieldName, objType.FullName));
+                throw new ArgumentOutOfRangeException(nameof(fieldName), $"Couldn't find field {fieldName} in type {objType.FullName}");
 
             fieldInfo.SetValue(obj, val);
         }

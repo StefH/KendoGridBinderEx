@@ -38,19 +38,19 @@ namespace KendoGridBinderEx.Containers.Json
             switch (Aggregate)
             {
                 case "count":
-                    return string.Format("Count() as count__{0}", Field);
+                    return $"Count() as count__{Field}";
 
                 case "sum":
-                    return string.Format("Sum(TEntity__.{0}) as sum__{1}", convertedField, Field);
+                    return $"Sum(TEntity__.{convertedField}) as sum__{Field}";
 
                 case "max":
-                    return string.Format("Max(TEntity__.{0}) as max__{1}", convertedField, Field);
+                    return $"Max(TEntity__.{convertedField}) as max__{Field}";
 
                 case "min":
-                    return string.Format("Min(TEntity__.{0}) as min__{1}", convertedField, Field);
+                    return $"Min(TEntity__.{convertedField}) as min__{Field}";
 
                 case "average":
-                    return string.Format("Average(TEntity__.{0}) as average__{1}", convertedField, Field);
+                    return $"Average(TEntity__.{convertedField}) as average__{Field}";
 
                 default:
                     return string.Empty;

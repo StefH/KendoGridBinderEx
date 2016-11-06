@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
+using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.ModelBinder.Api
 {
@@ -10,15 +11,16 @@ namespace KendoGridBinderEx.ModelBinder.Api
     {
         private NameValueCollection _queryString;
 
-        public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
+        public bool BindModel([NotNull] HttpActionContext actionContext, [NotNull] ModelBindingContext bindingContext)
         {
             if (actionContext == null)
             {
-                throw new ArgumentNullException("actionContext");
+                throw new ArgumentNullException(nameof(actionContext));
             }
+
             if (bindingContext == null)
             {
-                throw new ArgumentNullException("bindingContext");
+                throw new ArgumentNullException(nameof(bindingContext));
             }
 
             string content = actionContext.Request.Content.ReadAsStringAsync().Result;
