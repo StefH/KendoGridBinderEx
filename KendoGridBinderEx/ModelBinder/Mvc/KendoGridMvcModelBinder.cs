@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD
+using System;
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.Mvc;
@@ -48,3 +49,4 @@ namespace KendoGridBinderEx.ModelBinder.Mvc
         }
     }
 }
+#endif

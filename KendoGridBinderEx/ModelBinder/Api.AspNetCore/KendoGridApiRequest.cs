@@ -1,9 +1,9 @@
-﻿#if !NETSTANDARD
-using System.Web.Http.ModelBinding;
+﻿#if NETSTANDARD
+using Microsoft.AspNetCore.Mvc;
 
 namespace KendoGridBinderEx.ModelBinder.Api
 {
-    [ModelBinder(typeof(KendoGridApiModelBinder))]
+    [ModelBinder()]
     public class KendoGridApiRequest : KendoGridBaseRequest
     {
     }

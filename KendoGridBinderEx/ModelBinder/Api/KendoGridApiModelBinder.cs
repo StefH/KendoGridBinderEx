@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD
+using System;
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.Http.Controllers;
@@ -46,3 +47,4 @@ namespace KendoGridBinderEx.ModelBinder.Api
         }
     }
 }
+#endif
