@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Linq.Expressions;
 using AutoMapper;
 using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Extensions;
-using KendoGridBinderEx.QueryableExtensions;
 using KendoGridBinderEx.UnitTests.Entities;
 using KendoGridBinderEx.UnitTests.Helpers;
 using Newtonsoft.Json;
@@ -17,6 +14,10 @@ namespace KendoGridBinderEx.UnitTests
     [TestFixture]
     public class KendoGridExUnitTests : TestHelper
     {
+        private MapperConfiguration _mapperConfiguration;
+        private KendoGridExQueryableHelper _instanceUnderTest;
+        private IMapper _mapper;
+
         [Test]
         public void AutomapperUtilsTest()
         {
@@ -47,7 +48,9 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, null, null, false);
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest);
             Assert.IsNotNull(kendoGrid);
 
             Assert.AreEqual(employees.Count(), kendoGrid.Total);
@@ -83,7 +86,8 @@ namespace KendoGridBinderEx.UnitTests
 
             var employees = employeeList.AsQueryable();
 
-            var kendoGrid = employees.ToKendoGridEx<Employee, Employee>(gridRequest, null, null, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest);
             Assert.IsNotNull(kendoGrid);
 
             Assert.AreEqual(3, kendoGrid.Total);
@@ -99,7 +103,7 @@ namespace KendoGridBinderEx.UnitTests
                 {"skip", "0"},
                 {"page", "1"},
                 {"pagesize", "5"},
-                
+
                 {"sort[0][field]", "First"},
                 {"sort[0][dir]", "asc"},
                 {"sort[1][field]", "Email"},
@@ -112,7 +116,7 @@ namespace KendoGridBinderEx.UnitTests
                 {"filter[filters][0][filters][1][field]", "CompanyName"},
                 {"filter[filters][0][filters][1][operator]", "contains"},
                 {"filter[filters][0][filters][1][value]", "B"},
-                
+
                 {"filter[filters][1][field]", "Last"},
                 {"filter[filters][1][operator]", "contains"},
                 {"filter[filters][1][value]", "s"},
@@ -124,11 +128,14 @@ namespace KendoGridBinderEx.UnitTests
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
             var mappings = new Dictionary<string, MapExpression<Employee>>
-            {
-                { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
-                { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
-            };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+                {
+                    { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
+                    { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
+                };
+
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
             Assert.IsNotNull(kendoGrid);
 
             Assert.AreEqual(4, kendoGrid.Total);
@@ -169,7 +176,8 @@ namespace KendoGridBinderEx.UnitTests
                 { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } },
                 { "CountryName", new MapExpression<Employee> { Path = "Country.Name", Expression = m => m.Country.Name } }
             };
-            var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, new[] { "Company", "Company.MainCompany", "Country" }, mappings);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -218,7 +226,7 @@ namespace KendoGridBinderEx.UnitTests
             var gridRequest = SetupBinder(form, null);
             Assert.IsNull(gridRequest.GroupObjects);
             Assert.AreEqual(5, gridRequest.AggregateObjects.Count());
-            
+
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
             var mappings = new Dictionary<string, MapExpression<Employee>>
@@ -226,7 +234,8 @@ namespace KendoGridBinderEx.UnitTests
                 { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
                 { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
             };
-            var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, new[] { "Company", "Company.MainCompany", "Country" }, mappings);
 
             Assert.IsNull(kendoGrid.Groups);
             Assert.IsNotNull(kendoGrid.Data);
@@ -291,7 +300,8 @@ namespace KendoGridBinderEx.UnitTests
                 { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } },
                 { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } }
             };
-            var kendoGrid = new KendoGridEx<Employee, EmployeeVM>(gridRequest, employees, new[] { "Company", "Company.MainCompany", "Country" }, mappings, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, new[] { "Company", "Company.MainCompany", "Country" }, mappings);
 
             Assert.IsNull(kendoGrid.Groups);
             Assert.IsNotNull(kendoGrid.Data);
@@ -326,14 +336,16 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployees().AsQueryable();
-            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            var employeeVMs = _mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
             var mappings = new Dictionary<string, MapExpression<Employee>>
             {
                 { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
             };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -381,7 +393,9 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, null, null, false);
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -417,7 +431,9 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, null, null, false);
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -490,7 +506,7 @@ namespace KendoGridBinderEx.UnitTests
                 {"group[0][dir]", "asc"},
                 {"group[0][aggregates][0][field]", "Number"},
                 {"group[0][aggregates][0][aggregate]", "min"},
-          
+
                 {"group[1][field]", "LastName"},
                 {"group[1][dir]", "asc"},
                 {"group[1][aggregates][0][field]", "Number"},
@@ -510,7 +526,9 @@ namespace KendoGridBinderEx.UnitTests
                 { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } },
                 { "CountryName", new MapExpression<Employee> { Path = "Country.Name", Expression = m => m.Country.Name } }
             };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -584,7 +602,9 @@ namespace KendoGridBinderEx.UnitTests
                 { "CompanyName", new MapExpression<Employee> { Path = "Company.Name", Expression = m => m.Company.Name } },
                 { "CountryName", new MapExpression<Employee> { Path = "Country.Name", Expression = m => m.Country.Name } }
             };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -617,14 +637,15 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployees().AsQueryable();
-            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            var employeeVMs = _mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
             var mappings = new Dictionary<string, MapExpression<Employee>>
             {
                 { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
             };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
 
             Assert.IsNotNull(kendoGrid);
             Assert.IsNull(kendoGrid.Groups);
@@ -656,14 +677,15 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployees().AsQueryable();
-            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            var employeeVMs = _mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
             var mappings = new Dictionary<string, MapExpression<Employee>>
             {
                 { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
             };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
 
             Assert.IsNotNull(kendoGrid);
             Assert.IsNull(kendoGrid.Groups);
@@ -694,14 +716,15 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployees().AsQueryable();
-            var employeeVMs = Mapper.Map<List<EmployeeVM>>(employees.ToList());
+            var employeeVMs = _mapper.Map<List<EmployeeVM>>(employees.ToList());
             Assert.IsNotNull(employeeVMs);
 
             var mappings = new Dictionary<string, MapExpression<Employee>>
             {
                 { "CompanyId", new MapExpression<Employee> { Path = "Company.Id", Expression = m => m.Company.Id } }
             };
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, mappings, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest, null, mappings);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -744,7 +767,8 @@ namespace KendoGridBinderEx.UnitTests
 
             InitAutoMapper();
             var employees = InitEmployeesWithData().AsQueryable();
-            var kendoGrid = employees.ToKendoGridEx<Employee, EmployeeVM>(gridRequest, null, null, null, false);
+            _instanceUnderTest = new KendoGridExQueryableHelper(_mapperConfiguration);
+            var kendoGrid = _instanceUnderTest.ToKendoGridEx<Employee, EmployeeVM>(employees, gridRequest);
 
             Assert.IsNull(kendoGrid.Data);
             Assert.IsNotNull(kendoGrid.Groups);
@@ -780,49 +804,16 @@ namespace KendoGridBinderEx.UnitTests
         }
 
         #region InitAutoMapper
-        private static void InitAutoMapper()
+        private void InitAutoMapper()
         {
-            Mapper.CreateMap<Employee, EmployeeVM>()
-               .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
-               .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
-               .ForMember(vm => vm.Last, opt => opt.MapFrom(m => m.LastName))
-               .ForMember(vm => vm.Number, opt => opt.MapFrom(m => m.EmployeeNumber))
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<EmployeeProfile>();
+            });
 
-               //.ForMember(vm => vm.CompanyId, opt => opt.MapFrom(m => m.Company.Id))
-                //.ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
-                //.ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
-                //.ForMember(vm => vm.CountryId, opt => opt.MapFrom(m => m.Country.Id))
-                //.ForMember(vm => vm.CountryCode, opt => opt.MapFrom(m => m.Country.Code))
-                //.ForMember(vm => vm.CountryName, opt => opt.MapFrom(m => m.Country.Name))
+            _mapperConfiguration.AssertConfigurationIsValid();
 
-                .ForMember(vm => vm.CompanyId, opt => opt.ResolveUsing(new NullSafeResolver<Employee, long>(e => e.Company.Id)))
-                /*.ForMember(vm => vm.CompanyName, opt => opt.Ignore())
-                .ForMember(vm => vm.MainCompanyName, opt => opt.Ignore())
-                .ForMember(vm => vm.CountryId, opt => opt.Ignore())
-                .ForMember(vm => vm.CountryCode, opt => opt.Ignore())
-                .ForMember(vm => vm.CountryName, opt => opt.Ignore())*/
-
-
-               //.ForMember(vm => vm.CompanyName, opt => opt.ResolveUsing<CompanyNameResolver>().FromMember(x => x.Company))
-               .ForMember(vm => vm.CompanyName, opt => opt.ResolveUsing(new NullSafeResolver<Employee, string>(e => e.Company.Name)))
-               .ForMember(vm => vm.MainCompanyName, opt => opt.ResolveUsing(new NullSafeResolver<Employee, string>(e => e.Company.MainCompany.Name)))
-               .ForMember(vm => vm.CountryId, opt => opt.ResolveUsing(new NullSafeResolver<Employee, long>(e => e.Country.Id)))
-               .ForMember(vm => vm.CountryCode, opt => opt.ResolveUsing(new NullSafeResolver<Employee, string>(e => e.Country.Code)))
-               .ForMember(vm => vm.CountryName, opt => opt.ResolveUsing(new NullSafeResolver<Employee, string>(e => e.Country.Name)))
-
-               ;
-
-            Mapper.CreateMap<EmployeeVM, Employee>()
-              .ForMember(e => e.Email, opt => opt.MapFrom(vm => vm.Email))
-              .ForMember(e => e.EmployeeNumber, opt => opt.MapFrom(vm => vm.Number))
-              .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
-              .ForMember(e => e.HireDate, opt => opt.MapFrom(vm => vm.HireDate))
-              .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.Last))
-              .ForMember(e => e.Company, opt => opt.Ignore())
-              .ForMember(e => e.Country, opt => opt.Ignore())
-              ;
-
-            Mapper.AssertConfigurationIsValid();
+            _mapper = _mapperConfiguration.CreateMapper();
         }
         #endregion
 
@@ -831,74 +822,54 @@ namespace KendoGridBinderEx.UnitTests
             string GetM();
         }
 
-        public abstract class KendoResolver<TSource, TDestination> : ValueResolver<TSource, TDestination>
+        public class IdResolver : IValueResolver<Company, object, long>
         {
-
-        }
-
-        public class IdResolver : ValueResolver<Company, long>
-        {
-            protected override long ResolveCore(Company source)
+            public long Resolve(Company source, object destination, long destMember, ResolutionContext context)
             {
-                return source != null ? source.Id : 0;
+                return source?.Id ?? 0;
             }
         }
 
-        public class IdResolver2 : KendoResolver<IEntity, long>, IKendoResolver
+        public class IdResolver2 : IValueResolver<IEntity, object, long>, IKendoResolver
         {
             public string GetM()
             {
                 return "xxx";
             }
 
-            protected override long ResolveCore(IEntity source)
+            public long Resolve(IEntity source, object destination, long destMember, ResolutionContext context)
             {
-                return source != null ? source.Id : 0;
+                return source?.Id ?? 0;
             }
         }
 
-        public class NullSafeResolver<TEntity, TResult> : ValueResolver<TEntity, TResult>
+        public class CompanyNameResolver : IValueResolver<Company, object, string>
         {
-            private readonly Expression<Func<TEntity, TResult>> _expression;
-
-            public NullSafeResolver(Expression<Func<TEntity, TResult>> expression)
-            {
-                _expression = expression;
-            }
-
-            protected override TResult ResolveCore(TEntity source)
-            {
-                return source.NullSafeGetValue(_expression);
-            }
-        }
-
-        public class CompanyNameResolver : ValueResolver<Company, string>
-        {
-            protected override string ResolveCore(Company source)
+            public string Resolve(Company source, object destination, string destMember, ResolutionContext context)
             {
                 return source != null ? source.Name : string.Empty;
             }
         }
 
-        public class MainCompanyNameResolver : ValueResolver<Company, string>
+        public class MainCompanyNameResolver : IValueResolver<Company, object, string>
         {
-            protected override string ResolveCore(Company source)
+            public string Resolve(Company source, object destination, string destMember, ResolutionContext context)
             {
                 return source.NullSafeGetValue(x => x.MainCompany.Name, null);
             }
         }
 
-        public class CountryCodeResolver : ValueResolver<Country, string>
+        public class CountryCodeResolver : IValueResolver<Country, object, string>
         {
-            protected override string ResolveCore(Country source)
+            public string Resolve(Country source, object destination, string destMember, ResolutionContext context)
             {
                 return source != null ? source.Code : null;
             }
         }
 
-        public class CountryNameResolver : ValueResolver<Country, string>
+        public class CountryNameResolver : IValueResolver<Country, object, string>
         {
-            protected override string ResolveCore(Country source)
+            public string Resolve(Country source, object destination, string destMember, ResolutionContext context)
             {
                 return source != null ? source.Name : null;
             }

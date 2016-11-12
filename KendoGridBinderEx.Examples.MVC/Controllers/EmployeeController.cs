@@ -4,15 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web.Mvc;
-using AutoMapper;
 using FluentValidation.Results;
-using KendoGridBinderEx.Examples.Business.AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
+using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.Examples.MVC.Models;
 using KendoGridBinderEx.ModelBinder.Mvc;
-using KendoGridBinderEx.QueryableExtensions;
 using OfficeOpenXml;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
@@ -25,6 +23,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         private readonly IFunctionService _functionService;
         private readonly ISubFunctionService _subfunctionService;
         private readonly EmployeeValidator _employeeValidator;
+        private readonly KendoGridExQueryableHelper _kendoGridExQueryableHelper;
 
         public EmployeeController(IEmployeeService employeeService, ICompanyService companyService, IFunctionService functionService, ISubFunctionService subfunctionService, ICountryService countryService)
             : base(employeeService)
@@ -36,51 +35,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             _countryService = countryService;
 
             _employeeValidator = new EmployeeValidator(_employeeService);
-        }
-
-        public static void InitAutoMapper()
-        {
-            Mapper.CreateMap<Employee, EmployeeVM>()
-                .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
-                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
-                .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
-                .ForMember(vm => vm.Number, opt => opt.MapFrom(m => m.EmployeeNumber))
-                .ForMember(vm => vm.CompanyId, opt => opt.MapFrom(e => e.Company.Id))
-                .ForMember(vm => vm.CompanyName, opt => opt.MapFrom(m => m.Company.Name))
-                .ForMember(vm => vm.MainCompanyName, opt => opt.MapFrom(m => m.Company.MainCompany.Name))
-                .ForMember(vm => vm.CountryId, opt => opt.MapFrom(m => m.Country.Id))
-                .ForMember(vm => vm.CountryCode, opt => opt.MapFrom(m => m.Country.Code))
-                .ForMember(vm => vm.CountryName, opt => opt.MapFrom(m => m.Country.Name))
-                .ForMember(vm => vm.FunctionId, opt => opt.MapFrom(m => m.Function.Id))
-                .ForMember(vm => vm.FunctionCode, opt => opt.MapFrom(m => m.Function.Code))
-                .ForMember(vm => vm.FunctionName, opt => opt.MapFrom(m => m.Function.Name))
-                .ForMember(vm => vm.SubFunctionId, opt => opt.MapFrom(m => m.SubFunction.Id))
-                .ForMember(vm => vm.SubFunctionCode, opt => opt.MapFrom(m => m.SubFunction.Code))
-                .ForMember(vm => vm.SubFunctionName, opt => opt.MapFrom(m => m.SubFunction.Name))
-                .ForMember(vm => vm.ResourceType, opt => opt.UseValue("Employee"))
-                ;
-
-            Mapper.CreateMap<EmployeeVM, Employee>()
-                .ForMember(e => e.EmployeeNumber, opt => opt.MapFrom(vm => vm.Number))
-                .ForMember(e => e.FirstName, opt => opt.MapFrom(vm => vm.First))
-                .ForMember(e => e.LastName, opt => opt.MapFrom(vm => vm.LastName))
-                .ForMember(e => e.Company, opt => opt.ResolveUsing<EntityResolver<Company>>().FromMember(vm => vm.CompanyId))
-                .ForMember(e => e.Country, opt => opt.ResolveUsing<EntityResolver<Country>>().FromMember(vm => vm.CountryId))
-                .ForMember(e => e.Function, opt => opt.ResolveUsing<EntityResolver<Function>>().FromMember(vm => vm.FunctionId))
-                .ForMember(e => e.SubFunction, opt => opt.ResolveUsing<EntityResolver<SubFunction>>().FromMember(vm => vm.SubFunctionId))
-                ;
-
-            Mapper.CreateMap<Employee, EmployeeDetailVM>()
-                .ForMember(vm => vm.First, opt => opt.MapFrom(m => m.FirstName))
-                .ForMember(vm => vm.Full, opt => opt.MapFrom(m => m.FullName))
-                .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.LastName))
-                .ForMember(vm => vm.FunctionCode, opt => opt.MapFrom(m => m.Function.Code))
-                .ForMember(vm => vm.SubFunctionCode, opt => opt.MapFrom(m => m.SubFunction.Code))
-                .ForMember(vm => vm.ResourceType, opt => opt.UseValue("Employee"))
-                ;
-
-            Mapper.CreateMap<EmployeeDetailVM, Employee>()
-                .ForAllMembers(opt => opt.Ignore());
+            _kendoGridExQueryableHelper = new KendoGridExQueryableHelper(AutoMapperConfig.MapperConfiguration);
         }
 
         protected override IQueryable<Employee> GetQueryable()
@@ -159,7 +114,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             }
 
             var query = GetQueryable().AsNoTracking();
-            var results = query.FilterBy<Employee, EmployeeVM>(gridRequest);
+            var results = _kendoGridExQueryableHelper.FilterBy<Employee, EmployeeVM>(query, gridRequest);
 
             using (var stream = new MemoryStream())
             {
@@ -183,19 +138,19 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             // Is there a spreadsheet stored in session?
             if (Session[guid] == null)
             {
-                throw new Exception(string.Format("{0} not found", title));
+                throw new Exception($"{title} not found");
             }
 
             // Get the spreadsheet from session.
             var file = Session[guid] as byte[];
-            string filename = string.Format("{0}.xlsx", title);
+            string filename = $"{title}.xlsx";
 
             // Remove the spreadsheet from session.
             Session.Remove(guid);
 
             // Return the spreadsheet.
             Response.Buffer = true;
-            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}", filename));
+            Response.AddHeader("Content-Disposition", $"attachment; filename={filename}");
             return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
         }
 
@@ -203,7 +158,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public JsonResult GridBySubFunctionId(KendoGridMvcRequest request, long? subFunctionId)
         {
             var query = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
-            return Json(query.ToKendoGridEx<Employee, EmployeeDetailVM>(request));
+            var grid = _kendoGridExQueryableHelper.ToKendoGridEx<Employee, EmployeeDetailVM>(query, request);
+            return Json(grid);
         }
 
         [HttpPost]

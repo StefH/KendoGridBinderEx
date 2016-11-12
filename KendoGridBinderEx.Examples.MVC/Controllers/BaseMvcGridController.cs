@@ -4,8 +4,8 @@ using System.Web.Mvc;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.QueryContext;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
+using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.ModelBinder.Mvc;
-using KendoGridBinderEx.QueryableExtensions;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -13,29 +13,27 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
     {
+        private readonly KendoGridExQueryableHelper _kendoGridExQueryableHelper;
+
         protected BaseMvcGridController(IBaseService<TEntity> service)
             : base(service)
         {
+            _kendoGridExQueryableHelper = new KendoGridExQueryableHelper(AutoMapperConfig.MapperConfiguration);
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridMvcRequest request, IQueryContext<TEntity> queryContext)
         {
-            return Json(queryContext.ToKendoGrid<TViewModel>(request));
+            return Json(_kendoGridExQueryableHelper.ToKendoGridEx<TEntity, TViewModel>(queryContext.Query, request, queryContext.Includes));
         }
 
-        protected JsonResult GetKendoGridAsJson(KendoGridMvcRequest request, IQueryable<TEntity> query, IEnumerable<string> includes)
+        protected JsonResult GetKendoGridAsJson(KendoGridMvcRequest request, IQueryable<TEntity> query, IEnumerable<string> includes = null)
         {
-            return Json(query.ToKendoGridEx<TEntity, TViewModel>(request, includes));
+            return Json(_kendoGridExQueryableHelper.ToKendoGridEx<TEntity, TViewModel>(query, request, includes));
         }
-
-        protected JsonResult GetKendoGridAsJson(KendoGridMvcRequest request, IQueryable<TEntity> query)
-        {
-            return GetKendoGridAsJson(request, query, null);
-        }
-
+        
         protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridMvcRequest request, IQueryable<TEntity> query)
         {
-            return query.ToKendoGridEx<TEntity, TViewModel>(request);
+            return _kendoGridExQueryableHelper.ToKendoGridEx<TEntity, TViewModel>(query, request);
         }
 
         #region MVC Grid Actions

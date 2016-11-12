@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using KendoGridBinderEx.Containers.Json;
-using KendoGridBinderEx.ModelBinder;
+﻿using KendoGridBinderEx.ModelBinder;
 using KendoGridBinderEx.ModelBinder.Api;
 using NUnit.Framework;
 

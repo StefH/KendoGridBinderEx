@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
