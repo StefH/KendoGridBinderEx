@@ -222,6 +222,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.xproj">
+      <Project>{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}</Project>
+      <Name>KendoGridBinderEx</Name>
+	</ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
