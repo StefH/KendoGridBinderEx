@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
@@ -17,18 +16,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             : base(service)
         {
             _subFunctionService = service;
-        }
-
-        public static void InitAutoMapper()
-        {
-            Mapper.CreateMap<SubFunction, SubFunctionVM>()
-                .ForMember(vm => vm.FunctionId, opt => opt.MapFrom(e => e.Function.Id))
-                ;
-
-            Mapper.CreateMap<SubFunctionVM, SubFunction>()
-                .ForMember(e => e.Function, opt => opt.Ignore())
-                .ForMember(e => e.Employees, opt => opt.Ignore())
-                ;
         }
 
         [HttpPost]
@@ -49,7 +36,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         [HttpGet]
         public JsonResult GetSubFunctionsByFunctionIdAsJson(long functionId)
         {
-            var entities = base.ProjectToList(GetQueryable().Where(s => s.Function.Id == functionId));
+            var entities = ProjectToList(GetQueryable().Where(s => s.Function.Id == functionId));
 
             return Json(entities, JsonRequestBehavior.AllowGet);
         }

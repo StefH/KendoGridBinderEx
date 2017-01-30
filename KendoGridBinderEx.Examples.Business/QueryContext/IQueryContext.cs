@@ -15,6 +15,6 @@ namespace KendoGridBinderEx.Examples.Business.QueryContext
 
         IQueryContext<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
 
-        KendoGridEx<TEntity, TViewModel> ToKendoGrid<TViewModel>(KendoGridBaseRequest request);
+        // KendoGridEx<TEntity, TViewModel> ToKendoGrid<TViewModel>(KendoGridBaseRequest request);
     }
 }

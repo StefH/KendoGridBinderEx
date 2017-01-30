@@ -1,48 +1,27 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using KendoGridBinderEx.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace KendoGridBinderEx.AutoMapperExtensions
 {
-    public static class AutoMapperUtils
+    public class AutoMapperUtils
     {
-        private static string GetPath<T>(Expression<Func<T, object>> expr)
+        private readonly MapperConfiguration _mapperConfiguration;
+
+        public AutoMapperUtils(MapperConfiguration mapperConfiguration)
         {
-            var stack = new Stack<string>();
-
-            MemberExpression me;
-            switch (expr.Body.NodeType)
-            {
-                case ExpressionType.Convert:
-                case ExpressionType.ConvertChecked:
-                    var ue = expr.Body as UnaryExpression;
-                    me = ((ue != null) ? ue.Operand : null) as MemberExpression;
-                    break;
-                default:
-                    me = expr.Body as MemberExpression;
-                    break;
-            }
-
-            while (me != null)
-            {
-                stack.Push(me.Member.Name);
-                me = me.Expression as MemberExpression;
-            }
-
-            return string.Join(".", stack.ToArray());
+            _mapperConfiguration = mapperConfiguration;
         }
 
-        public static Dictionary<string, MapExpression<TEntity>> GetModelMappings<TEntity, TViewModel>(Dictionary<string, MapExpression<TEntity>> mappings = null)
+        public Dictionary<string, MapExpression<TEntity>> GetModelMappings<TEntity, TViewModel>(Dictionary<string, MapExpression<TEntity>> mappings = null)
         {
             if (SameTypes<TEntity, TViewModel>())
             {
                 return null;
             }
 
-            var map = Mapper.FindTypeMapFor<TEntity, TViewModel>();
+            var map = _mapperConfiguration?.FindTypeMapFor<TEntity, TViewModel>();
             if (map == null)
             {
                 return null;
@@ -59,7 +38,7 @@ namespace KendoGridBinderEx.AutoMapperExtensions
                 // Get the item tag
                 string tag = propertyMap.CustomExpression.Parameters[0].Name;
 
-                string destination = body.Replace(string.Format("{0}.", tag), string.Empty);
+                string destination = body.Replace($"{tag}.", string.Empty);
                 string source = propertyMap.DestinationProperty.Name;
 
                 var customExpression = new MapExpression<TEntity>
@@ -76,18 +55,19 @@ namespace KendoGridBinderEx.AutoMapperExtensions
 
             foreach (var propertyMap in map.GetPropertyMaps().Where(pm => pm.CustomExpression == null))
             {
-                object customResolver = propertyMap.GetFieldValue("_customResolver");
-                if (customResolver is IKendoGridExValueResolver)
+                var customResolver = propertyMap.ValueResolverConfig?.Instance;
+                if (customResolver is IKendoGridExValueResolver<TEntity>)
                 {
                     string source = propertyMap.DestinationProperty.Name;
 
-                    var kendoResolver = customResolver as IKendoGridExValueResolver;
-                    string destination = kendoResolver.GetDestinationProperty();
+                    IKendoGridExValueResolver<TEntity> kendoResolver = customResolver as IKendoGridExValueResolver<TEntity>;
+                    string destination = kendoResolver.DestinationProperty;
+                    var expression = propertyMap.CustomExpression != null ? propertyMap.CustomExpression.ToTypedExpression<TEntity>() : kendoResolver.Expression;
 
                     var customExpression = new MapExpression<TEntity>
                     {
                         Path = destination,
-                        Expression = propertyMap.CustomExpression.ToTypedExpression<TEntity>(),
+                        Expression = expression
                     };
 
                     if (!mappings.ContainsKey(source))

@@ -14,7 +14,7 @@
         },
         "projectUrl": "https://github.com/StefH/KendoGridBinderEx",
         "licenseUrl": "https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE",
-        "releaseNotes": "Upgrade to System.Linq.Dynamic.Core version 1.0.6.8"
+        "releaseNotes": "Use AutoMapper version 5.1.1"
     },
 
     "buildOptions": {
@@ -25,6 +25,7 @@
             "version": "10.1.4",
             "type": "build"
         },
+        "AutoMapper": "5.1.1",
         "System.Linq.Dynamic.Core": "1.0.6.8"
     },
 
@@ -35,7 +36,6 @@
                 "System.Runtime.Serialization": ""
             },
             "dependencies": {
-                "AutoMapper": "4.2.1",
                 "Newtonsoft.Json": "6.0.8",
 
                 "Microsoft.AspNet.Mvc": "5.2.3",
@@ -49,7 +49,6 @@
                 "System.Runtime.Serialization": ""
             },
             "dependencies": {
-                "AutoMapper": "4.2.1",
                 "Newtonsoft.Json": "6.0.8",
 
                 "Microsoft.AspNet.Mvc": "5.2.3",
@@ -63,7 +62,6 @@
                 "System.Runtime.Serialization": ""
             },
             "dependencies": {
-                "AutoMapper": "4.2.1",
                 "Newtonsoft.Json": "6.0.8",
 
                 "Microsoft.AspNet.Mvc": "5.2.3",

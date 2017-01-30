@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using AutoMapper;
 using FluentValidation.Results;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
@@ -24,22 +23,13 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             _productValidator = new ProductValidator(_productService);
         }
 
-        public static void InitAutoMapper()
-        {
-            Mapper.CreateMap<Product, ProductVM>()
-                ;
-
-            Mapper.CreateMap<ProductVM, Product>()
-                ;
-        }
-
         public async Task<ActionResult> DetailsByCode(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
                 throw new ArgumentException("code");
             }
-           
+
             var entity = await _productService.FirstAsync(p => p.Code == code);
             var viewModel = Map(entity);
 
@@ -58,6 +48,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             return _productValidator.ValidateAll(product);
         }
+
         [HttpGet]
         public JsonResult IsCodeUnique(string code, long? id)
         {

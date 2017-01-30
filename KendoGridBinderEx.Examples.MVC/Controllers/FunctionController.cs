@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using AutoMapper;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.Models;
@@ -14,17 +13,6 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             : base(service)
         {
             _functionService = service;
-        }
-
-        public static void InitAutoMapper()
-        {
-            Mapper.CreateMap<Function, FunctionVM>()
-                ;
-
-            Mapper.CreateMap<FunctionVM, Function>()
-                .ForMember(e => e.Employees, opt => opt.Ignore())
-                .ForMember(e => e.SubFunctions, opt => opt.Ignore())
-                ;
         }
 
         [HttpGet]

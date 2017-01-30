@@ -11,6 +11,7 @@ using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
+using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
@@ -49,7 +50,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             Service = service;
 
-            KendoGridExMappings = AutoMapperUtils.GetModelMappings<TEntity, TViewModel>();
+            KendoGridExMappings = AutoMapperConfig.AutoMapperUtils.GetModelMappings<TEntity, TViewModel>();
 
             if (KendoGridExMappings != null)
             {

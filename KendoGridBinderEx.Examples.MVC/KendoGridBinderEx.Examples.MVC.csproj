@@ -49,8 +49,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -223,6 +223,13 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\EmployeeProfile.cs" />
+    <Compile Include="AutoMapper\OUProfile.cs" />
+    <Compile Include="AutoMapper\FunctionProfile.cs" />
+    <Compile Include="AutoMapper\ProductProfile.cs" />
+    <Compile Include="AutoMapper\SubFunctionProfile.cs" />
+    <Compile Include="AutoMapper\UserProfile.cs" />
     <Compile Include="Controllers\BaseMvcController.cs" />
     <Compile Include="Controllers\BaseMvcGridController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -279,7 +286,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Copy of Site.css" />
     <Content Include="Content\Images\accept.png" />
     <Content Include="Content\Images\add.png" />
     <Content Include="Content\Images\addressbook.gif" />

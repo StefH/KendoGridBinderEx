@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using KendoGridBinderEx.AutoMapperExtensions;
 using KendoGridBinderEx.Containers;
 using KendoGridBinderEx.Containers.Json;
@@ -13,31 +11,12 @@ namespace KendoGridBinderEx
 {
     public class KendoGridEx<TModel> : KendoGridEx<TModel, TModel>
     {
-        public KendoGridEx(KendoGridBaseRequest request, IQueryable<TModel> query)
-            : base(request, query, null, null)
-        {
-        }
-
-        public KendoGridEx(KendoGridBaseRequest request, IQueryable<TModel> query,
+        public KendoGridEx(KendoGridBaseRequest request,
+            IEnumerable<TModel> source,
             IEnumerable<string> includes = null,
             Dictionary<string, MapExpression<TModel>> mappings = null,
-            Func<IQueryable<TModel>, IEnumerable<TModel>> conversion = null,
-            bool canUseAutoMapperProjection = true)
-            : base(request, query, includes, mappings, conversion, canUseAutoMapperProjection)
-        {
-        }
-
-        public KendoGridEx(KendoGridBaseRequest request, IEnumerable<TModel> source)
-            : this(request, source.AsQueryable())
-        {
-        }
-
-        public KendoGridEx(KendoGridBaseRequest request, IEnumerable<TModel> source,
-            IEnumerable<string> includes = null,
-            Dictionary<string, MapExpression<TModel>> mappings = null,
-            Func<IQueryable<TModel>, IEnumerable<TModel>> conversion = null,
-            bool canUseAutoMapperProjection = true)
-            : base(request, source.AsQueryable(), includes, mappings, conversion, canUseAutoMapperProjection)
+            Func<IQueryable<TModel>, IEnumerable<TModel>> conversion = null)
+            : base(request, source.AsQueryable(), mappings, conversion, includes)
         {
         }
 
@@ -60,13 +39,12 @@ namespace KendoGridBinderEx
 
         public KendoGridEx(KendoGridBaseRequest request,
             IQueryable<TEntity> query,
-            IEnumerable<string> includes = null,
-            Dictionary<string, MapExpression<TEntity>> mappings = null,
-            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion = null,
-            bool canUseAutoMapperProjection = true)
+            Dictionary<string, MapExpression<TEntity>> mappings,
+            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion,
+            IEnumerable<string> includes = null)
         {
-            _mappings = AutoMapperUtils.GetModelMappings<TEntity, TViewModel>(mappings);
-            _conversion = conversion ?? GetAutoMapperConversion(canUseAutoMapperProjection);
+            _mappings = mappings;
+            _conversion = conversion;
 
             IList<string> includesAsList = null;
             if (includes != null)
@@ -105,14 +83,9 @@ namespace KendoGridBinderEx
 
                 _query = tempQuery;
 
-                Data = _conversion(_query).ToList();
+                Data =  _conversion(_query).ToList();
                 Groups = null;
             }
-        }
-
-        protected KendoGridEx(KendoGridBaseRequest request, IEnumerable<TEntity> entities, Dictionary<string, MapExpression<TEntity>> mappings, Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion)
-            : this(request, entities.AsQueryable(), null, mappings, conversion)
-        {
         }
 
         protected KendoGridEx(IEnumerable<TViewModel> list, int totalCount)
@@ -138,7 +111,7 @@ namespace KendoGridBinderEx
             return query.OrderBy(sorting);
         }
 
-        protected object ApplyAggregates(IQueryable<TEntity> query, IList<string> includes, KendoGridBaseRequest request)
+        private object ApplyAggregates(IQueryable<TEntity> query, IList<string> includes, KendoGridBaseRequest request)
         {
             // In case of average, sum, min or max: convert it to sum(TEntity__.XXX) as sum_XXX
             // In case of count, convert it to count() as count_XXX
@@ -259,7 +232,7 @@ namespace KendoGridBinderEx
         private void Process(IEnumerable<GroupObject> groupByFields, IDictionary<string, object> values, IEnumerable<object> grouping, object aggregates, List<KendoGroup> kendoGroups)
         {
             var groupObjects = groupByFields as IList<GroupObject> ?? groupByFields.ToList();
-            bool isLast = groupObjects.Count() == 1;
+            bool isLast = groupObjects.Count == 1;
 
             var groupObject = groupObjects.First();
 
@@ -333,40 +306,12 @@ namespace KendoGridBinderEx
 
         protected string MapFieldfromViewModeltoEntity(string field)
         {
-            return (_mappings != null && field != null && _mappings.ContainsKey(field)) ? _mappings[field].Path : field;
+            return _mappings != null && field != null && _mappings.ContainsKey(field) ? _mappings[field].Path : field;
         }
 
         protected string MapFieldfromEntitytoViewModel(string field)
         {
-            return (_mappings != null && field != null && _mappings.Any(m => m.Value.Path == field)) ? _mappings.First(kvp => kvp.Value.Path == field).Key : field;
-        }
-
-        public static Func<IQueryable<TEntity>, IEnumerable<TViewModel>> GetAutoMapperConversion(bool canUseAutoMapperProjection = true)
-        {
-            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion;
-
-            if (AutoMapperUtils.SameTypes<TEntity, TViewModel>())
-            {
-                conversion = q => q.Cast<TViewModel>().ToList();
-            }
-            else
-            {
-                // https://github.com/AutoMapper/AutoMapper/issues/362
-                // The idea behind Project().To is to be passed to a query provider like EF or NHibernate that will then do the appropriate SQL creation, 
-                // not necessarily that the in-memory-execution will work.
-                // Project.To has a TON of limitations as it's built explicitly for real query providers, and only does things like MapFrom etc.
-                // To put it another way - don't use Project.To unless you're passing that to EF or NH or another DB query provider that knows what to do with the expression tree.
-                if (canUseAutoMapperProjection)
-                {
-                    conversion = q => Enumerable.AsEnumerable(q.ProjectTo<TViewModel>());
-                }
-                else
-                {
-                    conversion = Mapper.Map<IEnumerable<TViewModel>>;
-                }
-            }
-
-            return conversion;
+            return _mappings != null && field != null && _mappings.Any(m => m.Value.Path == field) ? _mappings.First(kvp => kvp.Value.Path == field).Key : field;
         }
     }
 }
