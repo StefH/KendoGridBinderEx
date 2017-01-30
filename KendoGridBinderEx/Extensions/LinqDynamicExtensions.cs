@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace KendoGridBinderEx.Extensions
 {
@@ -16,7 +17,7 @@ namespace KendoGridBinderEx.Extensions
         private static T GetPropertyValue<T>(object self, string propertyName)
         {
             var type = self.GetType();
-            var propInfo = type.GetProperty(propertyName);
+            var propInfo = type.GetTypeInfo().GetProperty(propertyName);
 
             try
             {

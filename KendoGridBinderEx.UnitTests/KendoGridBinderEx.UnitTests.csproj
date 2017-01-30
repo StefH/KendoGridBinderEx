@@ -48,7 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="KendoGridBinderEx">
-      <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net452\KendoGridBinderEx.dll</HintPath>
+      <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net45\KendoGridBinderEx.dll</HintPath>
     </Reference>
     <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Linq.PropertyTranslator.Core.1.0.3.0\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>

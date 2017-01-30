@@ -15,7 +15,7 @@ namespace KendoGridBinderEx.Extensions
             do
             {
                 fieldInfo = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
             }
             while (fieldInfo == null && type != null);
 

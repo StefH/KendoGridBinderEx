@@ -83,7 +83,7 @@
     </Reference>
     <Reference Include="KendoGridBinderEx, Version=5.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net452\KendoGridBinderEx.dll</HintPath>
+      <HintPath>..\KendoGridBinderEx\bin\Debug\net45\KendoGridBinderEx.dll</HintPath>
     </Reference>
     <Reference Include="Linq.Expression.Optimizer, Version=1.0.6.0, Culture=neutral, PublicKeyToken=34b6af2337893e15, processorArchitecture=MSIL">
       <HintPath>..\packages\Linq.Expression.Optimizer.1.0.7\lib\net45\Linq.Expression.Optimizer.dll</HintPath>

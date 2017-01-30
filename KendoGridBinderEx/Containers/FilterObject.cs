@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Reflection;
 
 namespace KendoGridBinderEx.Containers
 {
@@ -44,7 +45,7 @@ namespace KendoGridBinderEx.Containers
                     return null;
                 }
 
-                var info = type.GetProperty(part);
+                var info = type.GetTypeInfo().GetProperty(part);
                 if (info == null)
                 {
                     return null;
@@ -53,7 +54,7 @@ namespace KendoGridBinderEx.Containers
                 type = info.PropertyType;
             }
 
-            bool bIsGenericOrNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            bool bIsGenericOrNullable = type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
             return bIsGenericOrNullable ? type.GetGenericArguments()[0].Name.ToLower() : type.Name.ToLower();
         }

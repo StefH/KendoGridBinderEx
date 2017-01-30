@@ -70,8 +70,9 @@
       <HintPath>..\packages\JetBrains.Annotations.10.1.4\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="KendoGridBinderEx">
-      <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net452\KendoGridBinderEx.dll</HintPath>
+    <Reference Include="KendoGridBinderEx, Version=5.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KendoGridBinderEx\bin\$(SolutionDir)\net45\KendoGridBinderEx.dll</HintPath>
     </Reference>
     <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Linq.PropertyTranslator.Core.1.0.3.0\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>

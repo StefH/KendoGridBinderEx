@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Extensions
@@ -21,7 +22,7 @@ namespace KendoGridBinderEx.Extensions
             var parts = propertyPath.Split('.');
             Expression parent = parts.Aggregate<string, Expression>(param, Expression.Property);
 
-            if (parent.Type.IsValueType)
+            if (parent.Type.GetTypeInfo().IsValueType)
             {
                 var converted = Expression.Convert(parent, typeof(TProperty));
                 return Expression.Lambda<Func<T, TProperty>>(converted, param);
