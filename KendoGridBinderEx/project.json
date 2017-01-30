@@ -14,7 +14,7 @@
         },
         "projectUrl": "https://github.com/StefH/KendoGridBinderEx",
         "licenseUrl": "https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE",
-        "releaseNotes": "Use AutoMapper version 5.1.1"
+        "releaseNotes": "Use AutoMapper version 5.1.1 and added support for netstandard1.6"
     },
 
     "buildOptions": {
