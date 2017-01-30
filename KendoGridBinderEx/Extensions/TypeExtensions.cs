@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace KendoGridBinderEx.Extensions
 {
@@ -39,7 +40,7 @@ namespace KendoGridBinderEx.Extensions
 
         public static string FirstSortableProperty(this Type type)
         {
-            var propertyInfo = type.GetProperties().FirstOrDefault(property => property.PropertyType.IsPredefinedType());
+            var propertyInfo = type.GetTypeInfo().GetProperties().FirstOrDefault(property => property.PropertyType.IsPredefinedType());
             
             if (propertyInfo == null)
             {
@@ -51,7 +52,7 @@ namespace KendoGridBinderEx.Extensions
 
         public static object ChangeType(object value, Type conversionType)
         {
-            if (conversionType.IsGenericType && conversionType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (conversionType.GetTypeInfo().IsGenericType && conversionType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 if (value == null)
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 
 namespace KendoGridBinderEx.Extensions
 {
@@ -46,7 +47,7 @@ namespace KendoGridBinderEx.Extensions
         /// <returns></returns>
         public static IEnumerable<DataItem> GetDataItems(this DynamicClass self, string propertyName)
         {
-            var propertyInfo = self != null ? self.GetType().GetProperty(propertyName) : null;
+            var propertyInfo = self != null ? self.GetType().GetTypeInfo().GetProperty(propertyName) : null;
 
             if (propertyInfo == null)
             {

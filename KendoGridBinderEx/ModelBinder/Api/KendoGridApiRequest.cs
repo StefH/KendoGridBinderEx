@@ -1,4 +1,5 @@
-﻿using System.Web.Http.ModelBinding;
+﻿#if !NETSTANDARD
+using System.Web.Http.ModelBinding;
 
 namespace KendoGridBinderEx.ModelBinder.Api
 {
@@ -7,3 +8,4 @@ namespace KendoGridBinderEx.ModelBinder.Api
     {
     }
 }
+#endif

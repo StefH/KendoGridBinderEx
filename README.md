@@ -1,6 +1,7 @@
-#KendoGridBinderEx
+# KendoGridBinderEx
 
 [![Build status](https://ci.appveyor.com/api/projects/status/6ynbga07r315xhb8?svg=true)](https://ci.appveyor.com/project/StefH/kendogridbinderex)
+[![NuGet Badge](https://buildstats.info/nuget/KendoGridBinderEx)](https://www.nuget.org/packages/KendoGridBinderEx)
 
 ## Install
 ```html
@@ -8,8 +9,8 @@ PM> Install-Package KendoGridBinderEx
 ```
 
 ## Supported dotnet versions
-- .net 4.5
-- .net 4.5.x
+- .NET 4.5
+- NETStandard 1.6
 
 ## Demo
 http://kendogridbinderex.apphb.com

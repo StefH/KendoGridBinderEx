@@ -1,5 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
+﻿#if !NETSTANDARD
+using System;
+using System.Web.Http.ModelBinding;
 
 namespace KendoGridBinderEx.ModelBinder.Mvc
 {
@@ -14,3 +15,4 @@ namespace KendoGridBinderEx.ModelBinder.Mvc
     {
     }
 }
+#endif

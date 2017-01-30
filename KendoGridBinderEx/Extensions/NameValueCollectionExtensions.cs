@@ -9,9 +9,7 @@ namespace KendoGridBinderEx.Extensions
     {
         public static Dictionary<string, string> ToDictionary(this NameValueCollection source)
         {
-            return source != null ?
-                source.Cast<string>().Select(s => new { Key = s, Value = source.Get(s) }).ToDictionary(p => p.Key, p => p.Value) :
-                null;
+            return source?.Cast<string>().Select(s => new { Key = s, Value = source.Get(s) }).ToDictionary(p => p.Key, p => p.Value);
         }
 
         public static T GetQueryValue<T>([NotNull] this NameValueCollection queryString, string key, T defaultValue = default(T))

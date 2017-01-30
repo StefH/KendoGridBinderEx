@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 
 namespace KendoGridBinderEx.Extensions
@@ -17,7 +18,7 @@ namespace KendoGridBinderEx.Extensions
         {
             Type propertyType = expression.Body.Type;
 
-            if (!propertyType.IsValueType)
+            if (!propertyType.GetTypeInfo().IsValueType)
                 return Expression.Lambda<Func<T, TProperty>>(expression.Body, expression.Parameters);
 
             return Expression.Lambda<Func<T, TProperty>>(Expression.Convert(expression.Body, typeof(TProperty)), expression.Parameters);
