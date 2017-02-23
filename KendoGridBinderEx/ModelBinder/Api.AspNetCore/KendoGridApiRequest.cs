@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KendoGridBinderEx.ModelBinder.Api
 {
-    [ModelBinder()]
+    [ModelBinder(BinderType = typeof(KendoGridApiModelBinder))]
     public class KendoGridApiRequest : KendoGridBaseRequest
     {
     }
