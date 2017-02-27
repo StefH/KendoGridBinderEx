@@ -83,7 +83,15 @@ namespace KendoGridBinderEx
 
                 _query = tempQuery;
 
-                Data =  _conversion(_query).ToList();
+                if (_conversion == null)
+                {
+                    Data = _query.ToList().OfType<TViewModel>();
+                }
+                else
+                {
+                    Data = _conversion(_query).ToList();
+                }
+
                 Groups = null;
             }
         }

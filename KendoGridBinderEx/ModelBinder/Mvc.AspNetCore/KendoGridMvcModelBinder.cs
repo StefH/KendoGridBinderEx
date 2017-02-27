@@ -48,7 +48,8 @@ namespace KendoGridBinderEx.ModelBinder.AspNetCore
                 SortObjects = SortHelper.Parse(queryString),
             };
 
-            return Task.FromResult(kendoGridRequest);
+            bindingContext.Result = ModelBindingResult.Success(kendoGridRequest);
+            return Task.CompletedTask;
         }
     }
 }
