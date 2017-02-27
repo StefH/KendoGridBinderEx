@@ -83,14 +83,7 @@ namespace KendoGridBinderEx
 
                 _query = tempQuery;
 
-                if (_conversion == null)
-                {
-                    Data = _query.ToList().OfType<TViewModel>();
-                }
-                else
-                {
-                    Data = _conversion(_query).ToList();
-                }
+                Data = _conversion == null ? _query.ToList().OfType<TViewModel>() : _conversion(_query).ToList();
 
                 Groups = null;
             }
@@ -227,8 +220,8 @@ namespace KendoGridBinderEx
             var list = new List<KendoGroup>();
             foreach (DynamicClass item in tempQuery.ToDynamicList<DynamicClass>())
             {
-                var grouping = item.GetDynamicProperty<IGrouping<object, object>>("Grouping");
-                var groupByDictionary = item.GetDynamicProperty<object>("GroupByFields").ToDictionary();
+                var grouping = item.GetDynamicPropertyValue<IGrouping<object, object>>("Grouping");
+                var groupByDictionary = item.GetDynamicPropertyValue<object>("GroupByFields").ToDictionary();
                 var aggregates = item.GetAggregatesAsDictionary();
 
                 Process(request.GroupObjects, groupByDictionary, grouping, aggregates, list);

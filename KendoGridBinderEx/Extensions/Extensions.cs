@@ -85,9 +85,17 @@ namespace KendoGridBinderEx.Extensions
 
         public static IDictionary<string, object> ToDictionary(this object a)
         {
-            var type = a.GetType();
-            var props = type.GetProperties();
-            return props.ToDictionary(x => x.Name, y => y.GetValue(a, null));
+            Type type = a.GetType();
+
+            var propertiesDictionary = new Dictionary<string, object>();
+            foreach (PropertyInfo pi in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                int parameters = pi.GetGetMethod().GetParameters().Length;
+                if (parameters == 0)
+                    propertiesDictionary.Add(pi.Name, pi.GetValue(a, null));
+            }
+
+            return propertiesDictionary;
         }
     }
 }

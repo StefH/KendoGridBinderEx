@@ -1,12 +1,12 @@
 {
-    "version": "5.0.2.0",
+    "version": "5.0.3.0",
     "title": "KendoGridBinderEx",
-    "description": "This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel <> Entity.",
-    "authors": [ "Stef Heyenrath" ],
+    "description": "This is a ModelBinder designed to consume a http request and dynamically build a json serializable object for the Kendo UI Grid datasource. AutoMapper is used to support mapping from ViewModel <> Entity.",
+    "authors": [ "Ryan Whitmire", "Josh Ball", "Carlos Adriano Portes", "Stef Heyenrath" ],
 
     "packOptions": {
-        "summary": "This is an extension on the KendoGridBinder which uses AutoMapper to support mapping from ViewModel <> Entity.",
-        "tags": [ "Kendo", "Grid", "Model", "AutoMapper", "MVC", "ModelBinder", "Binder" ],
+        "summary": "This is a ModelBinder designed to consume a http request and dynamically build a json serializable object for the Kendo UI Grid datasource. AutoMapper is used to support mapping from ViewModel <> Entity.",
+        "tags": [ "Kendo", "Grid", "Model", "AutoMapper", "MVC", "ModelBinder", "Binder", "Dynamic" ],
         "owners": [ "Stef Heyenrath" ],
         "repository": {
             "type": "git",
@@ -14,7 +14,7 @@
         },
         "projectUrl": "https://github.com/StefH/KendoGridBinderEx",
         "licenseUrl": "https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE",
-        "releaseNotes": "Use AutoMapper version 5.1.1 and added support for netstandard1.6"
+        "releaseNotes": "Upgraded AspNetCore.Mvc to 1.1.1 and bug fixes for NETStandard 1.x version"
     },
 
     "buildOptions": {
@@ -22,18 +22,18 @@
 
     "dependencies": {
         "JetBrains.Annotations": {
-            "version": "10.1.4",
+            "version": "10.2.1",
             "type": "build"
         },
-        "AutoMapper": "5.1.1",
-        "System.Linq.Dynamic.Core": "1.0.6.8"
+        "AutoMapper": "5.2.0",
+        "System.Linq.Dynamic.Core": "1.0.6.10"
     },
 
     "frameworks": {
         "net45": {
             "frameworkAssemblies": {
-                "System.Web": "",
-                "System.Runtime.Serialization": ""
+                "System.Web": { "type": "build" },
+                "System.Runtime.Serialization": { "type": "build" }
             },
             "dependencies": {
                 "Newtonsoft.Json": "6.0.8",
@@ -52,8 +52,8 @@
                 "Newtonsoft.Json": "9.0.1",
 
                 "System.Collections.Specialized": "4.3.0",
-                "Microsoft.AspNetCore.Mvc": "1.0.1",
-                "Microsoft.AspNetCore.Mvc.Core": "1.0.1"
+                "Microsoft.AspNetCore.Mvc": "1.1.1",
+                "Microsoft.AspNetCore.Mvc.Core": "1.1.1"
             }
         }
     }
