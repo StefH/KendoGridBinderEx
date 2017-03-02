@@ -1,6 +1,6 @@
 os: Visual Studio 2015
 
-version: 5.0.1.{build}
+version: 5.0.4.{build}
 
 configuration:
 - Debug
@@ -19,11 +19,13 @@ environment:
   PATH: $(PATH);$(PROGRAMFILES)\dotnet\
 
 build_script:
+- appveyor-retry dotnet restore KendoGridBinder -v Minimal
 - appveyor-retry dotnet restore KendoGridBinderEx -v Minimal
 - appveyor-retry nuget restore KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj -PackagesDirectory packages
 - appveyor-retry nuget restore KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj -PackagesDirectory packages
 - appveyor-retry nuget restore KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
 
+- dotnet build KendoGridBinder\project.json -c %CONFIGURATION%
 - dotnet build KendoGridBinderEx\project.json -c %CONFIGURATION%
 - cmd: msbuild KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
 - cmd: msbuild KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU

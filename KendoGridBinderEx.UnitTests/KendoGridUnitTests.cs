@@ -863,7 +863,7 @@ namespace KendoGridBinder.UnitTests
         {
             public string Resolve(Country source, object destination, string destMember, ResolutionContext context)
             {
-                return source != null ? source.Code : null;
+                return source?.Code;
             }
         }
 
@@ -871,7 +871,7 @@ namespace KendoGridBinder.UnitTests
         {
             public string Resolve(Country source, object destination, string destMember, ResolutionContext context)
             {
-                return source != null ? source.Name : null;
+                return source?.Name;
             }
         }
     }
