@@ -70,9 +70,6 @@
       <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="KendoGridBinder">
-      <HintPath>..\KendoGridBinder\bin\$(Configuration)\net45\KendoGridBinder.dll</HintPath>
-    </Reference>
     <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Linq.PropertyTranslator.Core.1.0.3.0\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>
       <Private>True</Private>
@@ -241,6 +238,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KendoGridBinder\KendoGridBinder.xproj">
+      <Project>{fff14f34-addb-4310-9c6f-45eb31a17540}</Project>
+      <Name>KendoGridBinder</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
