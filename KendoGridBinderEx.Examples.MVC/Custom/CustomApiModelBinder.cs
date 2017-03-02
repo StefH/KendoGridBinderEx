@@ -3,8 +3,8 @@ using System.Collections.Specialized;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
-using KendoGridBinderEx.Extensions;
-using KendoGridBinderEx.ModelBinder;
+using KendoGridBinder.Extensions;
+using KendoGridBinder.ModelBinder;
 using Newtonsoft.Json;
 
 namespace KendoGridBinderEx.Examples.MVC.Custom

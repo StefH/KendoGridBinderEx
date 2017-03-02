@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using KendoGridBinderEx.AutoMapperExtensions;
+using KendoGridBinder.AutoMapperExtensions;
 
 namespace KendoGridBinderEx.Examples.MVC.AutoMapper
 {

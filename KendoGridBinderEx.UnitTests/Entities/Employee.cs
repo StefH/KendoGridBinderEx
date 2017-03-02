@@ -1,7 +1,7 @@
 ﻿using System;
 using Linq.PropertyTranslator.Core;
 
-namespace KendoGridBinderEx.UnitTests.Entities
+namespace KendoGridBinder.UnitTests.Entities
 {
     public class Employee : Entity
     {

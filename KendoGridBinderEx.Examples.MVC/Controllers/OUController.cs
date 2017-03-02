@@ -1,24 +1,24 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
+using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.Examples.MVC.Models;
-using KendoGridBinderEx.ModelBinder.Mvc;
-
+using KendoGridBinder.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
     public class OUController : BaseMvcGridController<OU, OUVM>
     {
         private readonly IOUService _ouService;
-        private readonly KendoGridExQueryableHelper _kendoGridExQueryableHelper;
+        private readonly KendoGridQueryableHelper _kendoGridQueryableHelper;
 
         public OUController(IOUService service)
             : base(service)
         {
             _ouService = service;
-            _kendoGridExQueryableHelper = new KendoGridExQueryableHelper(AutoMapperConfig.MapperConfiguration);
+            _kendoGridQueryableHelper = new KendoGridQueryableHelper(AutoMapperConfig.MapperConfiguration);
         }
 
         public ActionResult VirtualScrollable()
@@ -30,7 +30,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public JsonResult GridVirtualScrollable(KendoGridMvcRequest request)
         {
             var query = GetQueryable().AsNoTracking();
-            var kendoGrid = _kendoGridExQueryableHelper.ToKendoGridEx<OU, OUVM>(query, request);
+            var kendoGrid = _kendoGridQueryableHelper.ToKendoGridEx<OU, OUVM>(query, request);
             return Json(kendoGrid);
         }
 

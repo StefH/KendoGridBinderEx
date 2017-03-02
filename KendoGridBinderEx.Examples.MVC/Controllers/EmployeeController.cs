@@ -10,7 +10,8 @@ using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.AutoMapper;
 using KendoGridBinderEx.Examples.MVC.Models;
-using KendoGridBinderEx.ModelBinder.Mvc;
+using KendoGridBinder;
+using KendoGridBinder.ModelBinder.Mvc;
 using OfficeOpenXml;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
@@ -23,7 +24,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         private readonly IFunctionService _functionService;
         private readonly ISubFunctionService _subfunctionService;
         private readonly EmployeeValidator _employeeValidator;
-        private readonly KendoGridExQueryableHelper _kendoGridExQueryableHelper;
+        private readonly KendoGridQueryableHelper _kendoGridQueryableHelper;
 
         public EmployeeController(IEmployeeService employeeService, ICompanyService companyService, IFunctionService functionService, ISubFunctionService subfunctionService, ICountryService countryService)
             : base(employeeService)
@@ -35,7 +36,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             _countryService = countryService;
 
             _employeeValidator = new EmployeeValidator(_employeeService);
-            _kendoGridExQueryableHelper = new KendoGridExQueryableHelper(AutoMapperConfig.MapperConfiguration);
+            _kendoGridQueryableHelper = new KendoGridQueryableHelper(AutoMapperConfig.MapperConfiguration);
         }
 
         protected override IQueryable<Employee> GetQueryable()
@@ -114,7 +115,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
             }
 
             var query = GetQueryable().AsNoTracking();
-            var results = _kendoGridExQueryableHelper.FilterBy<Employee, EmployeeVM>(query, gridRequest);
+            var results = _kendoGridQueryableHelper.FilterBy<Employee, EmployeeVM>(query, gridRequest);
 
             using (var stream = new MemoryStream())
             {
@@ -158,7 +159,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         public JsonResult GridBySubFunctionId(KendoGridMvcRequest request, long? subFunctionId)
         {
             var query = GetQueryable().Where(s => s.SubFunction.Id == subFunctionId).AsNoTracking();
-            var grid = _kendoGridExQueryableHelper.ToKendoGridEx<Employee, EmployeeDetailVM>(query, request);
+            var grid = _kendoGridQueryableHelper.ToKendoGridEx<Employee, EmployeeDetailVM>(query, request);
             return Json(grid);
         }
 

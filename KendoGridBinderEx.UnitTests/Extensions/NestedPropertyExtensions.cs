@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace KendoGridBinderEx.Examples.Business.Extensions
+namespace KendoGridBinder.UnitTests.Extensions
 {
     public static class NestedPropertyExtensions
     {

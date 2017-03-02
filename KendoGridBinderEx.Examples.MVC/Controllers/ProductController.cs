@@ -6,7 +6,7 @@ using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.Models;
-using KendoGridBinderEx.ModelBinder.Mvc;
+using KendoGridBinder.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {

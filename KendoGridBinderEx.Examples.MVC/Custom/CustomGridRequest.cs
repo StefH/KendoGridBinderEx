@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-using KendoGridBinderEx.Containers.Json;
+using KendoGridBinder.Containers.Json;
 
 namespace KendoGridBinderEx.Examples.MVC.Custom
 {

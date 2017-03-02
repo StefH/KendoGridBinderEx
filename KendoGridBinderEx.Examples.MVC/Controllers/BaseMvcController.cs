@@ -7,12 +7,13 @@ using System.Web.Mvc;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentValidation.Results;
-using KendoGridBinderEx.AutoMapperExtensions;
+using KendoGridBinder;
+using KendoGridBinder.AutoMapperExtensions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.Business.Validation;
 using KendoGridBinderEx.Examples.MVC.AutoMapper;
-using KendoGridBinderEx.ModelBinder.Mvc;
+using KendoGridBinder.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -90,17 +91,17 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
 
         protected virtual TViewModel Map(TEntity entity)
         {
-            return Mapper.Map<TViewModel>(entity);
+            return AutoMapperConfig.Mapper.Map<TViewModel>(entity);
         }
 
         protected virtual ICollection<TViewModel> ProjectToList(IQueryable<TEntity> queryableEntities)
         {
-            return queryableEntities.ProjectTo<TViewModel>().ToList();
+            return queryableEntities.ProjectTo<TViewModel>(AutoMapperConfig.MapperConfiguration).ToList();
         }
 
         protected virtual IQueryable<TViewModel> ProjectToQueryable(IQueryable<TEntity> queryableEntities)
         {
-            return queryableEntities.ProjectTo<TViewModel>();
+            return queryableEntities.ProjectTo<TViewModel>(AutoMapperConfig.MapperConfiguration);
         }
 
         /// <summary>
@@ -122,8 +123,8 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         protected virtual TEntity Map(TViewModel viewModel, TEntity entity)
         {
             return entity == null ?
-                Mapper.Map<TEntity>(viewModel) :
-                Mapper.Map(viewModel, entity);
+                AutoMapperConfig.Mapper.Map<TEntity>(viewModel) :
+                AutoMapperConfig.Mapper.Map(viewModel, entity);
         }
         #endregion
 

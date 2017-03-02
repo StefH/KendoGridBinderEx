@@ -81,6 +81,10 @@
       <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="KendoGridBinder, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KendoGridBinder\bin\$(Configuration)\net45\KendoGridBinder.dll</HintPath>
+    </Reference>
     <Reference Include="Linq.Expression.Optimizer, Version=1.0.6.0, Culture=neutral, PublicKeyToken=34b6af2337893e15, processorArchitecture=MSIL">
       <HintPath>..\packages\Linq.Expression.Optimizer.1.0.7\lib\net45\Linq.Expression.Optimizer.dll</HintPath>
       <Private>True</Private>
@@ -209,9 +213,6 @@
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="KendoGridBinderEx">
-      <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net45\KendoGridBinderEx.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

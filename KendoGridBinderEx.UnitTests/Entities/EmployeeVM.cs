@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KendoGridBinderEx.UnitTests.Entities
+namespace KendoGridBinder.UnitTests.Entities
 {
     public class EmployeeVM : Entity
     {

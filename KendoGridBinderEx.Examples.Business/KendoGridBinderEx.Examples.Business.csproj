@@ -70,9 +70,8 @@
       <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="KendoGridBinderEx, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KendoGridBinderEx\bin\$(Configuration)\net45\KendoGridBinderEx.dll</HintPath>
+    <Reference Include="KendoGridBinder">
+      <HintPath>..\KendoGridBinder\bin\$(Configuration)\net45\KendoGridBinder.dll</HintPath>
     </Reference>
     <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Linq.PropertyTranslator.Core.1.0.3.0\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>
@@ -222,12 +221,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobalResources_Business.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KendoGridBinderEx\KendoGridBinderEx.xproj">
-      <Project>{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}</Project>
-      <Name>KendoGridBinderEx</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

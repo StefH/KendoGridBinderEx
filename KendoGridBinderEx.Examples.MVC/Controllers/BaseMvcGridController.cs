@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.QueryContext;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
 using KendoGridBinderEx.Examples.MVC.AutoMapper;
-using KendoGridBinderEx.ModelBinder.Mvc;
+using KendoGridBinder.ModelBinder.Mvc;
 
 namespace KendoGridBinderEx.Examples.MVC.Controllers
 {
@@ -13,12 +14,11 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         where TEntity : class, IEntity, new()
         where TViewModel : class, IEntity, new()
     {
-        private readonly KendoGridExQueryableHelper _kendoGridExQueryableHelper;
+        private readonly KendoGridQueryableHelper _kendoGridExQueryableHelper;
 
-        protected BaseMvcGridController(IBaseService<TEntity> service)
-            : base(service)
+        protected BaseMvcGridController(IBaseService<TEntity> service) : base(service)
         {
-            _kendoGridExQueryableHelper = new KendoGridExQueryableHelper(AutoMapperConfig.MapperConfiguration);
+            _kendoGridExQueryableHelper = new KendoGridQueryableHelper(AutoMapperConfig.MapperConfiguration);
         }
 
         protected JsonResult GetKendoGridAsJson(KendoGridMvcRequest request, IQueryContext<TEntity> queryContext)
@@ -30,7 +30,7 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         {
             return Json(_kendoGridExQueryableHelper.ToKendoGridEx<TEntity, TViewModel>(query, request, includes));
         }
-        
+
         protected KendoGridEx<TEntity, TViewModel> GetKendoGrid(KendoGridMvcRequest request, IQueryable<TEntity> query)
         {
             return _kendoGridExQueryableHelper.ToKendoGridEx<TEntity, TViewModel>(query, request);

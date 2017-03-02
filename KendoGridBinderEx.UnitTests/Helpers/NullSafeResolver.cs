@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using AutoMapper;
-using KendoGridBinderEx.Examples.Business.Extensions;
-using KendoGridBinderEx.Extensions;
+using KendoGridBinder.Extensions;
+using KendoGridBinder.UnitTests.Extensions;
 
-namespace KendoGridBinderEx.UnitTests.Helpers
+namespace KendoGridBinder.UnitTests.Helpers
 {
     public class NullSafeResolver<TEntity, TViewModel, TResult> : IValueResolver<TEntity, TViewModel, TResult>, IKendoGridExValueResolver<TEntity>
     {

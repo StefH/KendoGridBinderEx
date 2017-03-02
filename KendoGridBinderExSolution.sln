@@ -9,32 +9,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.UnitTests", "KendoGridBinderEx.UnitTests\KendoGridBinderEx.UnitTests.csproj", "{CD4A009C-9133-4A49-BCE0-912FF83E724F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0} = {39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinder.UnitTests", "KendoGridBinderEx.UnitTests\KendoGridBinder.UnitTests.csproj", "{CD4A009C-9133-4A49-BCE0-912FF83E724F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.MVC", "KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj", "{568C9351-94C2-412A-86BC-F1A10FD4DF01}"
-	ProjectSection(ProjectDependencies) = postProject
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0} = {39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Business", "KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj", "{28B83391-37D5-4DFF-8A32-6D508FB191B8}"
 	ProjectSection(ProjectDependencies) = postProject
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0} = {39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}
+		{FFF14F34-ADDB-4310-9C6F-45EB31A17540} = {FFF14F34-ADDB-4310-9C6F-45EB31A17540}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Security", "KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj", "{B67D5A1D-8963-43DF-8167-5887CBB73E7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Infrastructure", "KendoGridBinderEx.Examples.Infrastructure\KendoGridBinderEx.Examples.Infrastructure.csproj", "{B69F4BED-660D-47B7-891B-EB1CC1421279}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KendoGridBinderEx", "KendoGridBinderEx\KendoGridBinderEx.xproj", "{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BDB85A9F-DF57-403B-A795-0DE632B9AF84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9C1E407B-3DE7-4A01-B29C-260EB1BC9CF4}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KendoGridBinderEx.Examples.Web", "KendoGridBinderEx.Examples.Web\KendoGridBinderEx.Examples.Web.xproj", "{670A4D99-9DA9-4CF8-A915-BA77D9321E74}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KendoGridBinder", "KendoGridBinder\KendoGridBinder.xproj", "{FFF14F34-ADDB-4310-9C6F-45EB31A17540}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KendoGridBinderEx", "KendoGridBinderEx\KendoGridBinderEx.xproj", "{3A9A6993-1171-415B-9903-41B482096497}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,14 +58,18 @@ Global
 		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B69F4BED-660D-47B7-891B-EB1CC1421279}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{670A4D99-9DA9-4CF8-A915-BA77D9321E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{670A4D99-9DA9-4CF8-A915-BA77D9321E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{670A4D99-9DA9-4CF8-A915-BA77D9321E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{670A4D99-9DA9-4CF8-A915-BA77D9321E74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF14F34-ADDB-4310-9C6F-45EB31A17540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF14F34-ADDB-4310-9C6F-45EB31A17540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF14F34-ADDB-4310-9C6F-45EB31A17540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF14F34-ADDB-4310-9C6F-45EB31A17540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A9A6993-1171-415B-9903-41B482096497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A9A6993-1171-415B-9903-41B482096497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A9A6993-1171-415B-9903-41B482096497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A9A6993-1171-415B-9903-41B482096497}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,8 +80,9 @@ Global
 		{28B83391-37D5-4DFF-8A32-6D508FB191B8} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
 		{B67D5A1D-8963-43DF-8167-5887CBB73E7F} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
 		{B69F4BED-660D-47B7-891B-EB1CC1421279} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
-		{39C319A1-94DF-4D8E-B7B7-52B1A157F6D0} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
 		{670A4D99-9DA9-4CF8-A915-BA77D9321E74} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
+		{FFF14F34-ADDB-4310-9C6F-45EB31A17540} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
+		{3A9A6993-1171-415B-9903-41B482096497} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35

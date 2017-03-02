@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Web;
 
-namespace KendoGridBinderEx.UnitTests.Helpers
+namespace KendoGridBinder.UnitTests.Helpers
 {
     public class FakeContext : HttpContextBase
     {

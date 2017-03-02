@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace KendoGridBinderEx.UnitTests.Helpers
+namespace KendoGridBinder.UnitTests.Helpers
 {
     class FakeController : Controller
     {

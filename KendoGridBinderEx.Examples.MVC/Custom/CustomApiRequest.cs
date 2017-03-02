@@ -1,5 +1,5 @@
 ﻿using System.Web.Http.ModelBinding;
-using KendoGridBinderEx.ModelBinder.Api;
+using KendoGridBinder.ModelBinder.Api;
 
 namespace KendoGridBinderEx.Examples.MVC.Custom
 {

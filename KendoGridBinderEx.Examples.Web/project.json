@@ -22,7 +22,7 @@
         "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
 
-        "KendoGridBinderEx": { "target": "project" }
+        "KendoGridBinder": { "target": "project" }
     },
 
     "tools": {

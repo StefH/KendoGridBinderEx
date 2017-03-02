@@ -1,10 +1,10 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
-using KendoGridBinderEx.UnitTests.Helpers;
-using KendoGridBinderEx;
+using KendoGridBinder;
+using KendoGridBinder.UnitTests.Helpers;
 using NUnit.Framework;
 
-namespace KendoGridBinderEx.UnitTests
+namespace KendoGridBinder.UnitTests
 {
     [TestFixture]
     public class KendoGridModelBinderParseTests : TestHelper

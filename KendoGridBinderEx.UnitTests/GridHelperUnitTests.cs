@@ -1,8 +1,8 @@
-﻿using KendoGridBinderEx.ModelBinder;
-using KendoGridBinderEx.ModelBinder.Api;
+﻿using KendoGridBinder.ModelBinder;
+using KendoGridBinder.ModelBinder.Api;
 using NUnit.Framework;
 
-namespace KendoGridBinderEx.UnitTests
+namespace KendoGridBinder.UnitTests
 {
     [TestFixture]
     public class GridHelperUnitTests

@@ -1,4 +1,4 @@
-﻿namespace KendoGridBinderEx.UnitTests.Entities
+﻿namespace KendoGridBinder.UnitTests.Entities
 {
     public class Country : Entity
     {

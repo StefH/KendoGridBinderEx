@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using KendoGridBinderEx.UnitTests.Helpers;
+using KendoGridBinder.UnitTests.Helpers;
 
-namespace KendoGridBinderEx.UnitTests.Entities
+namespace KendoGridBinder.UnitTests.Entities
 {
     public class EmployeeProfile : Profile
     {
