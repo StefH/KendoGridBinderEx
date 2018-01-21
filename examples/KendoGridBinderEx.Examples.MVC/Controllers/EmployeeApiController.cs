@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using KendoGridBinder;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Service.Interface;
@@ -23,13 +24,13 @@ namespace KendoGridBinderEx.Examples.MVC.Controllers
         }
 
         [HttpPost]
-        public KendoGrid<Employee, Employee> Grid(KendoGridApiRequest request)
+        public KendoGrid<Employee, Employee> Grid([ModelBinder] KendoGridApiRequest request)
         {
             return _kendoGridQueryableHelper.ToKendoGridEx<Employee, Employee>(_employeeService.AsQueryable(), request);
         }
 
         [HttpPost]
-        public KendoGrid<Employee, Employee> GridWithJson(KendoGridApiRequest request)
+        public KendoGrid<Employee, Employee> GridWithJson([ModelBinder] KendoGridApiRequest request)
         {
             return _kendoGridQueryableHelper.ToKendoGridEx<Employee, Employee>(_employeeService.AsQueryable(), request);
         }

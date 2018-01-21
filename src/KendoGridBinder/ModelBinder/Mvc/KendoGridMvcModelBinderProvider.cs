@@ -1,20 +1,20 @@
-﻿#if NETSTANDARD
+﻿#if !NETSTANDARD
 using System;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Web.Mvc;
 
 // ReSharper disable once CheckNamespace
 namespace KendoGridBinder.ModelBinder.Mvc
 {
     public class KendoGridMvcModelBinderProvider : IModelBinderProvider
     {
-        public IModelBinder GetBinder(ModelBinderProviderContext context)
+        public IModelBinder GetBinder(Type type)
         {
-            if (context == null)
+            if (type == null)
             {
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException(nameof(type));
             }
 
-            if (context.Metadata.ModelType == typeof(KendoGridMvcRequest))
+            if (type == typeof(KendoGridMvcRequest))
             {
                 return new KendoGridMvcModelBinder();
             }

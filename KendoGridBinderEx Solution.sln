@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.NETCore2", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KendoGridBinder", "src\KendoGridBinder\KendoGridBinder.csproj", "{A6727BCD-9A9F-4893-A33A-BD50ACFFDC90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx", "src\KendoGridBinderEx\KendoGridBinderEx.csproj", "{7CE167D7-5C1C-4117-B2B4-DC38526FF85F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KendoGridBinderEx", "src\KendoGridBinderEx\KendoGridBinderEx.csproj", "{7CE167D7-5C1C-4117-B2B4-DC38526FF85F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinder.UnitTests", "tests\KendoGridBinderEx.UnitTests\KendoGridBinder.UnitTests.csproj", "{CD4A009C-9133-4A49-BCE0-912FF83E724F}"
 EndProject

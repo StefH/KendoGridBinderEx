@@ -7,19 +7,10 @@ namespace KendoGridBinderEx.Examples.MVC
     {
         private static readonly NameValueCollection Config = ConfigurationManager.AppSettings;
 
-        public static bool MiniProfilerEnabled
-        {
-            get { return bool.Parse(Config["MiniProfiler.Enabled"]); }
-        }
+        public static bool MiniProfilerEnabled => bool.Parse(Config["MiniProfiler.Enabled"]);
 
-        public static bool InitDatabase
-        {
-            get { return bool.Parse(Config["MyDataContextConfiguration.InitDatabase"]); }
-        }
+        public static bool InitDatabase => bool.Parse(Config["MyDataContextConfiguration.InitDatabase"]);
 
-        public static string ConnectionString
-        {
-            get { return ConfigurationManager.ConnectionStrings["MyDataContext"].ConnectionString; }
-        }
+        public static string ConnectionString => ConfigurationManager.ConnectionStrings["MyDataContext"].ConnectionString;
     }
 }

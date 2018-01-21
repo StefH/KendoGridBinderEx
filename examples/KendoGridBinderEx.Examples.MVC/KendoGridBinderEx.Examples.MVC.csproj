@@ -235,7 +235,7 @@
     <Compile Include="Controllers\FunctionController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="CustomModelBinders.cs" />
+    <Compile Include="MyDateTimeBinder.cs" />
     <Compile Include="Custom\CustomApiModelBinder.cs" />
     <Compile Include="Custom\CustomApiRequest.cs" />
     <Compile Include="Custom\CustomGridRequest.cs" />
@@ -541,6 +541,7 @@
     </None>
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
+    <None Include="Properties\PublishProfiles\kendogridbinderex - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -1145,9 +1146,7 @@
       <LastGenOutput>GlobalResources_MVC.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

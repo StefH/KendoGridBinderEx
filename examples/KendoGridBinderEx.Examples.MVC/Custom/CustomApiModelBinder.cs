@@ -17,11 +17,11 @@ namespace KendoGridBinderEx.Examples.MVC.Custom
         {
             if (actionContext == null)
             {
-                throw new ArgumentNullException("actionContext");
+                throw new ArgumentNullException(nameof(actionContext));
             }
             if (bindingContext == null)
             {
-                throw new ArgumentNullException("bindingContext");
+                throw new ArgumentNullException(nameof(bindingContext));
             }
 
             string content = actionContext.Request.Content.ReadAsStringAsync().Result;

@@ -1,6 +1,7 @@
 ﻿#if NETSTANDARD
 using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 // ReSharper disable once CheckNamespace
 namespace KendoGridBinder.ModelBinder.Api
@@ -14,7 +15,12 @@ namespace KendoGridBinder.ModelBinder.Api
                 throw new ArgumentNullException(nameof(context));
             }
 
-            return new KendoGridApiModelBinder();
+            if (context.Metadata.ModelType == typeof(KendoGridApiRequest))
+            {
+                return new BinderTypeModelBinder(typeof(KendoGridApiModelBinder));
+            }
+
+            return null;
         }
     }
 }

@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
 using KendoGridBinder.Containers;
 using KendoGridBinder.Containers.Json;
+using KendoGridBinder.ModelBinder.Mvc;
 
 namespace KendoGridBinder
 {
+#if NETSTANDARD
+    [Microsoft.AspNetCore.Mvc.ModelBinder(BinderType = typeof(KendoGridMvcModelBinder))]
+#else
+    [System.Web.Http.ModelBinding.ModelBinder(typeof(KendoGridMvcModelBinder))]
+#endif
     public abstract class KendoGridBaseRequest
     {
         public int? Take { get; set; }

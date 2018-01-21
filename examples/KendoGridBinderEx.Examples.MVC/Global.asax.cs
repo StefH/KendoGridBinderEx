@@ -1,18 +1,16 @@
-﻿using AutoMapper;
-using FluentValidation.Mvc;
+﻿using FluentValidation.Mvc;
 using KendoGridBinderEx.Examples.Business.Unity;
 using KendoGridBinderEx.Examples.MVC.Unity;
 using StackExchange.Profiling;
 using StackExchange.Profiling.EntityFramework6;
 using StackExchange.Profiling.SqlFormatters;
 using System;
-using System.Linq;
-using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using KendoGridBinder.ModelBinder.Mvc;
 using KendoGridBinderEx.Examples.MVC.AutoMapper;
 
 namespace KendoGridBinderEx.Examples.MVC
@@ -36,6 +34,7 @@ namespace KendoGridBinderEx.Examples.MVC
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ModelBinders.Binders.Add(typeof(DateTime), new MyDateTimeBinder());
+            ModelBinders.Binders.Add(typeof(KendoGridMvcRequest), new KendoGridMvcModelBinder());
 
             if (_miniProfilerEnabled)
             {

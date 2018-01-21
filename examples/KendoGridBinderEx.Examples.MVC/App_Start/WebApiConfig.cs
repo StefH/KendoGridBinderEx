@@ -1,6 +1,9 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using System.Web.Http.ModelBinding.Binders;
 using System.Web.Http.Routing;
+using KendoGridBinder.ModelBinder.Api;
 
 namespace KendoGridBinderEx.Examples.MVC
 {
@@ -21,6 +24,9 @@ namespace KendoGridBinderEx.Examples.MVC
             // To disable tracing in your application, please comment out or remove the following line of code
             // For more information, refer to: http://www.asp.net/web-api
             //config.EnableSystemDiagnosticsTracing();
+
+            var provider = new SimpleModelBinderProvider(typeof(KendoGridApiRequest), new KendoGridApiModelBinder());
+            config.Services.Insert(typeof(ModelBinderProvider), 0, provider);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace KendoGridBinder.ModelBinder
                 list.Add(obj);
             }
 
-            return list;
+            return list.Any() ? list : null;
         }
     }
 }
