@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>[Obsolete] Use latest version from KendoGridBinder.</Description>
+    <AssemblyTitle>KendoGridBinder</AssemblyTitle>
+    <VersionPrefix>9.9.9</VersionPrefix>
+    <Authors>Stef Heyenrath</Authors>
+    <TargetFrameworks>net45;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <AssemblyName>KendoGridBinderEx</AssemblyName>
+    <PackageId>KendoGridBinderEx</PackageId>
+    <PackageTags>Kendo;Grid;Model;AutoMapper;MVC;ModelBinder;Binder;Dynamic</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/StefH/KendoGridBinderEx</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KendoGridBinder\KendoGridBinder.csproj" />
+  </ItemGroup>
+
+</Project>

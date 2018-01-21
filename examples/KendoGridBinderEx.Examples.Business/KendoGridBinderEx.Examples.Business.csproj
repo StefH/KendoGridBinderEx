@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28B83391-37D5-4DFF-8A32-6D508FB191B8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KendoGridBinderEx.Examples.Business</RootNamespace>
+    <AssemblyName>KendoGridBinderEx.Examples.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Linq.PropertyTranslator.Core, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Linq.PropertyTranslator.Core.1.0.4\lib\net452\Linq.PropertyTranslator.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="NLipsum.Core, Version=1.0.1.0, Culture=neutral, PublicKeyToken=593e1df460e1bda0, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLipsum.1.0.1\lib\net20\NLipsum.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="QueryInterceptor.Core, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\QueryInterceptor.Core.1.0.6\lib\net45\QueryInterceptor.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Linq.Dynamic.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Linq.Dynamic.Core.1.0.8.2\lib\net45\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoMapper\EntityResolver.cs" />
+    <Compile Include="Entities\Company.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Country.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Employee.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\EmployeeView.cs" />
+    <Compile Include="Entities\Entity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Function.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\IEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\MainCompany.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Mapping\EmployeeViewMap.cs" />
+    <Compile Include="Entities\OU.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Product.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Role.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\SubFunction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\User.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\NestedPropertyExtensions.cs" />
+    <Compile Include="GlobalResources_Business.Designer.cs">
+      <DependentUpon>GlobalResources_Business.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GlobalResourcesLiterals_Business.cs">
+      <DependentUpon>GlobalResourcesLiterals_Business.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Service\Implementation\EmployeeViewService.cs" />
+    <Compile Include="Service\Interface\IEmployeeViewService.cs" />
+    <Compile Include="UnitOfWork\MyDataContext.cs" />
+    <Compile Include="Entities\Mapping\CompanyMap.cs" />
+    <Compile Include="Entities\Mapping\CountryMap.cs" />
+    <Compile Include="Entities\Mapping\EmployeeMap.cs" />
+    <Compile Include="Entities\Mapping\FunctionMap.cs" />
+    <Compile Include="Entities\Mapping\MainCompanyMap.cs" />
+    <Compile Include="Entities\Mapping\OUMap.cs" />
+    <Compile Include="Entities\Mapping\ProductMap.cs" />
+    <Compile Include="Entities\Mapping\RoleMap.cs" />
+    <Compile Include="Entities\Mapping\SubFunctionMap.cs" />
+    <Compile Include="Entities\Mapping\UserMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryContext\IQueryContext.cs" />
+    <Compile Include="QueryContext\QueryContext.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IRepositoryConfig.cs" />
+    <Compile Include="Repository\RepositoryImpl.cs" />
+    <Compile Include="Repository\RepositoryConfig.cs" />
+    <Compile Include="Service\Implementation\BaseService.cs" />
+    <Compile Include="Service\Implementation\CountryService.cs" />
+    <Compile Include="Service\Implementation\MainCompanyService.cs" />
+    <Compile Include="Service\Implementation\CompanyService.cs" />
+    <Compile Include="Service\Implementation\OUService.cs" />
+    <Compile Include="Service\Implementation\UserRoleService.cs" />
+    <Compile Include="Service\Implementation\RoleService.cs" />
+    <Compile Include="Service\Implementation\UserService.cs" />
+    <Compile Include="Service\Implementation\SubFunctionService.cs" />
+    <Compile Include="Service\Implementation\FunctionService.cs" />
+    <Compile Include="Service\Interface\ICountryService.cs" />
+    <Compile Include="Service\Interface\IMainCompanyService.cs" />
+    <Compile Include="Service\Interface\IOUService.cs" />
+    <Compile Include="Service\Interface\IUserRoleService.cs" />
+    <Compile Include="Service\Interface\IRoleService.cs" />
+    <Compile Include="Service\Interface\IUserService.cs" />
+    <Compile Include="Service\Interface\ISubFunctionService.cs" />
+    <Compile Include="Service\Interface\IFunctionService.cs" />
+    <Compile Include="Service\Implementation\EmployeeService.cs" />
+    <Compile Include="Service\Interface\IBaseService.cs" />
+    <Compile Include="Service\Interface\ICompanyService.cs" />
+    <Compile Include="Service\Interface\IEmployeeService.cs" />
+    <Compile Include="Service\Interface\IProductService.cs" />
+    <Compile Include="Service\Implementation\ProductService.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\MyDataContextConfiguration.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkImpl.cs" />
+    <Compile Include="Unity\UnityBootstrapper.cs" />
+    <Compile Include="Unity\UnityResolver.cs" />
+    <Compile Include="Validation\BaseValidator.cs" />
+    <Compile Include="Validation\EmployeeValidator.cs" />
+    <Compile Include="Validation\ProductValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="Database\Scripts\Add indexes.sql" />
+    <Content Include="GlobalResourcesLiterals_Business.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GlobalResourcesLiterals_Business.cs</LastGenOutput>
+    </Content>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GlobalResources_Business.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GlobalResources_Business.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
