@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Security", "examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj", "{B67D5A1D-8963-43DF-8167-5887CBB73E7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.MVC", "examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj", "{568C9351-94C2-412A-86BC-F1A10FD4DF01}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A6727BCD-9A9F-4893-A33A-BD50ACFFDC90} = {A6727BCD-9A9F-4893-A33A-BD50ACFFDC90}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Business", "examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj", "{28B83391-37D5-4DFF-8A32-6D508FB191B8}"
 EndProject
@@ -77,7 +80,7 @@ Global
 		{CD4A009C-9133-4A49-BCE0-912FF83E724F} = {9C1E407B-3DE7-4A01-B29C-260EB1BC9CF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 		SolutionGuid = {2982E497-A6B9-490F-9DF2-4B5C03B9536E}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

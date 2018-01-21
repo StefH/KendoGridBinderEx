@@ -16,6 +16,10 @@
     <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\KendoGridBinder\KendoGridBinder.csproj" />
   </ItemGroup>
