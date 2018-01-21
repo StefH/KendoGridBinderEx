@@ -1,9 +1,8 @@
-os: Visual Studio 2015
+os: Visual Studio 2017
 
-version: 5.0.4.{build}
+version: 2.0.0.{build}
 
 configuration:
-- Debug
 - Release
 
 platform: Any CPU
@@ -19,21 +18,17 @@ environment:
   PATH: $(PATH);$(PROGRAMFILES)\dotnet\
 
 build_script:
-- appveyor-retry dotnet restore KendoGridBinder -v Minimal
-- appveyor-retry nuget restore KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj -PackagesDirectory packages
-- appveyor-retry nuget restore KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj -PackagesDirectory packages
-- appveyor-retry nuget restore KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
+- appveyor-retry dotnet restore src\KendoGridBinder -v Minimal
+- appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj -PackagesDirectory packages
+- appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj -PackagesDirectory packages
+- appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
 
-- dotnet build KendoGridBinder\project.json -c %CONFIGURATION%
+- dotnet build src\KendoGridBinder\KendoGridBinder.csproj -c %CONFIGURATION%
+- dotnet build src\KendoGridBinderEx\KendoGridBinderEx.csproj -c %CONFIGURATION%
 
-- appveyor-retry dotnet restore KendoGridBinderEx -v Minimal
-- dotnet build KendoGridBinderEx\project.json -c %CONFIGURATION%
-
-- cmd: msbuild KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-- cmd: msbuild KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-- cmd: msbuild KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts KendoGridBinderEx\project.json
+# - cmd: msbuild examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
+# - cmd: msbuild examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
+# - cmd: msbuild examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
 
 artifacts:
 - path: artifacts\**\*.*

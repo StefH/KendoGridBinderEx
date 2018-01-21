@@ -1,21 +1,22 @@
-# KendoGridBinderEx
+# KendoGridBinder
 
 [![Build status](https://ci.appveyor.com/api/projects/status/6ynbga07r315xhb8?svg=true)](https://ci.appveyor.com/project/StefH/kendogridbinderex)
-[![NuGet Badge](https://buildstats.info/nuget/KendoGridBinderEx)](https://www.nuget.org/packages/KendoGridBinderEx)
+[![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder)](https://www.nuget.org/packages/KendoGridBinder)
 
 ## Install
 ```html
-PM> Install-Package KendoGridBinderEx
+PM> Install-Package KendoGridBinder
 ```
 
-## Supported dotnet versions
+## Supported frameworks
 - .NET 4.5
 - NETStandard 1.6
+- NETStandard 2.0
 
 ## Demo
-http://kendogridbinderex.apphb.com
+A live demo can be found [here](https://kendogridbinderex.azurewebsites.net).
 
-## Action Method
+### Action Method
 ```csharp
 [HttpPost]
 public JsonResult Grid(KendoGridMvcRequest request)
@@ -24,7 +25,7 @@ public JsonResult Grid(KendoGridMvcRequest request)
     {
         new Employee { EmployeeId = 1, FirstName = "Bill", LastName = "Jones", Email = "bill@email.com" },
         new Employee { EmployeeId = 2, FirstName = "Rob", LastName = "Johnson", Email = "rob@email.com" },
-        new Employee { EmployeeId = 3, FirstName = "Jane", LastName = "Smith", Email = "jane@email.com" },
+        new Employee { EmployeeId = 3, FirstName = "Jane", LastName = "Smith", Email = "jane@email.com" }
     };
 
     var grid = new KendoGridEx<Employee, EmployeeVM>(request, employees.AsQueryable());
@@ -32,18 +33,18 @@ public JsonResult Grid(KendoGridMvcRequest request)
 }
 ```
 
-## HTML
+### HTML
 ```html
 <div id="grid"></div>
 ```
 
 
-## Script
+### Script
 ```javascript
 <script>
     var url = '@Url.Action("Grid")';
 
-    var dataSource = new kendo.data.DataSource({
+    var dataSource = {
         serverPaging: true,
         serverSorting: true,
         serverFiltering: true,
@@ -67,7 +68,7 @@ public JsonResult Grid(KendoGridMvcRequest request)
                 }
             }
         }
-    });
+    };
 
     $('#grid').kendoGrid({
         dataSource: dataSource,

@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is a ModelBinder designed to consume a http request and dynamically build a json serializable object for the Kendo UI Grid datasource. AutoMapper is used to support mapping from ViewModel &lt;&gt; Entity.</Description>
+    <AssemblyTitle>KendoGridBinder</AssemblyTitle>
+    <VersionPrefix>2.0.0-preview-1</VersionPrefix>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
+    <Authors>Ryan Whitmire;Josh Ball;Carlos Adriano Portes;Stef Heyenrath</Authors>
+    <TargetFrameworks>net45;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <AssemblyName>KendoGridBinder</AssemblyName>
+    <PackageId>KendoGridBinder</PackageId>
+    <PackageTags>Kendo;Grid;Model;AutoMapper;MVC;ModelBinder;Binder;Dynamic</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/StefH/KendoGridBinderEx</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="AutoMapper" Version="5.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System.Web" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.3" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.3" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' or '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.1.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.2" />
+  </ItemGroup>
+
+</Project>
