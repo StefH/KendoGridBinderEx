@@ -14,7 +14,7 @@ PM> Install-Package KendoGridBinder
 - NETStandard 2.0
 
 ## Demo
-http://kendogridbinderex.apphb.com
+A live demo can be found [here](https://kendogridbinderex.azurewebsites.net).
 
 ### Action Method
 ```csharp

@@ -81,10 +81,6 @@
     <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
-    <Reference Include="KendoGridBinder">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\KendoGridBinder\bin\$(Configuration)\net45\KendoGridBinder.dll</HintPath>
-    </Reference>
     <Reference Include="Linq.Expression.Optimizer, Version=1.0.6.0, Culture=neutral, PublicKeyToken=34b6af2337893e15, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Linq.Expression.Optimizer.1.0.11\lib\net45\Linq.Expression.Optimizer.dll</HintPath>
     </Reference>
@@ -1128,6 +1124,10 @@
     <Content Include="Views\EmployeeView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\KendoGridBinder\KendoGridBinder.csproj">
+      <Project>{a6727bcd-9a9f-4893-a33a-bd50acffdc90}</Project>
+      <Name>KendoGridBinder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj">
       <Project>{28b83391-37d5-4dff-8a32-6d508fb191b8}</Project>
       <Name>KendoGridBinderEx.Examples.Business</Name>

@@ -22,7 +22,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitTests.Services
             unityContainer.RegisterType<IUnitOfWork, UnitOfWorkImpl>();
 
             var db = Effort.DbConnectionFactory.CreateTransient();
-            var ctx = new MyDataContext(db, new MyDataContextConfiguration("test", true));
+            var ctx = new MyTestDataContext(db, new MyDataContextConfiguration("x", true));
             ctx.Database.CreateIfNotExists();
             ctx.Database.Initialize(true);
 

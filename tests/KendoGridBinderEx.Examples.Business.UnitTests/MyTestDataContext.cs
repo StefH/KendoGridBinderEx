@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -8,11 +9,12 @@ using System.Linq;
 using System.Transactions;
 using KendoGridBinderEx.Examples.Business.Entities;
 using KendoGridBinderEx.Examples.Business.Entities.Mapping;
+using KendoGridBinderEx.Examples.Business.UnitOfWork;
 using NLipsum.Core;
 
-namespace KendoGridBinderEx.Examples.Business.UnitOfWork
+namespace KendoGridBinderEx.Examples.Business.UnitTests
 {
-    public class MyDataContext : DbContext
+    public class MyTestDataContext : DbContext
     {
         public DbSet<Company> Companies { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -25,60 +27,13 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
         public DbSet<SubFunction> SubFunctions { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public MyDataContext(MyDataContextConfiguration config)
-            : base(config.NameOrConnectionString)
+        public MyTestDataContext(DbConnection db, MyDataContextConfiguration config)
+            : base(db, true)
         {
-            Init(config);
-        }
-
-        private void Init(MyDataContextConfiguration config)
-        {
-            if (config.InitDatabase)
-            {
-                Database.SetInitializer(new InitDatabase(config));
-            }
-            else
-            {
-                Database.SetInitializer<MyDataContext>(null); // must be turned off before mini profiler runs
-            }
+            Database.SetInitializer(new InitDatabase(config));
         }
 
         public ObjectContext ObjectContext => (this as IObjectContextAdapter).ObjectContext;
-
-        public bool TableExists(string table)
-        {
-            return ObjectContext.ExecuteStoreQuery<string>($"SELECT name FROM dbo.sysobjects WHERE xtype = 'U' AND name = '{table}'").Any();
-        }
-
-        public void TableTruncate(string table)
-        {
-            Database.ExecuteSqlCommand($"TRUNCATE TABLE [dbo].[{table}]");
-        }
-
-        public void TableDelete(string table)
-        {
-            Database.ExecuteSqlCommand($"DROP TABLE [dbo].[{table}]");
-        }
-
-        public bool ViewExists(string view)
-        {
-            return ObjectContext.ExecuteStoreQuery<string>($"SELECT name FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[{view}]')").Any();
-        }
-
-        public void ViewDelete(string view)
-        {
-            Database.ExecuteSqlCommand($"DROP VIEW [dbo].[{view}]");
-        }
-
-        public void DeleteForeignKeys(string table)
-        {
-            string foreignKeys = $"SELECT parent_object_id FROM sys.foreign_keys WHERE referenced_object_id = object_id('{table}')";
-            if (ObjectContext.ExecuteStoreQuery<int>(foreignKeys).Any())
-            {
-                string dropForeignKeys = $"SELECT 'ALTER TABLE ' + OBJECT_NAME(parent_object_id) + ' DROP CONSTRAINT ' + name FROM sys.foreign_keys WHERE referenced_object_id = object_id('{table}')";
-                Database.ExecuteSqlCommand(dropForeignKeys);
-            }
-        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -96,7 +51,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
         }
     }
 
-    public class InitDatabase : IDatabaseInitializer<MyDataContext>
+    public class InitDatabase : IDatabaseInitializer<MyTestDataContext>
     {
         private readonly MyDataContextConfiguration _config;
 
@@ -105,63 +60,13 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             _config = config;
         }
 
-        public void InitializeDatabase(MyDataContext context)
+        public void InitializeDatabase(MyTestDataContext context)
         {
-            bool dbExists;
-            using (new TransactionScope(TransactionScopeOption.Suppress))
-            {
-                dbExists = context.Database.Exists();
-            }
-
-            if (!dbExists)
-            {
-                throw new Exception();
-            }
-
-            // remove all tables if present
-            string[] dropTables = { "VW_EmployeeDetails", "KendoGrid_UserRoles", "KendoGrid_User", "KendoGrid_Role", "KendoGrid_OU", "KendoGrid_Employee", "KendoGrid_SubFunction", "KendoGrid_Function", "KendoGrid_Product", "KendoGrid_Company", "KendoGrid_MainCompany", "KendoGrid_Country" };
-            foreach (string table in dropTables)
-            {
-                if (context.TableExists(table))
-                {
-                    context.TableTruncate(table);
-                    context.DeleteForeignKeys(table);
-                    context.TableDelete(table);
-                }
-            }
-
-            // remove view if present
-            if (context.ViewExists("VW_EmployeeDetails"))
-            {
-                context.ViewDelete("VW_EmployeeDetails");
-            }
-
-            // recreate all tables
-            string dbCreationScript = context.ObjectContext.CreateDatabaseScript();
-            context.Database.ExecuteSqlCommand(dbCreationScript);
-
-            // delete wrong table VW_EmployeeDetails
-            context.TableDelete("VW_EmployeeDetails");
-
-            string createView = @"
-                CREATE VIEW [dbo].[VW_EmployeeDetails]
-                AS
-                SELECT
-	                e.*,
-	                cast(case when e.LastName like '%smith' then 1 else 0 end as bit) as IsManager,
-	                e.FirstName + ' ' + e.LastName as FullName,
-	                cast(case when e.Assigned > 1 then 1 else 0 end as bit) as IsAssigned,
-	                c.Code as CountryCode,
-	                c.Name as CountryName
-                FROM dbo.KendoGrid_Employee as e
-                INNER JOIN dbo.KendoGrid_Country as c ON e.Country_Id = c.Id";
-            context.Database.ExecuteSqlCommand(createView);
-
             Seed(context);
             context.SaveChanges();
         }
 
-        private void Seed(MyDataContext context)
+        private void Seed(MyTestDataContext context)
         {
             var roleAdmin = new Role { Id = 1, Name = "Administrator", Description = "Administrator" };
             var roleSuperUser = new Role { Id = 2, Name = "SuperUser", Description = "Super User" };
@@ -277,13 +182,12 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             BulkInsert(context, context.OUs, list);
         }
 
-        private void BulkInsert<TEntity>(MyDataContext context, DbSet<TEntity> set, IEnumerable<TEntity> enumerable, int step = 100) where TEntity : class
+        private void BulkInsert<TEntity>(MyTestDataContext context, DbSet<TEntity> set, IEnumerable<TEntity> enumerable, int step = 100) where TEntity : class
         {
             using (var scope = new TransactionScope())
             {
                 try
                 {
-                    context = new MyDataContext(_config);
                     context.Configuration.AutoDetectChangesEnabled = false;
 
                     int count = 0;
@@ -297,27 +201,20 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
                 }
                 finally
                 {
-                    context?.Dispose();
+                    // context?.Dispose();
                 }
 
                 scope.Complete();
             }
         }
 
-        private MyDataContext AddToContext<TEntity>(MyDataContext context, DbSet<TEntity> set, TEntity entity, int count, int commitCount, bool recreateContext) where TEntity : class
+        private MyTestDataContext AddToContext<TEntity>(MyTestDataContext context, DbSet<TEntity> set, TEntity entity, int count, int commitCount, bool recreateContext) where TEntity : class
         {
-
             set.Add(entity);
 
             if (count % commitCount == 0)
             {
                 context.SaveChanges();
-                if (recreateContext)
-                {
-                    context.Dispose();
-                    context = new MyDataContext(_config);
-                    context.Configuration.AutoDetectChangesEnabled = false;
-                }
             }
 
             return context;
