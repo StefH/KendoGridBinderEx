@@ -91,6 +91,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Linq.Dynamic.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Linq.Dynamic.Core.1.0.8.2\lib\net45\System.Linq.Dynamic.Core.dll</HintPath>

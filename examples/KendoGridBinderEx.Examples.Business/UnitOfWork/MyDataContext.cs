@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -31,11 +32,18 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             Init(config);
         }
 
-        private void Init(MyDataContextConfiguration config)
+        // For unit tests
+        public MyDataContext(DbConnection db, MyDataContextConfiguration config)
+            : base(db, true)
+        {
+            Init(config, true);
+        }
+
+        private void Init(MyDataContextConfiguration config, bool test = false)
         {
             if (config.InitDatabase)
             {
-                Database.SetInitializer(new InitDatabase(config));
+                Database.SetInitializer(new InitDatabase(config, test));
             }
             else
             {
@@ -43,13 +51,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             }
         }
 
-        public ObjectContext ObjectContext
-        {
-            get
-            {
-                return (this as IObjectContextAdapter).ObjectContext;
-            }
-        }
+        public ObjectContext ObjectContext => (this as IObjectContextAdapter).ObjectContext;
 
         public bool TableExists(string table)
         {
@@ -105,14 +107,23 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
     public class InitDatabase : IDatabaseInitializer<MyDataContext>
     {
         private readonly MyDataContextConfiguration _config;
+        private readonly bool _test;
 
-        public InitDatabase(MyDataContextConfiguration config)
+        public InitDatabase(MyDataContextConfiguration config, bool test = false)
         {
             _config = config;
+            _test = test;
         }
 
         public void InitializeDatabase(MyDataContext context)
         {
+            if (_test)
+            {
+                Seed(context);
+                context.SaveChanges();
+                return;
+            }
+
             bool dbExists;
             using (new TransactionScope(TransactionScopeOption.Suppress))
             {
@@ -266,7 +277,7 @@ namespace KendoGridBinderEx.Examples.Business.UnitOfWork
             products.ForEach(x => context.Products.Add(x));
             context.SaveChanges();
 
-            const int numOUs = 5000;
+            const int numOUs = 100;
             var generator = new LipsumGenerator();
             var list = new List<OU>();
             for (int i = 1000000; i < 1000000 + numOUs; i++)

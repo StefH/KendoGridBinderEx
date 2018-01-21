@@ -114,7 +114,7 @@ namespace KendoGridBinder.UnitTests
                 {"skip", "0"},
                 {"page", "1"},
                 {"pagesize", "5"},
-                
+
                 {"sort[0][field]", "First"},
                 {"sort[0][dir]", "asc"},
                 {"sort[1][field]", "Email"},
@@ -127,7 +127,7 @@ namespace KendoGridBinder.UnitTests
                 {"filter[filters][0][filters][1][field]", "CompanyName"},
                 {"filter[filters][0][filters][1][operator]", "contains"},
                 {"filter[filters][0][filters][1][value]", "B"},
-                
+
                 {"filter[filters][1][field]", "Last"},
                 {"filter[filters][1][operator]", "contains"},
                 {"filter[filters][1][value]", "s"},
@@ -296,7 +296,7 @@ namespace KendoGridBinder.UnitTests
             CheckPageSize(gridRequest, 5);
 
             Assert.IsNull(gridRequest.FilterObjectWrapper);
-            Assert.AreEqual(0, gridRequest.SortObjects.Count());
+            Assert.IsNull(gridRequest.SortObjects);
             Assert.IsNull(gridRequest.GroupObjects);
 
             var aggregateObjects = gridRequest.AggregateObjects.ToList();

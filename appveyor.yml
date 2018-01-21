@@ -1,9 +1,8 @@
-os: Visual Studio 2015
+os: Visual Studio 2017
 
-version: 1.0.8.{build}
+version: 2.0.0.{build}
 
 configuration:
-- Debug
 - Release
 
 platform: Any CPU
@@ -24,12 +23,12 @@ build_script:
 - appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj -PackagesDirectory packages
 - appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
 
-- dotnet build src\KendoGridBinder\KendoGridBinder.csproj -c %CONFIGURATION%
-- dotnet build src\KendoGridBinderEx\KendoGridBinderEx.csproj -c %CONFIGURATION%
+- dotnet build src\KendoGridBinder\KendoGridBinder.csproj
+- dotnet build src\KendoGridBinderEx\KendoGridBinderEx.csproj
 
-- cmd: msbuild examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-- cmd: msbuild examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-- cmd: msbuild examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
+- cmd: msbuild examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj
+- cmd: msbuild examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj
+- cmd: msbuild examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj
 
 artifacts:
 - path: artifacts\**\*.*
