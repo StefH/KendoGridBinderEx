@@ -80,7 +80,7 @@ namespace KendoGridBinder.ModelBinder
             foreach (var groupObject in result)
             {
                 var aggregates = new Dictionary<int, AggregateObject>();
-                var aggregateKey = string.Format("group[{0}][aggregates]", groupObject.Key);
+                var aggregateKey = $"group[{groupObject.Key}][aggregates]";
 
                 foreach (var x in enumerable
                     .Where(k => k.StartsWith(aggregateKey))
