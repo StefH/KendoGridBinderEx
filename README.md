@@ -1,17 +1,14 @@
 # KendoGridBinder
 
 [![Build status](https://ci.appveyor.com/api/projects/status/6ynbga07r315xhb8?svg=true)](https://ci.appveyor.com/project/StefH/kendogridbinderex)
-[![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder)](https://www.nuget.org/packages/KendoGridBinder)
 
-## Install
-```html
-PM> Install-Package KendoGridBinder
-```
 
-## Supported frameworks
-- .NET 4.5
-- NETStandard 1.6
-- NETStandard 2.0
+## Versions
+
+| NuGet | Frameworks | NuGet |
+| - | - | - |
+| KendoGridBinder | .NET 4.5<br>NETStandard 2.0 | [![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder)](https://www.nuget.org/packages/KendoGridBinder)
+| KendoGridBinder.AspNetCore | .NET 4.6.1<br>NETStandard 1.6<br>NETStandard 2.0 | [![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder.AspNetCore)](https://www.nuget.org/packages/KendoGridBinder.AspNetCore)
 
 ## Demo
 A live demo can be found [here](https://kendogridbinderex.azurewebsites.net).

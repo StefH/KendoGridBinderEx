@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
@@ -55,4 +54,3 @@ namespace KendoGridBinder.ModelBinder.Mvc
         }
     }
 }
-#endif

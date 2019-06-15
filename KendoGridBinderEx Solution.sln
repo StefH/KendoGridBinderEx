@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23382819-D5CC-435B-803B-2F054D57A42F}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
 		readme.md = readme.md
 	EndProjectSection
 EndProject
@@ -33,6 +34,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinder.UnitTests", "tests\KendoGridBinderEx.UnitTests\KendoGridBinder.UnitTests.csproj", "{CD4A009C-9133-4A49-BCE0-912FF83E724F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KendoGridBinderEx.Examples.Business.UnitTests", "tests\KendoGridBinderEx.Examples.Business.UnitTests\KendoGridBinderEx.Examples.Business.UnitTests.csproj", "{DDC54B74-259B-47E5-A735-8CE528FFD33D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp", "examples\DemoApp\DemoApp.csproj", "{07187250-6389-47CE-911D-C97CED487C01}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KendoGridBinder.AspNetCore", "src\KendoGridBinder.AspNetCore\KendoGridBinder.AspNetCore.csproj", "{2D51216E-D54E-46D0-8A93-42667CF390CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +77,14 @@ Global
 		{DDC54B74-259B-47E5-A735-8CE528FFD33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDC54B74-259B-47E5-A735-8CE528FFD33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDC54B74-259B-47E5-A735-8CE528FFD33D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07187250-6389-47CE-911D-C97CED487C01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07187250-6389-47CE-911D-C97CED487C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07187250-6389-47CE-911D-C97CED487C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07187250-6389-47CE-911D-C97CED487C01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D51216E-D54E-46D0-8A93-42667CF390CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D51216E-D54E-46D0-8A93-42667CF390CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D51216E-D54E-46D0-8A93-42667CF390CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D51216E-D54E-46D0-8A93-42667CF390CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,9 +98,11 @@ Global
 		{7CE167D7-5C1C-4117-B2B4-DC38526FF85F} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
 		{CD4A009C-9133-4A49-BCE0-912FF83E724F} = {9C1E407B-3DE7-4A01-B29C-260EB1BC9CF4}
 		{DDC54B74-259B-47E5-A735-8CE528FFD33D} = {9C1E407B-3DE7-4A01-B29C-260EB1BC9CF4}
+		{07187250-6389-47CE-911D-C97CED487C01} = {218632BC-2653-4949-B672-243800E00F96}
+		{2D51216E-D54E-46D0-8A93-42667CF390CD} = {BDB85A9F-DF57-403B-A795-0DE632B9AF84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2982E497-A6B9-490F-9DF2-4B5C03B9536E}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+		SolutionGuid = {2982E497-A6B9-490F-9DF2-4B5C03B9536E}
 	EndGlobalSection
 EndGlobal

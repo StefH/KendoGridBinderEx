@@ -19,16 +19,13 @@ environment:
 
 build_script:
 - appveyor-retry dotnet restore src\KendoGridBinder -v Minimal
+- appveyor-retry dotnet restore src\KendoGridBinder.AspNetCore -v Minimal
 - appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj -PackagesDirectory packages
 - appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj -PackagesDirectory packages
 - appveyor-retry nuget restore examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj -PackagesDirectory packages
 
 - dotnet build src\KendoGridBinder\KendoGridBinder.csproj -c %CONFIGURATION%
-- dotnet build src\KendoGridBinderEx\KendoGridBinderEx.csproj -c %CONFIGURATION%
-
-# - cmd: msbuild examples\KendoGridBinderEx.Examples.Business\KendoGridBinderEx.Examples.Business.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-# - cmd: msbuild examples\KendoGridBinderEx.Examples.Security\KendoGridBinderEx.Examples.Security.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-# - cmd: msbuild examples\KendoGridBinderEx.Examples.MVC\KendoGridBinderEx.Examples.MVC.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
+- dotnet build src\KendoGridBinder.AspNetCore\KendoGridBinder.AspNetCore.csproj -c %CONFIGURATION%
 
 artifacts:
 - path: artifacts\**\*.*

@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
@@ -24,4 +23,3 @@ namespace KendoGridBinder.ModelBinder.Api
         }
     }
 }
-#endif

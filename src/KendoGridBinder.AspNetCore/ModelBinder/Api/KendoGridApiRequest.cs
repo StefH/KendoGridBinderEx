@@ -1,5 +1,4 @@
-﻿#if !NET45
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 // ReSharper disable once CheckNamespace
 namespace KendoGridBinder.ModelBinder.Api
@@ -9,4 +8,3 @@ namespace KendoGridBinder.ModelBinder.Api
     {
     }
 }
-#endif

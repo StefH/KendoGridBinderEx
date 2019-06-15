@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -45,4 +44,3 @@ namespace KendoGridBinder.ModelBinder.Api
         }
     }
 }
-#endif

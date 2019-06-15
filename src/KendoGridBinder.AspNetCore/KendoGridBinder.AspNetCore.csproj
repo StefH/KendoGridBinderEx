@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is a ModelBinder designed to consume a http request and dynamically build a json serializable object for the Kendo UI Grid datasource. AutoMapper is used to support mapping from ViewModel &lt;&gt; Entity.</Description>
+    <AssemblyTitle>KendoGridBinder.AspNetCore</AssemblyTitle>
+    <Authors>Stef Heyenrath</Authors>
+    <TargetFrameworks>net461;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <AssemblyName>KendoGridBinder.AspNetCore</AssemblyName>
+    <PackageId>KendoGridBinder.AspNetCore</PackageId>
+    <PackageTags>Kendo;Grid;Model;AutoMapper;MVC;ModelBinder;Binder;Dynamic</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/StefH/KendoGridBinderEx</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
+    <RootNamespace>KendoGridBinder.AspNetCore</RootNamespace>
+    <DefineConstants>$(DefineConstants);ASPNETCORE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\KendoGridBinder\AutoMapperExtensions\AutoMapperUtils.cs" Link="AutoMapperExtensions\AutoMapperUtils.cs" />
+    <Compile Include="..\KendoGridBinder\AutoMapperExtensions\MapExpression.cs" Link="AutoMapperExtensions\MapExpression.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\FilterObject.cs" Link="Containers\FilterObject.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\FilterObjectWrapper.cs" Link="Containers\FilterObjectWrapper.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\Json\AggregateObject.cs" Link="Containers\Json\AggregateObject.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\Json\Filter.cs" Link="Containers\Json\Filter.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\Json\GridRequest.cs" Link="Containers\Json\GridRequest.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\Json\GroupObject.cs" Link="Containers\Json\GroupObject.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\Json\Sort.cs" Link="Containers\Json\Sort.cs" />
+    <Compile Include="..\KendoGridBinder\Containers\SortObject.cs" Link="Containers\SortObject.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\ExpressionHelper.cs" Link="Extensions\ExpressionHelper.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\Extensions.cs" Link="Extensions\Extensions.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\LambdaExpressionExtensions.cs" Link="Extensions\LambdaExpressionExtensions.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\LinqDynamicExtensions.cs" Link="Extensions\LinqDynamicExtensions.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\NameValueCollectionExtensions.cs" Link="Extensions\NameValueCollectionExtensions.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\QueryProviderExtensions.cs" Link="Extensions\QueryProviderExtensions.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\ReflectionHelper.cs" Link="Extensions\ReflectionHelper.cs" />
+    <Compile Include="..\KendoGridBinder\Extensions\TypeExtensions.cs" Link="Extensions\TypeExtensions.cs" />
+    <Compile Include="..\KendoGridBinder\IKendoGridValueResolver.cs" Link="IKendoGridValueResolver.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGrid.cs" Link="KendoGrid.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGridBaseRequest.cs" Link="KendoGridBaseRequest.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGridFilter.cs" Link="KendoGridFilter.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGridQueryableHelper.cs" Link="KendoGridQueryableHelper.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGrid`1.cs" Link="KendoGrid`1.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGrid`2.cs" Link="KendoGrid`2.cs" />
+    <Compile Include="..\KendoGridBinder\KendoGroup.cs" Link="KendoGroup.cs" />
+    <Compile Include="..\KendoGridBinder\ModelBinder\AggregateHelper.cs" Link="ModelBinder\AggregateHelper.cs" />
+    <Compile Include="..\KendoGridBinder\ModelBinder\FilterHelper.cs" Link="ModelBinder\FilterHelper.cs" />
+    <Compile Include="..\KendoGridBinder\ModelBinder\GridHelper.cs" Link="ModelBinder\GridHelper.cs" />
+    <Compile Include="..\KendoGridBinder\ModelBinder\GroupHelper.cs" Link="ModelBinder\GroupHelper.cs" />
+    <Compile Include="..\KendoGridBinder\ModelBinder\SortHelper.cs" Link="ModelBinder\SortHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="AutoMapper" Version="5.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.17.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="System.Web" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.1.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.2" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <MsBuildAllProjects>$(MsBuildAllProjects);$(MsBuildThisFileFullPath)</MsBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VersionPrefix>3.0.0-preview-01</VersionPrefix>
+  </PropertyGroup>
+</Project>
