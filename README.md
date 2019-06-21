@@ -7,7 +7,7 @@
 
 | NuGet | Frameworks | NuGet |
 | - | - | - |
-| KendoGridBinder | .NET 4.5<br>NETStandard 2.0 | [![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder)](https://www.nuget.org/packages/KendoGridBinder)
+| KendoGridBinder | .NET 4.5 | [![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder)](https://www.nuget.org/packages/KendoGridBinder)
 | KendoGridBinder.AspNetCore | .NET 4.6.1<br>NETStandard 1.6<br>NETStandard 2.0 | [![NuGet Badge](https://buildstats.info/nuget/KendoGridBinder.AspNetCore)](https://www.nuget.org/packages/KendoGridBinder.AspNetCore)
 
 ## Demo
