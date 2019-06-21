@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 // ReSharper disable once CheckNamespace
@@ -23,4 +22,3 @@ namespace KendoGridBinder.ModelBinder.Mvc
         }
     }
 }
-#endif

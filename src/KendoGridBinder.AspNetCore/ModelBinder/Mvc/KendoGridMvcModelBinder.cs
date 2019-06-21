@@ -1,13 +1,12 @@
-﻿#if NETSTANDARD
+﻿using JetBrains.Annotations;
+using KendoGridBinder.Extensions;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 using System.Linq;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Primitives;
-using KendoGridBinder.Extensions;
+using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
 namespace KendoGridBinder.ModelBinder.Mvc
@@ -24,9 +23,9 @@ namespace KendoGridBinder.ModelBinder.Mvc
             bool isForm = bindingContext.HttpContext.Request.HasFormContentType &&
                           bindingContext.HttpContext.Request.Method.ToUpper() == "POST";
 
-            IEnumerable<KeyValuePair<string, StringValues>> form = bindingContext.HttpContext.Request.Form;
-            IEnumerable<KeyValuePair<string, StringValues>> query = bindingContext.HttpContext.Request.Query;
-            IEnumerable<KeyValuePair<string, StringValues>> collection = isForm ? form : query;
+            var collection = isForm ?
+                bindingContext.HttpContext.Request.Form as IEnumerable<KeyValuePair<string, StringValues>> :
+                bindingContext.HttpContext.Request.Query as IEnumerable<KeyValuePair<string, StringValues>>;
 
             var queryString = new NameValueCollection();
             foreach (KeyValuePair<string, StringValues> entry in collection)
@@ -55,4 +54,3 @@ namespace KendoGridBinder.ModelBinder.Mvc
         }
     }
 }
-#endif

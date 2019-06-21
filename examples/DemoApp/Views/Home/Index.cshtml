@@ -1,0 +1,77 @@
+﻿@{
+  ViewData["Title"] = "Home Page";
+}
+
+<!-- https://demos.telerik.com/kendo-ui/multiselect/serverfiltering -->
+
+<div id="example">
+    <div class="demo-section k-content">
+        <h4>Find a product</h4>
+        <input id="employees" style="width: 100%;" />
+        <div class="demo-hint">Hint: Employees are "Jones, Johnson, Smith".</div>
+    </div>
+
+    <div id="grid"></div>
+
+    <script>
+        var url = '@Url.Action("Grid2")';
+
+        var dataSource = {
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            pageSize: 10,
+            transport: {
+                read: {
+                    type: 'post',
+                    dataType: 'json',
+                    url: url
+                }
+            },
+            schema: {
+                data: 'Data',
+                total: 'Total',
+                model: {
+                    id: 'EmployeeId',
+                    fields: {
+                        FirstName: { type: 'string' },
+                        LastName: { type: 'string' },
+                        Email: { type: 'string' }
+                    }
+                }
+            }
+        };
+
+        $('#grid').kendoGrid({
+            dataSource: dataSource,
+            height: 410,
+            columns: [
+                { field: 'FirstName', title: 'First Name' },
+                { field: 'LastName', title: 'Last Name' },
+                { field: 'Email', title: 'E-Mail' }
+            ],
+            filterable: true,
+            sortable: true,
+            pageable: true
+        });
+
+        $(document).ready(function () {
+            $("#employees").kendoMultiSelect({
+                placeholder: "Select Employee",
+                dataTextField: "lastName",
+                dataValueField: "email",
+                autoBind: false,
+                dataSource: {
+                    dataType: "json",
+                    serverFiltering: true,
+                    transport: {
+                        read: {
+                            url: "@Url.Action("Grid")",
+                            type:"POST"
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</div>

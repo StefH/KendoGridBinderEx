@@ -5,7 +5,7 @@ using KendoGridBinder.ModelBinder.Mvc;
 
 namespace KendoGridBinder
 {
-#if NETSTANDARD
+#if ASPNETCORE
     [Microsoft.AspNetCore.Mvc.ModelBinder(BinderType = typeof(KendoGridMvcModelBinder))]
 #else
     [System.Web.Http.ModelBinding.ModelBinder(typeof(KendoGridMvcModelBinder))]
