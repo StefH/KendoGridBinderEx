@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using JetBrains.Annotations;
 using KendoGridBinder.AutoMapperExtensions;
 using KendoGridBinder.Containers;
 using KendoGridBinder.Containers.Json;
 using KendoGridBinder.Extensions;
+using KendoGridBinder.Validations;
 
 namespace KendoGridBinder
 {
-    
-
     public class KendoGrid<TEntity, TViewModel>
     {
         private readonly Func<IQueryable<TEntity>, IEnumerable<TViewModel>> _conversion;
@@ -23,12 +23,15 @@ namespace KendoGridBinder
         public int Total { get; set; }
 
         public KendoGrid(
-            KendoGridBaseRequest request,
-            IQueryable<TEntity> query,
-            Dictionary<string, MapExpression<TEntity>> mappings,
-            Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion,
-            IEnumerable<string> includes = null)
+            [NotNull] KendoGridBaseRequest request,
+            [NotNull] IQueryable<TEntity> query,
+            [CanBeNull] Dictionary<string, MapExpression<TEntity>> mappings = null,
+            [CanBeNull] Func<IQueryable<TEntity>, IEnumerable<TViewModel>> conversion = null,
+            [CanBeNull] IEnumerable<string> includes = null)
         {
+            Guard.NotNull(request, nameof(request));
+            Guard.NotNull(query, nameof(query));
+
             _mappings = mappings;
             _conversion = conversion;
 
@@ -69,7 +72,7 @@ namespace KendoGridBinder
 
                 _query = tempQuery;
 
-                Data = _conversion == null ? _query.ToList().OfType<TViewModel>() : _conversion(_query).ToList();
+                Data = _conversion?.Invoke(_query).ToList() ?? _query.ToList().OfType<TViewModel>();
 
                 Groups = null;
             }
@@ -77,6 +80,8 @@ namespace KendoGridBinder
 
         protected KendoGrid(IEnumerable<TViewModel> list, int totalCount)
         {
+            Guard.NotNull(list, nameof(list));
+
             Data = list;
             Total = totalCount;
         }
@@ -228,13 +233,21 @@ namespace KendoGridBinder
                 field = groupObject.Field,
                 aggregates = aggregates,
                 value = values[groupObject.Field],
-                hasSubgroups = !isLast,
+                hasSubgroups = !isLast
             };
 
             if (isLast)
             {
                 var entities = grouping.Select<TEntity>("TEntity__").AsQueryable();
-                kendoGroup.items = _conversion(entities).ToList();
+
+                if (_conversion != null)
+                {
+                    kendoGroup.items = _conversion(entities).ToList();
+                }
+                else
+                {
+                    kendoGroup.items = entities.ToList();
+                }
             }
             else
             {
