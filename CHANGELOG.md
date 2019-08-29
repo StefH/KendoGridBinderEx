@@ -1,3 +1,7 @@
+# 3.1.0 (29 August 2019)
+- [#33](https://github.com/StefH/KendoGridBinderEx/pull/33) - Use latest System.Linq.Dynamic.Core [bug, enhancement] contributed by [StefH](https://github.com/StefH)
+- [#32](https://github.com/StefH/KendoGridBinderEx/issues/32) - Not able to run Project giving exception for System.Linq.Dynamic.Core
+
 # 3.0.0 (21 June 2019)
 - [#30](https://github.com/StefH/KendoGridBinderEx/pull/30) - #29  Request.Form raises error when content is not a form contributed by [Bjego](https://github.com/Bjego)
 - [#31](https://github.com/StefH/KendoGridBinderEx/pull/31) - Create new AspNetCore package [enhancement] contributed by [StefH](https://github.com/StefH)
