@@ -34,6 +34,50 @@ namespace KendoGridBinder.UnitTests
         }
 
         [Test]
+        public void Test_KendoGrid_WithNullConversoin_And_OneGroupByOneAggregateCount_Should_ApplyGrouping()
+        {
+            // Assign
+            var form = new NameValueCollection
+            {
+                {"take", "5"},
+                {"skip", "0"},
+                {"page", "1"},
+                {"pagesize", "5"},
+
+                {"sort[0][field]", "Full"},
+                {"sort[0][dir]", "asc"},
+
+                {"group[0][field]", "First"},
+                {"group[0][dir]", "asc"},
+                {"group[0][aggregates][0][field]", "First"},
+                {"group[0][aggregates][0][aggregate]", "count"}
+            };
+
+            var request = SetupBinder(form, null);
+            var mappings = new Dictionary<string, MapExpression<Employee>>
+            {
+                { "First", new MapExpression<Employee> { Path = "FirstName", Expression = m => m.FirstName } },
+                { "Full", new MapExpression<Employee> { Path = "FullName", Expression = m => m.FullName } }
+            };
+            var employees = InitEmployeesWithData().AsQueryable();
+
+            // Act
+            var kendoGrid = new KendoGrid<Employee, EmployeeVM>(request, employees, mappings);
+
+            // Assert
+            Assert.IsNull(kendoGrid.Data);
+            Assert.IsNotNull(kendoGrid.Groups);
+            var json = JsonConvert.SerializeObject(kendoGrid.Groups, Formatting.Indented);
+            Assert.IsNotNull(json);
+
+            var groups = kendoGrid.Groups as List<KendoGroup>;
+            Assert.IsNotNull(groups);
+
+            Assert.AreEqual(5, groups.Count());
+            Assert.AreEqual(employees.Count(), kendoGrid.Total);
+        }
+
+        [Test]
         public void Test_KendoGridModelBinder_Grid_Page()
         {
             var form = new NameValueCollection
