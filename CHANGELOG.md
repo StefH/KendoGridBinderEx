@@ -1,3 +1,7 @@
+# 3.2.0 (30 August 2019)
+- [#35](https://github.com/StefH/KendoGridBinderEx/pull/35) - Fix _conversion is null [bug] contributed by [StefH](https://github.com/StefH)
+- [#34](https://github.com/StefH/KendoGridBinderEx/issues/34) - Having issue while using server grouping
+
 # 3.1.0 (29 August 2019)
 - [#33](https://github.com/StefH/KendoGridBinderEx/pull/33) - Use latest System.Linq.Dynamic.Core [bug, enhancement] contributed by [StefH](https://github.com/StefH)
 - [#32](https://github.com/StefH/KendoGridBinderEx/issues/32) - Not able to run Project giving exception for System.Linq.Dynamic.Core
