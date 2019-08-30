@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using KendoGridBinder.AutoMapperExtensions;
 
 namespace KendoGridBinder
@@ -8,11 +9,11 @@ namespace KendoGridBinder
     public class KendoGrid : KendoGrid<object>
     {
         public KendoGrid(
-            KendoGridBaseRequest request,
-            IEnumerable<dynamic> source,
-            Dictionary<string, MapExpression<dynamic>> mappings = null,
-            Func<IQueryable<dynamic>, IEnumerable<dynamic>> conversion = null,
-            IEnumerable<string> includes = null
+            [NotNull] KendoGridBaseRequest request,
+            [NotNull] IEnumerable<dynamic> source,
+            [CanBeNull] Dictionary<string, MapExpression<dynamic>> mappings = null,
+            [CanBeNull] Func<IQueryable<dynamic>, IEnumerable<dynamic>> conversion = null,
+            [CanBeNull] IEnumerable<string> includes = null
             )
             : base(request, source.AsQueryable(), mappings, conversion, includes)
         {

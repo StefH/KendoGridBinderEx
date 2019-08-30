@@ -53,6 +53,7 @@
     <Compile Include="..\KendoGridBinder\ModelBinder\GridHelper.cs" Link="ModelBinder\GridHelper.cs" />
     <Compile Include="..\KendoGridBinder\ModelBinder\GroupHelper.cs" Link="ModelBinder\GroupHelper.cs" />
     <Compile Include="..\KendoGridBinder\ModelBinder\SortHelper.cs" Link="ModelBinder\SortHelper.cs" />
+    <Compile Include="..\KendoGridBinder\Validations\Guard.cs" Link="Validations\Guard.cs" />
   </ItemGroup>
 
   <ItemGroup>
