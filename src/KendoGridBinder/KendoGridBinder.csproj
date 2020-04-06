@@ -8,11 +8,7 @@
     <AssemblyName>KendoGridBinder</AssemblyName>
     <PackageId>KendoGridBinder</PackageId>
     <PackageTags>Kendo;Grid;Model;AutoMapper;MVC;ModelBinder;Binder;Dynamic</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/StefH/KendoGridBinderEx</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
+    <UserSecretsId>7e6f7319-052a-43be-8a15-000f44f5d149</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

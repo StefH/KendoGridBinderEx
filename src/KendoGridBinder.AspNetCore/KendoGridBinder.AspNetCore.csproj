@@ -7,12 +7,6 @@
     <TargetFrameworks>net461;netstandard1.6;netstandard2.0</TargetFrameworks>
     <AssemblyName>KendoGridBinder.AspNetCore</AssemblyName>
     <PackageId>KendoGridBinder.AspNetCore</PackageId>
-    <PackageTags>Kendo;Grid;Model;AutoMapper;MVC;ModelBinder;Binder;Dynamic</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/StefH/KendoGridBinderEx</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/KendoGridBinderEx/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
     <RootNamespace>KendoGridBinder.AspNetCore</RootNamespace>
     <DefineConstants>$(DefineConstants);ASPNETCORE</DefineConstants>
   </PropertyGroup>
