@@ -1,18 +1,19 @@
+# 3.2.1 (06 April 2020)
+- [#42](https://github.com/StefH/KendoGridBinderEx/pull/42) - Change license to MIT [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 3.2.0 (30 August 2019)
 - [#35](https://github.com/StefH/KendoGridBinderEx/pull/35) - Fix _conversion is null [bug] contributed by [StefH](https://github.com/StefH)
 - [#34](https://github.com/StefH/KendoGridBinderEx/issues/34) - Having issue while using server grouping
 
 # 3.1.0 (29 August 2019)
-- [#33](https://github.com/StefH/KendoGridBinderEx/pull/33) - Use latest System.Linq.Dynamic.Core [bug, enhancement] contributed by [StefH](https://github.com/StefH)
-- [#32](https://github.com/StefH/KendoGridBinderEx/issues/32) - Not able to run Project giving exception for System.Linq.Dynamic.Core
-
-# 3.0.0 (21 June 2019)
 - [#30](https://github.com/StefH/KendoGridBinderEx/pull/30) - #29  Request.Form raises error when content is not a form contributed by [Bjego](https://github.com/Bjego)
 - [#31](https://github.com/StefH/KendoGridBinderEx/pull/31) - Create new AspNetCore package [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#33](https://github.com/StefH/KendoGridBinderEx/pull/33) - Use latest System.Linq.Dynamic.Core [bug, enhancement] contributed by [StefH](https://github.com/StefH)
 - [#25](https://github.com/StefH/KendoGridBinderEx/issues/25) - NuGet Package Version Number
 - [#27](https://github.com/StefH/KendoGridBinderEx/issues/27) - Question: Server paging
 - [#28](https://github.com/StefH/KendoGridBinderEx/issues/28) - Unable to obtain the filter values through FilterObjectWrapper
 - [#29](https://github.com/StefH/KendoGridBinderEx/issues/29) - Provide a package for asp.net core &gt; 2 only
+- [#32](https://github.com/StefH/KendoGridBinderEx/issues/32) - Not able to run Project giving exception for System.Linq.Dynamic.Core
 
 # 2.0.0 (06 March 2018)
 - [#2](https://github.com/StefH/KendoGridBinderEx/pull/2) - Updated KendoGridEx.cs [enhancement] contributed by [AdamDowns](https://github.com/AdamDowns)
@@ -24,11 +25,9 @@
 - [#1](https://github.com/StefH/KendoGridBinderEx/issues/1) - Strange DB Queries on Grouped Sort [bug]
 - [#3](https://github.com/StefH/KendoGridBinderEx/issues/3) - Kendo Grid declaration with Razor syntax...
 - [#6](https://github.com/StefH/KendoGridBinderEx/issues/6) - Getting Uncaught TypeError: Cannot read property 'length' of undefined
-- [#7](https://github.com/StefH/KendoGridBinderEx/issues/7) - Question about inheriting from KendoGridApiRequest [question]
 - [#8](https://github.com/StefH/KendoGridBinderEx/issues/8) - Error in example
 - [#9](https://github.com/StefH/KendoGridBinderEx/issues/9) - example is wrong?
 - [#10](https://github.com/StefH/KendoGridBinderEx/issues/10) - Does it work with C# Datatable
-- [#11](https://github.com/StefH/KendoGridBinderEx/issues/11) - How to use conversion parameter when building KendoGridEx? [question]
 - [#12](https://github.com/StefH/KendoGridBinderEx/issues/12) - Summary Rows Not Showing Correct Data
 - [#14](https://github.com/StefH/KendoGridBinderEx/issues/14) - Filter breaks if the result set contains a null value
 - [#15](https://github.com/StefH/KendoGridBinderEx/issues/15) - problem in ApplyAggregates when filtering produces zero entities [bug]
