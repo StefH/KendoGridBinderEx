@@ -4,6 +4,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>3.2.0</VersionPrefix>
+    <VersionPrefix>3.2.1</VersionPrefix>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Kendo;Grid;Model;AutoMapper;MVC;ModelBinder;Binder;Dynamic</PackageTags>
+    <PackageProjectUrl>https://github.com/StefH/KendoGridBinderEx</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StefH/KendoGridBinderEx</RepositoryUrl>
   </PropertyGroup>
 </Project>
