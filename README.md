@@ -1,3 +1,19 @@
+# Information on NuGet
+
+In Februari 2022 Progress Software Corporation ("PSC") has obtained from NuGet Prefix reservations for a number of its trademarks/product names, including Kendo.
+
+Since my NuGet packages use the "Kendo" prefix, PSC is hereby requesting that I either rename the package in a way that makes it clear to consumers that this is not a Progress Software Corporation product or delist the package from the nuget.org site altogether.
+
+So for now (Februari 2022) I decided to unlist the NuGet.
+
+When I have time, I'll create new NuGet packages. Probably like:
+- GridBinder.for.Kendo (rather than KendoGridBinder)
+- GridBinderEx.for.Kendo (rather than KendoGridBinderEx)
+- GridBinder.AspNetCore.for.Kendo (rather than KendoGridBinder.AspNetCore)
+
+Kind regards,
+Stef Heyenrath
+
 # KendoGridBinder
 
 [![Build status](https://ci.appveyor.com/api/projects/status/6ynbga07r315xhb8?svg=true)](https://ci.appveyor.com/project/StefH/kendogridbinderex)
