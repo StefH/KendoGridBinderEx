@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>This is a ModelBinder designed to consume a http request and dynamically build a json serializable object for the Kendo UI Grid datasource. AutoMapper is used to support mapping from ViewModel &lt;&gt; Entity.</Description>
@@ -56,7 +56,7 @@
     </PackageReference>
     <PackageReference Include="AutoMapper" Version="5.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.18.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
